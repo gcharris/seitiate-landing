@@ -11,7 +11,7 @@
     <meta property="og:url" content="https://seitiate.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #08090b;
@@ -19,10 +19,9 @@
             --border: #1a1c22;
             --text: #d8d6d3;
             --text-secondary: #7a7a80;
-            --accent: #d4a574;
-            --accent-dim: #a07a52;
+            --accent: #4ade80;
+            --accent-dim: #2d8a4e;
             --code-bg: #12141a;
-            --green: #4ade80;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -52,10 +51,12 @@
         }
 
         nav .nav-brand {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 500;
             color: var(--text);
             text-decoration: none;
+            letter-spacing: 0.02em;
         }
 
         nav .nav-links {
@@ -99,7 +100,7 @@
             border: 1px solid var(--border);
             border-radius: 100px;
             font-size: 0.75rem;
-            color: var(--green);
+            color: var(--accent);
             letter-spacing: 0.05em;
             margin-bottom: 2rem;
         }
@@ -109,11 +110,14 @@
         }
 
         .brand-img {
-            height: clamp(60px, 12vw, 110px);
+            /* Seitiate logo is LIGHT text on DARK background.
+               screen blend mode drops black/dark pixels (transparent),
+               keeps light pixels (visible text). No inversion needed. */
+            height: clamp(50px, 10vw, 90px);
             width: auto;
-            filter: invert(1) grayscale(1) brightness(1.5);
-            mix-blend-mode: screen;
             object-fit: contain;
+            filter: brightness(1.4) contrast(1.1);
+            mix-blend-mode: screen;
         }
 
         .tagline {
@@ -201,9 +205,9 @@
         }
 
         .architecture h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 600;
             text-align: center;
             margin-bottom: 1rem;
         }
@@ -241,7 +245,8 @@
 
         .arch-card h3 .icon {
             font-size: 0.85rem;
-            opacity: 0.6;
+            color: var(--accent);
+            opacity: 0.7;
         }
 
         .arch-card p {
@@ -262,9 +267,9 @@
         }
 
         .principles h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 600;
             text-align: center;
             margin-bottom: 3.5rem;
         }
@@ -272,7 +277,7 @@
         .principle {
             margin-bottom: 2.5rem;
             padding-left: 1.5rem;
-            border-left: 2px solid var(--border);
+            border-left: 2px solid var(--accent-dim);
         }
 
         .principle h3 {
@@ -299,9 +304,9 @@
         }
 
         .product h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 600;
             margin-bottom: 1rem;
         }
 
@@ -315,9 +320,9 @@
             font-family: 'Inter', sans-serif;
             font-size: 1.1rem;
             letter-spacing: 0.05em;
-            color: var(--accent);
+            color: #d4a574;
             text-transform: lowercase;
-            font-weight: 400;
+            font-weight: 500;
         }
 
         /* --- Footer --- */
@@ -328,9 +333,11 @@
         }
 
         footer .footer-brand {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.1rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
             margin-bottom: 0.5rem;
+            letter-spacing: 0.02em;
         }
 
         footer p {
@@ -363,7 +370,7 @@
 <body>
 
     <nav>
-        <a href="/" class="nav-brand">Seitiate</a>
+        <a href="/" class="nav-brand">seitiate</a>
         <div class="nav-links">
             <a href="#architecture">Architecture</a>
             <a href="#principles">Principles</a>
@@ -469,7 +476,7 @@
     <!-- Footer -->
     <footer>
         <div class="footer-brand">seitiate</div>
-        <p>&copy; 2026 Agent-C LLC. Released under AGPL-3.0.</p>
+        <p>&copy; 2026 Seitiate. Released under AGPL-3.0.</p>
         <div class="footer-links">
             <a href="https://github.com/seitiate/seitiate">GitHub</a>
             <a href="https://sakme.ai">Sakme (Product)</a>
