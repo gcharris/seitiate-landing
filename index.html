@@ -51,12 +51,16 @@
         }
 
         nav .nav-brand {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: var(--text);
             text-decoration: none;
-            letter-spacing: 0.02em;
+            display: flex;
+            align-items: center;
+        }
+
+        nav .nav-brand img {
+            height: 28px;
+            width: auto;
+            filter: brightness(1.6) contrast(5);
+            mix-blend-mode: screen;
         }
 
         nav .nav-links {
@@ -372,7 +376,7 @@
 <body>
 
     <nav>
-        <a href="/" class="nav-brand">seitiate</a>
+        <a href="/" class="nav-brand"><img src="assets/seitiate_logo.png" alt="seitiate"></a>
         <div class="nav-links">
             <a href="#architecture">Architecture</a>
             <a href="#principles">Principles</a>
