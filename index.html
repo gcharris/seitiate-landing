@@ -113,6 +113,7 @@
             width: auto;
             filter: invert(1) grayscale(1) brightness(1.5);
             mix-blend-mode: screen;
+            object-fit: contain;
         }
 
         .tagline {
@@ -310,12 +311,13 @@
             margin-bottom: 2rem;
         }
 
-        .product-logo {
-            height: 28px;
-            vertical-align: middle;
-            filter: invert(1) contrast(1.1) brightness(1.2);
-            mix-blend-mode: screen;
-            margin-right: 0.3rem;
+        .product .product-name {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 0.05em;
+            color: var(--accent);
+            text-transform: lowercase;
+            font-weight: 400;
         }
 
         /* --- Footer --- */
@@ -373,7 +375,7 @@
     <section class="hero">
         <span class="badge">AGPL-3.0 &middot; Open Source</span>
         <h1 class="brand">
-            <img src="assets/seitiate_wordmark.png" alt="seitiate" class="brand-img">
+            <img src="assets/seitiate_logo.png" alt="seitiate" class="brand-img">
         </h1>
         <p class="tagline">The self-knowing engine.</p>
         <p class="hero-desc">
@@ -458,7 +460,7 @@
         <div class="product-inner">
             <h2>Want the product, not the engine?</h2>
             <p>
-                <img src="assets/sakme_wordmark.png" alt="sakme" class="product-logo"> is the first product built on Seitiate. A creative workspace where your work serves your own becoming. Hosted AI, beautiful interface, morning reflections, and an Alter Ego that learns with every session.
+                <span class="product-name">sakme</span> is the first product built on Seitiate. A creative workspace where your work serves your own becoming. Hosted AI, beautiful interface, morning reflections, and an Alter Ego that learns with every session.
             </p>
             <a href="https://sakme.ai" class="btn-primary">Visit sakme.ai</a>
         </div>
@@ -466,8 +468,8 @@
 
     <!-- Footer -->
     <footer>
-        <div class="footer-brand">Seitiate</div>
-        <p>&copy; 2026 Seitiate. Released under AGPL-3.0.</p>
+        <div class="footer-brand">seitiate</div>
+        <p>&copy; 2026 Agent-C LLC. Released under AGPL-3.0.</p>
         <div class="footer-links">
             <a href="https://github.com/seitiate/seitiate">GitHub</a>
             <a href="https://sakme.ai">Sakme (Product)</a>
