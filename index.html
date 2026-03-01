@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seitiate — The Self-Knowing Engine</title>
+    <meta name="description" content="An open-source framework (AGPL-3.0) for building AI systems that accumulate understanding. Context engine, knowledge architecture, multi-agent orchestration, and creative governance.">
+    <meta property="og:title" content="Seitiate — The Self-Knowing Engine">
+    <meta property="og:description" content="Open-source framework for AI systems that accumulate understanding. Fork it. Extend it. Build your own.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://seitiate.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #08090b;
+            --surface: #0f1114;
+            --border: #1a1c22;
+            --text: #d8d6d3;
+            --text-secondary: #7a7a80;
+            --accent: #d4a574;
+            --accent-dim: #a07a52;
+            --code-bg: #12141a;
+            --green: #4ade80;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- Nav --- */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(8, 9, 11, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav .nav-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        nav .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+
+        nav a:hover { color: var(--text); }
+
+        nav .nav-github {
+            padding: 0.45rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+
+        nav .nav-github:hover { border-color: var(--text-secondary); }
+
+        /* --- Hero --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 6rem 2rem 4rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.35rem 0.9rem;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.75rem;
+            color: var(--green);
+            letter-spacing: 0.05em;
+            margin-bottom: 2rem;
+        }
+
+        .brand {
+            margin-bottom: 0.75rem;
+        }
+
+        .brand-img {
+            height: clamp(60px, 12vw, 110px);
+            width: auto;
+            filter: invert(1) grayscale(1) brightness(1.5);
+            mix-blend-mode: screen;
+        }
+
+        .tagline {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .hero-desc {
+            max-width: 580px;
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.85;
+            margin-bottom: 3rem;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 4rem;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.8rem;
+            background: var(--text);
+            color: var(--bg);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            border-radius: 6px;
+            transition: opacity 0.2s;
+        }
+
+        .btn-primary:hover { opacity: 0.88; }
+
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.8rem;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-radius: 6px;
+            transition: border-color 0.2s, color 0.2s;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--text-secondary);
+            color: var(--text);
+        }
+
+        /* --- Install snippet --- */
+        .install-block {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            max-width: 480px;
+            text-align: left;
+        }
+
+        .install-block .comment { color: #555; }
+        .install-block .cmd { color: var(--accent); }
+
+        /* --- Architecture --- */
+        .architecture {
+            padding: 6rem 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .architecture-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .architecture h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 500;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .architecture .subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 3.5rem;
+            max-width: 550px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .arch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .arch-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 2rem 1.75rem;
+        }
+
+        .arch-card h3 {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .arch-card h3 .icon {
+            font-size: 0.85rem;
+            opacity: 0.6;
+        }
+
+        .arch-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        /* --- Principles --- */
+        .principles {
+            padding: 6rem 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .principles-inner {
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .principles h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 500;
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .principle {
+            margin-bottom: 2.5rem;
+            padding-left: 1.5rem;
+            border-left: 2px solid var(--border);
+        }
+
+        .principle h3 {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .principle p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* --- Product --- */
+        .product {
+            padding: 6rem 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .product-inner {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .product h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .product p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .product-logo {
+            height: 28px;
+            vertical-align: middle;
+            filter: invert(1) contrast(1.1) brightness(1.2);
+            mix-blend-mode: screen;
+            margin-right: 0.3rem;
+        }
+
+        /* --- Footer --- */
+        footer {
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        footer .footer-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        footer p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+
+        footer a:hover { color: var(--text); }
+
+        .footer-links {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 600px) {
+            .arch-grid { grid-template-columns: 1fr; }
+            nav .nav-links { gap: 0.75rem; }
+            .hero { padding: 5rem 1.5rem 3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="/" class="nav-brand">Seitiate</a>
+        <div class="nav-links">
+            <a href="#architecture">Architecture</a>
+            <a href="#principles">Principles</a>
+            <a href="https://github.com/seitiate/seitiate" class="nav-github">GitHub</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <span class="badge">AGPL-3.0 &middot; Open Source</span>
+        <h1 class="brand">
+            <img src="assets/seitiate_wordmark.png" alt="seitiate" class="brand-img">
+        </h1>
+        <p class="tagline">The self-knowing engine.</p>
+        <p class="hero-desc">
+            An open-source framework for building AI systems that accumulate understanding.
+            Context engine, knowledge architecture, multi-agent orchestration, and creative governance.
+            Fork it. Extend it. Build your own.
+        </p>
+        <div class="hero-cta">
+            <a href="https://github.com/seitiate/seitiate" class="btn-primary">View on GitHub</a>
+            <a href="https://sakme.ai" class="btn-outline">See the product &rarr;</a>
+        </div>
+        <div class="install-block">
+            <div><span class="comment"># Clone and run</span></div>
+            <div><span class="cmd">git clone</span> https://github.com/seitiate/seitiate.git</div>
+            <div><span class="cmd">cd</span> seitiate && <span class="cmd">make</span> setup</div>
+        </div>
+    </section>
+
+    <!-- Architecture -->
+    <section class="architecture" id="architecture">
+        <div class="architecture-inner">
+            <h2>What's inside</h2>
+            <p class="subtitle">Six architectural layers that make AI systems accumulate understanding instead of starting from zero every time.</p>
+            <div class="arch-grid">
+                <div class="arch-card">
+                    <h3><span class="icon">&bull;</span> Context Engine</h3>
+                    <p>Three-tier knowledge architecture. Sovereign knowledge (yours), project-scoped knowledge (this work), and external knowledge (everything else). Trust tiers determine what the AI uses and how.</p>
+                </div>
+                <div class="arch-card">
+                    <h3><span class="icon">&bull;</span> Knowledge Crystallization</h3>
+                    <p>Raw inputs become structured understanding through a witnessed process. Blessing scores quantify human involvement. Knowledge graduates from project-scoped to universal as it proves its value.</p>
+                </div>
+                <div class="arch-card">
+                    <h3><span class="icon">&bull;</span> Multi-Agent Orchestration</h3>
+                    <p>Society of Thought architecture. Multiple AI perspectives generate variants, then structured evaluation selects the strongest. Tournaments over one-shot prompting.</p>
+                </div>
+                <div class="arch-card">
+                    <h3><span class="icon">&bull;</span> Creative Governance</h3>
+                    <p>Narrative Governor with kill switches and the N1-N5 failure taxonomy. Deterministic rules that LLMs cannot reliably maintain on their own. The ORA loop (Observe-Reason-Act) iterates until standards are met.</p>
+                </div>
+                <div class="arch-card">
+                    <h3><span class="icon">&bull;</span> Creator Development</h3>
+                    <p>Every creative decision becomes a signal. Decision events, provenance scoring, growth edge detection, and originality tracking. The system learns what "good" means to each creator.</p>
+                </div>
+                <div class="arch-card">
+                    <h3><span class="icon">&bull;</span> Skill Architecture</h3>
+                    <p>Entity-Component-System for AI capabilities. Skills are entities, metadata groups are components, executors are systems. Import from Claude, OpenAI, or MCP. Publish to the marketplace.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Principles -->
+    <section class="principles" id="principles">
+        <div class="principles-inner">
+            <h2>Design principles</h2>
+            <div class="principle">
+                <h3>The moat is understanding, not features</h3>
+                <p>Anyone can call the same APIs. The defensible value is accumulated self-knowledge — the understanding that emerges from a specific creator's sequence of decisions over time.</p>
+            </div>
+            <div class="principle">
+                <h3>Human decides, AI explores</h3>
+                <p>AI generates options and variations. Humans make all final decisions. No auto-publish, no auto-commit. Every write has a trail. Undo is always available.</p>
+            </div>
+            <div class="principle">
+                <h3>Deterministic governance over probabilistic hope</h3>
+                <p>Kill switches enforce rules that LLMs cannot maintain alone. Character consistency, continuity, arc structure, and voice stability are verified by deterministic checks, not left to chance.</p>
+            </div>
+            <div class="principle">
+                <h3>Bring your own model</h3>
+                <p>The intelligence layer is the system instructions, not the model. Seitiate provides soul, state, and policy. You provide the model — Gemini, Claude, GPT, or local. Same engine, your choice.</p>
+            </div>
+            <div class="principle">
+                <h3>Open core, honest boundary</h3>
+                <p>The engine is identical at every tier. Free users who can wire it themselves get everything. The paid product adds experience, not capability. AGPL-3.0 prevents proprietary wrapping.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product -->
+    <section class="product">
+        <div class="product-inner">
+            <h2>Want the product, not the engine?</h2>
+            <p>
+                <img src="assets/sakme_wordmark.png" alt="sakme" class="product-logo"> is the first product built on Seitiate. A creative workspace where your work serves your own becoming. Hosted AI, beautiful interface, morning reflections, and an Alter Ego that learns with every session.
+            </p>
+            <a href="https://sakme.ai" class="btn-primary">Visit sakme.ai</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-brand">Seitiate</div>
+        <p>&copy; 2026 Seitiate. Released under AGPL-3.0.</p>
+        <div class="footer-links">
+            <a href="https://github.com/seitiate/seitiate">GitHub</a>
+            <a href="https://sakme.ai">Sakme (Product)</a>
+            <a href="mailto:hello@seitiate.com">Contact</a>
+        </div>
+    </footer>
+
+</body>
+</html>
