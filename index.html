@@ -110,13 +110,15 @@
         }
 
         .brand-img {
-            /* Seitiate logo is LIGHT text on DARK background.
-               screen blend mode drops black/dark pixels (transparent),
-               keeps light pixels (visible text). No inversion needed. */
+            /* Seitiate logo is LIGHT text on DARK (near-black) background.
+               contrast(5) posterizes: crushes near-black bg → pure black,
+               pushes light text → pure white.
+               brightness(1.6) lifts the text further before contrast.
+               screen blend mode drops pure black (transparent), keeps white text. */
             height: clamp(50px, 10vw, 90px);
             width: auto;
             object-fit: contain;
-            filter: brightness(1.4) contrast(1.1);
+            filter: brightness(1.6) contrast(5);
             mix-blend-mode: screen;
         }
 
@@ -476,7 +478,7 @@
     <!-- Footer -->
     <footer>
         <div class="footer-brand">seitiate</div>
-        <p>&copy; 2026 Seitiate. Released under AGPL-3.0.</p>
+        <p>&copy; 2026 Agent-C LLC. All rights reserved. Released under AGPL-3.0.</p>
         <div class="footer-links">
             <a href="https://github.com/seitiate/seitiate">GitHub</a>
             <a href="https://sakme.ai">Sakme (Product)</a>
