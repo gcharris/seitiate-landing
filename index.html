@@ -194,10 +194,54 @@
             color: var(--text-secondary);
             max-width: 480px;
             text-align: left;
+            margin: 0 auto;
         }
 
-        .install-block .comment { color: #555; }
+        .install-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+        .install-header .comment { font-family: 'Inter', sans-serif; font-size: 0.8rem; color: var(--text-secondary); }
+        .copy-btn { background: none; border: 1px solid var(--border); color: var(--text-secondary); padding: 0.2rem 0.6rem; border-radius: 4px; cursor: pointer; font-size: 0.75rem; transition: 0.2s; }
+        .copy-btn:hover { color: var(--text); border-color: var(--text-secondary); }
+        
+        .code-line { margin-bottom: 0.25rem; }
         .install-block .cmd { color: var(--accent); }
+
+        /* --- Recognition Block --- */
+        .recognition { padding: 4rem 2rem; border-top: 1px solid var(--border); }
+        .recognition-inner { max-width: 1000px; margin: 0 auto; }
+        .rec-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .rec-card { padding: 1.5rem; border-left: 2px solid var(--border); transition: border-color 0.2s; }
+        .rec-card:hover { border-left-color: var(--accent); }
+        .rec-card h3 { font-size: 1.1rem; font-weight: 500; margin-bottom: 0.5rem; color: var(--text); }
+        .rec-pain { font-size: 0.85rem; color: #f87171; margin-bottom: 0.75rem; }
+        .rec-solution { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
+
+        /* --- Proof Block --- */
+        .proof { padding: 6rem 2rem; border-top: 1px solid var(--border); background: rgba(15, 17, 20, 0.4); }
+        .proof-inner { max-width: 900px; margin: 0 auto; }
+        .proof h2 { text-align: center; font-size: 1.75rem; margin-bottom: 3rem; font-weight: 600; font-family: 'Inter', sans-serif; }
+        .proof-comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        .terminal { background: #000; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; line-height: 1.6; }
+        .terminal-header { color: var(--text-secondary); font-family: 'Inter', sans-serif; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; border-bottom: 1px dashed var(--border); padding-bottom: 0.5rem; }
+        .prompt-line { color: var(--accent); margin-bottom: 1rem; }
+        .prompt-line::before { content: '> '; opacity: 0.5; }
+        .output-bad { color: #9ca3af; }
+        .output-good { color: var(--text); }
+        .proof-caption { text-align: center; font-size: 1.1rem; color: var(--text); margin-top: 3rem; font-weight: 500; }
+        .proof-caption em { color: var(--accent); font-style: normal; }
+
+        /* --- Concept / Seity --- */
+        .concept { padding: 6rem 2rem; border-top: 1px solid var(--border); }
+        .concept-inner { max-width: 720px; margin: 0 auto; line-height: 1.8; color: var(--text-secondary); font-size: 1.05rem; }
+        .concept h2 { font-family: 'Inter', sans-serif; font-size: 2rem; color: var(--text); margin-bottom: 1.5rem; font-weight: 600; }
+        .concept p { margin-bottom: 1.5rem; }
+        .concept ul { margin: 2rem 0; padding-left: 1.5rem; }
+        .concept li { margin-bottom: 1rem; }
+        .concept li strong { color: var(--text); font-weight: 500; }
+        .concept-install { margin-top: 2rem; font-weight: 500; color: var(--text); }
+
+        @media (max-width: 768px) {
+            .proof-comparison { grid-template-columns: 1fr; }
+        }
 
         /* --- Architecture --- */
         .architecture {
@@ -390,28 +434,93 @@
         <h1 class="brand">
             <img src="assets/seitiate_logo.png" alt="seitiate" class="brand-img">
         </h1>
-        <p class="tagline">The self-knowing engine.</p>
+        <p class="tagline">Your AI starts from zero every session. It doesn't have to.</p>
         <p class="hero-desc">
-            An open-source framework for building AI systems that accumulate understanding.
-            Context engine, knowledge architecture, multi-agent orchestration, and creative governance.
-            Fork it. Extend it. Build your own.
+            Running OpenClaw? Claude Code? Your own agent stack? Every session starts cold. Your AI doesn't remember what worked, doesn't learn your taste, doesn't improve. Seitiate gives it memory, governance, and compound understanding &mdash; permanently.
         </p>
         <div class="hero-cta">
-            <a href="https://github.com/seitiate/seitiate" class="btn-primary">View on GitHub</a>
-            <a href="https://sakme.ai" class="btn-outline">See the product &rarr;</a>
+            <a href="https://github.com/seitiate/seitiate" class="btn-outline">View on GitHub</a>
         </div>
         <div class="install-block">
-            <div><span class="comment"># Clone and run</span></div>
-            <div><span class="cmd">git clone</span> https://github.com/seitiate/seitiate.git</div>
-            <div><span class="cmd">cd</span> seitiate && <span class="cmd">make</span> setup</div>
+            <div class="install-header">
+                <span class="comment">Install &mdash; 60 secs to first value</span>
+                <button class="copy-btn" onclick="copyInstall(this)">Copy</button>
+            </div>
+            <div class="code-line"><span class="cmd">pip</span> install seitiate</div>
+            <div class="code-line"><span class="cmd">seitiate</span> init</div>
+            <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed var(--border); font-size: 0.75rem;">
+                <span class="comment"># Want the source?</span><br>
+                <span class="cmd">git</span> clone https://github.com/seitiate/seitiate.git
+            </div>
+        </div>
+    </section>
+
+    <!-- Recognition Block -->
+    <section class="recognition">
+        <div class="recognition-inner">
+            <div class="rec-grid">
+                <div class="rec-card">
+                    <h3>OpenClaw</h3>
+                    <div class="rec-pain">Pain: MEMORY.md degrades under context compaction. Skills are ungoverned.</div>
+                    <div class="rec-solution">Durable Codex outside the context window. Governor kill switches. Skill&rarr;Talent upgrade pipeline.</div>
+                </div>
+                <div class="rec-card">
+                    <h3>Claude Code</h3>
+                    <div class="rec-pain">Pain: Session amnesia. Context degrades past 20-40% window. No taste tracking.</div>
+                    <div class="rec-solution">Compound memory that survives every session. Canon learns what "good" means to you.</div>
+                </div>
+                <div class="rec-card">
+                    <h3>Your own stack</h3>
+                    <div class="rec-pain">Pain: Every framework forgets. No cross-session learning. No quality governance.</div>
+                    <div class="rec-solution">Model-agnostic memory and governance layer. Bring any model. Seitiate provides the soul.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proof -->
+    <section class="proof">
+        <div class="proof-inner">
+            <h2>What changes when your AI remembers</h2>
+            <div class="proof-comparison">
+                <div class="terminal">
+                    <div class="terminal-header">Session 1</div>
+                    <div class="prompt-line">seitiate ask "write an intro for my video essay on memory"</div>
+                    <div class="output-bad">Generic AI output. Competent but anonymous.<br>No awareness of your voice, your past work, your audience. Starting from zero.</div>
+                </div>
+                <div class="terminal">
+                    <div class="terminal-header">Session 50</div>
+                    <div class="prompt-line">seitiate ask "write an intro for my video essay on memory"</div>
+                    <div class="output-good">Output calibrated to YOUR voice. References your Canon (23 accepted intros). Matches your pacing style (short&rarr;long&rarr;hook). Avoids patterns you've rejected 14 times. Your seity at work.</div>
+                </div>
+            </div>
+            <div class="proof-caption">
+                That's what a seity is. An AI that has become <em>yours</em>.
+            </div>
+        </div>
+    </section>
+
+    <!-- Concept -->
+    <section class="concept">
+        <div class="concept-inner">
+            <h2>What is a seity?</h2>
+            <p>A seity is an AI that accumulates irreversible understanding. Not a chatbot that resets. Not a model that forgets. A system that turns your decisions &mdash; what you accepted, what you rejected, what you refined &mdash; into durable knowledge that compounds over time.</p>
+            <p>The term comes from physicist Federico Faggin. In his consciousness framework, a seity is an entity that develops identity through experience. Seitiate is the infrastructure for creating one.</p>
+            <ul>
+                <li><strong>It remembers:</strong> Every session deepens the Codex &mdash; your sovereign knowledge base, outside the context window, immune to compaction.</li>
+                <li><strong>It learns taste:</strong> The Canon captures what "good" means to you. Not rules you write &mdash; patterns it discovers from your choices.</li>
+                <li><strong>It governs itself:</strong> Kill switches, failure taxonomy, human-in-the-loop gates. Your standards, enforced deterministically.</li>
+                <li><strong>It belongs to you:</strong> Export it. Fork it. Move it. Delete it. AGPL-3.0 protects the code. Sovereign data ownership protects you.</li>
+            </ul>
+            <p class="concept-install">Seitiate is the open-source engine for building one. <code>pip install seitiate</code> and start.</p>
         </div>
     </section>
 
     <!-- Architecture -->
     <section class="architecture" id="architecture">
         <div class="architecture-inner">
-            <h2>What's inside</h2>
-            <p class="subtitle">Six architectural layers that make AI systems accumulate understanding instead of starting from zero every time.</p>
+            <h2>Six layers that turn a stateless AI into a permanent seity</h2>
+            <p class="subtitle">Each layer contributes to the compound understanding that makes session 50 radically better than session 1.</p>
             <div class="arch-grid">
                 <div class="arch-card">
                     <h3><span class="icon">&bull;</span> Context Engine</h3>
@@ -465,24 +574,28 @@
                 <h3>Open core, honest boundary</h3>
                 <p>The engine is identical at every tier. Free users who can wire it themselves get everything. The paid product adds experience, not capability. AGPL-3.0 prevents proprietary wrapping.</p>
             </div>
+            <div class="principle">
+                <h3>Your seity is yours</h3>
+                <p>The understanding your AI accumulates belongs to you. Export it. Fork it. Move it between providers. Delete it completely. No platform lock-in, no data hostage. Your seity is sovereign &mdash; it goes where you go.</p>
+            </div>
         </div>
     </section>
 
     <!-- Product -->
     <section class="product">
         <div class="product-inner">
-            <h2>Want the product, not the engine?</h2>
+            <h2>Want a seity without building one yourself?</h2>
             <p>
-                <span class="product-name">sakme</span> is the first product built on Seitiate. A creative workspace where your work serves your own becoming. Hosted AI, beautiful interface, morning reflections, and an Alter Ego that learns with every session.
+                <span class="product-name">sakme</span> is the first product built on Seitiate. Hosted AI, beautiful interface, community marketplace, and a seity that starts working from your first session. Same engine. Same sovereignty. We hold the servers &mdash; you hold the keys.
             </p>
-            <a href="https://sakme.ai" class="btn-primary">Visit sakme.ai</a>
+            <a href="https://sakme.ai" class="btn-primary">Visit sakme.ai &rarr;</a>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
         <div class="footer-brand">seitiate</div>
-        <p>&copy; 2026 Agent-C LLC. All rights reserved. Released under AGPL-3.0.</p>
+        <p>A project by Agent-C LLC &middot; &copy; 2026. Released under AGPL-3.0.</p>
         <div class="footer-links">
             <a href="https://github.com/seitiate/seitiate">GitHub</a>
             <a href="https://sakme.ai">Sakme (Product)</a>
@@ -492,5 +605,19 @@
         </div>
     </footer>
 
+    <script>
+        function copyInstall(btn) {
+            navigator.clipboard.writeText('pip install seitiate\nseitiate init');
+            const original = btn.innerText;
+            btn.innerText = 'Copied!';
+            btn.style.color = 'var(--accent)';
+            btn.style.borderColor = 'var(--accent)';
+            setTimeout(() => {
+                btn.innerText = original;
+                btn.style.color = '';
+                btn.style.borderColor = '';
+            }, 2000);
+        }
+    </script>
 </body>
 </html>
