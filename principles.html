@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Principles — Seitiate</title>
+    <meta name="description" content="The manifesto and core philosophies driving the Seitiate Context Engine.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #08090b;
+            --surface: #0f1114;
+            --border: #1a1c22;
+            --text: #d8d6d3;
+            --text-secondary: #7a7a80;
+            --accent: #4ade80;
+            --accent-dim: #2d8a4e;
+            --accent-glow: rgba(74, 222, 128, 0.08);
+            --code-bg: #12141a;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; background: rgba(8, 9, 11, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+        nav .nav-brand { text-decoration: none; display: flex; align-items: center; }
+        nav .nav-brand img { height: 38px; width: auto; filter: brightness(1.6) contrast(5); mix-blend-mode: screen; }
+        nav .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+        nav a { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+        nav a:hover, nav a.active { color: var(--text); }
+        nav .nav-github { padding: 0.45rem 1rem; border: 1px solid var(--border); border-radius: 6px; font-size: 0.85rem; }
+        nav .nav-github:hover { border-color: var(--text-secondary); }
+        
+        .hero { padding: 8rem 2rem 4rem; max-width: 800px; margin: 0 auto; text-align: left; }
+        .badge { display: inline-block; padding: 0.35rem 0.9rem; border: 1px solid var(--accent-dim); background: var(--accent-glow); border-radius: 100px; font-size: 0.75rem; color: var(--accent); letter-spacing: 0.05em; margin-bottom: 1.5rem; font-family: 'JetBrains Mono', monospace; }
+        h1 { font-size: 3rem; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 1.5rem; line-height: 1.1; }
+        .hero-desc { color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 4rem; }
+        
+        .principles-list { max-width: 800px; margin: 0 auto 6rem; padding: 0 2rem; display: flex; flex-direction: column; gap: 3rem; }
+        
+        .principle-block { padding-left: 2rem; border-left: 2px solid var(--border); position: relative; }
+        .principle-block.active { border-color: var(--accent); }
+        .principle-block::before { content: ''; position: absolute; left: -6px; top: 6px; width: 10px; height: 10px; background: var(--bg); border: 2px solid var(--border); border-radius: 50%; }
+        .principle-block.active::before { border-color: var(--accent); background: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
+        
+        .principle-num { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+        .principle-block.active .principle-num { color: var(--accent); }
+        .principle-title { font-size: 1.5rem; font-weight: 500; margin-bottom: 1rem; color: var(--text); }
+        .principle-text { color: var(--text-secondary); font-size: 1rem; line-height: 1.8; margin-bottom: 1rem; }
+        .principle-text strong { color: var(--text); font-weight: 500; }
+
+        footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; font-size: 0.85rem; color: var(--text-secondary); margin-top: 4rem; }
+        footer a { color: var(--text-secondary); margin: 0 1rem; text-decoration: none; }
+        footer a:hover { color: var(--text); }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/" class="nav-brand"><img src="assets/seitiate_logo.png" alt="Seitiate" class="brand-img" style="height: 38px;"></a>
+        <div class="nav-links">
+            <a href="/architecture.html">Architecture</a>
+            <a href="/principles.html" class="active">Principles</a>
+            <a href="https://github.com/seitiate/seitiate" class="nav-github">GitHub</a>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="badge">THE MANIFESTO</div>
+        <h1>Physics over promises.</h1>
+        <p class="hero-desc">The era of the "blank slate" AI session is over. Seitiate enforces continuity, authority, and compounding knowledge by shifting AI from a stateless utility into a permanent fixture of personal infrastructure.</p>
+    </div>
+
+    <div class="principles-list">
+        <div class="principle-block active">
+            <div class="principle-num">01</div>
+            <h2 class="principle-title">AI Must Accumulate</h2>
+            <div class="principle-text">
+                Current paradigms rely on massive, monolithic API models that reset their understanding every time you clear a chat window. We believe intelligence is useless without memory. A Context Engine's primary job is to ensure that work performed today compound the efficiency of work performed tomorrow. <strong>Your AI should not start from zero every session.</strong>
+            </div>
+        </div>
+
+        <div class="principle-block active">
+            <div class="principle-num">02</div>
+            <h2 class="principle-title">User Sovereignty</h2>
+            <div class="principle-text">
+                Your creative decisions, your structural logic, and your calibrated preferences belong to you. Too many platforms ingest user behaviors to train global aggregate models, quietly seizing your intellectual property. Seitiate isolates knowledge strictly within a <strong>Sovereign Codex</strong>. You own your memory, and you own the keys to it.
+            </div>
+        </div>
+
+        <div class="principle-block active">
+            <div class="principle-num">03</div>
+            <h2 class="principle-title">Deterministic Governance</h2>
+            <div class="principle-text">
+                A system that hallucinates when handling your most critical infrastructure is unacceptable. We believe that autonomous agents must be rigorously constrained. LLMs are allowed to be probabilistic, but the <strong>Governor</strong> executing the workflow must be rigidly deterministic, enforcing immediate kill switches the moment a process deviates from your explicit intent.
+            </div>
+        </div>
+
+        <div class="principle-block">
+            <div class="principle-num">04</div>
+            <h2 class="principle-title">Hardware-enforced Safety</h2>
+            <div class="principle-text">
+                We believe security policies are worthless without physical isolation. True AI agency requires giving the system root access, yet allowing an AI unrestricted read/write capabilities on a live machine is deeply flawed. We enforce <strong>Ephemeral Sandboxes</strong> and <strong>Network Silence</strong> by default, protecting the host system with physical barriers, not prompt instructions.
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <a href="/">Home</a>
+        <a href="/architecture.html">Architecture</a>
+        <a href="/principles.html">Principles</a>
+        <a href="/licensing.html">Licensing & Contribution</a>
+        <a href="mailto:hello@seitiate.com" style="margin-top: 1rem; display: block; color: var(--accent-dim);">hello@seitiate.com</a>
+    </footer>
+</body>
+</html>
