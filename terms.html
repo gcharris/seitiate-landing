@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Use — Seitiate</title>
+    <meta name="description" content="Terms of Service and License conditions for the Seitiate Context Engine.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #08090b;
+            --surface: #0f1114;
+            --border: #1a1c22;
+            --text: #d8d6d3;
+            --text-secondary: #7a7a80;
+            --accent: #4ade80;
+            --accent-dim: #2d8a4e;
+            --accent-glow: rgba(74, 222, 128, 0.08);
+            --code-bg: #12141a;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+        
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; background: rgba(8, 9, 11, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+        nav .nav-brand { text-decoration: none; display: flex; align-items: center; }
+        nav .nav-brand img { height: 38px; width: auto; filter: brightness(1.6) contrast(5); mix-blend-mode: screen; }
+        nav .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+        nav a { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+        nav a:hover, nav a.active { color: var(--text); }
+        nav .nav-github { padding: 0.45rem 1rem; border: 1px solid var(--border); border-radius: 6px; font-size: 0.85rem; }
+        nav .nav-github:hover { border-color: var(--text-secondary); }
+        
+        .hero { padding: 8rem 2rem 4rem; max-width: 800px; margin: 0 auto; text-align: left; }
+        .badge { display: inline-block; padding: 0.35rem 0.9rem; border: 1px solid var(--accent-dim); background: var(--accent-glow); border-radius: 100px; font-size: 0.75rem; color: var(--accent); letter-spacing: 0.05em; margin-bottom: 1.5rem; font-family: 'JetBrains Mono', monospace; }
+        h1 { font-size: 3rem; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 1.5rem; line-height: 1.1; }
+        .hero-desc { color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 2rem; }
+
+        .content { max-width: 800px; margin: 0 auto 6rem; padding: 0 2rem; }
+        
+        h2 { font-size: 1.3rem; font-weight: 500; margin-top: 3rem; margin-bottom: 1rem; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+        p { color: var(--text-secondary); margin-bottom: 1.25rem; }
+
+        footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; font-size: 0.85rem; color: var(--text-secondary); margin-top: 4rem; }
+        footer a { color: var(--text-secondary); margin: 0 1rem; text-decoration: none; }
+        footer a:hover { color: var(--text); }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/" class="nav-brand"><img src="assets/seitiate_logo.png" alt="Seitiate" class="brand-img" style="height: 38px;"></a>
+        <div class="nav-links">
+            <a href="/architecture.html">Architecture</a>
+            <a href="/principles.html">Principles</a>
+            <a href="https://github.com/seitiate/seitiate" class="nav-github">GitHub</a>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="badge">LEGAL & COMPLIANCE</div>
+        <h1>Terms of Use.</h1>
+        <p class="hero-desc">Effective Date: March 22, 2026</p>
+    </div>
+
+    <div class="content">
+        <h2>1. License and Open Source Provisions</h2>
+        <p>The Seitiate software engine and its associated repositories are licensed under the GNU Affero General Public License v3.0 (AGPL-3.0). By downloading, cloning, or operating the Seitiate software, you agree to abide by the terms set forth within the AGPL-3.0 copyleft requirements. Direct commercialization of the framework outside of the permitted Data Sovereignty loophole must be negotiated directly with Agent-C LLC.</p>
+
+        <h2>2. Use of the Website</h2>
+        <p>The materials on seitiate.com are provided for informational purposes surrounding the operation and architectural deployment of the framework. You agree not to attempt to breach the website's security or scrape assets.</p>
+
+        <h2>3. Disclaimer of Warranty</h2>
+        <p>The Seitiate software is cutting-edge AI orchestration infrastructure. It is provided "AS IS," without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, and non-infringement. In no event shall Agent-C LLC be liable for any claim, damages, or other liability arising from your use of the software, specifically related to unpredictable outputs generated by language models.</p>
+    </div>
+
+    <footer>
+        <a href="/">Home</a>
+        <a href="/architecture.html">Architecture</a>
+        <a href="/principles.html">Principles</a>
+        <a href="/licensing.html">Licensing</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+    </footer>
+</body>
+</html>

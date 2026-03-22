@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy & Sovereignty — Seitiate</title>
+    <meta name="description" content="Privacy posture, End-to-End Encryption, and Blockchain Provenance disclosures for the Seitiate Context Engine.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #08090b;
+            --surface: #0f1114;
+            --border: #1a1c22;
+            --text: #d8d6d3;
+            --text-secondary: #7a7a80;
+            --accent: #4ade80;
+            --accent-dim: #2d8a4e;
+            --accent-glow: rgba(74, 222, 128, 0.08);
+            --code-bg: #12141a;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+        
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; background: rgba(8, 9, 11, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+        nav .nav-brand { text-decoration: none; display: flex; align-items: center; }
+        nav .nav-brand img { height: 38px; width: auto; filter: brightness(1.6) contrast(5); mix-blend-mode: screen; }
+        nav .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+        nav a { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+        nav a:hover, nav a.active { color: var(--text); }
+        nav .nav-github { padding: 0.45rem 1rem; border: 1px solid var(--border); border-radius: 6px; font-size: 0.85rem; }
+        nav .nav-github:hover { border-color: var(--text-secondary); }
+        
+        .hero { padding: 8rem 2rem 4rem; max-width: 800px; margin: 0 auto; text-align: left; }
+        .badge { display: inline-block; padding: 0.35rem 0.9rem; border: 1px solid var(--accent-dim); background: var(--accent-glow); border-radius: 100px; font-size: 0.75rem; color: var(--accent); letter-spacing: 0.05em; margin-bottom: 1.5rem; font-family: 'JetBrains Mono', monospace; }
+        h1 { font-size: 3rem; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 1.5rem; line-height: 1.1; }
+        .hero-desc { color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 2rem; }
+
+        .content { max-width: 800px; margin: 0 auto 6rem; padding: 0 2rem; }
+        
+        h2 { font-size: 1.3rem; font-weight: 500; margin-top: 3rem; margin-bottom: 1rem; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+        h3 { font-size: 1.05rem; font-weight: 500; margin-top: 2rem; margin-bottom: 0.75rem; color: var(--accent); }
+        p { color: var(--text-secondary); margin-bottom: 1.25rem; }
+        ul { margin-bottom: 1.5rem; padding-left: 1.5rem; color: var(--text-secondary); }
+        li { margin-bottom: 0.5rem; }
+        strong { color: var(--text); font-weight: 500; }
+
+        .highlight-box { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent-dim); padding: 1.5rem; margin: 2rem 0; border-radius: 4px; }
+        .highlight-box p { margin-bottom: 0; color: var(--text); font-size: 0.95rem; }
+
+        .terminal-callout { background: var(--code-bg); border: 1px solid var(--border); padding: 1.5rem; border-radius: 4px; margin: 1.5rem 0; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--text-secondary); }
+
+        footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; font-size: 0.85rem; color: var(--text-secondary); margin-top: 4rem; }
+        footer a { color: var(--text-secondary); margin: 0 1rem; text-decoration: none; }
+        footer a:hover { color: var(--text); }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/" class="nav-brand"><img src="assets/seitiate_logo.png" alt="Seitiate" class="brand-img" style="height: 38px;"></a>
+        <div class="nav-links">
+            <a href="/architecture.html">Architecture</a>
+            <a href="/principles.html">Principles</a>
+            <a href="https://github.com/seitiate/seitiate" class="nav-github">GitHub</a>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="badge">PRIVACY & CRYPTOGRAPHY</div>
+        <h1>Zero Knowledge.<br>Absolute Sovereignty.</h1>
+        <p class="hero-desc">Effective Date: March 22, 2026</p>
+    </div>
+
+    <div class="content">
+        <div class="highlight-box">
+            <p><strong>The Engine Posture:</strong> Seitiate is an open-source framework designed for terminal sovereignty. If you self-host the engine, all data processing occurs entirely within your own physical hardware or VPC. Agent-C LLC collects zero telemetry, zero creative content, and zero analytics from self-hosted Seitiate instances.</p>
+        </div>
+
+        <h2>1. The Seitiate.com Website</h2>
+        <p>The marketing and documentation website you are currently viewing (`seitiate.com`) collects zero personal information. We do not use cookies, trackers, or advertising pixels. Server logs operate on standard 30-day rolling deletion and do not identify users.</p>
+
+        <h2>2. Data Liberation & The Vault</h2>
+        <p>A core feature of the Seitiate framework is the Data Liberation Pipeline, which allows users to parse and import historical data exports (e.g., Google Takeout, Facebook archives) directly into the framework's knowledge base. This ingestion occurs strictly locally, and the resulting structure is stored exclusively inside the user's sovereign boundaries. Agent-C LLC receives no notification of, nor access to, imported data.</p>
+
+        <h2>3. Framework Security Mechanisms</h2>
+        <p>When running Seitiate (or a product built upon its SDK), the framework enforces strict cryptographic thresholds to protect your accumulated self-knowledge.</p>
+
+        <h3>3.1 End-to-End Encryption and User-Held Keys</h3>
+        <p>Your Memory (Codex), Canon calibration data, and Crystallization outputs are encrypted at the engine layer using keys that <strong>you hold</strong>. This ensures:</p>
+        <ul>
+            <li><strong>We cannot read your Codex.</strong> Your accumulated self-knowledge is encrypted with keys derived locally. Even if hosted on an enterprise endpoint like Sakme, the servers only store ciphertext.</li>
+            <li><strong>You control access.</strong> Only you (or someone with your encryption keys) can decrypt your Memory. Agent-C LLC cannot access, search, or analyze your Codex contents under any circumstances.</li>
+            <li><strong>Your keys, your data.</strong> If you lose your encryption keys and have not set up a local recovery method, your encrypted data becomes permanently inaccessible.</li>
+        </ul>
+
+        <h3>3.2 Provenance and Blockchain Records</h3>
+        <p>The Seitiate engine includes modules to publish Talents or creative bundles to decentralize marketplaces with attached provenance certificates anchored to a blockchain smart contract. These on-chain records contain:</p>
+        <ul>
+            <li><strong>Cryptographic hashes</strong> of your published work (not the work itself).</li>
+            <li><strong>Provenance scores</strong> measuring the degree of human creative governance.</li>
+            <li><strong>Timestamps</strong> establishing absolute chronology.</li>
+            <li><strong>Soulbound identity tokens</strong> linking the provenance to your creator identity.</li>
+        </ul>
+        <p>On-chain records are immutable. However, these records contain no readable creative content. They are cryptographic artifacts entirely dependent on the decryption keys stored inside your encrypted Vault. If you wipe your Seitiate installation and destroy your keys, the on-chain records remain but become permanently inaccessible, effectively rendering them anonymous hash data detached from your identity.</p>
+
+        <h3>3.3 Network Silence Sandbox</h3>
+        <p>Agentic workflows executing within Seitiate's Copy-Mount Sandbox are rigidly sealed off from external networks via `network: none` docker configurations. AI generation loops cannot exfiltrate their internal working context.</p>
+
+    </div>
+
+    <footer>
+        <a href="/">Home</a>
+        <a href="/architecture.html">Architecture</a>
+        <a href="/principles.html">Principles</a>
+        <a href="/licensing.html">Licensing</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+    </footer>
+</body>
+</html>
