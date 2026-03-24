@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seitiate — Compound Memory for AI</title>
-    <meta name="description" content="Your AI starts from zero every session. Seitiate gives it memory, governance, and compound understanding. Built for OpenClaw, Claude Code, and custom stacks.">
-    <meta property="og:title" content="Seitiate — Compound Memory for AI">
-    <meta property="og:description" content="Your AI starts from zero every session. Seitiate gives it memory, governance, and compound understanding.">
+    <title>Seitiate — Memory and Governance for AI Systems</title>
+    <meta name="description" content="Open infrastructure for AI systems that remember useful context, support reusable capabilities, keep humans in control, and stay portable across models and deployments.">
+    <meta property="og:title" content="Seitiate — Memory and Governance for AI Systems">
+    <meta property="og:description" content="Open infrastructure for AI systems that remember useful context, support reusable capabilities, and stay portable across deployments.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://seitiate.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -219,7 +219,7 @@
         .proof { padding: 6rem 2rem; border-top: 1px solid var(--border); background: rgba(15, 17, 20, 0.4); }
         .proof-inner { max-width: 900px; margin: 0 auto; }
         .proof h2 { text-align: center; font-size: 1.75rem; margin-bottom: 3rem; font-weight: 600; font-family: 'Inter', sans-serif; }
-        .proof-comparison { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+        .proof-comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem; }
         .terminal { background: #000; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; line-height: 1.6; }
         .terminal-header { color: var(--text-secondary); font-family: 'Inter', sans-serif; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; border-bottom: 1px dashed var(--border); padding-bottom: 0.5rem; }
         .prompt-line { color: var(--accent); margin-bottom: 1rem; }
@@ -229,7 +229,7 @@
         .proof-caption { text-align: center; font-size: 1.1rem; color: var(--text); margin-top: 3rem; font-weight: 500; }
         .proof-caption em { color: var(--accent); font-style: normal; }
 
-        /* --- Concept / Seity --- */
+        /* --- Concept --- */
         .concept { padding: 6rem 2rem; border-top: 1px solid var(--border); }
         .concept-inner { max-width: 720px; margin: 0 auto; line-height: 1.8; color: var(--text-secondary); font-size: 1.05rem; }
         .concept h2 { font-family: 'Inter', sans-serif; font-size: 2rem; color: var(--text); margin-bottom: 1.5rem; font-weight: 600; }
@@ -434,11 +434,14 @@
         <h1 class="brand">
             <img src="assets/seitiate_logo.png" alt="seitiate" class="brand-img">
         </h1>
-        <p class="tagline">Your AI starts from zero every session. It doesn't have to.</p>
+        <p class="tagline">Open infrastructure for AI that remembers how work actually happens.</p>
         <p class="hero-desc">
-            Running OpenClaw? Claude Code? Your own agent stack? Every session starts cold. Your AI doesn't remember what worked, doesn't learn your taste, doesn't improve. Seitiate gives it memory, governance, and compound understanding &mdash; permanently.
+            Whether you are building coding tools, research workflows, or custom agent systems, the default pattern is the same:
+            each session starts cold. Seitiate provides a durable layer for continuity, reusable capabilities,
+            review, and portability so useful work can accumulate instead of resetting.
         </p>
         <div class="hero-cta">
+            <a href="/architecture.html" class="btn-primary">View architecture</a>
             <a href="https://github.com/seitiate/seitiate" class="btn-outline">View on GitHub</a>
         </div>
         <div class="install-block">
@@ -460,19 +463,19 @@
         <div class="recognition-inner">
             <div class="rec-grid">
                 <div class="rec-card">
-                    <h3>OpenClaw</h3>
-                    <div class="rec-pain">Pain: MEMORY.md degrades under context compaction. Skills are ungoverned.</div>
-                    <div class="rec-solution">Durable Codex outside the context window. Governor kill switches. Skill&rarr;Talent upgrade pipeline.</div>
+                    <h3>Coding copilots</h3>
+                    <div class="rec-pain">Pain: useful context lives in short-lived chats, scratch notes, and habits that never become system memory.</div>
+                    <div class="rec-solution">Seitiate gives AI-assisted work a durable layer for continuity, reusable capability packaging, and reviewable outputs.</div>
                 </div>
                 <div class="rec-card">
-                    <h3>Claude Code</h3>
-                    <div class="rec-pain">Pain: Session amnesia. Context degrades past 20-40% window. No taste tracking.</div>
-                    <div class="rec-solution">Compound memory that survives every session. Canon learns what "good" means to you.</div>
+                    <h3>Creative and research tools</h3>
+                    <div class="rec-pain">Pain: systems can generate quickly but struggle to preserve decisions, standards, and project continuity over time.</div>
+                    <div class="rec-solution">Seitiate makes prior sources, prior work, and human choices reusable so later sessions begin with context instead of guesswork.</div>
                 </div>
                 <div class="rec-card">
-                    <h3>Your own stack</h3>
-                    <div class="rec-pain">Pain: Every framework forgets. No cross-session learning. No quality governance.</div>
-                    <div class="rec-solution">Model-agnostic memory and governance layer. Bring any model. Seitiate adds the missing memory layer.</div>
+                    <h3>Custom stacks</h3>
+                    <div class="rec-pain">Pain: teams can assemble prompts, tools, and models, but the resulting system is brittle, provider-bound, and hard to govern.</div>
+                    <div class="rec-solution">Seitiate adds an open layer for memory, capability composition, governance, and portability across models and deployments.</div>
                 </div>
             </div>
         </div>
@@ -484,23 +487,18 @@
             <h2>What changes when your AI remembers</h2>
             <div class="proof-comparison">
                 <div class="terminal">
-                    <div class="terminal-header">Session 1 (Standard)</div>
+                    <div class="terminal-header">Session 1</div>
                     <div class="prompt-line">seitiate ask "write an intro for my video essay on memory"</div>
-                    <div class="output-bad">Generic AI output. Competent but anonymous.<br>No awareness of your voice, your past work, your audience. Starting from zero.</div>
-                </div>
-                <div class="terminal" style="border-color: var(--accent-dim);">
-                    <div class="terminal-header" style="color: var(--accent);">Session 1 (Post-Archive Import)</div>
-                    <div class="prompt-line">seitiate ask "write an intro for my video essay on memory"</div>
-                    <div class="output-good">Output calibrated to a decade of history. Leverages structured signals from 4,000 ingested emails and 200 previous essays stored in your encrypted Vault.</div>
+                    <div class="output-bad">Competent, but generic.<br>No awareness of the source material you trust, the choices you made last week, or the patterns you keep rejecting.</div>
                 </div>
                 <div class="terminal">
                     <div class="terminal-header">Session 50</div>
                     <div class="prompt-line">seitiate ask "write an intro for my video essay on memory"</div>
-                    <div class="output-good">Output calibrated to YOUR voice. References your Canon (23 accepted intros). Matches your pacing style (short&rarr;long&rarr;hook). Avoids patterns you've rejected 14 times. Your seity at work.</div>
+                    <div class="output-good">Starts from prior sources, accepted patterns, and earlier decisions. The work feels like a continuation of an existing practice instead of another cold start.</div>
                 </div>
             </div>
             <div class="proof-caption">
-                That's what a seity is. An AI that has become <em>yours</em>.
+                The difference is not just a better prompt. It is <em>continuity</em>.
             </div>
         </div>
     </section>
@@ -508,48 +506,48 @@
     <!-- Concept -->
     <section class="concept">
         <div class="concept-inner">
-            <h2>What is a seity?</h2>
-            <p>A seity is an AI that accumulates irreversible understanding. Not a chatbot that resets. Not a model that forgets. A system that turns your decisions &mdash; what you accepted, what you rejected, what you refined &mdash; into durable knowledge that compounds over time.</p>
-            <p>The term comes from physicist Federico Faggin. In his consciousness framework, a seity is an entity that develops identity through experience. Seitiate is the infrastructure for creating one.</p>
+            <h2>What Seitiate provides</h2>
+            <p>Seitiate is an open engine for building AI systems that can preserve useful context, package reusable capabilities, support review, and remain portable over time. It is designed for systems that need more than one-shot prompting.</p>
+            <p>The engine is intentionally model-agnostic and product-agnostic. Different products can sit on top of it, but the core responsibilities stay the same: remember what matters, make useful work reusable, and keep people in control of consequential outputs.</p>
             <ul>
-                <li><strong>It remembers:</strong> Every session deepens the Codex &mdash; your sovereign knowledge base, outside the context window, immune to compaction.</li>
-                <li><strong>It learns taste:</strong> The Canon captures what "good" means to you. Not rules you write &mdash; patterns it discovers from your choices.</li>
-                <li><strong>It governs itself:</strong> Kill switches, failure taxonomy, human-in-the-loop gates. Your standards, enforced deterministically.</li>
-                <li><strong>It belongs to you:</strong> Export it. Fork it. Move it. Delete it. AGPL-3.0 protects the code. Sovereign data ownership protects you.</li>
+                <li><strong>Memory:</strong> useful context survives beyond a single prompt window or session.</li>
+                <li><strong>Capabilities:</strong> workflows can be packaged, reused, and composed instead of rewritten from scratch.</li>
+                <li><strong>Review:</strong> important actions can be inspected and approved by humans.</li>
+                <li><strong>Portability:</strong> the system is built to outlast any one provider, interface, or deployment choice.</li>
             </ul>
-            <p class="concept-install">Seitiate is the open-source engine for building one. <code>pip install seitiate</code> and start.</p>
+            <p class="concept-install">Start with <code>pip install seitiate</code> or explore the public architecture page for the system-level overview.</p>
         </div>
     </section>
 
     <!-- Architecture -->
     <section class="architecture" id="architecture">
         <div class="architecture-inner">
-            <h2>Six layers that turn a stateless AI into a permanent seity</h2>
-            <p class="subtitle">Each layer contributes to the compound understanding that makes session 50 radically better than session 1.</p>
+            <h2>Public architecture at a glance</h2>
+            <p class="subtitle">These are the public-facing responsibilities of the engine. The detailed implementation story lives in the repo, not on the marketing site.</p>
             <div class="arch-grid">
                 <div class="arch-card">
-                    <h3><span class="icon">&bull;</span> Context Engine</h3>
-                    <p>Three-tier knowledge architecture. Sovereign knowledge (yours), project-scoped knowledge (this work), and external knowledge (everything else). Trust tiers determine what the AI uses and how.</p>
+                    <h3><span class="icon">&bull;</span> Durable memory</h3>
+                    <p>Seitiate preserves useful context from sources, prior work, and human decisions so later sessions can continue instead of restart.</p>
                 </div>
                 <div class="arch-card">
-                    <h3><span class="icon">&bull;</span> Knowledge Crystallization</h3>
-                    <p>Raw inputs become structured understanding through a witnessed process. Blessing scores quantify human involvement. Knowledge graduates from project-scoped to universal as it proves its value.</p>
+                    <h3><span class="icon">&bull;</span> Capability composition</h3>
+                    <p>Reusable capabilities can be packaged, shared, and combined into larger flows rather than remaining one-off prompt fragments.</p>
                 </div>
                 <div class="arch-card">
-                    <h3><span class="icon">&bull;</span> Multi-Agent Orchestration</h3>
-                    <p>Society of Thought architecture. Multiple AI perspectives generate variants, then structured evaluation selects the strongest. Tournaments over one-shot prompting.</p>
+                    <h3><span class="icon">&bull;</span> Human-guided adaptation</h3>
+                    <p>The engine improves through real choices, corrections, and approvals instead of assuming every model output should be treated as final.</p>
                 </div>
                 <div class="arch-card">
-                    <h3><span class="icon">&bull;</span> Creative Governance</h3>
-                    <p>Narrative Governor with kill switches and the N1-N5 failure taxonomy. Deterministic rules that LLMs cannot reliably maintain on their own. The ORA loop (Observe-Reason-Act) iterates until standards are met.</p>
+                    <h3><span class="icon">&bull;</span> Governance and review</h3>
+                    <p>Consequential work can be routed through explicit checks, policies, and review steps so quality and accountability stay visible.</p>
                 </div>
                 <div class="arch-card">
-                    <h3><span class="icon">&bull;</span> Creator Development</h3>
-                    <p>Every creative decision becomes a signal. Decision events, provenance scoring, growth edge detection, and originality tracking. The system learns what "good" means to each creator.</p>
+                    <h3><span class="icon">&bull;</span> Portability</h3>
+                    <p>Seitiate is designed to stay useful across interfaces, products, and model providers rather than locking the whole system to one stack.</p>
                 </div>
                 <div class="arch-card">
-                    <h3><span class="icon">&bull;</span> Skill Architecture</h3>
-                    <p>Entity-Component-System for AI capabilities. Skills are entities, metadata groups are components, executors are systems. Import from Claude, OpenAI, or MCP. Publish to the marketplace.</p>
+                    <h3><span class="icon">&bull;</span> Open engine boundary</h3>
+                    <p>The engine can power multiple experiences. Managed products may add workflow design and hosting, but the core memory and capability layer remains open.</p>
                 </div>
             </div>
         </div>
@@ -560,28 +558,24 @@
         <div class="principles-inner">
             <h2>Design principles</h2>
             <div class="principle">
-                <h3>The moat is understanding, not features</h3>
-                <p>Anyone can call the same APIs. The defensible value is accumulated self-knowledge — the understanding that emerges from a specific creator's sequence of decisions over time.</p>
+                <h3>Continuity matters more than novelty</h3>
+                <p>The goal is not another isolated AI moment. The goal is a system that improves because it can carry useful context forward.</p>
             </div>
             <div class="principle">
-                <h3>Human decides, AI explores</h3>
-                <p>AI generates options and variations. Humans make all final decisions. No auto-publish, no auto-commit. Every write has a trail. Undo is always available.</p>
+                <h3>Humans stay in charge of consequential work</h3>
+                <p>AI can explore, suggest, and accelerate, but meaningful actions should remain reviewable and accountable to human judgment.</p>
             </div>
             <div class="principle">
-                <h3>Deterministic governance over probabilistic hope</h3>
-                <p>Kill switches enforce rules that LLMs cannot maintain alone. Character consistency, continuity, arc structure, and voice stability are verified by deterministic checks, not left to chance.</p>
+                <h3>Reusable capabilities beat one-off prompting</h3>
+                <p>Systems become more valuable when useful workflows can be packaged, improved, and reused instead of rediscovered in every session.</p>
             </div>
             <div class="principle">
-                <h3>Bring your own model</h3>
-                <p>The intelligence layer is the system instructions, not the model. Seitiate provides soul, state, and policy. You provide the model — Gemini, Claude, GPT, or local. Same engine, your choice.</p>
+                <h3>Open boundaries keep systems resilient</h3>
+                <p>An engine should outlast any one model provider, interface choice, or deployment arrangement. Portability is part of the architecture.</p>
             </div>
             <div class="principle">
-                <h3>Open core, honest boundary</h3>
-                <p>The engine is identical at every tier. Free users who can wire it themselves get everything. The paid product adds experience, not capability. AGPL-3.0 prevents proprietary wrapping.</p>
-            </div>
-            <div class="principle">
-                <h3>Your seity is yours</h3>
-                <p>The understanding your AI accumulates belongs to you. Export it. Fork it. Move it between providers. Delete it completely. No platform lock-in, no data hostage. Your seity is sovereign &mdash; it goes where you go.</p>
+                <h3>Products can differ without locking the engine</h3>
+                <p>Managed experiences can add UX, hosting, and curation, but the engine layer should remain understandable, contributor-friendly, and portable.</p>
             </div>
         </div>
     </section>
@@ -589,9 +583,10 @@
     <!-- Product -->
     <section class="product">
         <div class="product-inner">
-            <h2>Want a seity without building one yourself?</h2>
+            <h2>Want the managed product experience?</h2>
             <p>
-                <span class="product-name">sakme</span> is the first product built on Seitiate. Hosted AI, beautiful interface, community marketplace, and a seity that starts working from your first session. Same engine. Same sovereignty. We hold the servers &mdash; you hold the keys.
+                <span class="product-name">sakme</span> is a managed product built on Seitiate. It adds hosting,
+                workflow design, and a product experience on top of the same underlying engine direction.
             </p>
             <a href="https://sakme.ai" class="btn-primary">Visit sakme.ai &rarr;</a>
         </div>
@@ -604,9 +599,9 @@
         <div class="footer-links" style="margin-bottom: 2rem;">
             <a href="/architecture.html">Architecture</a>
             <a href="/principles.html">Principles</a>
-            <a href="/licensing.html">Licensing & Contribution</a>
-            <a href="/privacy.html">Privacy Policy</a>
-            <a href="/terms.html">Terms of Service</a>
+            <a href="/licensing.html">Licensing</a>
+            <a href="/privacy.html">Privacy</a>
+            <a href="/terms.html">Terms</a>
             <a href="https://sakme.ai">sakme.ai</a>
             <a href="mailto:hello@seitiate.com">hello@seitiate.com</a>
         </div>

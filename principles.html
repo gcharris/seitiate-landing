@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Principles — Seitiate</title>
-    <meta name="description" content="The manifesto and core philosophies driving the Seitiate Context Engine.">
+    <meta name="description" content="Public design principles for Seitiate: continuity, review, portability, reusable capabilities, and clear engine boundaries.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -65,41 +65,58 @@
     </nav>
 
     <div class="hero">
-        <div class="badge">THE MANIFESTO</div>
+        <div class="badge">PUBLIC PRINCIPLES</div>
         <h1>Physics over promises.</h1>
-        <p class="hero-desc">The era of the "blank slate" AI session is over. Seitiate enforces continuity, authority, and compounding knowledge by shifting AI from a stateless utility into a permanent fixture of personal infrastructure.</p>
+        <p class="hero-desc">Seitiate is built for AI systems that need to remember useful context, support real review, and stay portable across models and products. These principles describe the public design direction of the engine.</p>
     </div>
 
     <div class="principles-list">
         <div class="principle-block active">
             <div class="principle-num">01</div>
-            <h2 class="principle-title">AI Must Accumulate</h2>
+            <h2 class="principle-title">Continuity over reset</h2>
             <div class="principle-text">
-                Current paradigms rely on massive, monolithic API models that reset their understanding every time you clear a chat window. We believe intelligence is useless without memory. A Context Engine's primary job is to ensure that work performed today compound the efficiency of work performed tomorrow. <strong>Your AI should not start from zero every session.</strong>
+                Useful AI systems should not lose the thread every time a session ends. Seitiate is designed so
+                prior sources, prior work, and prior decisions can remain useful instead of disappearing into chat history.
+                <strong>Work should compound over time.</strong>
             </div>
         </div>
 
         <div class="principle-block active">
             <div class="principle-num">02</div>
-            <h2 class="principle-title">User Sovereignty</h2>
+            <h2 class="principle-title">Human review over blind autonomy</h2>
             <div class="principle-text">
-                Your creative decisions, your structural logic, and your calibrated preferences belong to you. Too many platforms ingest user behaviors to train global aggregate models, quietly seizing your intellectual property. Seitiate isolates knowledge strictly within an encrypted <strong>Sovereign Vault</strong>. True sovereignty means you hold the right to extract decades of your trapped history from exploitative platforms via the <strong>Data Liberation Pipeline</strong>. You own your memory, and you own the keys to it.
+                Seitiate is meant for systems where meaningful actions remain inspectable. AI can generate options,
+                explore directions, and speed up work, but consequential outputs should still pass through visible
+                review and approval steps.
             </div>
         </div>
 
         <div class="principle-block active">
             <div class="principle-num">03</div>
-            <h2 class="principle-title">Deterministic Governance</h2>
+            <h2 class="principle-title">Reusable capabilities over one-off prompting</h2>
             <div class="principle-text">
-                A system that hallucinates when handling your most critical infrastructure is unacceptable. We believe that autonomous agents must be rigorously constrained. LLMs are allowed to be probabilistic, but the <strong>Governor</strong> executing the workflow must be rigidly deterministic, enforcing immediate kill switches the moment a process deviates from your explicit intent.
+                Systems get stronger when useful workflows can be packaged, improved, and reused. Seitiate treats
+                capabilities as something that can be composed into larger systems rather than rediscovered from scratch
+                in every prompt window.
             </div>
         </div>
 
         <div class="principle-block">
             <div class="principle-num">04</div>
-            <h2 class="principle-title">Hardware-enforced Safety</h2>
+            <h2 class="principle-title">Portability over provider lock-in</h2>
             <div class="principle-text">
-                We believe security policies are worthless without physical isolation. True AI agency requires giving the system root access, yet allowing an AI unrestricted read/write capabilities on a live machine is deeply flawed. We enforce <strong>Ephemeral Sandboxes</strong> and <strong>Network Silence</strong> by default, protecting the host system with physical barriers, not prompt instructions.
+                The engine should remain useful across different model providers, interfaces, and deployment choices.
+                Portability is not a nice-to-have. It is part of how systems stay resilient as tools and vendors change.
+            </div>
+        </div>
+
+        <div class="principle-block">
+            <div class="principle-num">05</div>
+            <h2 class="principle-title">Clear engine boundaries</h2>
+            <div class="principle-text">
+                Seitiate is the engine layer, not the whole product story. Managed products can add hosting, UX, and
+                workflow curation on top, but the engine itself should remain understandable, contributor-friendly,
+                and honest about what belongs in open infrastructure versus product experience.
             </div>
         </div>
     </div>
@@ -108,7 +125,7 @@
         <a href="/">Home</a>
         <a href="/architecture.html">Architecture</a>
         <a href="/principles.html">Principles</a>
-        <a href="/licensing.html">Licensing & Contribution</a>
+        <a href="/licensing.html">Licensing</a>
         <a href="/privacy.html">Privacy</a>
         <a href="/terms.html">Terms</a>
         <a href="mailto:hello@seitiate.com" style="margin-top: 1rem; display: block; color: var(--accent-dim);">hello@seitiate.com</a>

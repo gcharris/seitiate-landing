@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Architecture — Seitiate</title>
-    <meta name="description" content="Technical architecture of the Seitiate Context Engine.">
+    <meta name="description" content="A public overview of how Seitiate turns stateless AI tools into systems with memory, governance, portability, and reusable capabilities.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -32,35 +32,139 @@
         nav a:hover, nav a.active { color: var(--text); }
         nav .nav-github { padding: 0.45rem 1rem; border: 1px solid var(--border); border-radius: 6px; font-size: 0.85rem; }
         nav .nav-github:hover { border-color: var(--text-secondary); }
-        .hero { padding: 8rem 2rem 4rem; max-width: 900px; margin: 0 auto; text-align: left; }
-        .badge { display: inline-block; padding: 0.35rem 0.9rem; border: 1px solid var(--accent-dim); background: var(--accent-glow); border-radius: 100px; font-size: 0.75rem; color: var(--accent); letter-spacing: 0.05em; margin-bottom: 1.5rem; font-family: 'JetBrains Mono', monospace; }
-        h1 { font-size: 3rem; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 1.5rem; line-height: 1.1; }
-        .hero-desc { color: var(--text-secondary); font-size: 1.1rem; max-width: 700px; margin-bottom: 4rem; }
-        
-        .section { max-width: 900px; margin: 0 auto 6rem; padding: 0 2rem; }
-        .section-title { font-size: 1.5rem; font-weight: 500; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
-        
-        .arch-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
-        .arch-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 2.5rem; position: relative; overflow: hidden; }
-        .arch-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--accent-dim); }
-        .arch-card h3 { font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; font-weight: 500; color: var(--accent); margin-bottom: 1rem; }
-        .arch-card p { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem; }
-        
-        .diagram { background: var(--code-bg); border: 1px solid var(--border-highlight); border-radius: 6px; padding: 1.5rem; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--text-secondary); white-space: pre; overflow-x: auto; line-height: 1.6; }
-        .diagram .node { color: var(--text); font-weight: 500; }
-        .diagram .hl { color: var(--accent); }
-        .diagram .dim { opacity: 0.5; }
 
+        .hero { padding: 8rem 2rem 4rem; max-width: 980px; margin: 0 auto; text-align: left; }
+        .badge { display: inline-block; padding: 0.35rem 0.9rem; border: 1px solid var(--accent-dim); background: var(--accent-glow); border-radius: 100px; font-size: 0.75rem; color: var(--accent); letter-spacing: 0.05em; margin-bottom: 1.5rem; font-family: 'JetBrains Mono', monospace; }
+        h1 { font-size: clamp(2.4rem, 5vw, 3.2rem); font-weight: 500; letter-spacing: -0.02em; margin-bottom: 1.25rem; line-height: 1.08; }
+        .hero-desc { color: var(--text-secondary); font-size: 1.08rem; max-width: 760px; margin-bottom: 2rem; }
+        .hero-note {
+            max-width: 760px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent-dim);
+            border-radius: 6px;
+            padding: 1rem 1.15rem;
+            color: var(--text-secondary);
+            font-size: 0.94rem;
+        }
+        .hero-note strong { color: var(--text); }
+
+        .section { max-width: 980px; margin: 0 auto 5rem; padding: 0 2rem; }
+        .section-title { font-size: 1.55rem; font-weight: 500; margin-bottom: 1rem; }
+        .section-subtitle { color: var(--text-secondary); max-width: 760px; margin-bottom: 2rem; }
+
+        .overview {
+            background: var(--code-bg);
+            border: 1px solid var(--border-highlight);
+            border-radius: 8px;
+            padding: 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.84rem;
+            color: var(--text-secondary);
+            white-space: pre;
+            overflow-x: auto;
+            line-height: 1.7;
+        }
+        .overview .node { color: var(--text); font-weight: 500; }
+        .overview .hl { color: var(--accent); }
+        .overview .dim { opacity: 0.5; }
+
+        .arch-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+        .arch-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 2rem 1.75rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .arch-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--accent-dim); }
+        .arch-card h3 { font-family: 'JetBrains Mono', monospace; font-size: 1rem; font-weight: 500; color: var(--accent); margin-bottom: 0.9rem; }
+        .arch-card p { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1rem; }
         .feature-list { list-style: none; }
-        .feature-list li { margin-bottom: 0.75rem; color: var(--text-secondary); font-size: 0.95rem; display: flex; align-items: flex-start; gap: 0.75rem; }
+        .feature-list li { margin-bottom: 0.7rem; color: var(--text-secondary); font-size: 0.94rem; display: flex; align-items: flex-start; gap: 0.75rem; }
         .feature-list li::before { content: '→'; color: var(--accent-dim); font-family: 'JetBrains Mono', monospace; }
         .feature-list strong { color: var(--text); font-weight: 500; }
+
+        .boundary-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+        .boundary-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.5rem;
+        }
+        .boundary-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.74rem;
+            letter-spacing: 0.04em;
+            color: var(--accent);
+            margin-bottom: 0.6rem;
+        }
+        .boundary-card h3 {
+            font-size: 1.05rem;
+            font-weight: 500;
+            margin-bottom: 0.65rem;
+        }
+        .boundary-card p {
+            color: var(--text-secondary);
+            font-size: 0.93rem;
+        }
+
+        .cta-panel {
+            background: linear-gradient(180deg, rgba(15, 17, 20, 0.95) 0%, rgba(15, 17, 20, 0.75) 100%);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+        .cta-panel h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 0.75rem;
+        }
+        .cta-panel p {
+            color: var(--text-secondary);
+            max-width: 680px;
+            margin-bottom: 1.5rem;
+        }
+        .cta-row {
+            display: flex;
+            gap: 0.9rem;
+            flex-wrap: wrap;
+        }
+        .btn-primary, .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.3rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+        .btn-primary {
+            background: var(--text);
+            color: var(--bg);
+            font-weight: 500;
+        }
+        .btn-primary:hover { opacity: 0.9; }
+        .btn-outline {
+            border: 1px solid var(--border-highlight);
+            color: var(--text-secondary);
+        }
+        .btn-outline:hover {
+            border-color: var(--text-secondary);
+            color: var(--text);
+        }
 
         footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; font-size: 0.85rem; color: var(--text-secondary); margin-top: 4rem; }
         footer a { color: var(--text-secondary); margin: 0 1rem; text-decoration: none; }
         footer a:hover { color: var(--text); }
-        
-        @media (min-width: 768px) { .arch-grid { grid-template-columns: 1fr 1fr; } .full-width { grid-column: 1 / -1; } }
+
+        @media (min-width: 768px) {
+            .arch-grid { grid-template-columns: 1fr 1fr; }
+            .boundary-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            .full-width { grid-column: 1 / -1; }
+        }
     </style>
 </head>
 <body>
@@ -74,64 +178,159 @@
     </nav>
 
     <div class="hero">
-        <div class="badge">SYSTEM BLUEPRINT</div>
-        <h1>The Sovereign Stack.</h1>
-        <p class="hero-desc">Seitiate is not a wrapper. It is a heavy-duty, multi-layer engine designed to enforce statefulness, rigid safety boundaries, and absolute user sovereignty over compound memory.</p>
+        <div class="badge">PUBLIC ARCHITECTURE</div>
+        <h1>The engine for AI systems that remember, adapt, and stay portable.</h1>
+        <p class="hero-desc">
+            Seitiate is the open-source layer behind long-lived AI workspaces. It gives builders a way to
+            combine memory, reusable capabilities, human review, and data portability without tying the whole
+            system to a single model or vendor.
+        </p>
+        <div class="hero-note">
+            <strong>What this page is:</strong> a public map of the engine. It shows the responsibilities of the
+            system and how the major pieces fit together, without exposing internal implementation details or
+            deployment-specific internals.
+        </div>
     </div>
 
     <div class="section">
-        <div class="arch-card full-width" style="margin-bottom: 2rem;">
-            <h3>01. The Context Engine Flow</h3>
-            <p>At its core, Seitiate operates an immutable event pipeline. Inputs are not just passed to an LLM; they are routed through persistence layers, validated against a deterministic taxonomy, and permanently mapped.</p>
-            <div class="diagram">
-<span class="node">FRONTENDS</span> (React SPA / Capacitor / Workbenches)
-<span class="dim">│</span>
-<span class="node">API GATEWAY</span> (FastAPI + Middlewares)
-<span class="dim">├──</span> Tenant Isolation
-<span class="dim">└──</span> Auth & Identity Lock
-<span class="dim">│</span>
-<span class="node">THE CONTEXT ENGINE</span>
-<span class="dim">├──</span> <span class="hl">Graph Layer (Neo4j)</span> <span class="dim">→</span> Relationship Mapping / GraphRAG
-<span class="dim">├──</span> <span class="hl">Relational (PostgreSQL)</span> <span class="dim">→</span> State & Event Sourcing
-<span class="dim">└──</span> <span class="hl">Outbox Relay</span> <span class="dim">→</span> Asynchronous Event Validation
-<span class="dim">│</span>
-<span class="node">SINKS</span> (External APIs / Sandboxes / Output Renderers)</div>
+        <h2 class="section-title">The high-level flow</h2>
+        <p class="section-subtitle">
+            At a public level, Seitiate can be understood as a loop: bring in sources, build durable memory,
+            run capabilities against real work, keep humans in charge, and preserve portability as the system grows.
+        </p>
+        <div class="overview">
+<span class="node">Sources</span> <span class="dim">→</span> <span class="node">Memory</span> <span class="dim">→</span> <span class="node">Capabilities</span> <span class="dim">→</span> <span class="node">Human Review</span> <span class="dim">→</span> <span class="node">Reusable Knowledge</span>
+<span class="dim">   │</span>             <span class="dim">│</span>               <span class="dim">│</span>                   <span class="dim">│</span>                    <span class="dim">│</span>
+<span class="dim">   └─────────────── feeds ───────────────┴──────── supports ────────┴──────── teaches ────────┘</span>
+
+<span class="hl">Principles:</span> continuity, governance, portability, and reusable composition
         </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">Five public building blocks</h2>
+        <p class="section-subtitle">
+            These are the major responsibilities Seitiate exposes to developers and contributors. They describe
+            what the engine does, not the private internals of how each deployment chooses to implement it.
+        </p>
 
         <div class="arch-grid">
             <div class="arch-card">
-                <h3>02. The Sovereign Codex</h3>
-                <p>Knowledge isolation is the foundation of compound memory. Memory is structured across three strict tiers, ensuring the intelligence remains permanently anchored to the creator, not the framework.</p>
+                <h3>01. Memory That Persists</h3>
+                <p>
+                    Seitiate is built around the idea that useful AI work should not reset every session.
+                    The engine accumulates structured memory from sources, prior work, and human decisions so
+                    future sessions can begin with continuity instead of amnesia.
+                </p>
                 <ul class="feature-list">
-                    <li><strong>Sovereign Layer:</strong> Blessed, immutably trusted data created by the user. Highly weighted during retrieval.</li>
-                    <li><strong>Project Layer:</strong> Localized context constraints built for specific workstreams.</li>
-                    <li><strong>External Layer:</strong> Imported source material that is strictly read-only.</li>
+                    <li><strong>Source-aware:</strong> work can start from imported material, project context, and prior decisions.</li>
+                    <li><strong>Durable:</strong> useful context survives past a single chat or prompt window.</li>
+                    <li><strong>User-centered:</strong> memory is organized around the creator or operator, not the platform.</li>
                 </ul>
             </div>
 
             <div class="arch-card">
-                <h3>03. Deterministic Governance</h3>
-                <p>LLMs are inherently probabilistic. Seitiate imposes deterministic kill switches onto the generation pipeline to ensure absolute structural safety during autonomous agent loops.</p>
+                <h3>02. Reusable Capabilities</h3>
+                <p>
+                    Seitiate treats AI behavior as something composable. Builders can package workflows,
+                    prompts, tools, and policies into reusable capabilities that can be improved, shared, and
+                    assembled into larger systems.
+                </p>
                 <ul class="feature-list">
-                    <li><strong>Taxonomy Enforcement:</strong> Outputs are validated against rigid structural constraints.</li>
-                    <li><strong>Kill Switches:</strong> Sub-routines automatically terminate loops diverging from the user's mandated outcome.</li>
-                    <li><strong>The Governor Loop:</strong> An isolated evaluation state detached from generation context.</li>
+                    <li><strong>Composable:</strong> small capabilities can be combined into larger flows.</li>
+                    <li><strong>Portable:</strong> useful work should move between projects and deployments.</li>
+                    <li><strong>Extensible:</strong> contributors can add new capabilities without rewriting the whole engine.</li>
+                </ul>
+            </div>
+
+            <div class="arch-card">
+                <h3>03. Human-Guided Adaptation</h3>
+                <p>
+                    The engine learns from selection, correction, and approval rather than treating AI output as
+                    final. Human choice is part of the architecture, not a cleanup step added afterward.
+                </p>
+                <ul class="feature-list">
+                    <li><strong>Choice matters:</strong> accepted and rejected outputs become meaningful signals.</li>
+                    <li><strong>Quality compounds:</strong> the system improves by observing real preferences over time.</li>
+                    <li><strong>No blind autopilot:</strong> AI explores, humans decide.</li>
+                </ul>
+            </div>
+
+            <div class="arch-card">
+                <h3>04. Governance and Review</h3>
+                <p>
+                    Seitiate is designed for systems where quality, safety, and review are first-class concerns.
+                    The engine expects explicit gates, checks, and standards around consequential work.
+                </p>
+                <ul class="feature-list">
+                    <li><strong>Review-friendly:</strong> important actions are meant to be inspectable.</li>
+                    <li><strong>Policy-aware:</strong> deployments can layer rules and controls around workflows.</li>
+                    <li><strong>Built for real use:</strong> governance is part of the system contract, not an afterthought.</li>
                 </ul>
             </div>
 
             <div class="arch-card full-width">
-                <h3>04. The Copy-Mount Sandbox</h3>
-                <p>Allowing an AI to edit code directly is a security vulnerability. Seitiate ensures hardware-level isolation for agentic execution.</p>
+                <h3>05. Portability and Open Boundaries</h3>
+                <p>
+                    Seitiate is the engine, not the whole product story. Managed products can add experience,
+                    hosting, and specialized interfaces on top of it, but the underlying engine is intended to
+                    remain open, portable, and usable across different models and environments.
+                </p>
                 <ul class="feature-list">
-                    <li><strong>Hardware Isolation:</strong> When an agent executes a workflow, Seitiate clones the environment into an ephemeral Docker volume.</li>
-                    <li><strong>Zero-Exfiltration (Network Silence):</strong> The sandbox operates completely cut off from the network. It cannot phone home. Secure `.env` secrets are automatically stripped prior to the clone.</li>
-                    <li><strong>Cryptographic Verification:</strong> Diffs are analyzed locally in the safe-room before they ever interact with your external reality.</li>
+                    <li><strong>Model-agnostic:</strong> the engine is designed to outlast any one model provider.</li>
+                    <li><strong>Deployment-flexible:</strong> self-hosted and managed experiences can share the same core ideas.</li>
+                    <li><strong>Exit-friendly:</strong> portability is a design goal, not a premium feature.</li>
                 </ul>
             </div>
+        </div>
+    </div>
 
-            <div class="arch-card full-width">
-                <h3>05. Data Liberation Pipeline</h3>
-                <p>Intelligence doesn't have to begin at zero. The pipeline asynchronously ingests massive historical data exports (e.g. Google Takeout, Facebook archives). This deep processing architecture parses thousands of complex JSON/HTML artifacts, crystallizes the underlying context, and systematically builds a decade of your history directly into your encrypted Vault.</p>
+    <div class="section">
+        <h2 class="section-title">How Seitiate relates to products</h2>
+        <p class="section-subtitle">
+            One of the most important architectural distinctions in this repo is the line between the open engine,
+            the managed product experience, and governance-heavy deployment layers.
+        </p>
+        <div class="boundary-grid">
+            <div class="boundary-card">
+                <div class="boundary-label">ENGINE</div>
+                <h3>Seitiate</h3>
+                <p>
+                    The open-source composition and memory layer. This is where reusable capabilities, continuity,
+                    and contributor-facing architecture belong.
+                </p>
+            </div>
+            <div class="boundary-card">
+                <div class="boundary-label">PRODUCT</div>
+                <h3>Sakme</h3>
+                <p>
+                    A managed product built on the engine. It turns the underlying capabilities into a curated
+                    end-user experience, with hosting, workflow design, and product UX on top.
+                </p>
+            </div>
+            <div class="boundary-card">
+                <div class="boundary-label">GOVERNANCE LAYER</div>
+                <h3>ClosedClaw</h3>
+                <p>
+                    A security and enforcement-oriented deployment layer for higher-trust environments. It is not
+                    the public entry point for contributor architecture, but it informs how governance can be layered
+                    around the engine.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="cta-panel">
+            <h3>Want the code instead of the marketing story?</h3>
+            <p>
+                Start with the repository if you want implementation details, contribution paths, or the current
+                state of the engine. This page is the public overview; the repo remains the authoritative source
+                for contributors.
+            </p>
+            <div class="cta-row">
+                <a href="https://github.com/seitiate/seitiate" class="btn-primary">Open GitHub</a>
+                <a href="/principles.html" class="btn-outline">Read the principles</a>
             </div>
         </div>
     </div>
@@ -140,7 +339,7 @@
         <a href="/">Home</a>
         <a href="/architecture.html">Architecture</a>
         <a href="/principles.html">Principles</a>
-        <a href="/licensing.html">Licensing & Contribution</a>
+        <a href="/licensing.html">Licensing</a>
         <a href="/privacy.html">Privacy</a>
         <a href="/terms.html">Terms</a>
         <a href="mailto:hello@seitiate.com" style="margin-top: 1rem; display: block; color: var(--accent-dim);">hello@seitiate.com</a>

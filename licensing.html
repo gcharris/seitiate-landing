@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Licensing & Community — Seitiate</title>
-    <meta name="description" content="AGPL-3.0 Licensing exceptions, community contributions, and the commercial data sovereignty loophole.">
+    <title>Licensing & Contribution — Seitiate</title>
+    <meta name="description" content="How Seitiate is licensed, how to contribute, and how the project thinks about commercial products, ownership, and portability.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -36,7 +36,8 @@
         .hero { padding: 8rem 2rem 4rem; max-width: 800px; margin: 0 auto; text-align: left; }
         .badge { display: inline-block; padding: 0.35rem 0.9rem; border: 1px solid var(--accent-dim); background: var(--accent-glow); border-radius: 100px; font-size: 0.75rem; color: var(--accent); letter-spacing: 0.05em; margin-bottom: 1.5rem; font-family: 'JetBrains Mono', monospace; }
         h1 { font-size: 3rem; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 1.5rem; line-height: 1.1; }
-        .hero-desc { color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 4rem; }
+        .hero-desc { color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 1rem; }
+        .meta-line { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 4rem; }
 
         .faq-section { max-width: 800px; margin: 0 auto 6rem; padding: 0 2rem; }
         .faq-block { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
@@ -69,8 +70,9 @@
 
     <div class="hero">
         <div class="badge">LEGAL & COMMUNITY</div>
-        <h1>Open Core.<br>Rigid Constraints.</h1>
-        <p class="hero-desc">How to contribute to the open-source engine, the AGPL-3.0 rules for commercialization, and the one loophole regarding data sovereignty.</p>
+        <h1>Open engine.<br>Clear boundaries.</h1>
+        <p class="hero-desc">How to contribute to Seitiate, what the AGPL-3.0 means in practice, and how the project thinks about commercial products, ownership, and portability.</p>
+        <p class="meta-line">Effective Date: March 24, 2026 &middot; Last Updated: March 24, 2026</p>
     </div>
 
     <div class="faq-section">
@@ -78,30 +80,46 @@
         <div class="faq-block">
             <h2 class="faq-question">How can I contribute to Seitiate?</h2>
             <div class="faq-answer">
-                <p>We actively welcome builders, developers, and researchers to get involved in shaping the Context Engine. As an open-source framework, Seitiate relies on aggressive peer review and community development to harden its security sandbox and governance modules.</p>
-                <p>The absolute best place to discuss architecture, propose pull requests, or get the framework running locally is in our developer Discord.</p>
-                <a href="#" class="discord-btn">JOIN THE DISCORD SERVER →</a>
+                <p>We welcome builders, developers, and researchers who want to improve the engine. The best place to start is the public repository, where you can review the code, open issues, and propose pull requests.</p>
+                <p>If you want to contribute, start with the repository documentation and contribution guidance that ships with the codebase.</p>
+                <a href="https://github.com/seitiate/seitiate" class="discord-btn">OPEN THE REPOSITORY →</a>
             </div>
         </div>
 
         <div class="faq-block">
             <h2 class="faq-question">What does the AGPL-3.0 license restrict?</h2>
             <div class="faq-answer">
-                <p>Seitiate is licensed under the <strong>GNU Affero General Public License v3.0 (AGPL-3.0)</strong>. This guarantees that the open-source features will remain permanently open-source.</p>
-                <p>Crucially, it means the core tools and infrastructure <strong>cannot be taken private for direct commercial use or resold as proprietary software without distributing the source code.</strong> The framework is designed to be self-hosted by users, or modified publicly by contributors.</p>
+                <p>Seitiate is licensed under the <strong>GNU Affero General Public License v3.0 (AGPL-3.0)</strong>. In practical terms, if you modify the engine and make that modified version available over a network, the AGPL generally requires you to provide the corresponding source code under the same license.</p>
+                <p>The license is meant to keep the core engine open rather than allowing someone to privatize the engine layer while still benefiting from the community's work.</p>
             </div>
         </div>
 
         <div class="faq-block">
             <h2 class="faq-question">Can I build a commercial product on top of Seitiate?</h2>
             <div class="faq-answer">
-                <p>Yes, but with an extreme constraint. Projects (like <em>Sakme</em>) can be built on top of the open-source infrastructure, and an enterprise/commercial license <strong>could be granted</strong>, provided one major rule is followed:</p>
-                
+                <p>Yes. A commercial product can be built on top of Seitiate, provided you comply with the AGPL-3.0 or enter into any separate commercial arrangement that may apply to your use case.</p>
+                <p>Charging for managed compute, storage, governance, managed environments, operations, support, or user experience is compatible with the project boundary. The engine and the product experience are not the same thing.</p>
+
                 <div class="terminal-callout">
-                    <strong>NO DATA HARVESTING.</strong> No commercial licenses will ever be granted to any company that intends to exploit, train on, or monetize downstream customer data.
+                    <strong>Public doctrine:</strong> commercial products should not treat payment for service as a transfer of ownership of the user's content or durable context.
                 </div>
 
-                <p>The explicit exception to this rule is if the commercial project is built specifically to help the end-user <strong>monetize their own data.</strong> Suppose you want to commercialize a platform that helps users sell their own intelligence context; this is permitted <strong>only</strong> if it is fully transparent, and the ownership, specific permissions, and financial value of the data remain entirely with the person who generates it.</p>
+                <p>Our position is that products may charge for service and experience without claiming ownership of the person's work. We also reject lock-in through inaccessible derived context. If a hosted product is built on Seitiate, portability and export should remain part of the product boundary rather than being withheld indefinitely behind payment.</p>
+            </div>
+        </div>
+
+        <div class="faq-block">
+            <h2 class="faq-question">What is a current commitment vs. future direction?</h2>
+            <div class="faq-answer">
+                <p>The open-source license is a current legal reality. So is the project's public position that users should retain ownership of their content and that portability matters.</p>
+                <p>By contrast, the exact mechanics of exports, hosted-product safeguards, stronger encryption guarantees, or provenance features may vary by implementation and may still be evolving. Those details should be documented in the relevant product or repository materials rather than assumed from this page alone.</p>
+            </div>
+        </div>
+
+        <div class="faq-block">
+            <h2 class="faq-question">What still needs legal review?</h2>
+            <div class="faq-answer">
+                <p>Hosted-product contracts, data-processing terms, enterprise security representations, and any product-specific ownership or portability language should still receive formal legal review before being treated as finalized public commitments.</p>
             </div>
         </div>
         
@@ -111,7 +129,7 @@
         <a href="/">Home</a>
         <a href="/architecture.html">Architecture</a>
         <a href="/principles.html">Principles</a>
-        <a href="/licensing.html">Licensing & Contribution</a>
+        <a href="/licensing.html">Licensing</a>
         <a href="/privacy.html">Privacy</a>
         <a href="/terms.html">Terms</a>
         <a href="mailto:hello@seitiate.com" style="margin-top: 1rem; display: block; color: var(--accent-dim);">hello@seitiate.com</a>
