@@ -24,11 +24,21 @@
   .verify-cmd .ok { color: #5fe07f; }
   .om-note { width: 880px; max-width: 100%; background: rgba(255,255,255,0.4); border: 1px solid rgba(16,122,20,0.16); border-radius: 4px; padding: 17px 24px; }
 
+  /* tablets: fill width, but open the content well in past the engraved frame */
   @media (max-width: 920px) {
-    .om-backdrop { padding: 18px 10px; gap: 24px; }
+    .om-backdrop { padding: 22px 12px; gap: 26px; }
     .om-sheet { width: 100% !important; min-width: 0; min-height: 0; }
-    .om-content { padding: 44px 20px 40px !important; }
+    .om-content { padding: 52px 48px 46px !important; }
     .om-stack { flex-direction: column !important; align-items: stretch !important; }
+  }
+  /* phones: drop the engraved frame + document chrome entirely, give the content room */
+  @media (max-width: 600px) {
+    .om-sheet > div:not(.om-content) { display: none !important; }
+    .om-chrome { display: none !important; }
+    .om-recno { flex-direction: column !important; gap: 18px !important; }
+    .om-recno > div { border-right: none !important; padding: 0 !important; }
+    .om-content { padding: 32px 22px !important; }
+    .om-content h1 { font-size: 34px !important; }
   }
 
   @media print {
@@ -70,7 +80,7 @@
     <div class="om-content">
 
       <!-- running header -->
-      <div style="display:flex; justify-content:space-between; align-items:center; font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.26em; color:#8c8c80; text-transform:uppercase; margin-bottom:40px;">
+      <div class="om-chrome" style="display:flex; justify-content:space-between; align-items:center; font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.26em; color:#8c8c80; text-transform:uppercase; margin-bottom:40px;">
         <span>HUMAN WORK RECEIPT</span>
         <span>NTRY-AB12-7F</span>
         <span>PAGE 1 OF 2 — THE RECEIPT</span>
@@ -96,7 +106,7 @@
       </div>
 
       <!-- receipt no / date -->
-      <div style="display:flex; justify-content:center; gap:0; margin-bottom:34px;">
+      <div class="om-recno" style="display:flex; justify-content:center; gap:0; margin-bottom:34px;">
         <div style="flex:1; text-align:center; padding:0 18px; border-right:1px solid rgba(16,122,20,0.14);">
           <div style="font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.3em; color:#8c8c80; text-transform:uppercase; margin-bottom:9px;">Receipt No.</div>
           <div style="font-family:'IBM Plex Mono',monospace; font-size:24px; font-weight:500; letter-spacing:0.06em; color:#107a14; text-shadow:0 0 14px rgba(16,122,20,0.4);">NTRY-AB12-7F</div>
@@ -241,7 +251,7 @@
 
     <div class="om-content">
 
-      <div style="display:flex; justify-content:space-between; align-items:center; font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.26em; color:#8c8c80; text-transform:uppercase; margin-bottom:40px;">
+      <div class="om-chrome" style="display:flex; justify-content:space-between; align-items:center; font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.26em; color:#8c8c80; text-transform:uppercase; margin-bottom:40px;">
         <span>HUMAN WORK RECEIPT</span>
         <span>NTRY-AB12-7F</span>
         <span>PAGE 2 OF 2 — THE VERIFICATION</span>
@@ -298,7 +308,7 @@
         </div>
         <div style="width:188px; flex:none; text-align:center;">
           <div style="font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.3em; color:#8c8c80; text-transform:uppercase; margin-bottom:12px;">Scan to verify</div>
-          <div data-dc="qr" style="width:150px; height:150px; margin:0 auto; padding:9px; background:#ffffff; border:1px solid rgba(16,122,20,0.3);"></div>
+          <div style="width:150px; height:150px; margin:0 auto; padding:9px; background:#ffffff; border:1px solid rgba(16,122,20,0.3);"><img src="qr.svg" alt="QR code linking to https://seitiate.com/v/ab12-7f/" width="132" height="132" style="display:block; width:100%; height:100%; image-rendering:pixelated;"></div>
           <div style="margin-top:12px; font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.04em; color:#7c7c70; line-height:1.5;">seitiate.com/v/<br>ab12-7f</div>
         </div>
       </div>
@@ -434,32 +444,6 @@ $ openssl dgst -sha256 -verify trust-layer.pub -signature receipt.json.sig recei
       '</svg>';
   }
 
-  function qr() {
-    var N = 25, cell = 100 / N, x, y;
-    var grid = [];
-    for (y = 0; y < N; y++) { grid[y] = []; for (x = 0; x < N; x++) grid[y][x] = false; }
-    var finder = function (ox, oy) {
-      for (var yy = 0; yy < 7; yy++) for (var xx = 0; xx < 7; xx++) {
-        var edge = xx === 0 || xx === 6 || yy === 0 || yy === 6;
-        var core = xx >= 2 && xx <= 4 && yy >= 2 && yy <= 4;
-        grid[oy + yy][ox + xx] = edge || core;
-      }
-    };
-    finder(0, 0); finder(N - 7, 0); finder(0, N - 7);
-    var seed = 7;
-    var rnd = function () { seed = (seed * 1103515245 + 12345) & 0x7fffffff; return (seed >> 8) % 100; };
-    for (y = 0; y < N; y++) for (x = 0; x < N; x++) {
-      var inFinder = (x < 8 && y < 8) || (x > N - 9 && y < 8) || (x < 8 && y > N - 9);
-      if (inFinder) continue;
-      if (rnd() < 48) grid[y][x] = true;
-    }
-    var rects = '';
-    for (y = 0; y < N; y++) for (x = 0; x < N; x++) {
-      if (grid[y][x]) rects += '<rect x="' + (x * cell).toFixed(2) + '" y="' + (y * cell).toFixed(2) + '" width="' + (cell + 0.3).toFixed(2) + '" height="' + (cell + 0.3).toFixed(2) + '" fill="#0a0c10"/>';
-    }
-    return '<svg viewBox="0 0 100 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">' + rects + '</svg>';
-  }
-
   // Build SVG nodes via DOMParser (trusted, self-generated markup) and append — no innerHTML.
   function fill(sel, svgString) {
     var nodes = document.querySelectorAll(sel);
@@ -474,7 +458,6 @@ $ openssl dgst -sha256 -verify trust-layer.pub -signature receipt.json.sig recei
   fill('[data-dc="rosette"]', rosette());
   fill('[data-dc="crest"]', crest());
   fill('[data-dc="seal"]', seal('VALID'));
-  fill('[data-dc="qr"]', qr());
 
   var micro = '';
   for (var m = 0; m < 14; m++) micro += 'SEITIATE · TRUST LAYER · INDEPENDENT · ATTESTATION OF PROCESS · NTRY-AB12-7F · ';
