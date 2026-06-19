@@ -14,7 +14,8 @@
       --bg: #f4f3ee; --card: #fff; --ink: #23221f; --muted: #5f5e5a; --hint: #8a897f;
       --line: rgba(0,0,0,.12); --ok-bg: #e1f5ee; --ok: #0f6e56;
       --info-bg: #e6f1fb; --info: #0c447c; --warn-bg: #faeeda; --warn: #854f0b;
-      --purple-bg: #eeedfe; --purple: #3c3489;
+      --purple-bg: #eeedfe; --purple: #3c3489; --delta-bg: #fef3ff; --delta: #6b21a8;
+      --code-bg: #1f1f1f; --code-ink: #b8e0b8;
       --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -29,10 +30,10 @@
     .okbar { background: var(--ok-bg); border-radius: 8px; padding: 12px 14px; margin-bottom: 14px; }
     .okbar b { display: block; color: var(--ok); font-size: 14px; font-weight: 600; }
     .okbar span { display: block; color: var(--ok); font-size: 12px; margin-top: 4px; }
-    .claim { background: var(--info-bg); border-radius: 8px; padding: 12px 14px; margin-bottom: 14px; }
-    .claim small { color: var(--info); font-size: 11px; text-transform: uppercase; letter-spacing: .04em; }
-    .claim p { color: var(--info); font-size: 16px; font-weight: 600; margin-top: 4px; }
-    .claim em { display: block; font-size: 12px; font-style: normal; color: var(--info); margin-top: 4px; opacity: .85; }
+    .claim { background: var(--delta-bg); border-left: 3px solid var(--delta); border-radius: 8px; padding: 12px 14px; margin-bottom: 14px; }
+    .claim small { color: var(--delta); font-size: 11px; text-transform: uppercase; letter-spacing: .04em; }
+    .claim p { color: var(--delta); font-size: 18px; font-weight: 600; margin-top: 4px; }
+    .claim em { display: block; font-size: 12px; font-style: normal; color: var(--muted); margin-top: 4px; }
     .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 16px; font-size: 13px; }
     .grid .k { color: var(--muted); }
     .grid .v { text-align: right; }
@@ -49,10 +50,21 @@
     .pill { display: inline-block; font-size: 10px; padding: 2px 7px; border-radius: 6px; font-weight: 500; }
     .p-captured { background: var(--purple-bg); color: var(--purple); }
     .p-computed { background: var(--info-bg); color: var(--info); }
+    .p-logged { background: var(--info-bg); color: var(--info); }
+    .p-witness { background: var(--purple-bg); color: var(--purple); }
     .p-signed { background: var(--ok-bg); color: var(--ok); }
     .witness { font-size: 12px; color: var(--muted); margin-top: 12px; padding: 10px 12px; background: #fafaf8; border-radius: 8px; border: .5px solid var(--line); }
     .legend, .disc { font-size: 12px; color: var(--muted); line-height: 1.6; margin-top: 12px; }
     .disc { font-style: italic; }
+    .delta-box, .crypto-box { border-radius: 8px; padding: 13px 14px; margin: 14px 0; }
+    .delta-box { background: var(--delta-bg); }
+    .crypto-box { background: #f0f9ff; border-left: 3px solid var(--info); }
+    .delta-box h2, .crypto-box h2 { margin-bottom: 8px; }
+    .formula { font-family: var(--mono); font-size: 12px; color: var(--ink); background: rgba(107,33,168,.06); border-radius: 6px; padding: 9px 10px; white-space: pre-wrap; }
+    .delta-bar { height: 8px; border-radius: 4px; background: var(--line); overflow: hidden; margin: 9px 0 8px; }
+    .delta-fill { height: 100%; width: 73%; background: var(--delta); border-radius: 4px; }
+    .sig-block { font-family: var(--mono); font-size: 10px; color: var(--info); background: rgba(12,68,124,.06); border-radius: 6px; padding: 8px 10px; line-height: 1.5; word-break: break-all; margin-top: 6px; }
+    .verify-cmd { font-family: var(--mono); font-size: 10px; color: var(--code-ink); background: var(--code-bg); border-radius: 6px; padding: 10px 12px; white-space: pre-wrap; overflow-x: auto; margin-top: 8px; }
     .btn { display: inline-block; margin-top: 12px; font-size: 12px; padding: 8px 14px; border-radius: 8px; border: .5px solid var(--line); background: #fff; color: var(--ink); text-decoration: none; }
     .foot { text-align: center; font-size: 11px; color: var(--hint); margin-top: 20px; }
     .foot a { color: var(--info); }
@@ -78,14 +90,14 @@
     </div>
 
     <div class="okbar">
-      <b>Receipt valid · target capture model · demo issuance</b>
-      <span>You don't have to trust the agency's word. In production, this receipt is generated from captured workflow events, computed contribution signals, and a signed process record.</span>
+      <b>Receipt valid · Δ 73% computed · signature bundle valid</b>
+      <span>You don't have to trust the agency's word. The target system derives the score from captured events, then signs the receipt so anyone can verify it.</span>
     </div>
 
     <div class="claim">
-      <small>This work was</small>
-      <p>AI-assisted · human-directed · QA-reviewed · approved</p>
-      <em>based on captured events + computed contribution signals + signed receipt · no client content disclosed</em>
+      <small>Provenance score — computed from captured decision events</small>
+      <p>Δ = 73% human contribution</p>
+      <em>5 event classes · 4 human-directed · 1 AI-generated · weighted by decision authority</em>
     </div>
 
     <div class="grid">
@@ -96,55 +108,80 @@
       <span class="k">Receipt status</span><span class="v">valid</span>
       <span class="k">Capture mode</span><span class="v">host connector + Orchestra</span>
       <span class="k">Evidence depth</span><span class="v">captured · computed · signed</span>
-      <span class="k">Issuer key</span><span class="v mono">9F2A·4C71·B0E8</span>
-      <span class="k">Payload hash</span><span class="v mono">sha256:3b1e…a9c4</span>
+      <span class="k">Issuer key</span><span class="v mono">71F2·2C00·EA3D</span>
+      <span class="k">Payload hash</span><span class="v mono">sha256:44f9…a289</span>
       <span class="k">Template</span><span class="v">human-provenance receipt v0.2</span>
     </div>
   </div>
 
   <div class="card">
+    <div class="delta-box">
+      <h2>Delta Formula</h2>
+      <div class="formula">Δ = Σ(human events × authority weight) / Σ(all event weights)
+= (1.0 + 0.8 + 0.5 + 1.0) / (1.0 + 0.0 + 0.8 + 0.5 + 1.0)
+= 3.3 / 4.5 = 0.73</div>
+      <div class="delta-bar"><div class="delta-fill"></div></div>
+      <p class="legend">The formula, event weights, and event hashes are included in the signed receipt payload. If the score or any event changes, the signature check fails.</p>
+    </div>
+
+    <div class="crypto-box">
+      <h2>Cryptographic Proof</h2>
+      <div class="grid">
+        <span class="k">Algorithm</span><span class="v mono">ECDSA-P256-SHA256</span>
+        <span class="k">Issuer key ID</span><span class="v mono">stl-demo-2026-06</span>
+        <span class="k">Key fingerprint</span><span class="v mono">71F2·2C00·EA3D</span>
+        <span class="k">Signature file</span><span class="v mono">receipt-payload.json.sig</span>
+      </div>
+      <div class="sig-block">Signature is over the downloadable JSON payload: receipt ID + Delta score + event hashes + timestamp.</div>
+      <div class="verify-cmd">$ curl -s https://seitiate.com/keys/stl-demo-2026-06.pem > trust-layer.pub
+$ curl -s https://seitiate.com/v/ab12-7f/receipt-payload.json > receipt.json
+$ curl -s https://seitiate.com/v/ab12-7f/receipt-payload.json.sig > receipt.json.sig
+$ openssl dgst -sha256 -verify trust-layer.pub -signature receipt.json.sig receipt.json
+Verified OK — Delta: 0.73 · Receipt: NTRY-AB12-7F · Valid</div>
+    </div>
+
     <h2>Captured trail · target model</h2>
     <ul class="log">
       <li>
         <div class="log-top"><span class="log-time">2026-06-15 10:02 Tbilisi</span><span class="pill p-captured">captured</span></div>
         <div class="log-event">source packet received</div>
-        <div class="log-detail">host connector — brief/import event captured; private client content withheld</div>
+        <div class="log-detail">host connector — brief/import event captured; decision weight 1.0; private client content withheld</div>
         <div class="log-hash">entry #1 · prev genesis · sha256:a1b2c3d4…brief</div>
       </li>
       <li>
-        <div class="log-top"><span class="log-time">2026-06-15 10:18 Tbilisi</span><span class="pill p-captured">captured</span></div>
+        <div class="log-top"><span class="log-time">2026-06-15 10:18 Tbilisi</span><span class="pill p-logged">logged</span></div>
         <div class="log-event">llm call recorded · <span class="tool">ChatGPT</span></div>
-        <div class="log-detail">Orchestra/host connector — model, timestamp, prompt hash, and output hash captured</div>
+        <div class="log-detail">Orchestra/host connector — model, timestamp, prompt hash, and output hash logged; decision weight 0.0</div>
         <div class="log-hash">entry #2 · prev sha256:a1b2… · sha256:e5f6a7b8…chatgpt</div>
       </li>
       <li>
         <div class="log-top"><span class="log-time">2026-06-15 10:22 Tbilisi</span><span class="pill p-captured">captured</span></div>
         <div class="log-event">asset generation linked · <span class="tool">Midjourney</span></div>
-        <div class="log-detail">host connector — generation job, selected variant, and asset hash linked to the trail</div>
+        <div class="log-detail">host connector — generation job, selected variant, and asset hash linked to the trail; AI event logged</div>
         <div class="log-hash">entry #3 · prev sha256:e5f6… · sha256:c9d0e1f2…midjourney</div>
       </li>
       <li>
         <div class="log-top"><span class="log-time">2026-06-15 11:40 Tbilisi</span><span class="pill p-captured">captured</span></div>
         <div class="log-event">human direction + edit captured</div>
-        <div class="log-detail">creator action — refinement direction, substantial rewrite, tone/structure changes</div>
+        <div class="log-detail">creator action — refinement direction, substantial rewrite, tone/structure changes; decision weight 0.8</div>
         <div class="log-hash">entry #4 · prev sha256:c9d0… · sha256:1a2b3c4d…edit</div>
       </li>
       <li>
         <div class="log-top"><span class="log-time">2026-06-15 11:42 Tbilisi</span><span class="pill p-computed">computed</span></div>
         <div class="log-event">contribution signals computed</div>
-        <div class="log-detail">Seitiate engine — decision density, divergence depth, edit depth, and Delta baseline recorded</div>
+        <div class="log-detail">Seitiate engine — decision density, divergence depth, edit depth, and Delta baseline computed</div>
         <div class="log-hash">entry #5 · prev sha256:1a2b… · sha256:4b7c9a2e…score</div>
       </li>
       <li>
         <div class="log-top"><span class="log-time">2026-06-16 09:15 Tbilisi</span><span class="pill p-captured">captured</span></div>
         <div class="log-event">qa / governor review</div>
-        <div class="log-detail">reviewer action — brand checklist, approval gate, and policy checks recorded</div>
+        <div class="log-detail">reviewer action — brand checklist, approval gate, and policy checks recorded; decision weight 0.5</div>
         <div class="log-hash">entry #6 · prev sha256:4b7c… · sha256:5e6f7a8b…qa</div>
       </li>
       <li>
         <div class="log-top"><span class="log-time">2026-06-16 09:30 Tbilisi</span><span class="pill p-signed">signed</span></div>
         <div class="log-event">final approval under Bond</div>
-        <div class="log-detail">accountable human role — approval event bound to receipt payload and issuer signature</div>
+        <div class="log-detail">accountable human role — approval event bound to receipt payload and issuer signature; decision weight 1.0</div>
         <div class="log-hash">entry #7 · prev sha256:5e6f… · sha256:9f8e7d6c…approve</div>
       </li>
     </ul>
@@ -154,10 +191,13 @@
       Trust Layer signs the receipt payload, issuer, timestamp, evidence summary, artifact hash, and approval trail. The creator-owned record anchors to the neutral Seitiate substrate.
     </p>
 
-    <a class="btn" href="receipt-payload.json" download="NTRY-AB12-7F-receipt-payload.json">↓ Download receipt payload (JSON)</a>
+    <a class="btn" href="receipt-payload.json" download="NTRY-AB12-7F-receipt-payload.json">Download receipt payload</a>
+    <a class="btn" href="receipt-payload.json.sig" download="NTRY-AB12-7F-receipt-payload.json.sig">Download signature</a>
+    <a class="btn" href="/keys/stl-demo-2026-06.pem" download="stl-demo-2026-06.pem">Download public key</a>
 
     <p class="legend">
       <span style="color:var(--purple)">captured</span> = recorded by host connector or Orchestra ·
+      <span style="color:var(--info)">logged</span> = AI tool invocation recorded with zero human weight ·
       <span style="color:var(--info)">computed</span> = scored by Seitiate engine/Delta ·
       <span style="color:var(--ok)">signed</span> = anchored in the receipt payload.
       Hash links show append-only Ledger shape; not a blockchain transaction.

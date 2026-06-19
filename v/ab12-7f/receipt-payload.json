@@ -2,8 +2,8 @@
   "receipt_id": "NTRY-AB12-7F",
   "issued_at": "2026-06-17T12:00:00Z",
   "issuer": "Seitiate Trust Layer",
-  "issuer_key_fingerprint": "9F2A-4C71-B0E8",
-  "payload_hash": "sha256:3b1e8a2f9c4da9c4",
+  "issuer_key_fingerprint": "71F2-2C00-EA3D",
+  "event_ledger_hash": "sha256:3b1e8a2f9c4da9c4",
   "claim": "AI-assisted · human-directed · QA-reviewed · approved",
   "agency": "AI2Business",
   "project": "Project Aurora (withheld)",
@@ -12,6 +12,27 @@
   "evidence_basis": "target-system captured decision trail (demo sample)",
   "capture_model": "host connector + Orchestra events -> Seitiate scoring/Delta -> signed receipt -> neutral anchor",
   "measurement_mode": "evidenced_estimate",
+  "delta_score": {
+    "label": "human_contribution",
+    "value": 0.73,
+    "formula": "sum(human_events * authority_weight) / sum(all_event_weights)",
+    "human_weight": 3.3,
+    "total_weight": 4.5,
+    "components": {
+      "brief_and_direction": 1.0,
+      "ai_generation": 0.0,
+      "human_edit_and_rewrite": 0.8,
+      "qa_review": 0.5,
+      "final_approval": 1.0
+    }
+  },
+  "signature": {
+    "algorithm": "ECDSA-P256-SHA256",
+    "issuer_key_id": "stl-demo-2026-06",
+    "issuer_key_fingerprint": "71F2-2C00-EA3D",
+    "signature_file": "receipt-payload.json.sig",
+    "public_key": "https://seitiate.com/keys/stl-demo-2026-06.pem"
+  },
   "events": [
     {
       "seq": 1,
@@ -20,6 +41,7 @@
       "source": "host_connector",
       "actor": "human · agency lead",
       "backing": "captured",
+      "delta_weight": 1.0,
       "privacy": "client content withheld"
     },
     {
@@ -29,7 +51,8 @@
       "source": "orchestra_or_host_connector",
       "actor": "AI",
       "tool": "ChatGPT",
-      "backing": "captured",
+      "backing": "logged",
+      "delta_weight": 0.0,
       "captured_fields": ["model", "timestamp", "prompt_hash", "output_hash"]
     },
     {
@@ -39,7 +62,8 @@
       "source": "host_connector",
       "actor": "AI",
       "tool": "Midjourney",
-      "backing": "captured",
+      "backing": "logged",
+      "delta_weight": 0.0,
       "captured_fields": ["job_ref", "selected_variant_ref", "asset_hash"]
     },
     {
@@ -49,6 +73,7 @@
       "source": "creative_decision_event",
       "actor": "human · editor",
       "decision_type": "refinement_direction",
+      "delta_weight": 0.8,
       "backing": "captured"
     },
     {
@@ -57,6 +82,7 @@
       "type": "contribution_signals_computed",
       "source": "seitiate_engine",
       "measurement": "provenance_score_v1 + Delta baseline",
+      "delta_value": 0.73,
       "backing": "computed"
     },
     {
@@ -65,6 +91,7 @@
       "type": "qa_governor_review",
       "source": "approval_gate",
       "actor": "human · reviewer (role)",
+      "delta_weight": 0.5,
       "backing": "captured"
     },
     {
@@ -73,6 +100,7 @@
       "type": "final_approval",
       "source": "bond_signature",
       "actor": "human · accountable (role)",
+      "delta_weight": 1.0,
       "backing": "signed"
     }
   ],
