@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verify receipt NTRY-AB12-7F · Seitiate Trust Layer</title>
+  <meta name="description" content="Pilot verify page for a human work receipt — synthetic decision log, process evidence only.">
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f4f3ee; --card: #fff; --ink: #23221f; --muted: #5f5e5a; --hint: #8a897f;
+      --line: rgba(0,0,0,.12); --ok-bg: #e1f5ee; --ok: #0f6e56;
+      --info-bg: #e6f1fb; --info: #0c447c; --warn-bg: #faeeda; --warn: #854f0b;
+      --purple-bg: #eeedfe; --purple: #3c3489;
+      --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Inter, -apple-system, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.55; padding: 16px 16px 48px; }
+    .wrap { max-width: 680px; margin: 0 auto; }
+    .banner { background: var(--warn-bg); color: var(--warn); font-size: 12px; padding: 10px 14px; border-radius: 8px; margin-bottom: 16px; line-height: 1.45; }
+    .card { background: var(--card); border: .5px solid var(--line); border-radius: 12px; padding: 18px 20px; margin-bottom: 16px; }
+    .head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; margin-bottom: 14px; }
+    .head h1 { font-size: 17px; font-weight: 600; }
+    .head p { font-size: 12px; color: var(--muted); margin-top: 4px; }
+    .mono { font-family: var(--mono); font-size: 11px; color: var(--muted); text-align: right; }
+    .okbar { background: var(--ok-bg); border-radius: 8px; padding: 12px 14px; margin-bottom: 14px; }
+    .okbar b { display: block; color: var(--ok); font-size: 14px; font-weight: 600; }
+    .okbar span { display: block; color: var(--ok); font-size: 12px; margin-top: 4px; }
+    .claim { background: var(--info-bg); border-radius: 8px; padding: 12px 14px; margin-bottom: 14px; }
+    .claim small { color: var(--info); font-size: 11px; text-transform: uppercase; letter-spacing: .04em; }
+    .claim p { color: var(--info); font-size: 16px; font-weight: 600; margin-top: 4px; }
+    .claim em { display: block; font-size: 12px; font-style: normal; color: var(--info); margin-top: 4px; opacity: .85; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 16px; font-size: 13px; }
+    .grid .k { color: var(--muted); }
+    .grid .v { text-align: right; }
+    h2 { font-size: 13px; font-weight: 600; margin: 0 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+    .log { list-style: none; border: .5px solid var(--line); border-radius: 8px; overflow: hidden; }
+    .log li { padding: 12px 14px; border-bottom: .5px solid var(--line); font-size: 13px; }
+    .log li:last-child { border-bottom: none; }
+    .log-top { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+    .log-time { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+    .log-event { font-weight: 500; }
+    .log-detail { color: var(--muted); font-size: 12px; margin-top: 2px; }
+    .log-hash { font-family: var(--mono); font-size: 10px; color: var(--hint); margin-top: 6px; word-break: break-all; }
+    .tool { color: var(--info); }
+    .pill { display: inline-block; font-size: 10px; padding: 2px 7px; border-radius: 6px; font-weight: 500; }
+    .p-self { background: var(--warn-bg); color: var(--warn); }
+    .p-witness { background: var(--purple-bg); color: var(--purple); }
+    .witness { font-size: 12px; color: var(--muted); margin-top: 12px; padding: 10px 12px; background: #fafaf8; border-radius: 8px; border: .5px solid var(--line); }
+    .legend, .disc { font-size: 12px; color: var(--muted); line-height: 1.6; margin-top: 12px; }
+    .disc { font-style: italic; }
+    .btn { display: inline-block; margin-top: 12px; font-size: 12px; padding: 8px 14px; border-radius: 8px; border: .5px solid var(--line); background: #fff; color: var(--ink); text-decoration: none; }
+    .foot { text-align: center; font-size: 11px; color: var(--hint); margin-top: 20px; }
+    .foot a { color: var(--info); }
+    @media (max-width: 520px) { .grid { grid-template-columns: 1fr; } .grid .v { text-align: left; } }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="banner">
+    <strong>Pilot demonstration</strong> — synthetic decision log for buyer-lab testing.
+    Not live workflow capture. Not a legal notarization (not a Georgian notary / ნოტარიუსი act).
+  </p>
+
+  <div class="card">
+    <div class="head">
+      <div>
+        <h1>Verified by Seitiate Trust Layer</h1>
+        <p>Independent trust verification · human work receipt</p>
+      </div>
+      <div class="mono">NTRY-AB12-7F<br>2026-06-17</div>
+    </div>
+
+    <div class="okbar">
+      <b>Receipt valid · signature valid · pilot issuance</b>
+      <span>You don't have to trust the agency's word. This page shows the signed process record referenced by the receipt.</span>
+    </div>
+
+    <div class="claim">
+      <small>This work was</small>
+      <p>AI-assisted · human-directed · QA-reviewed · approved</p>
+      <em>based on a signed decision trail · no client content disclosed</em>
+    </div>
+
+    <div class="grid">
+      <span class="k">Agency</span><span class="v">AI2Business</span>
+      <span class="k">Project</span><span class="v">"Project Aurora" (withheld)</span>
+      <span class="k">Deliverable</span><span class="v">3-post social package</span>
+      <span class="k">AI tools</span><span class="v">ChatGPT, Midjourney</span>
+      <span class="k">Receipt status</span><span class="v">valid</span>
+      <span class="k">Issuer key</span><span class="v mono">9F2A·4C71·B0E8</span>
+      <span class="k">Payload hash</span><span class="v mono">sha256:3b1e…a9c4</span>
+      <span class="k">Template</span><span class="v">decision-trail v0.1</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Decision log · process only</h2>
+    <ul class="log">
+      <li>
+        <div class="log-top"><span class="log-time">2026-06-15 10:02 Tbilisi</span><span class="pill p-self">self-reported</span></div>
+        <div class="log-event">brief received</div>
+        <div class="log-detail">human · agency lead — Client brief and creative direction captured</div>
+        <div class="log-hash">entry #1 · prev genesis · sha256:a1b2c3d4…brief</div>
+      </li>
+      <li>
+        <div class="log-top"><span class="log-time">2026-06-15 10:18 Tbilisi</span><span class="pill p-self">self-reported</span></div>
+        <div class="log-event">ai draft generated · <span class="tool">ChatGPT</span></div>
+        <div class="log-detail">AI — First copy draft from prompt + brief</div>
+        <div class="log-hash">entry #2 · prev sha256:a1b2… · sha256:e5f6a7b8…chatgpt</div>
+      </li>
+      <li>
+        <div class="log-top"><span class="log-time">2026-06-15 10:22 Tbilisi</span><span class="pill p-self">self-reported</span></div>
+        <div class="log-event">asset generated · <span class="tool">Midjourney</span></div>
+        <div class="log-detail">AI — Visual variants for social posts</div>
+        <div class="log-hash">entry #3 · prev sha256:e5f6… · sha256:c9d0e1f2…midjourney</div>
+      </li>
+      <li>
+        <div class="log-top"><span class="log-time">2026-06-15 11:40 Tbilisi</span><span class="pill p-self">self-reported</span></div>
+        <div class="log-event">human edit</div>
+        <div class="log-detail">human · editor — Substantial rewrite: tone, structure, brand fit</div>
+        <div class="log-hash">entry #4 · prev sha256:c9d0… · sha256:1a2b3c4d…edit</div>
+      </li>
+      <li>
+        <div class="log-top"><span class="log-time">2026-06-16 09:15 Tbilisi</span><span class="pill p-self">self-reported</span></div>
+        <div class="log-event">qa review</div>
+        <div class="log-detail">human · reviewer (role) — Brand / QA checklist passed</div>
+        <div class="log-hash">entry #5 · prev sha256:1a2b… · sha256:5e6f7a8b…qa</div>
+      </li>
+      <li>
+        <div class="log-top"><span class="log-time">2026-06-16 09:30 Tbilisi</span><span class="pill p-self">self-reported</span></div>
+        <div class="log-event">final approval</div>
+        <div class="log-detail">human · accountable (role) — Approved for client delivery</div>
+        <div class="log-hash">entry #6 · prev sha256:5e6f… · sha256:9f8e7d6c…approve</div>
+      </li>
+    </ul>
+
+    <p class="witness">
+      <span class="pill p-witness">witnessed</span>
+      Trust Layer observed: trail submitted, receipt generated 2026-06-17, signer = AI2Business (role-only), required fields complete.
+    </p>
+
+    <a class="btn" href="receipt-payload.json" download="NTRY-AB12-7F-receipt-payload.json">↓ Download receipt payload (JSON)</a>
+
+    <p class="legend">
+      <span style="color:var(--ok)">signed</span> = included in signed receipt payload ·
+      <span style="color:var(--purple)">witnessed</span> = Trust Layer observed submission ·
+      <span style="color:var(--warn)">self-reported</span> = stated by the agency.
+      Hash links show append-only log shape; not a blockchain transaction.
+    </p>
+    <p class="disc">
+      This receipt verifies that an independent trust layer signed the agency's decision-trail summary.
+      It proves process evidence, timestamp, issuer, and approval trail; it does not disclose client content
+      and does not claim perfect measurement of human contribution.
+    </p>
+  </div>
+
+  <p class="foot">Seitiate Trust Layer · pilot · <a href="https://seitiate.com/">seitiate.com</a></p>
+</div>
+</body>
+</html>

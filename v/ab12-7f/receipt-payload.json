@@ -1,0 +1,60 @@
+{
+  "receipt_id": "NTRY-AB12-7F",
+  "issued_at": "2026-06-17T12:00:00Z",
+  "issuer": "Seitiate Trust Layer",
+  "issuer_key_fingerprint": "9F2A-4C71-B0E8",
+  "payload_hash": "sha256:3b1e8a2f9c4da9c4",
+  "claim": "AI-assisted · human-directed · QA-reviewed · approved",
+  "agency": "AI2Business",
+  "project": "Project Aurora (withheld)",
+  "deliverable": "3-post social package",
+  "ai_tools": ["ChatGPT", "Midjourney"],
+  "evidence_basis": "manual decision trail (pilot)",
+  "events": [
+    {
+      "seq": 1,
+      "at": "2026-06-15T10:02:00+04:00",
+      "type": "brief_received",
+      "actor": "human · agency lead",
+      "backing": "self-reported"
+    },
+    {
+      "seq": 2,
+      "at": "2026-06-15T10:18:00+04:00",
+      "type": "ai_draft_generated",
+      "actor": "AI",
+      "tool": "ChatGPT",
+      "backing": "self-reported"
+    },
+    {
+      "seq": 3,
+      "at": "2026-06-15T10:22:00+04:00",
+      "type": "asset_generated",
+      "actor": "AI",
+      "tool": "Midjourney",
+      "backing": "self-reported"
+    },
+    {
+      "seq": 4,
+      "at": "2026-06-15T11:40:00+04:00",
+      "type": "human_edit",
+      "actor": "human · editor",
+      "backing": "self-reported"
+    },
+    {
+      "seq": 5,
+      "at": "2026-06-16T09:15:00+04:00",
+      "type": "qa_review",
+      "actor": "human · reviewer (role)",
+      "backing": "self-reported"
+    },
+    {
+      "seq": 6,
+      "at": "2026-06-16T09:30:00+04:00",
+      "type": "final_approval",
+      "actor": "human · accountable (role)",
+      "backing": "self-reported"
+    }
+  ],
+  "disclaimer": "Pilot synthetic log. Not legal notarization. Process evidence only."
+}
