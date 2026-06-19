@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Verify receipt NTRY-AB12-7F · Seitiate Trust Layer</title>
-  <meta name="description" content="Pilot verify page for a human work receipt — synthetic decision log, process evidence only.">
+  <meta name="description" content="Target-system demo for a human work receipt — captured decision trail, computed contribution signals, signed receipt.">
   <meta name="robots" content="noindex">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,8 +47,9 @@
     .log-hash { font-family: var(--mono); font-size: 10px; color: var(--hint); margin-top: 6px; word-break: break-all; }
     .tool { color: var(--info); }
     .pill { display: inline-block; font-size: 10px; padding: 2px 7px; border-radius: 6px; font-weight: 500; }
-    .p-self { background: var(--warn-bg); color: var(--warn); }
-    .p-witness { background: var(--purple-bg); color: var(--purple); }
+    .p-captured { background: var(--purple-bg); color: var(--purple); }
+    .p-computed { background: var(--info-bg); color: var(--info); }
+    .p-signed { background: var(--ok-bg); color: var(--ok); }
     .witness { font-size: 12px; color: var(--muted); margin-top: 12px; padding: 10px 12px; background: #fafaf8; border-radius: 8px; border: .5px solid var(--line); }
     .legend, .disc { font-size: 12px; color: var(--muted); line-height: 1.6; margin-top: 12px; }
     .disc { font-style: italic; }
@@ -62,8 +63,9 @@
 <div class="wrap">
 
   <p class="banner">
-    <strong>Pilot demonstration</strong> — synthetic decision log for buyer-lab testing.
-    Not live workflow capture. Not a legal notarization (not a Georgian notary / ნოტარიუსი act).
+    <strong>Target-system demonstration</strong> — sample data for buyer-lab testing.
+    This shows the capture model Seitiate is building: host/Orchestra events → engine scoring/Delta → signed receipt → neutral anchor.
+    Not a legal notarization (not a Georgian notary / ნოტარიუსი act).
   </p>
 
   <div class="card">
@@ -76,14 +78,14 @@
     </div>
 
     <div class="okbar">
-      <b>Receipt valid · signature valid · pilot issuance</b>
-      <span>You don't have to trust the agency's word. This page shows the signed process record referenced by the receipt.</span>
+      <b>Receipt valid · target capture model · demo issuance</b>
+      <span>You don't have to trust the agency's word. In production, this receipt is generated from captured workflow events, computed contribution signals, and a signed process record.</span>
     </div>
 
     <div class="claim">
       <small>This work was</small>
       <p>AI-assisted · human-directed · QA-reviewed · approved</p>
-      <em>based on a signed decision trail · no client content disclosed</em>
+      <em>based on captured events + computed contribution signals + signed receipt · no client content disclosed</em>
     </div>
 
     <div class="grid">
@@ -92,70 +94,77 @@
       <span class="k">Deliverable</span><span class="v">3-post social package</span>
       <span class="k">AI tools</span><span class="v">ChatGPT, Midjourney</span>
       <span class="k">Receipt status</span><span class="v">valid</span>
+      <span class="k">Capture mode</span><span class="v">host connector + Orchestra</span>
+      <span class="k">Evidence depth</span><span class="v">captured · computed · signed</span>
       <span class="k">Issuer key</span><span class="v mono">9F2A·4C71·B0E8</span>
       <span class="k">Payload hash</span><span class="v mono">sha256:3b1e…a9c4</span>
-      <span class="k">Template</span><span class="v">decision-trail v0.1</span>
+      <span class="k">Template</span><span class="v">human-provenance receipt v0.2</span>
     </div>
   </div>
 
   <div class="card">
-    <h2>Decision log · process only</h2>
+    <h2>Captured trail · target model</h2>
     <ul class="log">
       <li>
-        <div class="log-top"><span class="log-time">2026-06-15 10:02 Tbilisi</span><span class="pill p-self">self-reported</span></div>
-        <div class="log-event">brief received</div>
-        <div class="log-detail">human · agency lead — Client brief and creative direction captured</div>
+        <div class="log-top"><span class="log-time">2026-06-15 10:02 Tbilisi</span><span class="pill p-captured">captured</span></div>
+        <div class="log-event">source packet received</div>
+        <div class="log-detail">host connector — brief/import event captured; private client content withheld</div>
         <div class="log-hash">entry #1 · prev genesis · sha256:a1b2c3d4…brief</div>
       </li>
       <li>
-        <div class="log-top"><span class="log-time">2026-06-15 10:18 Tbilisi</span><span class="pill p-self">self-reported</span></div>
-        <div class="log-event">ai draft generated · <span class="tool">ChatGPT</span></div>
-        <div class="log-detail">AI — First copy draft from prompt + brief</div>
+        <div class="log-top"><span class="log-time">2026-06-15 10:18 Tbilisi</span><span class="pill p-captured">captured</span></div>
+        <div class="log-event">llm call recorded · <span class="tool">ChatGPT</span></div>
+        <div class="log-detail">Orchestra/host connector — model, timestamp, prompt hash, and output hash captured</div>
         <div class="log-hash">entry #2 · prev sha256:a1b2… · sha256:e5f6a7b8…chatgpt</div>
       </li>
       <li>
-        <div class="log-top"><span class="log-time">2026-06-15 10:22 Tbilisi</span><span class="pill p-self">self-reported</span></div>
-        <div class="log-event">asset generated · <span class="tool">Midjourney</span></div>
-        <div class="log-detail">AI — Visual variants for social posts</div>
+        <div class="log-top"><span class="log-time">2026-06-15 10:22 Tbilisi</span><span class="pill p-captured">captured</span></div>
+        <div class="log-event">asset generation linked · <span class="tool">Midjourney</span></div>
+        <div class="log-detail">host connector — generation job, selected variant, and asset hash linked to the trail</div>
         <div class="log-hash">entry #3 · prev sha256:e5f6… · sha256:c9d0e1f2…midjourney</div>
       </li>
       <li>
-        <div class="log-top"><span class="log-time">2026-06-15 11:40 Tbilisi</span><span class="pill p-self">self-reported</span></div>
-        <div class="log-event">human edit</div>
-        <div class="log-detail">human · editor — Substantial rewrite: tone, structure, brand fit</div>
+        <div class="log-top"><span class="log-time">2026-06-15 11:40 Tbilisi</span><span class="pill p-captured">captured</span></div>
+        <div class="log-event">human direction + edit captured</div>
+        <div class="log-detail">creator action — refinement direction, substantial rewrite, tone/structure changes</div>
         <div class="log-hash">entry #4 · prev sha256:c9d0… · sha256:1a2b3c4d…edit</div>
       </li>
       <li>
-        <div class="log-top"><span class="log-time">2026-06-16 09:15 Tbilisi</span><span class="pill p-self">self-reported</span></div>
-        <div class="log-event">qa review</div>
-        <div class="log-detail">human · reviewer (role) — Brand / QA checklist passed</div>
-        <div class="log-hash">entry #5 · prev sha256:1a2b… · sha256:5e6f7a8b…qa</div>
+        <div class="log-top"><span class="log-time">2026-06-15 11:42 Tbilisi</span><span class="pill p-computed">computed</span></div>
+        <div class="log-event">contribution signals computed</div>
+        <div class="log-detail">Seitiate engine — decision density, divergence depth, edit depth, and Delta baseline recorded</div>
+        <div class="log-hash">entry #5 · prev sha256:1a2b… · sha256:4b7c9a2e…score</div>
       </li>
       <li>
-        <div class="log-top"><span class="log-time">2026-06-16 09:30 Tbilisi</span><span class="pill p-self">self-reported</span></div>
-        <div class="log-event">final approval</div>
-        <div class="log-detail">human · accountable (role) — Approved for client delivery</div>
-        <div class="log-hash">entry #6 · prev sha256:5e6f… · sha256:9f8e7d6c…approve</div>
+        <div class="log-top"><span class="log-time">2026-06-16 09:15 Tbilisi</span><span class="pill p-captured">captured</span></div>
+        <div class="log-event">qa / governor review</div>
+        <div class="log-detail">reviewer action — brand checklist, approval gate, and policy checks recorded</div>
+        <div class="log-hash">entry #6 · prev sha256:4b7c… · sha256:5e6f7a8b…qa</div>
+      </li>
+      <li>
+        <div class="log-top"><span class="log-time">2026-06-16 09:30 Tbilisi</span><span class="pill p-signed">signed</span></div>
+        <div class="log-event">final approval under Bond</div>
+        <div class="log-detail">accountable human role — approval event bound to receipt payload and issuer signature</div>
+        <div class="log-hash">entry #7 · prev sha256:5e6f… · sha256:9f8e7d6c…approve</div>
       </li>
     </ul>
 
     <p class="witness">
-      <span class="pill p-witness">witnessed</span>
-      Trust Layer observed: trail submitted, receipt generated 2026-06-17, signer = AI2Business (role-only), required fields complete.
+      <span class="pill p-signed">signed</span>
+      Trust Layer signs the receipt payload, issuer, timestamp, evidence summary, artifact hash, and approval trail. The creator-owned record anchors to the neutral Seitiate substrate.
     </p>
 
     <a class="btn" href="receipt-payload.json" download="NTRY-AB12-7F-receipt-payload.json">↓ Download receipt payload (JSON)</a>
 
     <p class="legend">
-      <span style="color:var(--ok)">signed</span> = included in signed receipt payload ·
-      <span style="color:var(--purple)">witnessed</span> = Trust Layer observed submission ·
-      <span style="color:var(--warn)">self-reported</span> = stated by the agency.
-      Hash links show append-only log shape; not a blockchain transaction.
+      <span style="color:var(--purple)">captured</span> = recorded by host connector or Orchestra ·
+      <span style="color:var(--info)">computed</span> = scored by Seitiate engine/Delta ·
+      <span style="color:var(--ok)">signed</span> = anchored in the receipt payload.
+      Hash links show append-only Ledger shape; not a blockchain transaction.
     </p>
     <p class="disc">
-      This receipt verifies that an independent trust layer signed the agency's decision-trail summary.
-      It proves process evidence, timestamp, issuer, and approval trail; it does not disclose client content
-      and does not claim perfect measurement of human contribution.
+      This is demo data showing what the production system is being built to capture and verify.
+      It does not disclose client content, and it does not claim perfect measurement of human contribution.
     </p>
   </div>
 
