@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>GTW Tbilisi 2026 — Personal Picks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --surface: #12121a;
+  --surface2: #1a1a26;
+  --border: #2a2a3a;
+  --text: #e8e8f0;
+  --text-dim: #8888a0;
+  --accent: #6c5ce7;
+  --accent-glow: rgba(108, 92, 231, 0.15);
+  --stage-w: #e17055;
+  --stage-t: #00b894;
+  --stage-f: #0984e3;
+  --stage-g: #fdcb6e;
+  --workshop: #a29bfe;
+  --conflict: #ff6b6b;
+  --free: #00cec9;
+  --radius: 12px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+.hero {
+  padding: 2rem 1.25rem 1.5rem;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(108,92,231,0.08) 0%, transparent 100%);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 50% 80%, rgba(108,92,231,0.06) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.hero-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+
+.hero h1 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.25rem;
+  background: linear-gradient(135deg, #e8e8f0 0%, #a29bfe 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-location {
+  font-size: 1rem;
+  color: var(--text-dim);
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.hero-sub {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.schedule {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0.75rem;
+}
+
+/* Time Block */
+.time-block {
+  margin-bottom: 0.75rem;
+}
+
+.time-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--bg);
+}
+
+.time-label time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.time-label .line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* Session Card */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.875rem 1rem;
+  margin-bottom: 0.5rem;
+  transition: border-color 0.2s;
+  position: relative;
+}
+
+.card:hover {
+  border-color: rgba(108,92,231,0.4);
+}
+
+.card-top {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.375rem;
+  flex-wrap: wrap;
+}
+
+.stage-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.stage-w  { background: rgba(225,112,85,0.15); color: var(--stage-w); }
+.stage-t  { background: rgba(0,184,148,0.15); color: var(--stage-t); }
+.stage-f  { background: rgba(9,132,227,0.15); color: var(--stage-f); }
+.stage-g  { background: rgba(253,203,110,0.15); color: var(--stage-g); }
+.stage-ws { background: rgba(162,155,254,0.15); color: var(--workshop); }
+
+.card-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}
+
+.card-format {
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  background: var(--surface2);
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+}
+
+.card h3 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.35;
+  margin-bottom: 0.25rem;
+  letter-spacing: -0.01em;
+}
+
+.card .speaker {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+.card .speaker strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.card .note {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  margin-top: 0.375rem;
+  padding-top: 0.375rem;
+  border-top: 1px solid var(--border);
+  font-style: italic;
+}
+
+/* Conflict Group */
+.conflict-group {
+  background: var(--surface);
+  border: 1px solid var(--conflict);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 0 20px rgba(255,107,107,0.05);
+}
+
+.conflict-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.4rem;
+  background: rgba(255,107,107,0.08);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--conflict);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.conflict-header svg {
+  width: 12px;
+  height: 12px;
+}
+
+.conflict-options {
+  display: flex;
+  flex-direction: column;
+}
+
+.conflict-or {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.1rem 1rem;
+  background: var(--surface2);
+}
+
+.conflict-or span {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--conflict);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.conflict-or .line {
+  flex: 1;
+  height: 1px;
+  background: rgba(255,107,107,0.2);
+}
+
+.conflict-group .card {
+  border: none;
+  border-radius: 0;
+  margin: 0;
+  background: transparent;
+}
+
+.conflict-group .card:hover {
+  background: rgba(108,92,231,0.03);
+  border-color: transparent;
+}
+
+/* Free Window */
+.free-window {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: var(--radius);
+  background: rgba(0,206,201,0.05);
+  border: 1px dashed rgba(0,206,201,0.25);
+}
+
+.free-window svg {
+  width: 16px;
+  height: 16px;
+  color: var(--free);
+  flex-shrink: 0;
+}
+
+.free-window p {
+  font-size: 0.78rem;
+  color: var(--free);
+  font-weight: 500;
+}
+
+.free-window .free-detail {
+  font-weight: 400;
+  color: var(--text-dim);
+  font-size: 0.72rem;
+}
+
+/* Late Additions */
+.late-section {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 2px dashed var(--border);
+}
+
+.late-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-dim);
+  margin-bottom: 0.75rem;
+  padding-left: 0.25rem;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--text-dim);
+  font-size: 0.7rem;
+  border-top: 1px solid var(--border);
+  margin-top: 1rem;
+}
+
+.footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+/* Desktop enhancement */
+@media (min-width: 520px) {
+  .hero { padding: 3rem 2rem 2rem; }
+  .hero h1 { font-size: 2rem; }
+  .schedule { padding: 1.25rem; }
+  .card { padding: 1rem 1.25rem; }
+
+  .conflict-options.side-by-side {
+    flex-direction: row;
+  }
+  .conflict-options.side-by-side .card {
+    flex: 1;
+  }
+  .conflict-options.side-by-side .conflict-or {
+    flex-direction: column;
+    padding: 0.5rem 0.25rem;
+    width: auto;
+  }
+  .conflict-options.side-by-side .conflict-or .line {
+    width: 1px;
+    height: 100%;
+    flex: 1;
+  }
+}
+
+/* Tap highlight for mobile */
+@media (hover: none) {
+  .card { -webkit-tap-highlight-color: rgba(108,92,231,0.1); }
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-eyebrow">June 20, 2026</div>
+  <h1>Global Tech Weekend</h1>
+  <p class="hero-location">Tbilisi, Georgia</p>
+  <p class="hero-sub">Personal picks &mdash; AI, Agents, Creative Tech, Startups</p>
+</header>
+
+<nav class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--stage-w)"></div>Stage W</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--stage-t)"></div>Stage T</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--stage-f)"></div>Stage F</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--stage-g)"></div>Stage G</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--workshop)"></div>Workshop</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--conflict)"></div>Time Conflict</div>
+</nav>
+
+<main class="schedule">
+
+  <!-- ===== 12:00 BLOCK ===== -->
+  <div class="time-block">
+    <div class="time-label"><time>12:00</time><div class="line"></div></div>
+
+    <div class="conflict-group">
+      <div class="conflict-header">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Overlapping Sessions
+      </div>
+      <div class="conflict-options">
+        <div class="card">
+          <div class="card-top">
+            <span class="stage-tag stage-ws">Workshop</span>
+            <span class="card-time">12:00 &ndash; 13:00</span>
+            <span class="card-format">1 hr</span>
+          </div>
+          <h3>Designing the Agentive Enterprise</h3>
+          <p class="speaker"><strong>Jon Ward</strong> &middot; Beneficial Consulting</p>
+          <p class="note">Full hour workshop &mdash; overlaps with next two sessions on Stage W</p>
+        </div>
+        <div class="conflict-or"><div class="line"></div><span>or</span><div class="line"></div></div>
+        <div class="card">
+          <div class="card-top">
+            <span class="stage-tag stage-w">Stage W</span>
+            <span class="card-time">12:17 &ndash; 12:42</span>
+            <span class="card-format">Keynote &middot; 25 min</span>
+          </div>
+          <h3>No Final Draft</h3>
+          <p class="speaker"><strong>Hugo Barbera &amp; Maria Vinagre</strong> &middot; HumAIn</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 12:51 BLOCK ===== -->
+  <div class="time-block">
+    <div class="time-label"><time>12:51</time><div class="line"></div></div>
+    <div class="card">
+      <div class="card-top">
+        <span class="stage-tag stage-w">Stage W</span>
+        <span class="card-time">12:51 &ndash; 13:06</span>
+        <span class="card-format">Keynote &middot; 15 min</span>
+      </div>
+      <h3>AI and the Big Rethink of Global Software Investing</h3>
+      <p class="speaker"><strong>Ronald Weissman</strong> &middot; Band of Angels</p>
+      <p class="note">Still overlaps with Workshop #1 if you stayed the full hour</p>
+    </div>
+  </div>
+
+  <!-- ===== 13:22 BLOCK — CONFLICT ===== -->
+  <div class="time-block">
+    <div class="time-label"><time>13:22</time><div class="line"></div></div>
+    <div class="conflict-group">
+      <div class="conflict-header">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Choose One
+      </div>
+      <div class="conflict-options side-by-side">
+        <div class="card">
+          <div class="card-top">
+            <span class="stage-tag stage-g">Stage G</span>
+            <span class="card-time">13:22 &ndash; 13:37</span>
+          </div>
+          <h3>The AI-First Entrepreneurship Economy</h3>
+          <p class="speaker"><strong>Ethan Pierse</strong> &middot; Borderless Ventures</p>
+        </div>
+        <div class="conflict-or"><div class="line"></div><span>or</span><div class="line"></div></div>
+        <div class="card">
+          <div class="card-top">
+            <span class="stage-tag stage-w">Stage W</span>
+            <span class="card-time">13:35 &ndash; 13:50</span>
+          </div>
+          <h3>chAI: A True Story About the Future of Meaning</h3>
+          <p class="speaker"><strong>Tiago Valente</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 14:00 BLOCK ===== -->
+  <div class="time-block">
+    <div class="time-label"><time>14:00</time><div class="line"></div></div>
+    <div class="card">
+      <div class="card-top">
+        <span class="stage-tag stage-f">Stage F</span>
+        <span class="card-time">14:00 &ndash; 14:15</span>
+        <span class="card-format">Keynote &middot; 15 min</span>
+      </div>
+      <h3>From Copilot to Autopilot and the Dark Side of Agentic AI</h3>
+      <p class="speaker"><strong>Anri Jikia</strong> &middot; Flutter CEE</p>
+    </div>
+  </div>
+
+  <!-- ===== 14:17 BLOCK ===== -->
+  <div class="time-block">
+    <div class="time-label"><time>14:17</time><div class="line"></div></div>
+    <div class="card">
+      <div class="card-top">
+        <span class="stage-tag stage-f">Stage F</span>
+        <span class="card-time">14:17 &ndash; 14:42</span>
+        <span class="card-format">Fireside &middot; 25 min</span>
+      </div>
+      <h3>Speak of the Devil: The CRM Stories No One Talks About</h3>
+      <p class="speaker"><strong>Alex Korn</strong> (T1A) &amp; <strong>Christos Bompolis</strong> (Salesforce)</p>
+    </div>
+  </div>
+
+  <!-- ===== FREE WINDOW 1 ===== -->
+  <div class="time-block">
+    <div class="time-label"><time>15:00</time><div class="line"></div></div>
+    <div class="free-window">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+      <div>
+        <p>Free window &mdash; networking</p>
+        <p class="free-detail">~15:00 &ndash; 17:00 &middot; Explore, connect, recharge</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 17:04 BLOCK ===== -->
+  <div class="time-block">
+    <div class="time-label"><time>17:04</time><div class="line"></div></div>
+    <div class="card">
+      <div class="card-top">
+        <span class="stage-tag stage-w">Stage W</span>
+        <span class="card-time">17:04 &ndash; 17:29</span>
+        <span class="card-format">Keynote &middot; 25 min</span>
+      </div>
+      <h3>Protopia World Stack: Designing Livable Futures</h3>
+      <p class="speaker"><strong>Monika Bielskyte</strong> &middot; Protopia Futures / NIKE</p>
+    </div>
+  </div>
+
+  <!-- ===== FREE WINDOW 2 ===== -->
+  <div class="time-block">
+    <div class="time-label"><time>17:30</time><div class="line"></div></div>
+    <div class="free-window">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+      <div>
+        <p>Free window &mdash; networking</p>
+        <p class="free-detail">~17:30 &ndash; 18:00 &middot; Quick break before evening block</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 18:06 BLOCK — CONFLICT ===== -->
+  <div class="time-block">
+    <div class="time-label"><time>18:06</time><div class="line"></div></div>
+    <div class="conflict-group">
+      <div class="conflict-header">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Choose One
+      </div>
+      <div class="conflict-options side-by-side">
+        <div class="card">
+          <div class="card-top">
+            <span class="stage-tag stage-g">Stage G</span>
+            <span class="card-time">18:06 &ndash; 18:21</span>
+          </div>
+          <h3>What Do VCs Look For?</h3>
+          <p class="speaker"><strong>John Kojiro Moriwaka</strong> &middot; Mendoza Ventures</p>
+        </div>
+        <div class="conflict-or"><div class="line"></div><span>or</span><div class="line"></div></div>
+        <div class="card">
+          <div class="card-top">
+            <span class="stage-tag stage-w">Stage W</span>
+            <span class="card-time">18:13 &ndash; 18:28</span>
+          </div>
+          <h3>It&rsquo;s Almost 2027. Forget Everything You Thought You Knew About Building a Startup</h3>
+          <p class="speaker"><strong>Bret Waters</strong> &middot; Stanford / StartX</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 18:45 BLOCK ===== -->
+  <div class="time-block">
+    <div class="time-label"><time>18:45</time><div class="line"></div></div>
+    <div class="card">
+      <div class="card-top">
+        <span class="stage-tag stage-g">Stage G</span>
+        <span class="card-time">18:45 &ndash; 19:00</span>
+        <span class="card-format">Keynote &middot; 15 min</span>
+      </div>
+      <h3>Darwin Had No Idea</h3>
+      <p class="speaker"><strong>Jako Jikia</strong> &middot; Helio AI</p>
+    </div>
+  </div>
+
+  <!-- ===== 19:26 BLOCK ===== -->
+  <div class="time-block">
+    <div class="time-label"><time>19:26</time><div class="line"></div></div>
+    <div class="card">
+      <div class="card-top">
+        <span class="stage-tag stage-f">Stage F</span>
+        <span class="card-time">19:26 &ndash; 19:41</span>
+        <span class="card-format">Keynote &middot; 15 min</span>
+      </div>
+      <h3>For-Purpose Structures: How We Define Ownership and Value</h3>
+      <p class="speaker"><strong>Fionn Tahu Balfour</strong> &middot; Vitex Lucens</p>
+    </div>
+  </div>
+
+  <!-- ===== 19:39 BLOCK — CONFLICT ===== -->
+  <div class="time-block">
+    <div class="time-label"><time>19:39</time><div class="line"></div></div>
+    <div class="conflict-group">
+      <div class="conflict-header">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Choose One
+      </div>
+      <div class="conflict-options side-by-side">
+        <div class="card">
+          <div class="card-top">
+            <span class="stage-tag stage-w">Stage W</span>
+            <span class="card-time">19:39 &ndash; 19:59</span>
+          </div>
+          <h3>When Machines Start Thinking: Turing Test to AGI</h3>
+          <p class="speaker"><strong>Aleksandre Lomadze</strong> &middot; Liberty Bank</p>
+        </div>
+        <div class="conflict-or"><div class="line"></div><span>or</span><div class="line"></div></div>
+        <div class="card">
+          <div class="card-top">
+            <span class="stage-tag stage-t">Stage T</span>
+            <span class="card-time">19:47 &ndash; 20:02</span>
+          </div>
+          <h3>Humans Are Overrated</h3>
+          <p class="speaker"><strong>Aleksandre Shapatava</strong> &middot; TBC Bank</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 20:01 BLOCK — CONFLICT ===== -->
+  <div class="time-block">
+    <div class="time-label"><time>20:01</time><div class="line"></div></div>
+    <div class="conflict-group">
+      <div class="conflict-header">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Choose One
+      </div>
+      <div class="conflict-options side-by-side">
+        <div class="card">
+          <div class="card-top">
+            <span class="stage-tag stage-g">Stage G</span>
+            <span class="card-time">20:01 &ndash; 20:16</span>
+          </div>
+          <h3>From Zero to 18,000: How AI Agents Became Our Global Sales Team</h3>
+          <p class="speaker"><strong>Anuki Robakidze</strong> &middot; Theneo (YC W22)</p>
+        </div>
+        <div class="conflict-or"><div class="line"></div><span>or</span><div class="line"></div></div>
+        <div class="card">
+          <div class="card-top">
+            <span class="stage-tag stage-t">Stage T</span>
+            <span class="card-time">20:04 &ndash; 20:19</span>
+          </div>
+          <h3>Mapping the Human Mind to Hardware &amp; Software Architecture</h3>
+          <p class="speaker"><strong>Fran Mikulicic</strong> &middot; FM Advisory</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== LATE ADDITIONS ===== -->
+  <div class="late-section">
+    <div class="late-label">Late additions &mdash; worth considering</div>
+
+    <div class="time-block">
+      <div class="time-label"><time>20:43</time><div class="line"></div></div>
+      <div class="card">
+        <div class="card-top">
+          <span class="stage-tag stage-w">Stage W</span>
+          <span class="card-time">20:43 &ndash; 20:58</span>
+          <span class="card-format">Keynote</span>
+        </div>
+        <h3>Fail Loud, Scale Fast</h3>
+        <p class="speaker"><strong>Pepe Villatoro</strong> &middot; Fuckup Nights</p>
+      </div>
+    </div>
+
+    <div class="time-block">
+      <div class="time-label"><time>20:53</time><div class="line"></div></div>
+      <div class="card">
+        <div class="card-top">
+          <span class="stage-tag stage-t">Stage T</span>
+          <span class="card-time">20:53 &ndash; 21:03</span>
+          <span class="card-format">Keynote</span>
+        </div>
+        <h3>AI Is Not Replacing Filmmakers &mdash; It&rsquo;s Replacing Production Pipelines</h3>
+        <p class="speaker"><strong>Davit Vashadze</strong></p>
+      </div>
+    </div>
+
+    <div class="time-block">
+      <div class="time-label"><time>21:47</time><div class="line"></div></div>
+      <div class="card">
+        <div class="card-top">
+          <span class="stage-tag stage-t">Stage T</span>
+          <span class="card-time">21:47 &ndash; 21:57</span>
+          <span class="card-format">Keynote</span>
+        </div>
+        <h3>Can We Create an AI Creative Director?</h3>
+        <p class="speaker"><strong>Hicham Wehbe</strong></p>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <p>Personal pick list &middot; Not an official GTW schedule</p>
+  <p style="margin-top:0.25rem">Built with care by <a href="https://seitiate.com">Seitiate Studio</a></p>
+</footer>
+
+</body>
+</html>
