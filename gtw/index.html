@@ -333,6 +333,13 @@ body {
   font-size: 0.72rem;
 }
 
+/* Drop-in card (long overlapping block — dip in between sessions) */
+.card.drop-in {
+  border: 2px dashed rgba(255,255,255,0.18);
+  background: var(--surface2);
+  opacity: 0.82;
+}
+
 /* Late Additions */
 .late-section {
   margin-top: 1.5rem;
@@ -523,15 +530,78 @@ body {
     </div>
   </div>
 
-  <!-- ===== FREE WINDOW 1 ===== -->
+  <!-- ===== 15:09 BLOCK ===== -->
   <div class="time-block">
-    <div class="time-label"><time>15:00</time><div class="line"></div></div>
-    <div class="free-window">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
-      <div>
-        <p>Free window &mdash; networking</p>
-        <p class="free-detail">~15:00 &ndash; 17:00 &middot; Explore, connect, recharge</p>
+    <div class="time-label"><time>15:09</time><div class="line"></div></div>
+    <div class="card">
+      <div class="card-top">
+        <span class="stage-tag stage-t">Stage T</span>
+        <span class="card-time">15:09 &ndash; 15:24</span>
+        <span class="card-format">Keynote &middot; 15 min</span>
       </div>
+      <h3>From AI Adoption to AI Value: Make a Team Member, Not Just Another Tool</h3>
+      <p class="speaker"><strong>Agne Rakstikaite</strong> &middot; Monday.com</p>
+    </div>
+  </div>
+
+  <!-- ===== 15:18 BLOCK — DROP-IN ===== -->
+  <div class="time-block">
+    <div class="time-label"><time>15:18</time><div class="line"></div></div>
+    <div class="card drop-in">
+      <div class="card-top">
+        <span class="stage-tag stage-g">Stage G</span>
+        <span class="card-time">15:18 &ndash; 16:33</span>
+        <span class="card-format">Competition</span>
+      </div>
+      <h3>Startup World Cup Finale</h3>
+      <p class="speaker">10 startups competing</p>
+      <p class="note">Long block &mdash; drop in and out between other sessions</p>
+    </div>
+  </div>
+
+  <!-- ===== 15:26 BLOCK — CONFLICT ===== -->
+  <div class="time-block">
+    <div class="time-label"><time>15:26</time><div class="line"></div></div>
+    <div class="conflict-group">
+      <div class="conflict-header">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Choose One
+      </div>
+      <div class="conflict-options side-by-side">
+        <div class="card">
+          <div class="card-top">
+            <span class="stage-tag stage-t">Stage T</span>
+            <span class="card-time">15:26 &ndash; 16:06</span>
+            <span class="card-format">Panel &middot; 40 min</span>
+          </div>
+          <h3>Thinkfluencers: Authentic Non-Profit Communication in the Age of AI Slop</h3>
+          <p class="speaker"><strong>Benjamin L&auml;pple</strong> (Political Tech Summit), <strong>Vahan Martirosyan</strong> (COPA LLC) &middot; Mod: <strong>Sven Gerst</strong> (&aelig;vum Quarterly)</p>
+        </div>
+        <div class="conflict-or"><div class="line"></div><span>or</span><div class="line"></div></div>
+        <div class="card">
+          <div class="card-top">
+            <span class="stage-tag stage-f">Stage F</span>
+            <span class="card-time">15:28 &ndash; 15:43</span>
+            <span class="card-format">Keynote &middot; 15 min</span>
+          </div>
+          <h3>The Complete GTM &amp; Revenue Engine; supercharged by AI</h3>
+          <p class="speaker"><strong>Alfredo Moya</strong> &middot; CloudTalk</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 16:00 BLOCK ===== -->
+  <div class="time-block">
+    <div class="time-label"><time>16:00</time><div class="line"></div></div>
+    <div class="card">
+      <div class="card-top">
+        <span class="stage-tag stage-w">Stage W</span>
+        <span class="card-time">16:00 &ndash; 16:20</span>
+        <span class="card-format">Keynote &middot; 20 min</span>
+      </div>
+      <h3>Rewiring Creativity for Better: Two Decades of Fighting Bullsh*t in Marketing</h3>
+      <p class="speaker"><strong>Thomas Kolster</strong> &middot; Goodvertising Agency</p>
     </div>
   </div>
 
