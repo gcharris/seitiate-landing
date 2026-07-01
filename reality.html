@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>The reality today, and what we need</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #08090b; --surface: #0f1114; --border: #1a1c22;
+            --text: #eceae7; --text-secondary: #8a8a90; --text-muted: #56585f;
+            --accent: #4ade80; --amber: #e0b34a; --red: #d67a7a;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+        a { color: inherit; text-decoration: none; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 14px 24px; display: flex; justify-content: space-between; align-items: center;
+            background: rgba(8, 9, 11, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);
+        }
+        nav .brand { display: flex; align-items: center; gap: 9px; font-size: 15px; font-weight: 500; }
+        nav .brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 2.2s infinite; }
+        nav .home { color: var(--text-secondary); font-size: 0.85rem; }
+        nav .home:hover { color: var(--text); }
+
+        .doc { max-width: 720px; margin: 0 auto; padding: 112px 24px 40px; }
+        .banner {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.03em;
+            color: var(--amber); border: 1px solid rgba(224, 179, 74, 0.25); background: rgba(224, 179, 74, 0.06);
+            border-radius: 8px; padding: 10px 14px; margin-bottom: 2.4rem;
+        }
+        h1 { font-size: clamp(26px, 4.5vw, 36px); font-weight: 600; letter-spacing: -0.01em; line-height: 1.2; margin-bottom: 1rem; }
+        .lead { font-size: 1.08rem; color: var(--text-secondary); margin-bottom: 2.6rem; }
+        h2 { font-size: 1.15rem; font-weight: 500; margin: 2.8rem 0 0.4rem; }
+        .h2note { color: var(--text-secondary); font-size: 0.92rem; margin-bottom: 1.1rem; }
+        p.body { color: var(--text-secondary); font-size: 0.96rem; margin-bottom: 0.8rem; }
+
+        .row { display: flex; align-items: flex-start; gap: 13px; padding: 15px 0; border-bottom: 1px solid var(--border); }
+        .row .rdot { width: 8px; height: 8px; border-radius: 50%; margin-top: 8px; flex-shrink: 0; }
+        .rdot.live { background: var(--accent); } .rdot.hand { background: var(--amber); } .rdot.no { background: var(--red); }
+        .row .name { flex: 1; }
+        .row .name strong { font-weight: 500; font-size: 0.98rem; }
+        .row .name span { display: block; color: var(--text-secondary); font-size: 0.85rem; margin-top: 3px; }
+        .pill { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; padding: 3px 10px; border-radius: 100px; letter-spacing: 0.03em; white-space: nowrap; margin-top: 4px; }
+        .pill.live { color: var(--accent); background: rgba(74, 222, 128, 0.1); border: 1px solid rgba(74, 222, 128, 0.22); }
+        .pill.hand { color: var(--amber); background: rgba(224, 179, 74, 0.1); border: 1px solid rgba(224, 179, 74, 0.22); }
+        .pill.no { color: var(--red); background: rgba(214, 122, 122, 0.1); border: 1px solid rgba(214, 122, 122, 0.22); }
+
+        ol.need { list-style: none; counter-reset: n; margin-top: 0.6rem; }
+        ol.need li { counter-increment: n; position: relative; padding: 13px 0 13px 40px; border-bottom: 1px solid var(--border); }
+        ol.need li::before {
+            content: counter(n); position: absolute; left: 0; top: 13px; width: 24px; height: 24px;
+            border: 1px solid var(--border); border-radius: 6px; display: flex; align-items: center; justify-content: center;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--text-secondary);
+        }
+        ol.need li strong { font-weight: 500; }
+        ol.need li span { display: block; color: var(--text-secondary); font-size: 0.86rem; margin-top: 3px; }
+        .tag { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--amber); margin-left: 6px; }
+        .tag.block { color: var(--red); }
+
+        .rule { border: 1px solid rgba(74, 222, 128, 0.22); background: rgba(74, 222, 128, 0.05); border-radius: 10px; padding: 20px 22px; margin-top: 1rem; }
+        .rule strong { color: var(--accent); font-weight: 500; }
+        .rule p { color: var(--text-secondary); font-size: 0.96rem; }
+        .rule p + p { margin-top: 0.7rem; }
+
+        footer { text-align: center; color: var(--text-muted); font-size: 0.78rem; padding: 50px 24px; border-top: 1px solid var(--border); margin-top: 3rem; }
+        .legend { display: flex; gap: 16px; flex-wrap: wrap; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.4rem; }
+        .legend span { display: flex; align-items: center; gap: 6px; }
+        .legend i { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="brand"><span class="dot"></span>substrate</div>
+        <a class="home" href="/builders.html">the pitch →</a>
+    </nav>
+
+    <div class="doc">
+        <div class="banner">internal — reality check. not for public distribution.</div>
+        <h1>The reality today, and what we need</h1>
+        <p class="lead">The builders page promises "drop a repo → it runs the same afternoon." Today that happens <em>by hand</em>, not by button. This page keeps us honest about which parts are real, which are concierge, and which are still to build — so nobody reads the marketing as a spec.</p>
+
+        <h2>What the page promises</h2>
+        <p class="body">Bring an AI-built repo; it's running on our infrastructure the same afternoon — compute, AI, memory, and storage provisioned, a live URL, you own the company. That's the destination. It's the right north star. It is not yet the mechanism.</p>
+
+        <h2>What's real today</h2>
+        <div class="legend">
+            <span><i style="background:#4ade80"></i>live</span>
+            <span><i style="background:#e0b34a"></i>by hand</span>
+            <span><i style="background:#d67a7a"></i>not built yet</span>
+        </div>
+        <div class="row"><span class="rdot hand"></span><div class="name"><strong>Concierge onboarding</strong><span>We can take a simple repo and stand it up for you. For a simple app, a day or two. First external repo not yet run end-to-end — Sensarra (our own) was hand-Dockerized over weeks.</span></div><span class="pill hand">by hand</span></div>
+        <div class="row"><span class="rdot live"></span><div class="name"><strong>Deploy to our cloud (Cloud Run)</strong><span>The place things actually run. Real and in use across the stack.</span></div><span class="pill live">live</span></div>
+        <div class="row"><span class="rdot hand"></span><div class="name"><strong>LLM gateway (Orchestra)</strong><span>The /v1/complete gateway exists — but it isn't yet wired to production verticals. Even Sensarra has no managed inference in prod.</span></div><span class="pill hand">partial</span></div>
+        <div class="row"><span class="rdot no"></span><div class="name"><strong>Self-serve "drop any repo → auto-runs"</strong><span>No generic repo→run pipeline exists. Every run so far has been hand-built by agents.</span></div><span class="pill no">not built</span></div>
+        <div class="row"><span class="rdot no"></span><div class="name"><strong>Safe execution of arbitrary code</strong><span>Running untrusted third-party code without risking the platform — the sandbox/trust layer — isn't wired for arbitrary apps.</span></div><span class="pill no">not built</span></div>
+        <div class="row"><span class="rdot no"></span><div class="name"><strong>Earning / usage metering / payout</strong><span>Billing today is Paddle tier subscriptions. Usage metering, cross-vertical settlement, and payout are gated on a regulated partner (SEIT §14.1) — not a promise we can make yet.</span></div><span class="pill no">not built</span></div>
+        <div class="row"><span class="rdot no"></span><div class="name"><strong>Engine external API surface</strong><span>The automated self-serve path calls Pavel's engine API. It doesn't exist yet, and it's on his cadence.</span></div><span class="pill no">not built</span></div>
+        <div class="row"><span class="rdot no"></span><div class="name"><strong>Opt-in shell</strong><span>Filed as a dispatch. Not built.</span></div><span class="pill no">not built</span></div>
+
+        <h2>What we need to build</h2>
+        <p class="h2note">To turn concierge into the button the page describes, in rough dependency order:</p>
+        <ol class="need">
+            <li><strong>Repo→run onboarding pipeline</strong> — containerize and deploy an arbitrary simple stack to Cloud Run automatically. <span>This is what turns "we'll get it running by hand" into a button.</span></li>
+            <li><strong>Managed inference in prod</strong> — the LLM gateway consumable by live verticals, not just in principle. <span>Sensarra is the first place to wire it.</span></li>
+            <li><strong>Safe-execution / sandbox layer</strong> — run third-party code without risking the platform. <span>This is Notary's job; it isn't wired for arbitrary apps.</span></li>
+            <li><strong>Engine external API surface</strong> <span class="tag block">blocks self-serve · Pavel's cadence</span><span>The control plane the automated path calls. The self-serve version can't ship without it.</span></li>
+            <li><strong>Per-vertical usage metering</strong> — meter each business against the shared credit. <span>The honest, non-counsel-gated half of the economics.</span></li>
+            <li><strong>Settlement / payout</strong> <span class="tag block">counsel-gated</span><span>Cross-vertical value and earning. Needs a regulated partner. Latest, not soonest.</span></li>
+        </ol>
+        <p class="body" style="margin-top:1.2rem">Honest sizing: this is a multi-month build, and the automated path is partly blocked on Pavel's engine API. <strong style="color:var(--text)">The concierge path needs none of it</strong> — which is exactly why we lead with concierge.</p>
+
+        <h2>The one rule</h2>
+        <div class="rule">
+            <p><strong>The builders page is marketing, not a spec.</strong></p>
+            <p>"Ship this" means the page + a concierge apply flow + hand-onboarding the first founders. It does <em>not</em> mean "go build the drop-any-repo runtime." That runtime is the roadmap above — building it off the back of the marketing page burns months and double-books against Pavel's cutover.</p>
+            <p>If you're an engineer reading the builders page: build the page and the form, not the machine it describes.</p>
+        </div>
+    </div>
+
+    <footer>Seitiate · internal reality check — not for public distribution</footer>
+</body>
+</html>
