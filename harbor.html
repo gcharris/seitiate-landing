@@ -88,6 +88,10 @@
         .rule p { color: var(--text-secondary); font-size: 0.92rem; margin-top: 0.4rem; }
 
         footer { text-align: center; color: var(--text-muted); font-size: 0.78rem; padding: 50px 24px; border-top: 1px solid var(--border); margin-top: 3rem; }
+        .pageset { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; margin-bottom: 16px; }
+        .pageset a { color: var(--text-secondary); }
+        .pageset a:hover { color: var(--text); }
+        .pageset a.cur { color: var(--accent); }
 
         @media (max-width: 640px) {
             .grid2 { grid-template-columns: 1fr; }
@@ -200,7 +204,7 @@
         <div class="card">
             <div class="head"><h3>Notary — the trust layer</h3><span class="tag">private · IP-sensitive</span></div>
             <p>Trust backbone through the entire skill lifecycle: risk classification · sandboxing · 12-check certification gauntlet · ES256 attestations (FORGE-2 built, activation held for the Elixir re-home) · provenance chain.</p>
-            <p>Load-bearing when hosting third-party verticals — "we run real businesses, so what runs is vetted."</p>
+            <p>Also the <strong>slop filter at vertical intake</strong> — the same certification that vets a skill vets a vertical (mechanical → risk-classify → intent check → sandbox → Governor). AI authorship is fine and expected (90%+ of repos); what we filter is slop, not AI. Load-bearing when hosting third-party verticals — "we run real businesses, so what runs is vetted."</p>
         </div>
         <div class="card">
             <div class="head"><h3>CES — the brain</h3><span class="tag">coordination</span></div>
@@ -215,6 +219,7 @@
             <p class="p"><strong>The seity</strong> — accumulated, non-clonable steering judgment bonded to the human, riding across every runtime on C2PA rails. We persist the human; we don't ship the agent runtime (giants commoditize it).</p>
             <p class="p"><strong>Neutrality</strong> — a third party attests what a platform-owner cannot attest for itself.</p>
             <p class="p"><strong>The provenance stamp that travels</strong> — Notary's offline-verifiable ES256 receipt is the thing a wrapper-LLM competitor structurally cannot copy. That is the flank.</p>
+            <p class="p"><strong>The intake filter</strong> — the same Notary gauntlet that vets a skill vets a vertical before it runs. AI authorship is expected; slop is refused. The economics finish the job: every sandbox run costs the founder real SEIT credits.</p>
         </div>
 
         <!-- ============ THE RULE ============ -->
@@ -225,6 +230,13 @@
         </div>
     </div>
 
-    <footer>Seitiate · internal — not for public distribution</footer>
+    <footer>
+        <nav class="pageset">
+            <a href="/builders.html">the pitch</a>
+            <a href="/reality.html">the reality</a>
+            <a href="/harbor.html" class="cur">the harbor</a>
+        </nav>
+        <span>Seitiate · internal — not for public distribution</span>
+    </footer>
 </body>
 </html>

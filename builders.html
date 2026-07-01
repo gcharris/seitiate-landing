@@ -81,6 +81,10 @@
         .close h2 { font-size: clamp(22px, 4vw, 30px); font-weight: 600; margin-bottom: 1.6rem; letter-spacing: -0.01em; }
         .fine { font-size: 0.9rem; color: var(--text-muted); font-style: italic; max-width: 440px; margin: 1.4rem auto 0; line-height: 1.6; }
         footer { text-align: center; color: var(--text-muted); font-size: 0.78rem; padding: 54px 24px; }
+        .pageset { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; margin-bottom: 16px; }
+        .pageset a { color: var(--text-secondary); }
+        .pageset a:hover { color: var(--text); }
+        .pageset a.cur { color: var(--accent); }
 
         @media (max-width: 640px) {
             .grid { grid-template-columns: 1fr; }
@@ -148,6 +152,13 @@
         <p class="fine">You keep the company. We keep it running. Bring your repo — let's find out if it flies.</p>
     </section>
 
-    <footer>Seitiate · internal preview — not for public distribution</footer>
+    <footer>
+        <nav class="pageset">
+            <a href="/builders.html" class="cur">the pitch</a>
+            <a href="/reality.html">the reality</a>
+            <a href="/harbor.html">the harbor</a>
+        </nav>
+        <span>Seitiate · internal preview — not for public distribution</span>
+    </footer>
 </body>
 </html>

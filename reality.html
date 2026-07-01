@@ -69,6 +69,10 @@
         .rule p + p { margin-top: 0.7rem; }
 
         footer { text-align: center; color: var(--text-muted); font-size: 0.78rem; padding: 50px 24px; border-top: 1px solid var(--border); margin-top: 3rem; }
+        .pageset { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; margin-bottom: 16px; }
+        .pageset a { color: var(--text-secondary); }
+        .pageset a:hover { color: var(--text); }
+        .pageset a.cur { color: var(--accent); }
         .legend { display: flex; gap: 16px; flex-wrap: wrap; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.4rem; }
         .legend span { display: flex; align-items: center; gap: 6px; }
         .legend i { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
@@ -107,6 +111,7 @@
         <p class="h2note">To turn concierge into the button the page describes, in rough dependency order:</p>
         <ol class="need">
             <li><strong>Repo→run onboarding pipeline</strong> — containerize and deploy an arbitrary simple stack to Cloud Run automatically. <span>This is what turns "we'll get it running by hand" into a button.</span></li>
+            <li><strong>The slop filter at intake</strong> — every repo that wants to be a vertical passes cascading gates before it runs: <em>mechanical</em> (build, license, no malware) → <em>Notary risk-classify</em> (PROMPT_ONLY / TOOL_USING / EXECUTABLE; egress surface) → <em>intent check</em> (does the code do what the README claims) → <em>sandbox run</em> (crash-test, phone-home behavior) → <em>Governor/Canon</em> (output meets the creator's taste). <span>This is Notary's job, extended from skills to verticals. AI authorship is fine — 90%+ of repos will be AI-generated; what we filter is slop, not AI.</span></li>
             <li><strong>Managed inference in prod</strong> — the LLM gateway consumable by live verticals, not just in principle. <span>Sensarra is the first place to wire it.</span></li>
             <li><strong>Safe-execution / sandbox layer</strong> — run third-party code without risking the platform. <span>This is Notary's job; it isn't wired for arbitrary apps.</span></li>
             <li><strong>Engine external API surface</strong> <span class="tag block">blocks self-serve · Pavel's cadence</span><span>The control plane the automated path calls. The self-serve version can't ship without it.</span></li>
@@ -114,6 +119,13 @@
             <li><strong>Settlement / payout</strong> <span class="tag block">counsel-gated</span><span>Cross-vertical value and earning. Needs a regulated partner. Latest, not soonest.</span></li>
         </ol>
         <p class="body" style="margin-top:1.2rem">Honest sizing: this is a multi-month build, and the automated path is partly blocked on Pavel's engine API. <strong style="color:var(--text)">The concierge path needs none of it</strong> — which is exactly why we lead with concierge.</p>
+
+        <h2>What stops the slop-farm</h2>
+        <p class="body">The fair stress-test: <em>what happens when AI sends you 1000 repos at once — do you become a slop-farm, or do you filter?</em></p>
+        <p class="body">We filter. Three structural reasons:</p>
+        <p class="body"><strong>The moat is the seity, not the typing.</strong> AI will write most of what lands here, and that's fine. What we refuse is the model where an agent generates slop at scale and a human collects passive rent — that's a different company's product, and it's exactly the thing we're not. A founder using Claude to build 50 products and steering each one is a real founder; the filter targets slop, not AI authorship.</p>
+        <p class="body"><strong>The intake gates are Notary's job.</strong> The same certification gauntlet that vets a skill vets a vertical — risk-classified, sandboxed, intent-checked. "We run real businesses, so what runs is vetted."</p>
+        <p class="body"><strong>The economics finish the job.</strong> SEIT is closed-loop and non-redeemable: every sandbox run, every intent check costs the founder real credits they paid $1 each for. No rate limit (a real founder iterating fast should be able to) — but slop costs money before it ever reaches a customer, and the ledger does the work without anyone moralizing about it.</p>
 
         <h2>The one rule</h2>
         <div class="rule">
@@ -123,6 +135,13 @@
         </div>
     </div>
 
-    <footer>Seitiate · internal reality check — not for public distribution</footer>
+    <footer>
+        <nav class="pageset">
+            <a href="/builders.html">the pitch</a>
+            <a href="/reality.html" class="cur">the reality</a>
+            <a href="/harbor.html">the harbor</a>
+        </nav>
+        <span>Seitiate · internal reality check — not for public distribution</span>
+    </footer>
 </body>
 </html>
