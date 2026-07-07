@@ -19,15 +19,18 @@
         body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; }
         a { color: inherit; text-decoration: none; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
-        nav {
+        body > nav {
             position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-            padding: 14px 24px; display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 24px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
             background: rgba(8, 9, 11, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);
         }
-        nav .brand { display: flex; align-items: center; gap: 9px; font-size: 15px; font-weight: 500; }
-        nav .brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 2.2s infinite; }
-        nav .home { color: var(--text-secondary); font-size: 0.85rem; }
-        nav .home:hover { color: var(--text); }
+        body > nav .brand { display: flex; align-items: center; gap: 9px; font-size: 15px; font-weight: 500; }
+        body > nav .brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 2.2s infinite; }
+        body > nav .links { display: flex; align-items: center; justify-content: center; gap: 18px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; }
+        body > nav .links a { color: var(--text-secondary); white-space: nowrap; }
+        body > nav .links a:hover, body > nav .links a.cur { color: var(--accent); }
+        body > nav .home { color: var(--text-secondary); font-size: 0.85rem; justify-self: end; }
+        body > nav .home:hover { color: var(--text); }
         .doc { max-width: 720px; margin: 0 auto; padding: 112px 24px 40px; }
         .banner {
             font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.03em;
@@ -86,12 +89,25 @@
         .pageset a.cur { color: var(--accent); }
         .appendix { margin-top: 8px; font-size: 0.72rem; }
         .appendix a { color: var(--text-muted); margin: 0 8px; }
+        @media (max-width: 760px) {
+            body > nav { grid-template-columns: 1fr; justify-items: center; gap: 8px; }
+            body > nav .brand, body > nav .home { display: none; }
+            body > nav .links { width: 100%; justify-content: center; flex-wrap: wrap; gap: 8px 14px; overflow-x: visible; padding-bottom: 2px; }
+        }
     </style>
 </head>
 <body>
     <nav>
         <div class="brand"><span class="dot"></span>Evidence Foundry</div>
-        <a class="home" href="/overview.html">company overview →</a>
+        <div class="links">
+            <a href="/overview.html">overview</a>
+            <a href="/researcher.html" class="cur">researchers</a>
+            <a href="/baas.html">builders</a>
+            <a href="/july-overview.html">July detail</a>
+            <a href="/harbor.html">stack map</a>
+            <a href="/reality.html">build state</a>
+        </div>
+        <a class="home" href="/">public engine →</a>
     </nav>
 
     <div class="doc">
