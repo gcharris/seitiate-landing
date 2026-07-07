@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>For researchers — defensible claims, not confident text</title>
+    <meta name="description" content="A truth-first research workspace: every load-bearing claim traces to evidence, a source, or an open question. Built on Seitiate.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #08090b; --surface: #0f1114; --border: #1a1c22;
+            --text: #eceae7; --text-secondary: #8a8a90; --text-muted: #56585f;
+            --accent: #4ade80; --amber: #e0b34a; --accent-ink: #08170d;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+        a { color: inherit; text-decoration: none; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 14px 24px; display: flex; justify-content: space-between; align-items: center;
+            background: rgba(8, 9, 11, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);
+        }
+        nav .brand { display: flex; align-items: center; gap: 9px; font-size: 15px; font-weight: 500; }
+        nav .brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 2.2s infinite; }
+        nav .home { color: var(--text-secondary); font-size: 0.85rem; }
+        nav .home:hover { color: var(--text); }
+        .doc { max-width: 720px; margin: 0 auto; padding: 112px 24px 40px; }
+        .banner {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.03em;
+            color: var(--accent); border: 1px solid rgba(74, 222, 128, 0.25); background: rgba(74, 222, 128, 0.05);
+            border-radius: 8px; padding: 10px 14px; margin-bottom: 2.4rem;
+        }
+        h1 { font-size: clamp(28px, 4.8vw, 38px); font-weight: 600; letter-spacing: -0.01em; line-height: 1.18; margin-bottom: 1.1rem; }
+        .lead { font-size: 1.08rem; color: var(--text-secondary); margin-bottom: 2.2rem; }
+        .lead strong { color: var(--text); font-weight: 500; }
+        h2 { font-size: 1.15rem; font-weight: 500; margin: 2.6rem 0 0.6rem; }
+        .h2note { color: var(--text-secondary); font-size: 0.92rem; margin-bottom: 1rem; }
+        p.body { color: var(--text-secondary); font-size: 0.96rem; margin-bottom: 0.8rem; }
+        p.body strong { color: var(--text); font-weight: 500; }
+        ul.body { color: var(--text-secondary); font-size: 0.94rem; padding-left: 1.2rem; margin-bottom: 1rem; }
+        ul.body li { margin-bottom: 0.45rem; }
+        ul.body li strong { color: var(--text); font-weight: 500; }
+        .discipline {
+            border: 1px solid var(--border); background: var(--surface); border-radius: 12px;
+            padding: 20px 22px; margin: 1.2rem 0;
+        }
+        .discipline .label { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--accent); letter-spacing: 0.04em; margin-bottom: 0.6rem; }
+        .quote {
+            margin: 1.4rem 0; padding: 16px 18px; border-left: 2px solid var(--accent);
+            background: rgba(74, 222, 128, 0.04); font-style: italic; color: var(--text); font-size: 0.96rem; line-height: 1.65;
+        }
+        .steps { margin: 1rem 0; }
+        .step { display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+        .step:last-child { border-bottom: none; }
+        .step .n {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--text-muted);
+            width: 24px; height: 24px; border: 1px solid var(--border); border-radius: 6px;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;
+        }
+        .step .t strong { font-weight: 500; font-size: 0.98rem; }
+        .step .t span { display: block; color: var(--text-secondary); font-size: 0.88rem; margin-top: 3px; }
+        .scope {
+            border: 1px solid rgba(224, 179, 74, 0.25); background: rgba(224, 179, 74, 0.05);
+            border-radius: 10px; padding: 16px 18px; margin: 1.4rem 0;
+        }
+        .scope strong { color: var(--amber); font-weight: 500; }
+        .scope p { color: var(--text-secondary); font-size: 0.92rem; margin-top: 0.4rem; }
+        .cta-row { display: flex; flex-wrap: wrap; gap: 14px; margin: 2rem 0 1rem; }
+        .cta {
+            display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: var(--accent-ink);
+            font-weight: 600; font-size: 0.95rem; padding: 13px 22px; border-radius: 8px; font-family: 'JetBrains Mono', monospace;
+        }
+        .cta:hover { filter: brightness(1.08); }
+        .ghost { color: var(--text-secondary); font-size: 0.95rem; padding: 13px 0; }
+        .ghost:hover { color: var(--text); }
+        .footnote { margin-top: 2.5rem; padding-top: 1.4rem; border-top: 1px solid var(--border); font-size: 0.88rem; color: var(--text-muted); }
+        .footnote a { color: var(--text-secondary); text-decoration: underline; text-underline-offset: 3px; }
+        footer { text-align: center; color: var(--text-muted); font-size: 0.78rem; padding: 40px 24px 54px; }
+        .pageset { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; margin-bottom: 16px; }
+        .pageset a { color: var(--text-secondary); }
+        .pageset a:hover { color: var(--text); }
+        .pageset a.cur { color: var(--accent); }
+        .appendix { margin-top: 8px; font-size: 0.72rem; }
+        .appendix a { color: var(--text-muted); margin: 0 8px; }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="brand"><span class="dot"></span>Evidence Foundry</div>
+        <a class="home" href="/">seitiate.com</a>
+    </nav>
+
+    <div class="doc">
+        <div class="banner">for researchers · reviewed-access beta</div>
+        <h1>When AI makes confident writing cheap, defensible claims become the work.</h1>
+        <p class="lead"><strong>A workspace where every load-bearing claim must trace to evidence, a source, or an open question</strong> — and the export shows when text outran its support. The system does not bless sentences because they sound good.</p>
+
+        <h2>The problem</h2>
+        <p class="body">Research has a painful version of the universal AI trust problem. Drafts arrive fast; citations and evidence lag behind. Reviewers, supervisors, and integrity offices care about one thing: <strong>can this claim survive scrutiny?</strong></p>
+
+        <h2>The discipline</h2>
+        <div class="discipline">
+            <div class="label">THREE ALLOWED BACKINGS</div>
+            <ul class="body" style="margin-bottom:0">
+                <li>your own evidence;</li>
+                <li>a real source or citation;</li>
+                <li>an explicitly marked open question.</li>
+            </ul>
+        </div>
+        <div class="quote">The system is not saying the science is true. It is saying whether the manuscript has outrun the record.</div>
+
+        <h2>What you do in the workspace</h2>
+        <p class="h2note">Sources, evidence, claims, writing, review, and export stay connected — not scattered across five tools.</p>
+        <div class="steps">
+            <div class="step"><span class="n">1</span><div class="t"><strong>Import and organize sources</strong><span>Keep what you're building on where you can see it.</span></div></div>
+            <div class="step"><span class="n">2</span><div class="t"><strong>Attach evidence to claims</strong><span>Load-bearing sentences earn their backing or get flagged.</span></div></div>
+            <div class="step"><span class="n">3</span><div class="t"><strong>Write with the record visible</strong><span>Draft in the same place the evidence lives.</span></div></div>
+            <div class="step"><span class="n">4</span><div class="t"><strong>Run rigor review before export</strong><span>Unresolved claims travel in the export — visibly, not hidden.</span></div></div>
+        </div>
+
+        <h2>Try it</h2>
+        <p class="body">Evidence Foundry is live on synthetic and public data. Reviewed-access beta — apply on the product site; we onboard in batches.</p>
+        <div class="cta-row">
+            <a class="cta" href="https://evidencefoundry.com/">Apply at evidencefoundry.com →</a>
+            <a class="ghost" href="https://app.evidencefoundry.com/">Already approved? Open workspace →</a>
+        </div>
+
+        <div class="scope">
+            <strong>Current scope</strong>
+            <p>Synthetic, public, or explicitly approved non-sensitive data only. Real institutional datasets need governance work first. No paid tier yet — we're optimizing for serious beta feedback.</p>
+        </div>
+
+        <p class="footnote">Built on <a href="/overview.html">Seitiate</a> — exportable research records on a trust substrate. Company overview for investors <a href="/overview.html">here</a>; not required to use the workspace.</p>
+    </div>
+
+    <footer>
+        <nav class="pageset">
+            <a href="/overview.html">investors</a>
+            <a href="/researcher.html" class="cur">researchers</a>
+            <a href="/baas.html">builders</a>
+        </nav>
+        <span>Evidence Foundry · a Seitiate vertical · 2026</span>
+    </footer>
+</body>
+</html>
