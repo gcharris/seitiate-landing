@@ -177,7 +177,7 @@
 
         @media (max-width: 640px) {
             body > nav { grid-template-columns: 1fr; justify-items: center; gap: 8px; }
-            body > nav .brand, body > nav .home { display: none; }
+            body > nav .home { display: none; }
             body > nav .links { width: 100%; justify-content: center; flex-wrap: wrap; gap: 8px 14px; overflow-x: visible; padding-bottom: 2px; }
             .twocol { grid-template-columns: 1fr; }
             table.rev { font-size: 0.84rem; }
@@ -188,7 +188,7 @@
 </head>
 <body>
     <nav>
-        <div class="brand"><span class="dot"></span>Seitiate partner brief</div>
+        <a class="brand" href="/" aria-label="Back to private index"><span class="dot"></span>Seitiate partner brief</a>
         <div class="links">
             <a href="/overview.html">overview</a>
             <a href="/researcher.html">researchers</a>

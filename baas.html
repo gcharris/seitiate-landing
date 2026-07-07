@@ -100,7 +100,7 @@
 
         @media (max-width: 640px) {
             body > nav { grid-template-columns: 1fr; justify-items: center; gap: 8px; }
-            body > nav .brand, body > nav .home { display: none; }
+            body > nav .home { display: none; }
             body > nav .links { width: 100%; justify-content: center; flex-wrap: wrap; gap: 8px 14px; overflow-x: visible; padding-bottom: 2px; }
             .grid { grid-template-columns: 1fr; }
             .flip { flex-direction: column; }
@@ -111,7 +111,7 @@
 </head>
 <body>
     <nav>
-        <div class="brand"><span class="dot"></span>Seitiate for builders</div>
+        <a class="brand" href="/" aria-label="Back to private index"><span class="dot"></span>Seitiate for builders</a>
         <div class="links">
             <a href="/overview.html">overview</a>
             <a href="/researcher.html">researchers</a>

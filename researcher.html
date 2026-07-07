@@ -91,14 +91,14 @@
         .appendix a { color: var(--text-muted); margin: 0 8px; }
         @media (max-width: 760px) {
             body > nav { grid-template-columns: 1fr; justify-items: center; gap: 8px; }
-            body > nav .brand, body > nav .home { display: none; }
+            body > nav .home { display: none; }
             body > nav .links { width: 100%; justify-content: center; flex-wrap: wrap; gap: 8px 14px; overflow-x: visible; padding-bottom: 2px; }
         }
     </style>
 </head>
 <body>
     <nav>
-        <div class="brand"><span class="dot"></span>Evidence Foundry</div>
+        <a class="brand" href="/" aria-label="Back to private index"><span class="dot"></span>Evidence Foundry</a>
         <div class="links">
             <a href="/overview.html">overview</a>
             <a href="/researcher.html" class="cur">researchers</a>
