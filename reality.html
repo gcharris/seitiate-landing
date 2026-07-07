@@ -81,13 +81,13 @@
 <body>
     <nav>
         <div class="brand"><span class="dot"></span>substrate</div>
-        <a class="home" href="/builders.html">the pitch →</a>
+        <a class="home" href="/baas.html">BaaS →</a>
     </nav>
 
     <div class="doc">
         <div class="banner">internal — reality check. not for public distribution.</div>
         <h1>The reality today, and what we need</h1>
-        <p class="lead">The builders page promises "drop a repo → it runs the same afternoon." Today that happens <em>by hand</em>, not by button. This page keeps us honest about which parts are real, which are concierge, and which are still to build — so nobody reads the marketing as a spec.</p>
+        <p class="lead">The BaaS page promises "drop a repo → it runs the same afternoon." Today that happens <em>by hand</em>, not by button. This page keeps us honest about which parts are real, which are concierge, and which are still to build — so nobody reads the marketing as a spec.</p>
 
         <h2>What the page promises</h2>
         <p class="body">Bring an AI-built repo; it's running on our infrastructure the same afternoon — compute, AI, memory, and storage provisioned, a live URL, you own the company. That's the destination. It's the right north star. It is not yet the mechanism.</p>
@@ -95,16 +95,19 @@
         <h2>What's real today</h2>
         <div class="legend">
             <span><i style="background:#4ade80"></i>live</span>
-            <span><i style="background:#e0b34a"></i>by hand</span>
+            <span><i style="background:#e0b34a"></i>by hand / partial</span>
             <span><i style="background:#d67a7a"></i>not built yet</span>
         </div>
+        <div class="row"><span class="rdot live"></span><div class="name"><strong>Evidence Foundry</strong><span>Public landing + hosted workspace (reviewed-access beta). The people-side proof of the substrate — claim/evidence/export loop on synthetic data.</span></div><span class="pill live">live</span></div>
+        <div class="row"><span class="rdot live"></span><div class="name"><strong>Agentic Contract-CI</strong><span>Governed merge path across core repos: independent LLM review, Tier-2 hold, phone approval, audit. Proven on a sensitive PR cleared from the Director's phone.</span></div><span class="pill live">live</span></div>
+        <div class="row"><span class="rdot live"></span><div class="name"><strong>Engine core loop (Elixir)</strong><span><code style="font-family:'JetBrains Mono',monospace;font-size:0.82em">27db2f6</code> on <code style="font-family:'JetBrains Mono',monospace;font-size:0.82em">origin/elixir</code>: session → signed memory → export → offline verify → retrieval. 592 tests green. Pre-deploy — integration target, not production yet.</span></div><span class="pill live">live · pre-deploy</span></div>
         <div class="row"><span class="rdot hand"></span><div class="name"><strong>Concierge onboarding</strong><span>We can take a simple repo and stand it up for you. For a simple app, a day or two. First external repo not yet run end-to-end — Sensarra (our own) was hand-Dockerized over weeks.</span></div><span class="pill hand">by hand</span></div>
         <div class="row"><span class="rdot live"></span><div class="name"><strong>Deploy to our cloud (Cloud Run)</strong><span>The place things actually run. Real and in use across the stack.</span></div><span class="pill live">live</span></div>
         <div class="row"><span class="rdot hand"></span><div class="name"><strong>LLM gateway (Orchestra)</strong><span>The /v1/complete gateway exists — but it isn't yet wired to production verticals. Even Sensarra has no managed inference in prod.</span></div><span class="pill hand">partial</span></div>
         <div class="row"><span class="rdot no"></span><div class="name"><strong>Self-serve "drop any repo → auto-runs"</strong><span>No generic repo→run pipeline exists. Every run so far has been hand-built by agents.</span></div><span class="pill no">not built</span></div>
         <div class="row"><span class="rdot no"></span><div class="name"><strong>Safe execution of arbitrary code</strong><span>Running untrusted third-party code without risking the platform — the sandbox/trust layer — isn't wired for arbitrary apps.</span></div><span class="pill no">not built</span></div>
         <div class="row"><span class="rdot no"></span><div class="name"><strong>Earning / usage metering / payout</strong><span>Billing today is Paddle tier subscriptions. Usage metering, cross-vertical settlement, and payout are gated on a regulated partner (SEIT §14.1) — not a promise we can make yet.</span></div><span class="pill no">not built</span></div>
-        <div class="row"><span class="rdot no"></span><div class="name"><strong>Engine external API surface</strong><span>The automated self-serve path calls Pavel's engine API. It doesn't exist yet, and it's on his cadence.</span></div><span class="pill no">not built</span></div>
+        <div class="row"><span class="rdot hand"></span><div class="name"><strong>Engine external API (self-serve path)</strong><span>The core loop exists on the Elixir branch; the automated BaaS onboarding path still needs a stable external control-plane API. That seam is the remaining blocker for the button, not the loop itself.</span></div><span class="pill hand">partial</span></div>
         <div class="row"><span class="rdot no"></span><div class="name"><strong>Opt-in shell</strong><span>Filed as a dispatch. Not built.</span></div><span class="pill no">not built</span></div>
 
         <h2>What we need to build</h2>
@@ -114,11 +117,11 @@
             <li><strong>The slop filter at intake</strong> — every repo that wants to be a vertical passes cascading gates before it runs: <em>mechanical</em> (build, license, no malware) → <em>Notary risk-classify</em> (PROMPT_ONLY / TOOL_USING / EXECUTABLE; egress surface) → <em>intent check</em> (does the code do what the README claims) → <em>sandbox run</em> (crash-test, phone-home behavior) → <em>Governor/Canon</em> (output meets the creator's taste). <span>This is Notary's job, extended from skills to verticals. AI authorship is fine — 90%+ of repos will be AI-generated; what we filter is slop, not AI.</span></li>
             <li><strong>Managed inference in prod</strong> — the LLM gateway consumable by live verticals, not just in principle. <span>Sensarra is the first place to wire it.</span></li>
             <li><strong>Safe-execution / sandbox layer</strong> — run third-party code without risking the platform. <span>This is Notary's job; it isn't wired for arbitrary apps.</span></li>
-            <li><strong>Engine external API surface</strong> <span class="tag block">blocks self-serve · Pavel's cadence</span><span>The control plane the automated path calls. The self-serve version can't ship without it.</span></li>
+            <li><strong>Engine external API (self-serve)</strong> <span class="tag">partial · loop exists</span><span>The control plane the automated BaaS path calls. Core loop is built; stable external surface for onboarding is still the gap.</span></li>
             <li><strong>Per-vertical usage metering</strong> — meter each business against the shared credit. <span>The honest, non-counsel-gated half of the economics.</span></li>
             <li><strong>Settlement / payout</strong> <span class="tag block">counsel-gated</span><span>Cross-vertical value and earning. Needs a regulated partner. Latest, not soonest.</span></li>
         </ol>
-        <p class="body" style="margin-top:1.2rem">Honest sizing: this is a multi-month build, and the automated path is partly blocked on Pavel's engine API. <strong style="color:var(--text)">The concierge path needs none of it</strong> — which is exactly why we lead with concierge.</p>
+        <p class="body" style="margin-top:1.2rem">Honest sizing: the self-serve button is a multi-month build; the core engine loop is no longer the long pole. <strong style="color:var(--text)">The concierge path needs none of it</strong> — which is exactly why we lead with concierge.</p>
 
         <h2>What stops the slop-farm</h2>
         <p class="body">The fair stress-test: <em>what happens when AI sends you 1000 repos at once — do you become a slop-farm, or do you filter?</em></p>
@@ -129,17 +132,18 @@
 
         <h2>The one rule</h2>
         <div class="rule">
-            <p><strong>The builders page is marketing, not a spec.</strong></p>
-            <p>"Ship this" means the page + a concierge apply flow + hand-onboarding the first founders. It does <em>not</em> mean "go build the drop-any-repo runtime." That runtime is the roadmap above — building it off the back of the marketing page burns months and double-books against Pavel's cutover.</p>
-            <p>If you're an engineer reading the builders page: build the page and the form, not the machine it describes.</p>
+            <p><strong>The BaaS page is marketing, not a spec.</strong></p>
+            <p>"Ship this" means the page + a concierge apply flow + hand-onboarding the first founders. It does <em>not</em> mean "go build the drop-any-repo runtime." That runtime is the roadmap above — building it off the back of the marketing page burns months and double-books against the Elixir deploy cutover.</p>
+            <p>If you're an engineer reading the BaaS page: build the page and the form, not the machine it describes.</p>
         </div>
     </div>
 
     <footer>
         <nav class="pageset">
-            <a href="/builders.html">the pitch</a>
-            <a href="/reality.html" class="cur">the reality</a>
-            <a href="/harbor.html">the harbor</a>
+            <a href="/overview.html">overview</a>
+            <a href="/baas.html">BaaS</a>
+            <a href="/reality.html" class="cur">reality</a>
+            <a href="/harbor.html">harbor</a>
         </nav>
         <span>Seitiate · internal reality check — not for public distribution</span>
     </footer>
