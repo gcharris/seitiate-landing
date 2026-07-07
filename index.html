@@ -3,623 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seitiate — Memory and Governance for AI Systems</title>
-    <meta name="description" content="Open infrastructure for AI systems that remember useful context, support reusable capabilities, keep humans in control, and stay portable across models and deployments.">
-    <meta property="og:title" content="Seitiate — Memory and Governance for AI Systems">
-    <meta property="og:description" content="Open infrastructure for AI systems that remember useful context, support reusable capabilities, and stay portable across deployments.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://seitiate.com">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Seitiate — private index</title>
+    <meta name="description" content="Private orientation index for friends, collaborators, and contacts reviewing the current Seitiate materials.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #08090b;
-            --surface: #0f1114;
-            --border: #1a1c22;
-            --text: #d8d6d3;
-            --text-secondary: #7a7a80;
-            --accent: #4ade80;
-            --accent-dim: #2d8a4e;
-            --code-bg: #12141a;
+            --bg: #08090b; --surface: #0f1114; --border: #1a1c22;
+            --text: #eceae7; --text-secondary: #8a8a90; --text-muted: #56585f;
+            --accent: #4ade80; --amber: #e0b34a;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.7;
-            -webkit-font-smoothing: antialiased;
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+        a { color: inherit; text-decoration: none; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+        body > nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 14px 24px; display: flex; justify-content: center; align-items: center;
+            background: rgba(8, 9, 11, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);
         }
-
-        /* --- Nav --- */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(8, 9, 11, 0.85);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border);
+        body > nav .brand { display: flex; align-items: center; gap: 9px; font-size: 15px; font-weight: 500; }
+        body > nav .brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 2.2s infinite; }
+        .doc { max-width: 860px; margin: 0 auto; padding: 112px 24px 54px; }
+        .banner {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.03em;
+            color: var(--accent); border: 1px solid rgba(74, 222, 128, 0.25); background: rgba(74, 222, 128, 0.05);
+            border-radius: 8px; padding: 10px 14px; margin-bottom: 2.4rem;
         }
-
-        nav .nav-brand {
-            text-decoration: none;
-            display: flex;
-            align-items: center;
+        h1 { font-size: clamp(30px, 5vw, 44px); font-weight: 600; letter-spacing: -0.01em; line-height: 1.15; margin-bottom: 1.1rem; }
+        .lead { font-size: 1.08rem; color: var(--text-secondary); max-width: 690px; margin-bottom: 2.2rem; }
+        .lead strong { color: var(--text); font-weight: 500; }
+        .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 1.5rem; }
+        .card {
+            display: block; min-height: 138px; border: 1px solid var(--border); background: var(--surface);
+            border-radius: 12px; padding: 18px 20px;
         }
-
-        nav .nav-brand img {
-            height: 44px;
-            width: auto;
-            filter: brightness(1.6) contrast(5);
-            mix-blend-mode: screen;
+        .card:hover { border-color: rgba(74, 222, 128, 0.34); background: rgba(74, 222, 128, 0.04); }
+        .card .kicker { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--text-muted); letter-spacing: 0.04em; margin-bottom: 0.45rem; }
+        .card h2 { font-size: 1.04rem; font-weight: 500; margin-bottom: 0.35rem; }
+        .card p { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.55; }
+        .note {
+            margin-top: 1.6rem; border: 1px solid rgba(224, 179, 74, 0.25);
+            background: rgba(224, 179, 74, 0.05); border-radius: 10px; padding: 16px 18px;
+            color: var(--text-secondary); font-size: 0.92rem;
         }
-
-        nav .nav-links {
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-        }
-
-        nav a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.85rem;
-            transition: color 0.2s;
-        }
-
-        nav a:hover { color: var(--text); }
-
-        nav .nav-github {
-            padding: 0.45rem 1rem;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            font-size: 0.85rem;
-        }
-
-        nav .nav-github:hover { border-color: var(--text-secondary); }
-
-        /* --- Hero --- */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 6rem 2rem 4rem;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 0.35rem 0.9rem;
-            border: 1px solid var(--border);
-            border-radius: 100px;
-            font-size: 0.75rem;
-            color: var(--accent);
-            letter-spacing: 0.05em;
-            margin-bottom: 2rem;
-        }
-
-        .brand {
-            margin-bottom: 0.75rem;
-        }
-
-        .brand-img {
-            /* Seitiate logo is LIGHT text on DARK (near-black) background.
-               contrast(5) posterizes: crushes near-black bg → pure black,
-               pushes light text → pure white.
-               brightness(1.6) lifts the text further before contrast.
-               screen blend mode drops pure black (transparent), keeps white text. */
-            height: clamp(50px, 10vw, 90px);
-            width: auto;
-            object-fit: contain;
-            filter: brightness(1.6) contrast(5);
-            mix-blend-mode: screen;
-        }
-
-        .tagline {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            font-weight: 300;
-        }
-
-        .hero-desc {
-            max-width: 580px;
-            color: var(--text-secondary);
-            font-size: 1rem;
-            line-height: 1.85;
-            margin-bottom: 3rem;
-        }
-
-        .hero-cta {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-bottom: 4rem;
-        }
-
-        .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.8rem 1.8rem;
-            background: var(--text);
-            color: var(--bg);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9rem;
-            border-radius: 6px;
-            transition: opacity 0.2s;
-        }
-
-        .btn-primary:hover { opacity: 0.88; }
-
-        .btn-outline {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.8rem 1.8rem;
-            border: 1px solid var(--border);
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.9rem;
-            border-radius: 6px;
-            transition: border-color 0.2s, color 0.2s;
-        }
-
-        .btn-outline:hover {
-            border-color: var(--text-secondary);
-            color: var(--text);
-        }
-
-        /* --- Install snippet --- */
-        .install-block {
-            background: var(--code-bg);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 1rem 1.5rem;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            max-width: 480px;
-            text-align: left;
-            margin: 0 auto;
-        }
-
-        .install-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
-        .install-header .comment { font-family: 'Inter', sans-serif; font-size: 0.8rem; color: var(--text-secondary); }
-        .copy-btn { background: none; border: 1px solid var(--border); color: var(--text-secondary); padding: 0.2rem 0.6rem; border-radius: 4px; cursor: pointer; font-size: 0.75rem; transition: 0.2s; }
-        .copy-btn:hover { color: var(--text); border-color: var(--text-secondary); }
-        
-        .code-line { margin-bottom: 0.25rem; }
-        .install-block .cmd { color: var(--accent); }
-
-        /* --- Recognition Block --- */
-        .recognition { padding: 4rem 2rem; border-top: 1px solid var(--border); }
-        .recognition-inner { max-width: 1000px; margin: 0 auto; }
-        .rec-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
-        .rec-card { padding: 1.5rem; border-left: 2px solid var(--border); transition: border-color 0.2s; }
-        .rec-card:hover { border-left-color: var(--accent); }
-        .rec-card h3 { font-size: 1.1rem; font-weight: 500; margin-bottom: 0.5rem; color: var(--text); }
-        .rec-pain { font-size: 0.85rem; color: #f87171; margin-bottom: 0.75rem; }
-        .rec-solution { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
-
-        /* --- Proof Block --- */
-        .proof { padding: 6rem 2rem; border-top: 1px solid var(--border); background: rgba(15, 17, 20, 0.4); }
-        .proof-inner { max-width: 900px; margin: 0 auto; }
-        .proof h2 { text-align: center; font-size: 1.75rem; margin-bottom: 3rem; font-weight: 600; font-family: 'Inter', sans-serif; }
-        .proof-comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem; }
-        .terminal { background: #000; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; line-height: 1.6; }
-        .terminal-header { color: var(--text-secondary); font-family: 'Inter', sans-serif; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; border-bottom: 1px dashed var(--border); padding-bottom: 0.5rem; }
-        .prompt-line { color: var(--accent); margin-bottom: 1rem; }
-        .prompt-line::before { content: '> '; opacity: 0.5; }
-        .output-bad { color: #9ca3af; }
-        .output-good { color: var(--text); }
-        .proof-caption { text-align: center; font-size: 1.1rem; color: var(--text); margin-top: 3rem; font-weight: 500; }
-        .proof-caption em { color: var(--accent); font-style: normal; }
-
-        /* --- Concept --- */
-        .concept { padding: 6rem 2rem; border-top: 1px solid var(--border); }
-        .concept-inner { max-width: 720px; margin: 0 auto; line-height: 1.8; color: var(--text-secondary); font-size: 1.05rem; }
-        .concept h2 { font-family: 'Inter', sans-serif; font-size: 2rem; color: var(--text); margin-bottom: 1.5rem; font-weight: 600; }
-        .concept p { margin-bottom: 1.5rem; }
-        .concept ul { margin: 2rem 0; padding-left: 1.5rem; }
-        .concept li { margin-bottom: 1rem; }
-        .concept li strong { color: var(--text); font-weight: 500; }
-        .concept-install { margin-top: 2rem; font-weight: 500; color: var(--text); }
-
-        @media (max-width: 768px) {
-            .proof-comparison { grid-template-columns: 1fr; }
-        }
-
-        /* --- Architecture --- */
-        .architecture {
-            padding: 6rem 2rem;
-            border-top: 1px solid var(--border);
-        }
-
-        .architecture-inner {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .architecture h2 {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.75rem;
-            font-weight: 600;
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-
-        .architecture .subtitle {
-            text-align: center;
-            color: var(--text-secondary);
-            margin-bottom: 3.5rem;
-            max-width: 550px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .arch-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.25rem;
-        }
-
-        .arch-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 2rem 1.75rem;
-        }
-
-        .arch-card h3 {
-            font-size: 1rem;
-            font-weight: 500;
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .arch-card h3 .icon {
-            font-size: 0.85rem;
-            color: var(--accent);
-            opacity: 0.7;
-        }
-
-        .arch-card p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.7;
-        }
-
-        /* --- Principles --- */
-        .principles {
-            padding: 6rem 2rem;
-            border-top: 1px solid var(--border);
-        }
-
-        .principles-inner {
-            max-width: 720px;
-            margin: 0 auto;
-        }
-
-        .principles h2 {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.75rem;
-            font-weight: 600;
-            text-align: center;
-            margin-bottom: 3.5rem;
-        }
-
-        .principle {
-            margin-bottom: 2.5rem;
-            padding-left: 1.5rem;
-            border-left: 2px solid var(--accent-dim);
-        }
-
-        .principle h3 {
-            font-size: 1rem;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-        }
-
-        .principle p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        /* --- Product --- */
-        .product {
-            padding: 6rem 2rem;
-            border-top: 1px solid var(--border);
-            text-align: center;
-        }
-
-        .product-inner {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .product h2 {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.75rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .product p {
-            color: var(--text-secondary);
-            line-height: 1.8;
-            margin-bottom: 2rem;
-        }
-
-        .product .product-name {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.1rem;
-            letter-spacing: 0.05em;
-            color: #d4a574;
-            text-transform: lowercase;
-            font-weight: 500;
-        }
-
-        /* --- Footer --- */
-        footer {
-            padding: 3rem 2rem;
-            border-top: 1px solid var(--border);
-            text-align: center;
-        }
-
-        footer .footer-brand {
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-            letter-spacing: 0.02em;
-        }
-
-        footer p {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-
-        footer a {
-            color: var(--text-secondary);
-            text-decoration: none;
-        }
-
-        footer a:hover { color: var(--text); }
-
-        .footer-links {
-            margin-top: 1rem;
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            font-size: 0.8rem;
-        }
-
-        @media (max-width: 600px) {
-            .arch-grid { grid-template-columns: 1fr; }
-            nav .nav-links { gap: 0.75rem; }
-            .hero { padding: 5rem 1.5rem 3rem; }
+        .note strong { color: var(--amber); font-weight: 500; }
+        footer { text-align: center; color: var(--text-muted); font-size: 0.78rem; padding: 24px 24px 54px; }
+        @media (max-width: 680px) {
+            .grid { grid-template-columns: 1fr; }
+            .doc { padding-top: 96px; }
         }
     </style>
 </head>
 <body>
-
     <nav>
-        <a href="/" class="nav-brand"><img src="assets/seitiate_logo.png" alt="seitiate"></a>
-        <div class="nav-links">
-            <a href="/architecture.html">Architecture</a>
-            <a href="/principles.html">Principles</a>
-            <a href="https://github.com/seitiate/seitiate" class="nav-github">GitHub</a>
-        </div>
+        <div class="brand"><span class="dot"></span>Seitiate private index</div>
     </nav>
 
-    <!-- Hero -->
-    <section class="hero">
-        <span class="badge">AGPL-3.0 &middot; Open Source</span>
-        <h1 class="brand">
-            <img src="assets/seitiate_logo.png" alt="seitiate" class="brand-img">
-        </h1>
-        <p class="tagline">Open infrastructure for AI that remembers how work actually happens.</p>
-        <p class="hero-desc">
-            Whether you are building coding tools, research workflows, or custom agent systems, the default pattern is the same:
-            each session starts cold. Seitiate provides a durable layer for continuity, reusable capabilities,
-            review, and portability so useful work can accumulate instead of resetting.
-        </p>
-        <div class="hero-cta">
-            <a href="/architecture.html" class="btn-primary">View architecture</a>
-            <a href="https://github.com/seitiate/seitiate" class="btn-outline">View on GitHub</a>
-        </div>
-        <div class="install-block">
-            <div class="install-header">
-                <span class="comment">Install &mdash; 60 secs to first value</span>
-                <button class="copy-btn" onclick="copyInstall(this)">Copy</button>
-            </div>
-            <div class="code-line"><span class="cmd">pip</span> install seitiate</div>
-            <div class="code-line"><span class="cmd">seitiate</span> init</div>
-            <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed var(--border); font-size: 0.75rem;">
-                <span class="comment"># Want the source?</span><br>
-                <span class="cmd">git</span> clone https://github.com/seitiate/seitiate.git
-            </div>
-        </div>
-    </section>
+    <main class="doc">
+        <div class="banner">friends · collaborators · contacts</div>
+        <h1>Choose the door that matches the conversation.</h1>
+        <p class="lead">These pages are a private orientation set, not a public launch site. They are meant to help friends, collaborators, researchers, builders, and serious contacts understand where Seitiate stands right now.</p>
 
-    <!-- Recognition Block -->
-    <section class="recognition">
-        <div class="recognition-inner">
-            <div class="rec-grid">
-                <div class="rec-card">
-                    <h3>Coding copilots</h3>
-                    <div class="rec-pain">Pain: useful context lives in short-lived chats, scratch notes, and habits that never become system memory.</div>
-                    <div class="rec-solution">Seitiate gives AI-assisted work a durable layer for continuity, reusable capability packaging, and reviewable outputs.</div>
-                </div>
-                <div class="rec-card">
-                    <h3>Creative and research tools</h3>
-                    <div class="rec-pain">Pain: systems can generate quickly but struggle to preserve decisions, standards, and project continuity over time.</div>
-                    <div class="rec-solution">Seitiate makes prior sources, prior work, and human choices reusable so later sessions begin with context instead of guesswork.</div>
-                </div>
-                <div class="rec-card">
-                    <h3>Custom stacks</h3>
-                    <div class="rec-pain">Pain: teams can assemble prompts, tools, and models, but the resulting system is brittle, provider-bound, and hard to govern.</div>
-                    <div class="rec-solution">Seitiate adds an open layer for memory, capability composition, governance, and portability across models and deployments.</div>
-                </div>
-            </div>
+        <div class="grid">
+            <a class="card" href="/overview.html">
+                <div class="kicker">START HERE</div>
+                <h2>Company overview</h2>
+                <p>The plain-language Seitiate story: accountable AI work, the substrate, Evidence Foundry, and what is honestly live today.</p>
+            </a>
+            <a class="card" href="/researcher.html">
+                <div class="kicker">FOR SCHOLARS</div>
+                <h2>Researchers</h2>
+                <p>Evidence Foundry as a truth-first research workspace: sources, evidence, claims, rigor review, and export.</p>
+            </a>
+            <a class="card" href="/baas.html">
+                <div class="kicker">FOR FOUNDERS</div>
+                <h2>Builders</h2>
+                <p>The early builder-facing idea: bring a repo, concierge onboarding, real users, and founder-owned verticals.</p>
+            </a>
+            <a class="card" href="/july-overview.html">
+                <div class="kicker">DETAILED SHARE-OUT</div>
+                <h2>July detail</h2>
+                <p>The current investor/partner-style update: what changed in July, what is live, what is not, and what we need next.</p>
+            </a>
+            <a class="card" href="/harbor.html">
+                <div class="kicker">APPENDIX</div>
+                <h2>Stack map</h2>
+                <p>The deeper map of verticals, Seitiate+, the engine, Notary, and CES. Useful after the overview, not before it.</p>
+            </a>
+            <a class="card" href="/reality.html">
+                <div class="kicker">APPENDIX</div>
+                <h2>Build state</h2>
+                <p>The honest inventory of what is real, what is concierge, what is partial, and what is not built yet.</p>
+            </a>
         </div>
-    </section>
 
-    <!-- Proof -->
-    <section class="proof">
-        <div class="proof-inner">
-            <h2>What changes when your AI remembers</h2>
-            <div class="proof-comparison">
-                <div class="terminal">
-                    <div class="terminal-header">Session 1</div>
-                    <div class="prompt-line">seitiate ask "write an intro for my video essay on memory"</div>
-                    <div class="output-bad">Competent, but generic.<br>No awareness of the source material you trust, the choices you made last week, or the patterns you keep rejecting.</div>
-                </div>
-                <div class="terminal">
-                    <div class="terminal-header">Session 50</div>
-                    <div class="prompt-line">seitiate ask "write an intro for my video essay on memory"</div>
-                    <div class="output-good">Starts from prior sources, accepted patterns, and earlier decisions. The work feels like a continuation of an existing practice instead of another cold start.</div>
-                </div>
-            </div>
-            <div class="proof-caption">
-                The difference is not just a better prompt. It is <em>continuity</em>.
-            </div>
+        <div class="note">
+            <strong>Private orientation, not public positioning.</strong>
+            These pages are deliberately candid about gaps. Please do not treat them as a polished marketing site or a public prospectus.
         </div>
-    </section>
+    </main>
 
-    <!-- Concept -->
-    <section class="concept">
-        <div class="concept-inner">
-            <h2>What Seitiate provides</h2>
-            <p>Seitiate is an open engine for building AI systems that can preserve useful context, package reusable capabilities, support review, and remain portable over time. It is designed for systems that need more than one-shot prompting.</p>
-            <p>The engine is intentionally model-agnostic and product-agnostic. Different products can sit on top of it, but the core responsibilities stay the same: remember what matters, make useful work reusable, and keep people in control of consequential outputs.</p>
-            <ul>
-                <li><strong>Memory:</strong> useful context survives beyond a single prompt window or session.</li>
-                <li><strong>Capabilities:</strong> workflows can be packaged, reused, and composed instead of rewritten from scratch.</li>
-                <li><strong>Review:</strong> important actions can be inspected and approved by humans.</li>
-                <li><strong>Portability:</strong> the system is built to outlast any one provider, interface, or deployment choice.</li>
-            </ul>
-            <p class="concept-install">Start with <code>pip install seitiate</code> or explore the public architecture page for the system-level overview.</p>
-        </div>
-    </section>
-
-    <!-- Architecture -->
-    <section class="architecture" id="architecture">
-        <div class="architecture-inner">
-            <h2>Public architecture at a glance</h2>
-            <p class="subtitle">These are the public-facing responsibilities of the engine. The detailed implementation story lives in the repo, not on the marketing site.</p>
-            <div class="arch-grid">
-                <div class="arch-card">
-                    <h3><span class="icon">&bull;</span> Durable memory</h3>
-                    <p>Seitiate preserves useful context from sources, prior work, and human decisions so later sessions can continue instead of restart.</p>
-                </div>
-                <div class="arch-card">
-                    <h3><span class="icon">&bull;</span> Capability composition</h3>
-                    <p>Reusable capabilities can be packaged, shared, and combined into larger flows rather than remaining one-off prompt fragments.</p>
-                </div>
-                <div class="arch-card">
-                    <h3><span class="icon">&bull;</span> Human-guided adaptation</h3>
-                    <p>The engine improves through real choices, corrections, and approvals instead of assuming every model output should be treated as final.</p>
-                </div>
-                <div class="arch-card">
-                    <h3><span class="icon">&bull;</span> Governance and review</h3>
-                    <p>Consequential work can be routed through explicit checks, policies, and review steps so quality and accountability stay visible.</p>
-                </div>
-                <div class="arch-card">
-                    <h3><span class="icon">&bull;</span> Portability</h3>
-                    <p>Seitiate is designed to stay useful across interfaces, products, and model providers rather than locking the whole system to one stack.</p>
-                </div>
-                <div class="arch-card">
-                    <h3><span class="icon">&bull;</span> Open engine boundary</h3>
-                    <p>The engine can power multiple experiences. Managed products may add workflow design and hosting, but the core memory and capability layer remains open.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Principles -->
-    <section class="principles" id="principles">
-        <div class="principles-inner">
-            <h2>Design principles</h2>
-            <div class="principle">
-                <h3>Continuity matters more than novelty</h3>
-                <p>The goal is not another isolated AI moment. The goal is a system that improves because it can carry useful context forward.</p>
-            </div>
-            <div class="principle">
-                <h3>Humans stay in charge of consequential work</h3>
-                <p>AI can explore, suggest, and accelerate, but meaningful actions should remain reviewable and accountable to human judgment.</p>
-            </div>
-            <div class="principle">
-                <h3>Reusable capabilities beat one-off prompting</h3>
-                <p>Systems become more valuable when useful workflows can be packaged, improved, and reused instead of rediscovered in every session.</p>
-            </div>
-            <div class="principle">
-                <h3>Open boundaries keep systems resilient</h3>
-                <p>An engine should outlast any one model provider, interface choice, or deployment arrangement. Portability is part of the architecture.</p>
-            </div>
-            <div class="principle">
-                <h3>Products can differ without locking the engine</h3>
-                <p>Managed experiences can add UX, hosting, and curation, but the engine layer should remain understandable, contributor-friendly, and portable.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Product -->
-    <section class="product">
-        <div class="product-inner">
-            <h2>Want the managed product experience?</h2>
-            <p>
-                <span class="product-name">sakme</span> is a managed product built on Seitiate. It adds hosting,
-                workflow design, and a product experience on top of the same underlying engine direction.
-            </p>
-            <a href="https://sakme.ai" class="btn-primary">Visit sakme.ai &rarr;</a>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-brand">seitiate</div>
-        <p>A project by Agent-C LLC &middot; &copy; 2026. Released under AGPL-3.0.</p>
-        <div class="footer-links" style="margin-bottom: 2rem;">
-            <a href="/architecture.html">Architecture</a>
-            <a href="/principles.html">Principles</a>
-            <a href="/licensing.html">Licensing</a>
-            <a href="/privacy.html">Privacy</a>
-            <a href="/terms.html">Terms</a>
-            <a href="https://sakme.ai">sakme.ai</a>
-            <a href="mailto:hello@seitiate.com">hello@seitiate.com</a>
-        </div>
-    </footer>
-
-    <script>
-        function copyInstall(btn) {
-            navigator.clipboard.writeText('pip install seitiate\nseitiate init');
-            const original = btn.innerText;
-            btn.innerText = 'Copied!';
-            btn.style.color = 'var(--accent)';
-            btn.style.borderColor = 'var(--accent)';
-            setTimeout(() => {
-                btn.innerText = original;
-                btn.style.color = '';
-                btn.style.borderColor = '';
-            }, 2000);
-        }
-    </script>
+    <footer>seitiate.com · private orientation index · 2026</footer>
 </body>
 </html>
