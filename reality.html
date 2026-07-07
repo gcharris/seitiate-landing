@@ -80,17 +80,17 @@
 </head>
 <body>
     <nav>
-        <div class="brand"><span class="dot"></span>substrate</div>
+        <div class="brand"><span class="dot"></span>Build state</div>
         <a class="home" href="/baas.html">BaaS →</a>
     </nav>
 
     <div class="doc">
         <div class="banner">appendix · build state · honest inventory</div>
         <h1>The reality today, and what we need</h1>
-        <p class="lead">The BaaS page promises "drop a repo → it runs the same afternoon." Today that happens <em>by hand</em>, not by button. This page keeps us honest about which parts are real, which are concierge, and which are still to build — so nobody reads the marketing as a spec.</p>
+        <p class="lead">The builder page points at "bring a repo → get it running." Today that happens <em>by hand</em>, not by button. This page keeps us honest about which parts are real, which are concierge, and which are still to build — so nobody reads the marketing as a spec.</p>
 
         <h2>What the page promises</h2>
-        <p class="body">Bring an AI-built repo; it's running on our infrastructure the same afternoon — compute, AI, memory, and storage provisioned, a live URL, you own the company. That's the destination. It's the right north star. It is not yet the mechanism.</p>
+        <p class="body">Bring an AI-built repo; it gets vetted, deployed, and connected to shared infrastructure so real users can touch it. That's the destination. It's the right north star. It is not yet a self-serve mechanism.</p>
 
         <h2>What's real today</h2>
         <div class="legend">
@@ -100,7 +100,7 @@
         </div>
         <div class="row"><span class="rdot live"></span><div class="name"><strong>Evidence Foundry</strong><span>Public landing + hosted workspace (reviewed-access beta). The people-side proof of the substrate — claim/evidence/export loop on synthetic data.</span></div><span class="pill live">live</span></div>
         <div class="row"><span class="rdot live"></span><div class="name"><strong>Agentic Contract-CI</strong><span>Governed merge path across core repos: independent LLM review, Tier-2 hold, phone approval, audit. Proven on a sensitive PR cleared from the Director's phone.</span></div><span class="pill live">live</span></div>
-        <div class="row"><span class="rdot live"></span><div class="name"><strong>Engine core loop (Elixir)</strong><span><code style="font-family:'JetBrains Mono',monospace;font-size:0.82em">27db2f6</code> on <code style="font-family:'JetBrains Mono',monospace;font-size:0.82em">origin/elixir</code>: session → signed memory → export → offline verify → retrieval. 592 tests green. Pre-deploy — integration target, not production yet.</span></div><span class="pill live">live · pre-deploy</span></div>
+        <div class="row"><span class="rdot hand"></span><div class="name"><strong>Engine core loop (Elixir)</strong><span><code style="font-family:'JetBrains Mono',monospace;font-size:0.82em">27db2f6</code> on <code style="font-family:'JetBrains Mono',monospace;font-size:0.82em">origin/elixir</code>: session → signed memory → export → offline verify → retrieval. 592 tests green. Pre-deploy — integration target, not production yet.</span></div><span class="pill hand">tested · pre-deploy</span></div>
         <div class="row"><span class="rdot hand"></span><div class="name"><strong>Concierge onboarding</strong><span>We can take a simple repo and stand it up for you. For a simple app, a day or two. First external repo not yet run end-to-end — Sensarra (our own) was hand-Dockerized over weeks.</span></div><span class="pill hand">by hand</span></div>
         <div class="row"><span class="rdot live"></span><div class="name"><strong>Deploy to our cloud (Cloud Run)</strong><span>The place things actually run. Real and in use across the stack.</span></div><span class="pill live">live</span></div>
         <div class="row"><span class="rdot hand"></span><div class="name"><strong>LLM gateway (Orchestra)</strong><span>The /v1/complete gateway exists — but it isn't yet wired to production verticals. Even Sensarra has no managed inference in prod.</span></div><span class="pill hand">partial</span></div>
