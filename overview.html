@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
-    <title>For investors & partners — accountable AI work</title>
-    <meta name="description" content="Seitiate is the trust substrate for accountable AI work. Evidence Foundry is the live wedge. Pre-revenue; seeking beta commitments and introductions.">
+    <title>Seitiate — company overview</title>
+    <meta name="description" content="Seitiate is infrastructure for accountable AI work: memory, governance, provenance, and verification people can inspect. Open engine, trust layer, founder-owned verticals on top.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -13,321 +13,136 @@
         :root {
             --bg: #08090b; --surface: #0f1114; --border: #1a1c22;
             --text: #eceae7; --text-secondary: #8a8a90; --text-muted: #56585f;
-            --accent: #4ade80; --amber: #e0b34a; --red: #d67a7a;
-            --accent-ink: #08170d;
+            --accent: #4ade80; --amber: #e0b34a;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background: var(--bg); color: var(--text);
-            line-height: 1.7; -webkit-font-smoothing: antialiased;
-        }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; }
         a { color: inherit; text-decoration: none; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
-
         nav {
             position: fixed; top: 0; left: 0; right: 0; z-index: 100;
             padding: 14px 24px; display: flex; justify-content: space-between; align-items: center;
-            background: rgba(8, 9, 11, 0.85); backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border);
+            background: rgba(8, 9, 11, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);
         }
         nav .brand { display: flex; align-items: center; gap: 9px; font-size: 15px; font-weight: 500; }
         nav .brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 2.2s infinite; }
         nav .home { color: var(--text-secondary); font-size: 0.85rem; }
         nav .home:hover { color: var(--text); }
-
-        .doc { max-width: 780px; margin: 0 auto; padding: 112px 24px 40px; }
+        .doc { max-width: 720px; margin: 0 auto; padding: 112px 24px 40px; }
         .banner {
             font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.03em;
             color: var(--accent); border: 1px solid rgba(74, 222, 128, 0.25); background: rgba(74, 222, 128, 0.05);
             border-radius: 8px; padding: 10px 14px; margin-bottom: 2.4rem;
         }
-
         h1 { font-size: clamp(28px, 4.8vw, 38px); font-weight: 600; letter-spacing: -0.01em; line-height: 1.18; margin-bottom: 1.1rem; }
-        .lead { font-size: 1.08rem; color: var(--text-secondary); margin-bottom: 2.4rem; }
+        .lead { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 2rem; }
         .lead strong { color: var(--text); font-weight: 500; }
-
-        h2 { font-size: 1.15rem; font-weight: 500; margin: 2.8rem 0 0.6rem; letter-spacing: -0.005em; }
-        .h2note { color: var(--text-secondary); font-size: 0.92rem; margin-bottom: 1.1rem; }
-        p.body { color: var(--text-secondary); font-size: 0.96rem; margin-bottom: 0.8rem; }
+        h2 { font-size: 1.15rem; font-weight: 500; margin: 2.6rem 0 0.6rem; }
+        p.body { color: var(--text-secondary); font-size: 0.96rem; margin-bottom: 0.85rem; }
         p.body strong { color: var(--text); font-weight: 500; }
         ul.body { color: var(--text-secondary); font-size: 0.94rem; padding-left: 1.2rem; margin-bottom: 1rem; }
         ul.body li { margin-bottom: 0.45rem; }
-        ul.body li strong { color: var(--text); font-weight: 500; }
-
-        .legend { display: flex; gap: 16px; flex-wrap: wrap; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.8rem; }
-        .legend span { display: flex; align-items: center; gap: 6px; }
-        .legend i { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
-
-        .row { display: flex; align-items: flex-start; gap: 13px; padding: 14px 0; border-bottom: 1px solid var(--border); }
-        .row .rdot { width: 8px; height: 8px; border-radius: 50%; margin-top: 8px; flex-shrink: 0; }
-        .rdot.live { background: var(--accent); }
-        .rdot.hand { background: var(--amber); }
-        .rdot.no { background: var(--red); }
-        .row .name { flex: 1; }
-        .row .name strong { font-weight: 500; font-size: 0.98rem; }
-        .row .name span { display: block; color: var(--text-secondary); font-size: 0.85rem; margin-top: 3px; line-height: 1.55; }
-        .pill { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; padding: 3px 10px; border-radius: 100px; letter-spacing: 0.03em; white-space: nowrap; margin-top: 4px; }
-        .pill.live { color: var(--accent); background: rgba(74, 222, 128, 0.1); border: 1px solid rgba(74, 222, 128, 0.22); }
-        .pill.hand { color: var(--amber); background: rgba(224, 179, 74, 0.1); border: 1px solid rgba(224, 179, 74, 0.22); }
-        .pill.no { color: var(--red); background: rgba(214, 122, 122, 0.1); border: 1px solid rgba(214, 122, 122, 0.22); }
-
-        .seam { text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-muted); margin: 1.4rem 0 1.2rem; letter-spacing: 0.02em; }
-        .seam .arrows { display: block; font-size: 0.85rem; line-height: 1; margin-bottom: 4px; }
-
-        .substrate {
+        .stack {
             border: 1px solid var(--border); background: var(--surface); border-radius: 12px;
-            padding: 22px 24px; margin: 1rem 0 1.4rem;
+            padding: 20px 22px; margin: 1.2rem 0; font-size: 0.92rem; color: var(--text-secondary);
         }
-        .substrate .label {
-            font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
-            color: var(--accent); letter-spacing: 0.04em; margin-bottom: 0.6rem;
+        .stack .layer { padding: 11px 0; border-bottom: 1px dashed var(--border); }
+        .stack .layer:last-child { border-bottom: none; }
+        .stack .layer strong { color: var(--text); font-weight: 500; }
+        .stack .layer span { display: block; font-size: 0.86rem; margin-top: 3px; color: var(--text-muted); }
+        .loop {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; line-height: 1.75;
+            color: var(--text-muted); padding: 14px 16px; margin: 1rem 0;
+            background: rgba(74, 222, 128, 0.04); border: 1px solid rgba(74, 222, 128, 0.14); border-radius: 8px;
         }
-        .substrate h3 { font-size: 1.1rem; font-weight: 500; margin-bottom: 0.4rem; }
-        .substrate .sub { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.6rem; }
-        .substrate .loop {
-            font-family: 'JetBrains Mono', monospace; font-size: 0.74rem;
-            color: var(--text-muted); line-height: 1.7; padding: 10px 12px;
-            background: rgba(74, 222, 128, 0.04); border: 1px solid rgba(74, 222, 128, 0.14);
-            border-radius: 6px; margin-top: 8px;
+        .doors { margin-top: 2.8rem; border-top: 1px solid var(--border); padding-top: 1.6rem; }
+        .doors .label { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.04em; margin-bottom: 0.8rem; }
+        .doors a {
+            display: block; padding: 12px 0; border-bottom: 1px solid var(--border);
+            font-size: 0.94rem; color: var(--text-secondary);
         }
-        .substrate .live-tag {
-            display: inline-block; margin-left: 8px;
-            font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
-            color: var(--accent); padding: 1px 7px; border-radius: 100px;
-            border: 1px solid rgba(74, 222, 128, 0.3);
+        .doors a:hover { color: var(--text); }
+        .doors a strong { color: var(--text); font-weight: 500; }
+        .doors a em { color: var(--text-muted); font-style: normal; font-size: 0.84rem; }
+        .stage {
+            border: 1px solid rgba(224, 179, 74, 0.25); background: rgba(224, 179, 74, 0.05);
+            border-radius: 10px; padding: 16px 18px; margin: 1.4rem 0;
         }
-
-        .twocol { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-        .twocol .col {
-            border: 1px solid var(--border); background: var(--surface); border-radius: 10px;
-            padding: 18px;
-        }
-        .twocol .col .tag {
-            font-family: 'JetBrains Mono', monospace; font-size: 0.66rem;
-            letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 0.5rem;
-        }
-        .twocol .col h4 { font-size: 1rem; font-weight: 500; margin-bottom: 0.4rem; }
-        .twocol .col p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; }
-        .twocol .col .status {
-            font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
-            margin-top: 0.7rem; color: var(--accent);
-        }
-
-        .stackbox {
-            border: 1px solid var(--border); background: var(--surface); border-radius: 12px;
-            padding: 22px 24px; margin: 0.8rem 0 1rem;
-        }
-        .stackbox .layer {
-            padding: 10px 0; border-bottom: 1px dashed var(--border);
-            font-size: 0.92rem; color: var(--text-secondary);
-        }
-        .stackbox .layer:last-child { border-bottom: none; }
-        .stackbox .layer strong { color: var(--text); font-weight: 500; }
-        .stackbox .layer .right {
-            float: right; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
-            color: var(--text-muted);
-        }
-
-        table.rev { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin: 0.4rem 0 1rem; }
-        table.rev th { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); font-weight: 500; font-size: 0.82rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.04em; }
-        table.rev td { padding: 12px; border-bottom: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; }
-        table.rev td strong { color: var(--text); font-weight: 500; }
-
-        .askblock {
-            border: 1px solid rgba(74, 222, 128, 0.25); background: rgba(74, 222, 128, 0.04);
-            border-radius: 12px; padding: 22px 24px; margin: 1.4rem 0;
-        }
-        .askblock .label {
-            font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
-            color: var(--accent); letter-spacing: 0.05em; margin-bottom: 0.8rem;
-        }
-        .askblock ol { padding-left: 1.2rem; color: var(--text-secondary); font-size: 0.95rem; }
-        .askblock ol li { margin-bottom: 0.55rem; }
-        .askblock ol li strong { color: var(--text); font-weight: 500; }
-        .askblock .quote {
-            margin-top: 1.2rem; padding: 14px 16px;
-            border-left: 2px solid var(--accent); background: rgba(74, 222, 128, 0.04);
-            font-style: italic; color: var(--text); font-size: 0.94rem; line-height: 1.65;
-        }
-
-        .companions {
-            border-top: 1px solid var(--border); margin-top: 3rem; padding-top: 1.6rem;
-        }
-        .companions .label {
-            font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
-            color: var(--text-muted); letter-spacing: 0.04em; margin-bottom: 0.8rem;
-        }
-        .companions a {
-            display: block; padding: 10px 0; border-bottom: 1px solid var(--border);
-            font-size: 0.92rem; color: var(--text-secondary);
-        }
-        .companions a:hover { color: var(--text); }
-        .companions a strong { color: var(--text); font-weight: 500; }
-        .companions a span { color: var(--text-muted); font-size: 0.82rem; }
-
+        .stage strong { color: var(--amber); font-weight: 500; }
+        .stage p { color: var(--text-secondary); font-size: 0.92rem; margin-top: 0.4rem; }
         footer { text-align: center; color: var(--text-muted); font-size: 0.78rem; padding: 40px 24px 54px; }
         .pageset { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; margin-bottom: 16px; }
         .pageset a { color: var(--text-secondary); }
         .pageset a:hover { color: var(--text); }
         .pageset a.cur { color: var(--accent); }
-
-        @media (max-width: 640px) {
-            .twocol { grid-template-columns: 1fr; }
-            table.rev { font-size: 0.84rem; }
-            .row { flex-direction: column; gap: 6px; }
-            .row .pill { align-self: flex-start; }
-        }
+        .appendix { margin-top: 10px; font-size: 0.72rem; }
+        .appendix a { color: var(--text-muted); margin: 0 6px; }
     </style>
 </head>
 <body>
     <nav>
-        <div class="brand"><span class="dot"></span>substrate</div>
+        <div class="brand"><span class="dot"></span>Seitiate</div>
         <a class="home" href="/">seitiate.com</a>
     </nav>
 
     <div class="doc">
-        <div class="banner">for investors &amp; partners · company overview</div>
-        <h1>Accountable AI work needs a neutral trust layer.</h1>
-        <p class="lead"><strong>We built it</strong> — memory, governance, and exportable proof underneath. <strong>Evidence Foundry</strong> is the live wedge researchers can try. We're pre-revenue; the next conversation should be about beta commitments, not a prettier pitch.</p>
+        <div class="banner">company overview</div>
+        <h1>We make AI work accountable.</h1>
+        <p class="lead"><strong>Seitiate is a trust substrate for AI agency</strong> — memory, governance, provenance, and delegated authority that people and institutions can inspect. Not another agent wrapper. Not identity for disposable bots. The point is the <strong>durable human underneath the work</strong>, and proof that the work is theirs.</p>
 
-        <p class="body">Same thesis since June: persist the human, not the agent. What's new is a concrete door (Evidence Foundry) and a stronger foundation (the engine core loop runs end-to-end with offline verification — pre-deploy).</p>
+        <h2>The problem</h2>
+        <p class="body">AI is making output infinite and cheap. When prose is free, what becomes scarce is <strong>trust</strong>: was a real, accountable person behind this? And can their judgment <strong>accumulate</strong> — so today's work makes tomorrow's work better-shaped, portable, and defensible?</p>
+        <p class="body">The industry is racing to give agents passports. Our bet is the opposite: <strong>agents are disposable; people are not.</strong> We build for the person whose judgment compounds over years — across tools, verticals, and institutions.</p>
 
-        <!-- ============ THE STACK ============ -->
-        <h2>The stack — one picture</h2>
-        <p class="h2note">Read it in one sentence: one substrate, two live proofs of it, more verticals to come on the same floor.</p>
+        <h2>What Seitiate is</h2>
+        <p class="body"><strong>Seitiate</strong> (to <em>seitiate</em> — to cause seity) is infrastructure, not a single app. A <strong>seity</strong> is not a profile or a score. It is the process of a person's AI-instrumented judgment accumulating and becoming more coherent over time — captured, governed, exportable, and eventually verifiable.</p>
+        <p class="body">Three layers, one floor:</p>
 
-        <div class="twocol">
-            <div class="col">
-                <div class="tag">PROOF · PEOPLE-SIDE</div>
-                <h4>Evidence Foundry</h4>
-                <p>Truth-first research workspace. Every claim traces to evidence, a source, or an honest open question. Refuses the magic trick — when a claim outruns its support, the export carries the unresolved flag.</p>
-                <div class="status">LIVE · public surfaces + hosted synthetic beta</div>
-            </div>
-            <div class="col">
-                <div class="tag">PROOF · BUILDER-SIDE</div>
-                <h4>Agentic Contract-CI</h4>
-                <p>How we build the company without letting agents corrupt it. Independent LLM review, Tier-2 human hold, phone approval, governed merge, audit events.</p>
-                <div class="status">LIVE · internal proof (not a product)</div>
-            </div>
+        <div class="stack">
+            <div class="layer"><strong>Vertical products</strong><span>Founder-owned applications where real work happens — research, creative work, OEM pilots. We host the harbor; founders own the fleet. Connected by thin contracts, never by import.</span></div>
+            <div class="layer"><strong>Seitiate+</strong><span>The commercial surface: identity, billing, credits, hosting, tenant isolation. Turns a product into a business on shared infrastructure.</span></div>
+            <div class="layer"><strong>Notary</strong><span>The trust layer: risk classification, certification, signed attestations, offline verification. A neutral third party can attest what a platform owner cannot attest for itself.</span></div>
+            <div class="layer"><strong>Seitiate engine</strong><span>Open core: capture memory (Codex), enforce taste and quality (Canon, Governor), orchestrate agents, export portable proof. The loop every vertical sits on.</span></div>
         </div>
 
-        <p class="seam"><span class="arrows">↓ ↓</span>both proofs sit on the same substrate</p>
-
-        <div class="substrate">
-            <div class="label">SUBSTRATE</div>
-            <h3>Seitiate — memory · governance · provenance · delegated authority</h3>
-            <p class="sub">Signed ledger, exportable proof, offline verification. The floor everything else stands on.</p>
-            <div class="loop">
-                session → crystallized memory → signed commitment<br>
-                → seitiate-export-v1 bundle → mix seitiate.verify offline<br>
-                → retrieval into a later session<span class="live-tag">LIVE 2026-07-06</span>
-            </div>
+        <h2>The loop</h2>
+        <p class="body">At the center is one turn of accountable work:</p>
+        <div class="loop">
+            session → crystallized memory → governance at consequential transitions<br>
+            → signed, exportable record → offline verification → retrieval in a later session
         </div>
+        <p class="body">Products are where the loop meets a domain. The substrate is what makes the loop portable, governable, and eventually provable to someone who does not have to trust us.</p>
 
-        <p class="seam"><span class="arrows">↑ ↑</span>the same substrate hosts more verticals and commercial platforms</p>
-
-        <div class="stackbox">
-            <div class="layer"><strong>Sakme</strong> — creator product on the substrate <span class="right">live · sandbox</span></div>
-            <div class="layer"><strong>Seitiate+ managed cloud</strong> — billing, credits, hosting, enterprise governance <span class="right">in build</span></div>
-            <div class="layer"><strong>Notary trust root</strong> — the counter-signature that turns "trust us" into "check it yourself" <span class="right">next ceremony</span></div>
-        </div>
-
-        <!-- ============ WHY NOW ============ -->
-        <h2>Why now</h2>
-        <p class="body">AI is making output infinite and free. When output is infinite, two things turn scarce and valuable: <strong>trust</strong> (was a real, accountable person behind this?) and the <strong>durable person underneath</strong> the work.</p>
-        <p class="body">The whole field arrived at this in 2026 — EU AI Act audit mandates, C2PA on every major camera, "proof-of-human" as an enterprise category, an agent-identity standards race. Everyone is building identity <em>for the agent</em>. <strong>Agents are disposable. We persist the durable thing underneath: the human, and the proof that the work is theirs.</strong></p>
-
-        <!-- ============ THE DOOR ============ -->
-        <h2>The door — Evidence Foundry</h2>
-        <p class="body"><strong>Evidence Foundry is not the company. It is the cleanest door into the company.</strong></p>
-        <p class="body">A truth-first research workspace: a researcher keeps sources, evidence, claims, writing, review, and export connected. The discipline is simple — every load-bearing claim in a manuscript traces to one of three things:</p>
+        <h2>Where we are</h2>
+        <p class="body">Pre-revenue, building in public with unusual honesty about what is real:</p>
         <ul class="body">
-            <li>the researcher's own evidence;</li>
-            <li>a real source or citation;</li>
-            <li>an explicitly marked open question.</li>
-        </ul>
-        <p class="body">The system does not bless sentences because they sound good. It refuses the magic trick: when a claim has outrun its support, the system says so. <strong>Why this door: research has a painful version of the universal AI trust problem.</strong> Confident text is cheap; defensible claims are expensive.</p>
-        <p class="body">The same substrate then proves itself a second way — by governing the agents that build the company (Agentic Contract-CI). That is internal dogfooding today, not a product we sell.</p>
-
-        <!-- ============ WHAT IS LIVE ============ -->
-        <h2>What is live today</h2>
-        <p class="h2note">Honest inventory · <span style="font-family:'JetBrains Mono',monospace;font-size:0.82em">product live</span> vs <span style="font-family:'JetBrains Mono',monospace;font-size:0.82em">infra live</span> vs <span style="font-family:'JetBrains Mono',monospace;font-size:0.82em">internal proof</span></p>
-
-        <div class="row"><span class="rdot live"></span><div class="name"><strong>Evidence Foundry public surfaces</strong><span>landing + hosted workspace, reviewed-access beta on synthetic data.</span></div><span class="pill live">product live</span></div>
-        <div class="row"><span class="rdot live"></span><div class="name"><strong>Hosted synthetic demo path</strong><span>full loop: sources → evidence → claims → writing → rigor review → export.</span></div><span class="pill live">product live</span></div>
-        <div class="row"><span class="rdot live"></span><div class="name"><strong>Seitiate+ login graft + tenant isolation audit</strong><span>workspace connects to the shared substrate; two-tenant test suite is the regression floor.</span></div><span class="pill live">infra live</span></div>
-        <div class="row"><span class="rdot live"></span><div class="name"><strong>Agentic Contract-CI</strong><span>governed merge path across core repos — proven on a sensitive PR cleared from the Director's phone.</span></div><span class="pill live">internal proof</span></div>
-        <div class="row"><span class="rdot live"></span><div class="name"><strong>Engine-side core loop</strong><span>Elixir branch: session → signed memory → export → offline verify → retrieval. 592 tests green. Not deployed to production yet.</span></div><span class="pill live">infra · pre-deploy</span></div>
-
-        <!-- ============ WHAT IS NOT LIVE ============ -->
-        <h2>What is not live yet</h2>
-        <p class="h2note">Listed plainly. The next conversation should be about beta commitments, not philosophy.</p>
-
-        <div class="row"><span class="rdot no"></span><div class="name"><strong>No institutional pilots yet</strong><span>the buyer path is a technical-university beta network; the conversations have not happened at scale.</span></div><span class="pill no">open</span></div>
-        <div class="row"><span class="rdot hand"></span><div class="name"><strong>External Notary trust root</strong><span>engine-side bundle verifies offline; the Notary counter-signature on top is the next ceremony, not the next build.</span></div><span class="pill hand">next ceremony</span></div>
-        <div class="row"><span class="rdot hand"></span><div class="name"><strong>Hosted evaluation scope</strong><span>synthetic, public, or explicitly approved non-sensitive data only. Real institutional data needs governance and policy work first.</span></div><span class="pill hand">scoped</span></div>
-        <div class="row"><span class="rdot hand"></span><div class="name"><strong>Production Elixir deployment</strong><span>first tenant, vault credentials, Cloud Run/Postgres shape, Notary counter-signature contract, CES extraction plugged in. The next workstream.</span></div><span class="pill hand">next workstream</span></div>
-
-        <!-- ============ MOAT ============ -->
-        <h2>The moat — why this isn't a feature Notion ships next quarter</h2>
-        <p class="body">The code is copyable; the moat is not. Three things a clone cannot reconstitute:</p>
-        <ul class="body">
-            <li><strong>The accumulated per-creator record</strong> — the seity grows over years and follows the person across tools. You cannot fake a lifetime of accumulated work.</li>
-            <li><strong>Neutrality</strong> — a neutral third party can attest to work in a way a platform owner structurally cannot for its own users. The Stripe / Plaid position.</li>
-            <li><strong>The hard verification</strong> — exportable, offline-verifiable, signed proof anyone can check while trusting no one. Defensible cryptography the commodity-CA identity crowd cannot do.</li>
+            <li><strong>Engine core loop</strong> runs end-to-end on an Elixir foundation branch (592 tests green) — integration target, not production deploy yet.</li>
+            <li><strong>Managed commercial surface</strong> (Seitiate+) is deployed — auth, credits, tenant isolation — serving early verticals.</li>
+            <li><strong>We govern our own agents</strong> through a live merge pipeline (independent review, human holds, audit) — internal proof of the thesis, not a product we sell today.</li>
+            <li><strong>External Notary trust root</strong> and institutional pilots are <em>not</em> done yet. Saying so plainly is part of the product.</li>
         </ul>
 
-        <!-- ============ BUSINESS ============ -->
-        <h2>The business — four streams, open core</h2>
-        <table class="rev">
-            <thead><tr><th>stream</th><th>customer</th><th>pays for</th></tr></thead>
-            <tbody>
-                <tr><td><strong>Vertical subscriptions</strong></td><td>End users</td><td>The product + the managed loop</td></tr>
-                <tr><td><strong>Seitiate+ managed cloud</strong></td><td>Power users / developers</td><td>Hosting, pooled credits, identity verification</td></tr>
-                <tr><td><strong>Enterprise Notary</strong></td><td>Institutions</td><td>Compliance, audit, SLA, certified integrity</td></tr>
-                <tr><td><strong>Embedded / OEM</strong></td><td>Vertical builders</td><td>Engine + trust inside their product, commercial licence</td></tr>
-            </tbody>
-        </table>
-        <p class="body">Give away the engine (distribution + ecosystem). Monetize the neutral anchor, the managed layer, certification, and OEM licensing. Stripe's shape: a million people install the open tool; one company owns the ledger underneath.</p>
-
-        <!-- ============ THE ASK ============ -->
-        <h2>The ask</h2>
-        <div class="askblock">
-            <div class="label">three things, in this order</div>
-            <ol>
-                <li><strong>Introductions</strong> to university research-integrity, graduate-studies, library, or AI-governance stakeholders. The gating asset is 3–5 real beta commitments, not a better pitch.</li>
-                <li><strong>Judgment</strong> on whether the first beta path should be graduate training, lab-group workflow, or research-integrity infrastructure.</li>
-                <li><strong>Advice</strong> on the milestone that makes a serious pre-seed conversation clean.</li>
-            </ol>
-            <div class="quote">"My goal before the next conversation is not a prettier deck. It is five to ten serious beta users, at least one institution-shaped pilot conversation, and a demo where the evidence package survives a skeptical reviewer instead of just impressing a friendly room."</div>
+        <div class="stage">
+            <strong>Stage</strong>
+            <p>We are not asking you to fund a finished platform. We are building the substrate while proving it in real verticals — and dogfooding accountability on the agents that build the company itself.</p>
         </div>
 
-        <!-- ============ WHY US ============ -->
-        <h2>Why us</h2>
-        <p class="body">We made the one non-obvious bet — <strong>persist the human, not the agent</strong> — before the market proved it. We built the engine while everyone else built disposable agent plumbing. We dogfood the accountability thesis on ourselves: the agents building the company are governed by the same substrate we propose to govern AI work for everyone else.</p>
-        <p class="body">The window is open and finite. The team that owns the neutral, accumulating, human-sovereign layer before the giants commoditize identity wins it. We intend to be that team.</p>
-
-        <!-- ============ COMPANIONS ============ -->
-        <div class="companions">
-            <div class="label">other readers · pick one door</div>
-            <a href="/researcher.html"><strong>For researchers</strong> <span>· defensible claims, rigor review, beta access at evidencefoundry.com</span></a>
-            <a href="/baas.html"><strong>For builders</strong> <span>· bring a repo, concierge onboarding, you keep the company</span></a>
-            <a href="https://evidencefoundry.com/"><strong>Live demo</strong> <span>· evidencefoundry.com · synthetic data, reviewed-access beta</span></a>
-            <div class="label" style="margin-top:1.4rem">appendix · if you want depth</div>
-            <a href="/harbor.html"><strong>Stack map</strong> <span>· verticals, Seitiate+, engine, Notary, CES</span></a>
-            <a href="/reality.html"><strong>Build state</strong> <span>· what's real, what's concierge, what's not built yet</span></a>
+        <div class="doors">
+            <div class="label">different readers · start here</div>
+            <a href="/researcher.html"><strong>Researchers</strong> <em>· defensible claims, rigor review, beta at evidencefoundry.com</em></a>
+            <a href="/baas.html"><strong>Builders</strong> <em>· bring what you built with AI; concierge onboarding; you keep the company</em></a>
+            <a href="/july-overview.html"><strong>Investors &amp; partners</strong> <em>· July 2026 detailed share-out: stack diagram, live inventory, business model, ask</em></a>
         </div>
     </div>
 
     <footer>
         <nav class="pageset">
-            <a href="/overview.html" class="cur">investors</a>
+            <a href="/overview.html" class="cur">overview</a>
             <a href="/researcher.html">researchers</a>
             <a href="/baas.html">builders</a>
         </nav>
-        <p style="margin-top:10px;font-size:0.72rem"><a href="/harbor.html" style="color:var(--text-muted)">stack map</a> · <a href="/reality.html" style="color:var(--text-muted)">build state</a></p>
-        <span>seitiate.com · the trust substrate for accountable AI work · 2026</span>
+        <p class="appendix"><a href="/july-overview.html">July investor detail</a> · <a href="/harbor.html">stack map</a> · <a href="/reality.html">build state</a></p>
+        <span>seitiate.com · infrastructure for accountable AI work · 2026</span>
     </footer>
 </body>
 </html>
