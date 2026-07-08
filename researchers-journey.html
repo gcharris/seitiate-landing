@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>The Researcher&rsquo;s Journey &mdash; Seitiate</title>
+<meta name="description" content="A narrative walkthrough of one researcher's day inside the finished Seitiate platform, from raw data to a signed, verifiable export.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500;1,9..144,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1E2A38;
+    --ink-soft:#4E5A66;
+    --paper:#F0EFE6;
+    --paper-raised:#E6E3D3;
+    --accent:#7A3229;
+    --accent-soft:#EFDFD9;
+    --slate:#42525E;
+    --rule:#C7C0A9;
+    --numeral:#A89E84;
+    --serif-display:'Fraunces', ui-serif, Georgia, 'Iowan Old Style', serif;
+    --serif-body:'Source Serif 4', ui-serif, Georgia, serif;
+    --mono:'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--serif-body);
+    font-size:clamp(1rem, 0.95rem + 0.2vw, 1.0625rem);
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--accent-soft); color:var(--ink); }
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+
+  .sr-only{
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+  }
+
+  .page{
+    max-width:680px;
+    margin:0 auto;
+    padding:clamp(2.5rem, 6vw, 5.5rem) clamp(1.25rem, 4vw, 2rem) 5rem;
+  }
+
+  /* ---- top nav ---- */
+  .top-nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:0.75rem 1.5rem;
+    margin:0 0 3rem;
+    padding-bottom:1.25rem;
+    border-bottom:1px solid var(--rule);
+    font-family:var(--mono);
+    font-size:0.72rem;
+    font-weight:500;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+  }
+  .top-nav a{ color:var(--ink-soft); text-decoration:none; }
+  .top-nav a:hover{ color:var(--accent); }
+  .top-nav .home{ color:var(--ink); }
+  .top-nav .links{ display:flex; gap:1.5rem; flex-wrap:wrap; }
+
+  /* ---- masthead ---- */
+  .kicker{
+    font-family:var(--mono);
+    font-size:0.7rem;
+    font-weight:500;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin:0 0 1.1rem;
+  }
+  h1{
+    font-family:var(--serif-display);
+    font-weight:600;
+    font-size:clamp(2.1rem, 1.7rem + 1.8vw, 3.1rem);
+    line-height:1.05;
+    letter-spacing:-0.01em;
+    margin:0 0 0.65rem;
+    color:var(--ink);
+  }
+  .subtitle{
+    font-family:var(--serif-display);
+    font-style:italic;
+    font-weight:400;
+    font-size:1.2rem;
+    color:var(--ink-soft);
+    margin:0 0 3.25rem;
+  }
+
+  /* ---- epigraph ---- */
+  .epigraph{
+    border-left:3px solid var(--accent);
+    background:var(--paper-raised);
+    border-radius:0 3px 3px 0;
+    padding:1.6rem 1.85rem;
+    margin:0 0 4.75rem;
+  }
+  .epigraph .kicker{ color:var(--accent); margin-bottom:0.85rem; }
+  .epigraph p{
+    font-style:italic;
+    color:var(--ink-soft);
+    font-size:0.98rem;
+    margin:0 0 0.9rem;
+  }
+  .epigraph p:last-child{ margin-bottom:0; }
+
+  /* ---- chapters ---- */
+  .chapter{
+    padding-top:3.75rem;
+    border-top:1px solid var(--rule);
+  }
+  .chapter:first-of-type{ padding-top:0; border-top:none; }
+
+  .chapter-head{ margin-bottom:1.65rem; }
+  .numeral{
+    display:block;
+    font-family:var(--serif-display);
+    font-style:italic;
+    font-weight:400;
+    font-size:clamp(2.6rem, 2.1rem + 2vw, 3.75rem);
+    line-height:1;
+    color:var(--numeral);
+    margin:0 0 0.6rem;
+  }
+  .tag{
+    display:inline-block;
+    font-family:var(--mono);
+    font-size:0.66rem;
+    font-weight:500;
+    letter-spacing:0.09em;
+    text-transform:uppercase;
+    padding:0.28rem 0.6rem;
+    border-radius:2px;
+    margin:0 0 0.9rem;
+  }
+  .tag-product{ color:var(--accent); background:var(--accent-soft); }
+  .tag-frame{ color:var(--ink-soft); background:var(--paper-raised); }
+
+  h2.chapter-title{
+    font-family:var(--serif-display);
+    font-style:italic;
+    font-weight:500;
+    font-size:1.35rem;
+    color:var(--ink);
+    margin:0;
+  }
+
+  .chapter-body p{ margin:0 0 1.15rem; }
+  .chapter-body p:last-child{ margin-bottom:0; }
+
+  strong{ font-weight:600; color:var(--ink); }
+  strong.layer{ color:var(--accent); }
+  em{ font-style:italic; }
+
+  /* ---- stack section ---- */
+  .stack-section{
+    margin-top:3.75rem;
+    padding-top:3.75rem;
+    border-top:1px solid var(--rule);
+  }
+  .stack-section h2{
+    font-family:var(--serif-display);
+    font-weight:600;
+    font-size:1.75rem;
+    margin:0 0 1.25rem;
+  }
+  .stack-section > p.intro{ margin:0 0 2.25rem; }
+
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin:0 0 2rem;
+    font-size:0.9rem;
+  }
+  thead th{
+    font-family:var(--mono);
+    font-size:0.64rem;
+    font-weight:500;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    text-align:left;
+    padding:0.9rem 1rem;
+    background:var(--paper-raised);
+    border-top:2px solid var(--ink);
+  }
+  thead th:nth-child(1){ color:var(--ink); border-top-color:var(--ink); }
+  thead th:nth-child(2){ color:var(--accent); border-top-color:var(--accent); }
+  thead th:nth-child(3){ color:var(--slate); border-top-color:var(--slate); }
+  tbody td{
+    padding:1.1rem 1rem;
+    border-top:1px solid var(--rule);
+    vertical-align:top;
+    line-height:1.55;
+  }
+  tbody tr:last-child td{ border-bottom:1px solid var(--rule); }
+
+  .through-line{
+    font-style:italic;
+    color:var(--ink-soft);
+    border-left:3px solid var(--rule);
+    padding-left:1.25rem;
+    margin:0;
+  }
+
+  /* ---- closing ---- */
+  .closing{
+    margin-top:3.75rem;
+    padding-top:2.5rem;
+    border-top:1px solid var(--rule);
+  }
+  .closing h2{
+    font-family:var(--serif-display);
+    font-weight:600;
+    font-size:1.25rem;
+    margin:0 0 1rem;
+  }
+  .closing p{ color:var(--ink-soft); font-size:0.96rem; margin:0; }
+  .closing p a{ color:var(--accent); text-decoration:underline; text-decoration-color:var(--rule); text-underline-offset:3px; }
+  .closing p a:hover{ text-decoration-color:var(--accent); }
+
+  footer{
+    margin-top:4.5rem;
+    padding-top:2rem;
+    border-top:1px solid var(--rule);
+    text-align:center;
+  }
+  footer .foot-links{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:1.5rem;
+    margin-bottom:1.1rem;
+    font-family:var(--mono);
+    font-size:0.68rem;
+    font-weight:500;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+  }
+  footer .foot-links a{ color:var(--ink-soft); text-decoration:none; }
+  footer .foot-links a:hover{ color:var(--accent); }
+  footer .wordmark{
+    font-family:var(--mono);
+    font-size:0.68rem;
+    font-weight:500;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+
+  /* ---- responsive table ---- */
+  @media (max-width:640px){
+    table, thead, tbody, th, td, tr{ display:block; }
+    thead{ display:none; }
+    table{ margin-bottom:0.5rem; }
+    tr{
+      margin-bottom:1.85rem;
+      padding-top:1.35rem;
+      border-top:1px solid var(--rule);
+    }
+    tr:first-child{ border-top:none; padding-top:0; }
+    tbody td{ border:none; padding:0.35rem 0; }
+    tbody tr:last-child td{ border-bottom:none; }
+    td::before{
+      content:attr(data-label);
+      display:block;
+      font-family:var(--mono);
+      font-size:0.62rem;
+      font-weight:500;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      color:var(--accent);
+      margin-bottom:0.35rem;
+    }
+  }
+
+  @media print{
+    body{ background:#fff; }
+    .epigraph, .tag-frame, thead th{ background:transparent !important; }
+    .top-nav, footer .foot-links{ display:none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <nav class="top-nav">
+    <a class="home" href="/">&larr; Seitiate</a>
+    <div class="links">
+      <a href="/overview.html">Overview</a>
+      <a href="/researcher.html">Researchers</a>
+    </div>
+  </nav>
+
+  <header>
+    <p class="kicker">A vision narrative &mdash; Seitiate, one horizon out</p>
+    <h1>The Researcher&rsquo;s Journey</h1>
+    <p class="subtitle">A day inside the finished platform</p>
+  </header>
+
+  <aside class="epigraph">
+    <p class="kicker">What this is</p>
+    <p>A story, not a spec. It follows one researcher through the finished Seitiate platform &mdash; the state the roadmap is building toward, written as if it were already here. That is the deliberate device: <em>a day in the finished platform.</em> The experience and the architecture are real and designed; the traction is not &mdash; no customers, institutions, or numbers are claimed here, because this is a picture of where we are going, not a report of where we are.</p>
+    <p>Read it top-down (what she lives) and it reveals itself bottom-up (the stack she never sees).</p>
+  </aside>
+
+  <section class="chapter">
+    <div class="chapter-head">
+      <span class="numeral">I</span>
+      <span class="tag tag-frame">The problem</span>
+      <h2 class="chapter-title sr-only">The problem</h2>
+    </div>
+    <div class="chapter-body">
+      <p>Her name is Dr. Amara Okonkwo &mdash; though for most of this story she is not a doctor yet. She is eleven months from her defense, and she has a problem that did not exist when her supervisor was a graduate student.</p>
+      <p>Amara builds electrocatalysts. Her days are voltammograms and impedance spectra: electrodes that report on the world in curves of current and frequency, and a thesis chapter that has to turn those curves into claims a committee will believe. The science is hard, but the science was always hard. What&rsquo;s new is the suspicion.</p>
+      <p>AI can write her methods section in four seconds. It can write a polished literature review, fabricate a citation that looks exactly like a real one, and describe a selectivity her catalyst never achieved &mdash; all in the same confident prose as the true parts. Everyone knows this now. So the question underneath every conversation with her advisor, her committee, the reviewer she&rsquo;ll never meet, has changed. It used to be <em>is this good?</em> Now it is <em>is this yours, and how would we know?</em></p>
+      <p>That question keeps her up. Not because she cheats &mdash; she doesn&rsquo;t &mdash; but because honesty is no longer self-evidencing. Her careful, hand-checked work and a machine&rsquo;s confident hallucination arrive in the same font. The burden of proof has silently moved onto her, and she has no instrument that measures the thing now in doubt: not the science, but her authorship of it.</p>
+      <p>This is where the platform meets her. Not as a chatbot promising to write faster &mdash; as a workspace that takes her side of that exact anxiety.</p>
+    </div>
+  </section>
+
+  <section class="chapter">
+    <div class="chapter-head">
+      <span class="numeral">II</span>
+      <span class="tag tag-product">Sensarra &middot; field analyzer</span>
+      <h2 class="chapter-title">the honest machine</h2>
+    </div>
+    <div class="chapter-body">
+      <p>She starts where the doubt is sharpest: the raw data.</p>
+      <p>She has a week of runs &mdash; cyclic voltammetry across a potential series, a batch of impedance sweeps, the usual mess of real measurement. She brings them into Sensarra, the analysis surface for her field. What happens next surprises her, because it is the first time in two years that a piece of software has told her <em>less</em> than she asked for.</p>
+      <p>Sensarra runs the analysis deterministically &mdash; same input, same output, every time, with a fingerprint she can re-run. It computes what the data supports, and it keeps the figures its own tools derived scrupulously apart from the numbers she reported by hand, which it labels as hers. And when she asks for the verdict &mdash; is this a working catalyst? &mdash; it declines to give her the answer she wants.</p>
+      <p>The reading comes back <strong>inconclusive</strong>. Not because the machine is timid, but because the data, read honestly, floors there. A verdict of &ldquo;supported&rdquo; is something only a human can raise it to, deliberately, on the record. The software will evidence; it will not flatter.</p>
+      <p>For two years, every tool has been eager to agree with her. This one refuses until the record earns it. For the first time, a tool is standing where she needs someone to stand &mdash; on the side of the caveat.</p>
+      <p>That is the beginning of the trust. It is also the first entry in something that will keep accumulating.</p>
+    </div>
+  </section>
+
+  <section class="chapter">
+    <div class="chapter-head">
+      <span class="numeral">III</span>
+      <span class="tag tag-product">Evidence Foundry &middot; claim graph</span>
+      <h2 class="chapter-title">the claim graph</h2>
+    </div>
+    <div class="chapter-body">
+      <p>The evidence from Sensarra flows into Evidence Foundry, the workspace where her thesis takes shape, and becomes the raw material for the object at the center of everything she does next: a <strong>claim</strong>.</p>
+      <p>A claim, here, is not a sentence. It is a sentence <em>with its footing shown.</em> When Amara writes &ldquo;the nitrogen-doped catalyst holds its selectivity across the tested potential range,&rdquo; the workspace treats it as load-bearing and asks the only question that matters: what is it standing on? There are exactly three answers the system will accept.</p>
+      <p>Her own evidence &mdash; the sealed, fingerprinted run from Sensarra, linked to the precise excerpt that supports the words. A real source &mdash; a paper in her library, pinned to the page and passage she&rsquo;s leaning on. Or an honest open question &mdash; a claim she believes but cannot yet support, marked as exactly that, where everyone including her future self can see it.</p>
+      <p>There is no fourth answer. There is no &ldquo;because it sounds right.&rdquo; The workspace holds one unbending distinction: what she <em>declares</em> a claim to be, and what the record <em>computes</em> it to be. When those disagree &mdash; when she&rsquo;s called something grounded that the evidence doesn&rsquo;t reach &mdash; the claim is flagged. Not deleted, not scolded. Flagged, so the gap is visible instead of buried.</p>
+      <p>She works this way for weeks, and the graph grows. Every afternoon in the lab becomes a few more claims, each roped to its evidence or its open gap. The thing she is building stops being a document and starts being a structure &mdash; a map of what she knows, what supports it, and what is still open, visible in a way a Word file never allowed.</p>
+      <p>Before anything leaves the workspace, there is a gate. A rigor review reads the whole graph and will not wave through an unsupported claim in silence. If something is unresolved, the export carries that flag out into the light rather than hiding it. The system is not claiming her science is true. It is telling her whether her <em>manuscript has outrun her record</em> &mdash; and giving her the chance to fix it before her committee does it for her.</p>
+    </div>
+  </section>
+
+  <section class="chapter">
+    <div class="chapter-head">
+      <span class="numeral">IV</span>
+      <span class="tag tag-product">Connector hub &middot; her own keys</span>
+      <h2 class="chapter-title">her own connections</h2>
+    </div>
+    <div class="chapter-body">
+      <p>A few weeks in, she connects her real research life to the workspace, and it stops feeling like a tool she visits and starts feeling like a place she works.</p>
+      <p>She opens the connections panel and turns on her own accounts. Her Zotero library &mdash; years of collected papers &mdash; flows in with her own key, under her own login. Scite, so a claim she leans on comes with the shadow of how the literature has actually treated it. Crossref and PubMed, so a citation is a real object with a real DOI and not a plausible fiction. Edison Scientific, for the deeper reach into her field. These are <em>her</em> sources, <em>her</em> keys, <em>her</em> library. Nothing is rented to her from a central pool; nothing is scraped or resold.</p>
+      <p>This is the part that tells her the platform understands researchers. The connectors <em>are</em> the product &mdash; not a walled garden pretending her field starts and ends inside one company&rsquo;s database, but a hub that plugs into the tools she already trusts and makes them accountable together. Her library, her evidence, and her claims stop being five open tabs and become one connected record &mdash; and the more of her research life flows through it, the more that record is unmistakably hers.</p>
+    </div>
+  </section>
+
+  <section class="chapter">
+    <div class="chapter-head">
+      <span class="numeral">V</span>
+      <span class="tag tag-product">Seitiate engine &middot; accumulated context</span>
+      <h2 class="chapter-title">she writes</h2>
+    </div>
+    <div class="chapter-body">
+      <p>Now she writes.</p>
+      <p>Not from a blank page, and not from a chatbot&rsquo;s draft. She writes from the graph. The workspace hands her what she has been building &mdash; the accumulated shape of her sources, evidence, and settled claims &mdash; as the ground beneath the cursor. When she drafts her methods, her results, her literature review, she is writing in her voice, at her level of caution, and every load-bearing sentence is roped to a claim she can defend.</p>
+      <p>The strange gift of working this way: the writing gets faster <em>and</em> more honest at once. Faster, because she is not reconstructing her argument from memory &mdash; it is already assembled, already footed. More honest, because the moment a sentence reaches past its evidence, the workspace knows, and so does she.</p>
+      <p>Her thesis chapter takes shape. Then a paper, carved from the same graph. The prose is ordinary scholarly prose &mdash; measured, careful, hers. What&rsquo;s underneath it is not ordinary: every claim in the manuscript is accountable to its evidence, a source, or an open question, and nothing else. She has written a great deal of it with AI in the room. None of it is the AI&rsquo;s.</p>
+      <p>She has, without ever using the word, been building her <em>seity</em> &mdash; a research self that accumulates, compounds, and becomes provably her own.</p>
+    </div>
+  </section>
+
+  <section class="chapter">
+    <div class="chapter-head">
+      <span class="numeral">VI</span>
+      <span class="tag tag-product">Seitiate Trust Layer &middot; signed export</span>
+      <h2 class="chapter-title">the proof</h2>
+    </div>
+    <div class="chapter-body">
+      <p>The day comes when she has to hand it over.</p>
+      <p>In the old world this was the moment of maximum exposure &mdash; the moment her advisor, or a reviewer, or an integrity officer had to simply <em>trust</em> that the confident prose in front of them was honestly made. Confident prose is exactly what can no longer be trusted on sight.</p>
+      <p>Now she exports.</p>
+      <p>The workspace produces a bundle &mdash; the manuscript, the bibliography, the evidence appendix, the map of every claim to its footing, the honest list of what stayed unresolved, a plain disclosure of where AI was in the room. And the bundle is signed, and its signature can be checked by anyone, offline, without asking the platform to vouch for anything and without trusting her word.</p>
+      <p>The fear of the AI age is fabrication &mdash; the machine that invents and passes it off as real. What she hands her supervisor is fabrication made <em>legible</em>. The bundle does not claim her science is true; no signature could. What it proves is provenance: that every claim traces to the evidence, source, or open question it stood on when she made it; that the record was not altered after the fact; that her human contribution is attested rather than assumed. The question that started this story &mdash; <em>is this yours, and how would we know?</em> &mdash; has an answer now, and the answer is not &ldquo;trust me.&rdquo; The answer is &ldquo;check it.&rdquo;</p>
+      <p>Her supervisor checks it in seconds. Not by rereading the chapter line by line, hunting for the tell of a machine &mdash; that game is unwinnable now, and they both know it. He runs the verification against the signed bundle. It holds. The claims trace. The evidence is there. The open questions are labeled open. The signature is valid, and it did not require phoning home to anyone.</p>
+      <p>He looks up. &ldquo;This is clean,&rdquo; he says, and means something he could not have meant two years ago: not <em>this is good writing</em> &mdash; writing is cheap now &mdash; but <em>this is verifiably your work.</em></p>
+      <p>The loop has closed. What accumulated across all those afternoons &mdash; the honest verdicts, the footed claims, the connected sources, the grounded prose &mdash; has crystallized into something sovereign: a record of a mind at work that does not ask to be believed. It asks to be checked.</p>
+    </div>
+  </section>
+
+  <section class="chapter">
+    <div class="chapter-head">
+      <span class="numeral">VII</span>
+      <span class="tag tag-frame">The full stack, revealed</span>
+      <h2 class="chapter-title">pull the camera back</h2>
+    </div>
+    <div class="chapter-body">
+      <p>She never saw the machinery. That was the point. But everything she trusted was made of it.</p>
+      <p>At the bottom is the <strong class="layer">Seitiate Trust Layer</strong> &mdash; the neutral trust root. It signs, counter-signs, and lets anyone verify offline, a third party vouching for the work in a way the platform that made it never honestly could for itself. When she thought &ldquo;check it, don&rsquo;t trust me,&rdquo; this is what made the sentence true.</p>
+      <p>Above it sits the <strong class="layer">Seitiate engine</strong> &mdash; the substrate where her research self actually lived: memory that accumulates, governance that holds the line at the moments that matter, provenance that makes all of it checkable. She experienced it as &ldquo;the workspace knows my work.&rdquo; This is where her seity grew.</p>
+      <p>Between the engine and her experience sits <strong class="layer">Seitiate+</strong> &mdash; the managed layer running the parts she was never supposed to think about: her identity and keys, the metered compute her analysis consumed, her lab&rsquo;s subscription, her supervisor&rsquo;s verification access. The layer that made it a business, not just software.</p>
+      <p>Three layers she never saw, so the one surface she did see could simply be honest. Experienced top-down; built from the bottom up.</p>
+    </div>
+  </section>
+
+  <section class="chapter">
+    <div class="chapter-head">
+      <span class="numeral">VIII</span>
+      <span class="tag tag-frame">Why this matters</span>
+      <h2 class="chapter-title">why this matters, and who pays</h2>
+    </div>
+    <div class="chapter-body">
+      <p>Step out of her story for a moment.</p>
+      <p>AI has made writing free and infinite. When output costs nothing, two things become scarce, and scarce things are what institutions pay for. The first is <strong>trust</strong> &mdash; was a real, accountable person behind this work? The second is the <strong>durable person underneath it</strong> &mdash; the accumulated judgment and context that take years to build and cannot be regenerated on demand. Amara&rsquo;s story is both scarcities answered at once: a provable human contribution, and a research self that compounded into something only she owns.</p>
+      <p>Most of the field is racing to build identity <em>for the agent</em> &mdash; passports for disposable bots. That is the wrong bet. Agents are disposable; the human, and the proof that the work is theirs, is what lasts. Provable human contribution is the scarce good, and research is the cleanest place to prove it first, because research already lives by claims, evidence, review, and reproducibility. It has the most painful version of the universal AI trust problem &mdash; and so it is the wedge.</p>
+      <p>The money follows the trust. Amara&rsquo;s lab runs on a plan billed to her PI&rsquo;s grant card &mdash; a routine line-item a research group already understands, because integrity infrastructure is exactly what grants are meant to fund. The credits that meter her compute are closed-loop store credit against real analysis run &mdash; nothing more exotic than a prepaid balance. Her supervisor&rsquo;s ability to verify comes with the managed layer. None of it ever felt like a paywall, because none of it stood between her and honesty &mdash; it stood behind her, underwriting it.</p>
+      <p>And the horizon is larger than one lab or one field. The same substrate that let Amara prove her catalysis work is hers will sit under any institution&rsquo;s work where <em>is this yours?</em> has teeth &mdash; which, in the AI age, is all of them. Research is the door. The provable human record is the building.</p>
+      <p>In this future, she defends in the spring. Her committee will ask hard questions about her science, as they should. They will not have to ask whether it is hers. That part is already proven.</p>
+    </div>
+  </section>
+
+  <section class="stack-section">
+    <h2>The stack beneath the story</h2>
+    <p class="intro">The companion map: each act of Amara&rsquo;s journey, the layer that powered it, and where the business lives at that beat. She experiences the left column; the platform is built as the middle; the business is the right.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Her experience &mdash; top-down</th>
+          <th>The layer that powered it &mdash; bottom-up</th>
+          <th>The monetization touchpoint</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Her experience"><strong>The honest verdict</strong> &mdash; Sensarra reads her raw data, floors to &ldquo;inconclusive&rdquo;; only a human can raise a verdict, on the record</td>
+          <td data-label="The layer">Field analyzer surface on the engine; deterministic, offline, verdicts floored at what the data supports</td>
+          <td data-label="Monetization">Metered compute &mdash; credits measure the analysis actually run</td>
+        </tr>
+        <tr>
+          <td data-label="Her experience"><strong>The claim graph</strong> &mdash; every load-bearing claim traces to evidence, a source, or an open question; rigor gate before export</td>
+          <td data-label="The layer">Evidence Foundry, the research workspace surface on the Seitiate engine</td>
+          <td data-label="Monetization">The vertical subscription &mdash; the workspace + the managed loop, on the lab&rsquo;s plan</td>
+        </tr>
+        <tr>
+          <td data-label="Her experience"><strong>Her connections open</strong> &mdash; Zotero, Scite, Crossref/PubMed, Edison; her keys, her library, one connected record</td>
+          <td data-label="The layer">Connector hub on the workspace; her credentials, held not pooled (BYO-account / BYO-key)</td>
+          <td data-label="Monetization">Lab plan on a PI&rsquo;s grant card &mdash; the recurring line the research world already funds</td>
+        </tr>
+        <tr>
+          <td data-label="Her experience"><strong>She writes</strong> &mdash; grounded in her accumulated research context, in her voice, every sentence footed</td>
+          <td data-label="The layer">The Seitiate engine &mdash; her memory, taste, and standards accumulating into her seity</td>
+          <td data-label="Monetization">Managed subscription runs identity, keys, and continuity underneath</td>
+        </tr>
+        <tr>
+          <td data-label="Her experience"><strong>The proof</strong> &mdash; a signed, offline-verifiable export whose claim-by-claim provenance can be checked in seconds</td>
+          <td data-label="The layer"><strong class="layer">Seitiate Trust Layer</strong> &mdash; the neutral trust root that signs, counter-signs, and verifies offline</td>
+          <td data-label="Monetization">Enterprise trust &mdash; where institutions pay for certified, checkable integrity</td>
+        </tr>
+        <tr>
+          <td data-label="Her experience"><strong>The reveal</strong> &mdash; three layers she never saw, so the one she saw could just be honest</td>
+          <td data-label="The layer"><strong class="layer">Seitiate+</strong> between engine and experience: credits, keys, subscription, supervisor access</td>
+          <td data-label="Monetization">The managed layer itself &mdash; the business membrane over the open engine</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="through-line">The through-line: she lived a single honest surface; underneath, a substrate made that honesty <em>checkable</em>; and the business was woven into the parts she never had to look at.</p>
+  </section>
+
+  <section class="closing">
+    <h2>How to use this</h2>
+    <p>This is a marketing and investor narrative, and a script spine. Read on its own, it is the emotional answer to &ldquo;what is Seitiate, and why now.&rdquo; Handed to a filmmaker or walked through live, its eight beats are the storyboard: problem &rarr; the honest machine &rarr; the claim graph &rarr; her connections &rarr; she writes &rarr; the proof &rarr; the reveal &rarr; the market. It pairs with <a href="/overview.html">the seitiate.com pages</a> and the <a href="/july-overview.html">partner brief</a> &mdash; the pages state what the platform <em>is</em>; this story shows what it feels like to be the person it&rsquo;s for, and lets the architecture reveal itself as the payoff rather than the pitch.</p>
+  </section>
+
+  <footer>
+    <nav class="foot-links">
+      <a href="/overview.html">Overview</a>
+      <a href="/researcher.html">Researchers</a>
+      <a href="/">Index</a>
+    </nav>
+    <p class="wordmark">Seitiate &mdash; the researcher&rsquo;s journey</p>
+  </footer>
+
+</div>
+</body>
+</html>
