@@ -1,6 +1,27 @@
 (function() {
   const KEY = 'seitiate_access_auth';
-  if (typeof localStorage !== 'undefined' && localStorage.getItem(KEY) === 'GCH') {
+
+  function isAuthed() {
+    try {
+      if (typeof localStorage !== 'undefined' && localStorage.getItem(KEY) === 'GCH') return true;
+    } catch (e) {}
+    try {
+      if (typeof sessionStorage !== 'undefined' && sessionStorage.getItem(KEY) === 'GCH') return true;
+    } catch (e) {}
+    return window.__gch_authed === true;
+  }
+
+  function setAuthed() {
+    try {
+      if (typeof localStorage !== 'undefined') localStorage.setItem(KEY, 'GCH');
+    } catch (e) {}
+    try {
+      if (typeof sessionStorage !== 'undefined') sessionStorage.setItem(KEY, 'GCH');
+    } catch (e) {}
+    window.__gch_authed = true;
+  }
+
+  if (isAuthed()) {
     return;
   }
 
@@ -44,10 +65,10 @@
     .gate-btn:hover { opacity: 0.9; }
     .gate-error { color: #f87171; font-size: 0.76rem; font-family: 'JetBrains Mono', monospace; margin-top: 12px; display: none; }
   `;
-  document.head.appendChild(style);
+  (document.head || document.documentElement).appendChild(style);
 
   function mountGate() {
-    if (typeof localStorage !== 'undefined' && localStorage.getItem(KEY) === 'GCH') {
+    if (isAuthed()) {
       document.documentElement.classList.remove('gated');
       return;
     }
@@ -75,9 +96,7 @@
     const err = document.getElementById('gate-err');
 
     function unlock() {
-      if (typeof localStorage !== 'undefined') {
-        localStorage.setItem(KEY, 'GCH');
-      }
+      setAuthed();
       document.documentElement.classList.remove('gated');
       overlay.remove();
     }
