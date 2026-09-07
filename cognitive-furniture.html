@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>The Cognitive Furniture — Seitiate Estate</title>
+    <meta name="description" content="Instruments, desks, benches, and seals: how every piece of furniture in the palace enforces an evidentiary contract.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #08090b;
+            --surface: #0f1114;
+            --surface-hover: #16181e;
+            --surface-active: #1c1f27;
+            --border: #1a1c22;
+            --border-hover: #2a2e39;
+            --text: #eceae7;
+            --text-secondary: #8a8a90;
+            --text-muted: #56585f;
+            --accent: #4ade80;
+            --accent-dim: rgba(74, 222, 128, 0.1);
+            --accent-glow: rgba(74, 222, 128, 0.25);
+            --amber: #e0b34a;
+            --amber-dim: rgba(224, 179, 74, 0.1);
+            --amber-glow: rgba(224, 179, 74, 0.25);
+            --cyan: #38bdf8;
+            --cyan-dim: rgba(56, 189, 248, 0.1);
+            --purple: #c084fc;
+            --red: #f87171;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        a { color: inherit; text-decoration: none; }
+
+        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .4; transform: scale(0.92); } }
+
+        /* Navigation */
+        body > nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 14px 28px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+            background: rgba(8, 9, 11, 0.88); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border);
+        }
+        body > nav .brand { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 500; letter-spacing: -0.01em; }
+        body > nav .brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--amber); animation: pulse 2.5s infinite; }
+        body > nav .links { display: flex; align-items: center; justify-content: center; gap: 20px; font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; }
+        body > nav .links a { color: var(--text-secondary); white-space: nowrap; transition: color 0.15s ease; }
+        body > nav .links a:hover, body > nav .links a.cur { color: var(--amber); }
+        body > nav .home { color: var(--text-secondary); font-size: 0.85rem; justify-self: end; transition: color 0.15s ease; }
+        body > nav .home:hover { color: var(--text); }
+
+        /* Main Container */
+        .doc { max-width: 900px; margin: 0 auto; padding: 116px 24px 70px; }
+
+        /* Banners & Labels */
+        .banner {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; letter-spacing: 0.04em;
+            color: var(--amber); border: 1px solid var(--amber-glow); background: var(--amber-dim);
+            border-radius: 100px; padding: 6px 14px; margin-bottom: 2rem;
+        }
+
+        h1 { font-size: clamp(32px, 5.2vw, 48px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 1.2rem; }
+        .lead { font-size: 1.16rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 2.2rem; }
+        .lead strong { color: var(--text); font-weight: 600; }
+
+        /* Doctrine Pill */
+        .doctrine-card {
+            border: 1px solid var(--border); background: linear-gradient(180deg, rgba(15, 17, 20, 0.8) 0%, rgba(10, 11, 14, 0.95) 100%);
+            border-radius: 14px; padding: 22px 26px; margin-bottom: 3.2rem; position: relative; overflow: hidden;
+        }
+        .doctrine-card::before {
+            content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent 0%, var(--amber) 50%, transparent 100%); opacity: 0.5;
+        }
+        .doctrine-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+        .doctrine-header .tag { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.05em; color: var(--amber); }
+        .doctrine-text { font-size: 0.94rem; color: #dedbd6; line-height: 1.65; }
+        .doctrine-text em { color: var(--amber); font-style: normal; font-weight: 500; }
+
+        /* Interactive Furniture Grid */
+        .interactive-furniture {
+            margin: 3.2rem 0; border: 1px solid var(--border); background: var(--surface);
+            border-radius: 16px; padding: 28px; box-shadow: 0 20px 40px -15px rgba(0,0,0,0.5);
+        }
+        .furniture-title { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .furniture-title h3 { font-size: 1.12rem; font-weight: 600; letter-spacing: -0.01em; }
+        .furniture-hint { font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; color: var(--text-muted); }
+
+        .furniture-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 24px;
+        }
+        .furniture-node {
+            border: 1px solid var(--border); background: rgba(8, 9, 11, 0.6); border-radius: 12px;
+            padding: 16px; cursor: pointer; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+        .furniture-node:hover {
+            border-color: var(--border-hover); background: var(--surface-hover); transform: translateY(-2px);
+        }
+        .furniture-node.active {
+            border-color: var(--amber); background: rgba(224, 179, 74, 0.05);
+            box-shadow: 0 0 20px rgba(224, 179, 74, 0.12);
+        }
+        .furniture-node .tag { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--text-muted); margin-bottom: 6px; }
+        .furniture-node.active .tag { color: var(--amber); }
+        .furniture-node h4 { font-size: 0.98rem; font-weight: 600; margin-bottom: 4px; color: var(--text); }
+        .furniture-node p { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; }
+
+        .inspector-panel {
+            background: rgba(8, 9, 11, 0.9); border: 1px solid var(--border); border-radius: 12px;
+            padding: 22px 24px; transition: all 0.25s ease;
+        }
+        .inspector-badge {
+            display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+            padding: 3px 8px; border-radius: 6px; background: rgba(255,255,255,0.06); color: var(--amber); margin-bottom: 8px;
+        }
+        .inspector-panel h4 { font-size: 1.15rem; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+        .inspector-panel .desc { font-size: 0.92rem; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.6; }
+        .inspector-props { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding-top: 14px; border-top: 1px solid var(--border); }
+        .inspector-prop strong { display: block; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 4px; }
+        .inspector-prop span { font-size: 0.86rem; color: var(--text); }
+
+        /* Furniture Deep Dives */
+        .furniture-section { margin: 3.8rem 0; }
+        .furniture-kicker { font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; color: var(--amber); letter-spacing: 0.04em; margin-bottom: 0.6rem; }
+        .furniture-section h2 { font-size: 1.5rem; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 1.1rem; color: var(--text); }
+        p.prose { font-size: 1.02rem; color: var(--text-secondary); line-height: 1.75; margin-bottom: 1.2rem; }
+        p.prose strong { color: var(--text); font-weight: 500; }
+        p.prose code { font-family: 'JetBrains Mono', monospace; font-size: 0.86rem; background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 4px; color: var(--cyan); }
+
+        .spec-box {
+            background: rgba(15, 17, 20, 0.6); border: 1px solid var(--border); border-left: 3px solid var(--amber);
+            border-radius: 8px; padding: 18px 20px; margin: 1.6rem 0; font-size: 0.92rem; color: var(--text-secondary);
+        }
+        .spec-box strong { color: var(--text); }
+        .spec-box pre { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: #a5b4fc; background: #050608; padding: 12px; border-radius: 6px; margin-top: 10px; overflow-x: auto; }
+
+        /* Lens Navigation Strip */
+        .lens-nav {
+            margin-top: 4rem; border-top: 1px solid var(--border); padding-top: 2.4rem;
+        }
+        .lens-nav-kicker { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.04em; margin-bottom: 1rem; }
+        .lens-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+        .lens-card {
+            border: 1px solid var(--border); background: var(--surface); border-radius: 12px; padding: 18px;
+            display: block; transition: all 0.2s ease;
+        }
+        .lens-card:hover { border-color: var(--amber); background: rgba(224, 179, 74, 0.04); transform: translateY(-2px); }
+        .lens-card.active { border-color: var(--amber); background: rgba(224, 179, 74, 0.06); }
+        .lens-card .lens-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--amber); margin-bottom: 6px; }
+        .lens-card h5 { font-size: 0.95rem; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+        .lens-card p { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.45; }
+
+        footer { text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 48px 24px; font-family: 'JetBrains Mono', monospace; }
+
+        @media (max-width: 768px) {
+            .furniture-grid { grid-template-columns: 1fr; }
+            .inspector-props { grid-template-columns: 1fr; }
+            .lens-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="brand"><span class="dot"></span>Seitiate · Cognitive Furniture</div>
+        <div class="links">
+            <a href="/palace-as-world.html">Lens 1: World</a>
+            <a href="/cognitive-furniture.html" class="cur">Lens 2: Furniture</a>
+            <a href="/game-engine.html">Lens 3: World Machine</a>
+            <a href="/harbor.html">Lens 4: Harbor</a>
+            <a href="/architecture.html">Lens 5: Architecture</a>
+        </div>
+        <a href="/index.html" class="home">← Private Index</a>
+    </nav>
+
+    <main class="doc">
+        <div class="banner">private orientation · lens 2 · instruments & contracts</div>
+        <h1>The Cognitive Furniture</h1>
+        <p class="lead">
+            In the estate of human practice, a room is not a generic text prompt or an empty chat canvas. 
+            <strong>A room is defined by its furniture</strong>—and every desk, bench, courier slip, and seal 
+            enforces an evidentiary contract between author, instrument, and community.
+        </p>
+
+        <!-- Doctrine Banner -->
+        <div class="doctrine-card">
+            <div class="doctrine-header">
+                <span class="tag">THE INSTRUMENT DOCTRINE (CHECK-CONTRACT §2)</span>
+                <span style="color: var(--text-muted); font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;">SSOT-CHECK-V1</span>
+            </div>
+            <div class="doctrine-text">
+                "An instrument's self-report is not evidence. Only an independent assertion of resulting state is. 
+                Furniture is not decorative; <em>it is the physical embodiment of a boundary</em>. Where a tool permits careless 
+                inference, the architecture must replace it with an explicit invariant."
+            </div>
+        </div>
+
+        <!-- Interactive Furniture Widget -->
+        <div class="interactive-furniture">
+            <div class="furniture-title">
+                <h3>Select an Instrument or Piece of Furniture</h3>
+                <span class="furniture-hint">CLICK TO INSPECT CONTRACT</span>
+            </div>
+
+            <div class="furniture-grid">
+                <div class="furniture-node active" onclick="inspectItem(this, 'desk')">
+                    <div class="tag">FURNITURE 01 · SCRIPTORIUM</div>
+                    <h4>The Writing Desk</h4>
+                    <p>Singular estate authoring surface; abolition of the disconnected textarea.</p>
+                </div>
+                <div class="furniture-node" onclick="inspectItem(this, 'courier')">
+                    <div class="tag">FURNITURE 02 · CLOISTER SEAM</div>
+                    <h4>The Evidence Courier</h4>
+                    <p>Resolver endpoint carrying verified claims from lab flags to manuscript margins.</p>
+                </div>
+                <div class="furniture-node" onclick="inspectItem(this, 'bench')">
+                    <div class="tag">FURNITURE 03 · COLLEGIUM</div>
+                    <h4>The Sensor Benches</h4>
+                    <p>Honesty Floor rigs: sanity checks reproduce mechanics, never auto-pass science.</p>
+                </div>
+                <div class="furniture-node" onclick="inspectItem(this, 'seal')">
+                    <div class="tag">FURNITURE 04 · BARBICAN</div>
+                    <h4>The Notary's Seal</h4>
+                    <p>Cryptographic envelopes, SHA-256 digests, and sovereign provenance proofs.</p>
+                </div>
+                <div class="furniture-node" onclick="inspectItem(this, 'sanctuary')">
+                    <div class="tag">FURNITURE 05 · SILENTIUM</div>
+                    <h4>The Unrecorded Cushion</h4>
+                    <p>The Vipassana sanctuary where no cameras record and no receipts are minted.</p>
+                </div>
+                <div class="furniture-node" onclick="inspectItem(this, 'chests')">
+                    <div class="tag">FURNITURE 06 · THE KEEP</div>
+                    <h4>The Four Chests of Seitas</h4>
+                    <p>Arca (Keys) → Horreum (Harvest) → Proprium (Affirmation) → Summarium (Essence).</p>
+                </div>
+            </div>
+
+            <div class="inspector-panel" id="inspector">
+                <span class="inspector-badge" id="inspectBadge">AUTHORING SURFACE</span>
+                <h4 id="inspectTitle">The Writing Desk</h4>
+                <p class="desc" id="inspectDesc">
+                    The single manuscript surface for long-form prose across all verticals. Rather than litigating experimental methods inside a clumsy inline textarea, the scholar attaches typed marks like [warrant:ef_claim_4810a]. The desk speaks to the Evidence Resolver across the cloister seam.
+                </p>
+                <div class="inspector-props">
+                    <div class="inspector-prop">
+                        <strong>LOCATION</strong>
+                        <span id="inspectLoc">The Scriptorium</span>
+                    </div>
+                    <div class="inspector-prop">
+                        <strong>CONTRACT ENFORCED</strong>
+                        <span id="inspectContract">WRITING-DESK-EVIDENCE-RESOLVER-SPEC-V1</span>
+                    </div>
+                    <div class="inspector-prop">
+                        <strong>DOCTRINE INVARIANT</strong>
+                        <span id="inspectInvariant">Zero duplicate authoring textareas; all citations resolve</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 1: The Writing Desk -->
+        <div class="furniture-section">
+            <div class="furniture-kicker">01 · THE SCRIPTORIUM</div>
+            <h2>The Writing Desk & The Dismantled &lt;textarea&gt;</h2>
+            <p class="prose">
+                In earlier iterations of our scientific estate, an awkward compromise occurred: when researchers needed to capture 
+                methodological notes inside the biosensing lab (Sensarra / Evidence Foundry), someone built a raw HTML 
+                <code>&lt;textarea&gt;</code> directly into the test bench.
+            </p>
+            <p class="prose">
+                The result was a severe architectural fracture. A scientist was composing prose where they should have been reading 
+                amperometric current curves, and their sentences were disconnected from the estate's citation graph, leaving draft 
+                manuscripts scattered across local state.
+            </p>
+            <p class="prose">
+                <strong>Under the Scientific Estate Remediation:</strong> That clumsy textarea was dismantled. 
+                The <strong>Writing Desk</strong> in the Scriptorium is now the <em>single authoring surface</em> across the entire estate. 
+                When a scholar sits at the desk, they compose continuous long-form prose and insert typed warrant marks:
+            </p>
+            <div class="spec-box">
+                <strong>Typing an Evidence Mark at the Desk:</strong>
+                <pre>The sensor demonstrates a linear calibration floor down to 0.05 nM [warrant:ef_claim_982a],
+corroborated by independent electrode titration [warrant:sensarra_run_104].</pre>
+            </div>
+            <p class="prose">
+                The author does not paste JSON or pretend to be a database. They write. The desk handles the evidentiary binding.
+            </p>
+        </div>
+
+        <!-- Section 2: The Cloister Seam -->
+        <div class="furniture-section">
+            <div class="furniture-kicker">02 · THE CLOISTER SEAM</div>
+            <h2>The Evidence Courier & Pneumatic Tube</h2>
+            <p class="prose">
+                How does a warrant mark at the Writing Desk connect to a physical experiment executed in the laboratory?
+                Through the <strong>Cloister Seam</strong>, governed by <code>GET /api/v1/evidence/resolve/:ref</code>.
+            </p>
+            <p class="prose">
+                Think of this as a pneumatic carrier tube running through the vaulted cloister between the Scriptorium and the 
+                Evidence Foundry. When the author highlights a claim or compiles a manuscript, a courier packet traverses the seam.
+            </p>
+            <div class="spec-box">
+                <strong>The Resolved Carrier Packet:</strong>
+                <pre>{
+  "ref": "ef_claim_982a",
+  "status": "grounded",
+  "claim_text": "Calibration floor measured at 0.05 nM limit of detection",
+  "evidence": {
+    "run_id": "run_2026_09_05_001",
+    "root_digest": "sha256:a796595574a1b47bb3bceb217254cf0d0f6e77f646202eae7c8d660ad0a53a79",
+    "support_issuer": "empirical:own-measurement",
+    "receipt_status": "signed"
+  }
+}</pre>
+            </div>
+            <p class="prose">
+                The <code>support_issuer</code> field tells the reader who vouches for the underlying empirical weight: 
+                an external Zenodo DOI, a Zotero archival URI, or an authentic own-measurement benchmark from the Collegium.
+            </p>
+        </div>
+
+        <!-- Section 3: The Sensor Benches -->
+        <div class="furniture-section">
+            <div class="furniture-kicker">03 · THE COLLEGIUM</div>
+            <h2>The Sensor Benches & The Honesty Floor</h2>
+            <p class="prose">
+                Inside the Collegium and Sensorium, work is performed with physical electrodes, microfluidic channels, and statistical checks. 
+                Here sits the estate's most rigorously guarded doctrine: <strong>The Honesty Floor</strong> (PR #227 &amp; Check Contract §2).
+            </p>
+            <blockquote style="border-left: 2px solid var(--amber); background: rgba(224, 179, 74, 0.04); padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 1.4rem 0; font-size: 0.94rem; color: #dedbd6;">
+                <strong>Verdict Floor Inversion:</strong> A check that turns a software sanity result into a domain verdict is a named failure the contract must carry, alongside the control that must fail. Software reproduction of known test data validates execution mechanics only; it must not elevate an evidence status to a scientific pass.
+            </blockquote>
+            <p class="prose">
+                When a benchmark script runs against a known synthetic dataset, it merely verifies that the code didn't crash. 
+                In our stack, that run's status is strictly <code>inconclusive</code>. 
+                Only an experimental run meeting explicit domain thresholds and bearing an attested evidence envelope can earn a 
+                canonical <code>pass</code>.
+            </p>
+        </div>
+
+        <!-- Section 4: The Notary's Seal -->
+        <div class="furniture-section">
+            <div class="furniture-kicker">04 · THE BARBICAN</div>
+            <h2>The Notary's Wax Hallmark & Sovereign Seal</h2>
+            <p class="prose">
+                At the Barbican between the public road and the inner rooms sits the <strong>Notary</strong>. 
+                The Notary holds no opinions on prose style and conducts no chemical experiments. 
+                The Notary's sole instrument is the <strong>Seal</strong>.
+            </p>
+            <p class="prose">
+                Every verified claim, every evidence receipt, and every state mutation in the Ledger is sealed into a canonical 
+                cryptographic envelope:
+            </p>
+            <p class="prose">
+                • <strong>Deterministic Serialization:</strong> Fields are sorted and normalized before hashing.<br>
+                • <strong>Double SHA-256 Digest:</strong> The payload and metadata digests are pinned.<br>
+                • <strong>Actor Key Signature:</strong> Stamped with the sovereign private key held in the Arca.<br>
+            </p>
+            <p class="prose">
+                If the estate's servers were turned off tomorrow, a scholar holding an exported manuscript with Notary receipts can 
+                mathematically verify every cited claim without calling home to Seitiate.
+            </p>
+        </div>
+
+        <!-- Section 5: The Silentium Cushion -->
+        <div class="furniture-section">
+            <div class="furniture-kicker">05 · THE SANCTUARY</div>
+            <h2>The Silentium: The Unrecorded Cushion</h2>
+            <p class="prose">
+                Every cognitive platform designed in Silicon Valley suffers from totalizing surveillance: every keystroke logged, 
+                every cursor dwell measured, every scrap of text scraped for training weights.
+            </p>
+            <p class="prose">
+                In the Seitiate estate, the <strong>Silentium</strong> exists as the constitutional counterweight. 
+                Its furniture is sparse: a meditation cushion, a plain timber bench, a shaded garden corner.
+            </p>
+            <p class="prose">
+                <strong>The Architectural Invariant:</strong> In the Silentium, <em>no socket listens, no camera records, and no receipts are minted</em>. 
+                It is inspired by the Vipassana tradition: a space for unhurried, unmonitored human contemplation. 
+                The honesty of the estate is proven as much by what it deliberately refuses to surveil as by what it hallmarks.
+            </p>
+        </div>
+
+        <!-- Section 6: The Four Chests of Seitas -->
+        <div class="furniture-section">
+            <div class="furniture-kicker">06 · THE KEEP (SEITAS)</div>
+            <h2>The Four Chests of the Sovereign Keep</h2>
+            <p class="prose">
+                Rising at the physical and conceptual center of the estate is the Keep. Inside each member's chamber sit 
+                <strong>the Four Chests</strong>, representing the four life stages of human intellectual practice:
+            </p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 1.8rem 0;">
+                <div style="border: 1px solid var(--border); background: var(--surface); padding: 18px; border-radius: 10px;">
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--amber); margin-bottom: 4px;">CHEST 1 · BEDROCK</div>
+                    <h4 style="font-size: 1.05rem; margin-bottom: 6px;">The Arca (The Vault)</h4>
+                    <p style="font-size: 0.86rem; color: var(--text-secondary); line-height: 1.5;">Holds your sovereign keys and identity roots. The estate does not possess your keys; you hold them. If the palace burns, you take your Arca and walk away.</p>
+                </div>
+                <div style="border: 1px solid var(--border); background: var(--surface); padding: 18px; border-radius: 10px;">
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--cyan); margin-bottom: 4px;">CHEST 2 · GROUND FLOOR</div>
+                    <h4 style="font-size: 1.05rem; margin-bottom: 6px;">The Horreum (The Granary)</h4>
+                    <p style="font-size: 0.86rem; color: var(--text-secondary); line-height: 1.5;">The harvest bin. Everything you collect, read, clip, or notice. Kept unsorted, untagged, and unjudged. Abundance without premature organization.</p>
+                </div>
+                <div style="border: 1px solid var(--border); background: var(--surface); padding: 18px; border-radius: 10px;">
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--accent); margin-bottom: 4px;">CHEST 3 · LIVING ROOM</div>
+                    <h4 style="font-size: 1.05rem; margin-bottom: 6px;">The Proprium (What is Yours)</h4>
+                    <p style="font-size: 0.86rem; color: var(--text-secondary); line-height: 1.5;">Of all that was harvested in the Horreum, what do you actually affirm? What do you sign your name to and stand behind? The chest of deliberate commitment.</p>
+                </div>
+                <div style="border: 1px solid var(--border); background: var(--surface); padding: 18px; border-radius: 10px;">
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--purple); margin-bottom: 4px;">CHEST 4 · THE SUMMIT</div>
+                    <h4 style="font-size: 1.05rem; margin-bottom: 6px;">The Summarium (Crystallization)</h4>
+                    <p style="font-size: 0.86rem; color: var(--text-secondary); line-height: 1.5;">The distilled essence of decades of thought. A single page, a unified theorem, an enduring essay. What survives after everything extraneous is burned away.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lens Navigation Strip -->
+        <div class="lens-nav">
+            <div class="lens-nav-kicker">EXPLORE THE STACK THROUGH DIFFERENT LENSES</div>
+            <div class="lens-grid">
+                <a class="lens-card" href="/palace-as-world.html">
+                    <div class="lens-tag">LENS 1 · WORLD</div>
+                    <h5>The Palace as World</h5>
+                    <p>The spatial walk, the rooms, Ivo at the gate, and the two-body architecture.</p>
+                </a>
+                <a class="lens-card active" href="/cognitive-furniture.html">
+                    <div class="lens-tag">LENS 2 · ACTIVE</div>
+                    <h5>Cognitive Furniture</h5>
+                    <p>The Writing Desk, Evidence Courier, Sensor Benches, Honesty Floors, and the Keep's Chests.</p>
+                </a>
+                <a class="lens-card" href="/game-engine.html">
+                    <div class="lens-tag">LENS 3 · ENGINE</div>
+                    <h5>The World Machine</h5>
+                    <p>The estate as game server, presence by work-in-progress, SEIT credit, and state machines.</p>
+                </a>
+                <a class="lens-card" href="/harbor.html">
+                    <div class="lens-tag">LENS 4 · HARBOR</div>
+                    <h5>The Harbor & Verticals</h5>
+                    <p>How founder-owned verticals sit on the shared business layer.</p>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Seitiate Estate · Private Orientation · seitiate.com</p>
+    </footer>
+
+    <script>
+        const furnitureData = {
+            desk: {
+                badge: "AUTHORING SURFACE",
+                title: "The Writing Desk",
+                desc: "The single manuscript surface for long-form prose across all verticals. Rather than litigating experimental methods inside a clumsy inline textarea, the scholar attaches typed marks like [warrant:ef_claim_4810a]. The desk speaks to the Evidence Resolver across the cloister seam.",
+                loc: "The Scriptorium",
+                contract: "WRITING-DESK-EVIDENCE-RESOLVER-SPEC-V1",
+                invariant: "Zero duplicate authoring textareas; all citations resolve"
+            },
+            courier: {
+                badge: "EVIDENTIARY SEAM",
+                title: "The Evidence Courier",
+                desc: "A pneumatic transport seam (GET /api/v1/evidence/resolve/:ref) carrying claim cards from the laboratory across the courtyard flagstones into the margin of the author's draft. Returns claim status, support issuer (Zenodo, Zotero, or empirical), and cryptographic root digest.",
+                loc: "The Cloister Seam",
+                contract: "EVIDENCE-V1-CONVERGENCE & ADR-001",
+                invariant: "Every mark binds to verified empirical data"
+            },
+            bench: {
+                badge: "EMPIRICAL RIG",
+                title: "The Sensor Benches",
+                desc: "Biosensing and electrochemistry test rigs enforcing the Honesty Floor. Software validation runs reproducing synthetic test vectors validate code mechanics only and remain strictly 'inconclusive'. Only genuine experimental evidence satisfies a scientific 'pass'.",
+                loc: "The Collegium & Sensorium",
+                contract: "CHECK-CONTRACT.md §2 (PR #227)",
+                invariant: "Sanity reproduction never auto-promoted to scientific PASS"
+            },
+            seal: {
+                badge: "CRYPTOGRAPHIC PROVENANCE",
+                title: "The Notary's Seal",
+                desc: "The double SHA-256 cryptographic envelope stamping tool at the Barbican. It signs event logs, claims, and state mutations with sovereign keys. Verifiable offline forever, even if the estate's physical servers cease to exist.",
+                loc: "The Barbican & Arch",
+                contract: "LEDGER-PRIMITIVE-V0-SPEC & Envelope.v1",
+                invariant: "Deterministic hashing; actor non-repudiation"
+            },
+            sanctuary: {
+                badge: "UNMONITORED REFUGE",
+                title: "The Unrecorded Cushion",
+                desc: "The Vipassana meditation sanctuary where human thought happens outside the purview of logging, telemetry, and machine listening. No receipts minted, no events recorded, zero surveillance.",
+                loc: "The Silentium",
+                contract: "CONSTITUTION §4 (Unsurveilled Thought)",
+                invariant: "Zero logging; absolute privacy guarantee"
+            },
+            chests: {
+                badge: "SOVEREIGN LIFECYCLE",
+                title: "The Four Chests of Seitas",
+                desc: "The progressive custody model of a scholar's life work: Arca (sovereign key vault in bedrock) → Horreum (unfiltered raw harvest) → Proprium (deliberate commitment and affirmation) → Summarium (the summit of crystallized essence).",
+                loc: "Seitas (The Keep)",
+                contract: "MAPPA-PALATII §Keep",
+                invariant: "Keys held by user; data outlives the platform"
+            }
+        };
+
+        function inspectItem(element, key) {
+            const data = furnitureData[key];
+            if (!data) return;
+
+            document.querySelectorAll('.furniture-node').forEach(node => node.classList.remove('active'));
+            element.classList.add('active');
+
+            const panel = document.getElementById('inspector');
+            panel.style.opacity = '0.35';
+            panel.style.transform = 'translateY(4px)';
+
+            setTimeout(() => {
+                document.getElementById('inspectBadge').innerText = data.badge;
+                document.getElementById('inspectTitle').innerText = data.title;
+                document.getElementById('inspectDesc').innerText = data.desc;
+                document.getElementById('inspectLoc').innerText = data.loc;
+                document.getElementById('inspectContract').innerText = data.contract;
+                document.getElementById('inspectInvariant').innerText = data.invariant;
+
+                panel.style.opacity = '1';
+                panel.style.transform = 'translateY(0)';
+            }, 120);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>The World Machine — Seitiate Estate as Game Engine</title>
+    <meta name="description" content="The estate as a multiplayer world: BEAM processes as game server, presence through work-in-progress, the SEIT economy, and truth floors.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #08090b;
+            --surface: #0f1114;
+            --surface-hover: #16181e;
+            --surface-active: #1c1f27;
+            --border: #1a1c22;
+            --border-hover: #2a2e39;
+            --text: #eceae7;
+            --text-secondary: #8a8a90;
+            --text-muted: #56585f;
+            --accent: #4ade80;
+            --accent-dim: rgba(74, 222, 128, 0.1);
+            --amber: #e0b34a;
+            --cyan: #38bdf8;
+            --cyan-dim: rgba(56, 189, 248, 0.1);
+            --cyan-glow: rgba(56, 189, 248, 0.25);
+            --purple: #c084fc;
+            --purple-dim: rgba(192, 132, 252, 0.1);
+            --red: #f87171;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        a { color: inherit; text-decoration: none; }
+
+        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .4; transform: scale(0.92); } }
+
+        /* Navigation */
+        body > nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 14px 28px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+            background: rgba(8, 9, 11, 0.88); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border);
+        }
+        body > nav .brand { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 500; letter-spacing: -0.01em; }
+        body > nav .brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--cyan); animation: pulse 2.5s infinite; }
+        body > nav .links { display: flex; align-items: center; justify-content: center; gap: 20px; font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; }
+        body > nav .links a { color: var(--text-secondary); white-space: nowrap; transition: color 0.15s ease; }
+        body > nav .links a:hover, body > nav .links a.cur { color: var(--cyan); }
+        body > nav .home { color: var(--text-secondary); font-size: 0.85rem; justify-self: end; transition: color 0.15s ease; }
+        body > nav .home:hover { color: var(--text); }
+
+        /* Main Container */
+        .doc { max-width: 900px; margin: 0 auto; padding: 116px 24px 70px; }
+
+        /* Banners & Labels */
+        .banner {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; letter-spacing: 0.04em;
+            color: var(--cyan); border: 1px solid var(--cyan-glow); background: var(--cyan-dim);
+            border-radius: 100px; padding: 6px 14px; margin-bottom: 2rem;
+        }
+
+        h1 { font-size: clamp(32px, 5.2vw, 48px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 1.2rem; }
+        .lead { font-size: 1.16rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 2.2rem; }
+        .lead strong { color: var(--text); font-weight: 600; }
+
+        /* Reframe Table Box */
+        .reframe-card {
+            border: 1px solid var(--border); background: var(--surface);
+            border-radius: 14px; padding: 24px; margin-bottom: 3.2rem; position: relative;
+        }
+        .reframe-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 8px; }
+        .reframe-card p.desc { font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 18px; }
+
+        .table-wrap { overflow-x: auto; }
+        table.reframe-table {
+            width: 100%; border-collapse: collapse; font-size: 0.86rem; text-align: left;
+        }
+        table.reframe-table th {
+            padding: 10px 14px; border-bottom: 1px solid var(--border); font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem; color: var(--text-muted); font-weight: 500;
+        }
+        table.reframe-table td {
+            padding: 12px 14px; border-bottom: 1px solid var(--border); color: var(--text-secondary);
+        }
+        table.reframe-table tr:hover td { background: rgba(255,255,255,0.02); }
+        table.reframe-table td strong { color: var(--text); font-weight: 500; }
+        table.reframe-table td.estate { color: #38bdf8; font-weight: 500; }
+
+        /* Interactive State Simulator */
+        .interactive-sim {
+            margin: 3.2rem 0; border: 1px solid var(--border); background: var(--surface);
+            border-radius: 16px; padding: 28px; box-shadow: 0 20px 40px -15px rgba(0,0,0,0.5);
+        }
+        .sim-title { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .sim-title h3 { font-size: 1.12rem; font-weight: 600; letter-spacing: -0.01em; }
+        .sim-hint { font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; color: var(--text-muted); }
+
+        .sim-pipeline {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px;
+        }
+        .pipeline-step {
+            border: 1px solid var(--border); background: rgba(8, 9, 11, 0.6); border-radius: 12px;
+            padding: 16px; cursor: pointer; transition: all 0.2s ease;
+        }
+        .pipeline-step:hover { border-color: var(--border-hover); background: var(--surface-hover); transform: translateY(-2px); }
+        .pipeline-step.active {
+            border-color: var(--cyan); background: rgba(56, 189, 248, 0.05);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.12);
+        }
+        .pipeline-step .step-num { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--text-muted); margin-bottom: 6px; }
+        .pipeline-step.active .step-num { color: var(--cyan); }
+        .pipeline-step h4 { font-size: 0.94rem; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+        .pipeline-step p { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.35; }
+
+        .pipeline-details {
+            background: rgba(8, 9, 11, 0.9); border: 1px solid var(--border); border-radius: 12px;
+            padding: 22px 24px; transition: all 0.25s ease;
+        }
+        .pipeline-badge {
+            display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+            padding: 3px 8px; border-radius: 6px; background: rgba(56, 189, 248, 0.1); color: var(--cyan); margin-bottom: 8px;
+        }
+        .pipeline-details h4 { font-size: 1.15rem; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+        .pipeline-details .desc { font-size: 0.92rem; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.6; }
+        .pipeline-code { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; background: #050608; border: 1px solid var(--border); border-radius: 8px; padding: 14px; color: #7dd3fc; overflow-x: auto; }
+
+        /* Chapters */
+        .chapter { margin: 3.8rem 0; }
+        .chapter-kicker { font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; color: var(--cyan); letter-spacing: 0.04em; margin-bottom: 0.6rem; }
+        .chapter h2 { font-size: 1.5rem; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 1.1rem; color: var(--text); }
+        p.prose { font-size: 1.02rem; color: var(--text-secondary); line-height: 1.75; margin-bottom: 1.2rem; }
+        p.prose strong { color: var(--text); font-weight: 500; }
+        p.prose code { font-family: 'JetBrains Mono', monospace; font-size: 0.86rem; background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 4px; color: var(--cyan); }
+
+        /* Feature Cards */
+        .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 1.8rem 0; }
+        .feature-card { border: 1px solid var(--border); background: var(--surface); border-radius: 10px; padding: 20px; }
+        .feature-card .kicker { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--cyan); margin-bottom: 6px; }
+        .feature-card h4 { font-size: 1.05rem; font-weight: 600; margin-bottom: 6px; color: var(--text); }
+        .feature-card p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; }
+
+        /* Lens Navigation Strip */
+        .lens-nav {
+            margin-top: 4rem; border-top: 1px solid var(--border); padding-top: 2.4rem;
+        }
+        .lens-nav-kicker { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.04em; margin-bottom: 1rem; }
+        .lens-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+        .lens-card {
+            border: 1px solid var(--border); background: var(--surface); border-radius: 12px; padding: 18px;
+            display: block; transition: all 0.2s ease;
+        }
+        .lens-card:hover { border-color: var(--cyan); background: rgba(56, 189, 248, 0.04); transform: translateY(-2px); }
+        .lens-card.active { border-color: var(--cyan); background: rgba(56, 189, 248, 0.06); }
+        .lens-card .lens-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--cyan); margin-bottom: 6px; }
+        .lens-card h5 { font-size: 0.95rem; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+        .lens-card p { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.45; }
+
+        footer { text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 48px 24px; font-family: 'JetBrains Mono', monospace; }
+
+        @media (max-width: 768px) {
+            .sim-pipeline { grid-template-columns: 1fr 1fr; }
+            .feature-grid { grid-template-columns: 1fr; }
+            .lens-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="brand"><span class="dot"></span>Seitiate · The World Machine</div>
+        <div class="links">
+            <a href="/palace-as-world.html">Lens 1: World</a>
+            <a href="/cognitive-furniture.html">Lens 2: Furniture</a>
+            <a href="/game-engine.html" class="cur">Lens 3: World Machine</a>
+            <a href="/harbor.html">Lens 4: Harbor</a>
+            <a href="/architecture.html">Lens 5: Architecture</a>
+        </div>
+        <a href="/index.html" class="home">← Private Index</a>
+    </nav>
+
+    <main class="doc">
+        <div class="banner">private orientation · lens 3 · game substrate & state mechanics</div>
+        <h1>The Estate as World Machine</h1>
+        <p class="lead">
+            What if you treated the estate not as a static web app or a chat prompt, but as a 
+            <strong>many-player world machine</strong>? By eliminating twitch combat, the hard parts of gaming 
+            dissolve—leaving behind the exact primitives we build: identity, ordered events, fan-out, and provenance.
+        </p>
+
+        <!-- Reframe Comparison Card -->
+        <div class="reframe-card">
+            <h3>The Reframing: Twitch MMO vs. Estate of Practice</h3>
+            <p class="desc">Drawn from our ratified architecture analysis (2026-08-22 MMO Substrate Memo):</p>
+            <div class="table-wrap">
+                <table class="reframe-table">
+                    <thead>
+                        <tr>
+                            <th>DIMENSION</th>
+                            <th>TWITCH MMO (WoW, Fortnite)</th>
+                            <th>THE ESTATE OF PRACTICE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Authority</strong></td>
+                            <td>Server simulates 60Hz physics; clients predict/rollback</td>
+                            <td class="estate">Server records events; there is nothing to simulate</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Consistency Need</strong></td>
+                            <td>Physical (hit registration, collision boxes)</td>
+                            <td class="estate">Economic + Evidentiary (who owns what, who made what)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Latency Budget</strong></td>
+                            <td>50–150 ms or the twitch game breaks</td>
+                            <td class="estate">Seconds; a room is a thoughtful conversation</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Concurrency Shape</strong></td>
+                            <td>One giant shard, thousands in a field</td>
+                            <td class="estate">Many rooms of 2–50 members; an estate of federated rooms</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cheating Surface</strong></td>
+                            <td>Speed hacks, wallhacks, aimbots</td>
+                            <td class="estate">Dupes, impersonation, forged provenance, empty citations</td>
+                        </tr>
+                        <tr>
+                            <td><strong>The Hard Parts</strong></td>
+                            <td>Netcode, spatial interest management, anti-cheat</td>
+                            <td class="estate">Identity spine, event ordering, fan-out control, truth floors</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Interactive Pipeline Simulator -->
+        <div class="interactive-sim">
+            <div class="sim-title">
+                <h3>The World Machine State Pipeline</h3>
+                <span class="sim-hint">CLICK ANY STEP TO TRACE EXECUTION</span>
+            </div>
+
+            <div class="sim-pipeline">
+                <div class="pipeline-step active" onclick="traceStep(this, 'beam')">
+                    <div class="step-num">01 · SERVER</div>
+                    <h4>BEAM Actors</h4>
+                    <p>Erlang processes govern rooms, presence, and pub/sub channels.</p>
+                </div>
+                <div class="pipeline-step" onclick="traceStep(this, 'ledger')">
+                    <div class="step-num">02 · LOG</div>
+                    <h4>The World Bus</h4>
+                    <p>Monotonic sequence append-log; the single source of truth.</p>
+                </div>
+                <div class="pipeline-step" onclick="traceStep(this, 'floor')">
+                    <div class="step-num">03 · VERIFICATION</div>
+                    <h4>Truth Floor Gate</h4>
+                    <p>Honesty check: software reproduction stays inconclusive.</p>
+                </div>
+                <div class="pipeline-step" onclick="traceStep(this, 'keep')">
+                    <div class="step-num">04 · CUSTODY</div>
+                    <h4>The Keep Chests</h4>
+                    <p>State transitions: Arca → Horreum → Proprium → Summarium.</p>
+                </div>
+            </div>
+
+            <div class="pipeline-details" id="pipelineDetails">
+                <span class="pipeline-badge" id="stepBadge">BEAM PROCESSES · RUNTIME</span>
+                <h4 id="stepTitle">The BEAM is the Game Server</h4>
+                <p class="desc" id="stepDesc">
+                    Each room in the estate is an isolated Elixir GenServer. Presence, active drafts, and room conversations stay in memory with sub-millisecond dispatch. If a room crashes, its supervision tree restarts it instantly without disturbing neighboring cloisters.
+                </p>
+                <div class="pipeline-code" id="stepCode">
+defmodule Sakme.RoomChannel do
+  use GenServer
+  # Supervision tree isolates room state; crash in Scriptorium never touches Collegium
+  def handle_cast({:warrant_marked, actor_id, warrant_ref}, state) do
+    Envelope.broadcast_to_room(state.room_id, actor_id, warrant_ref)
+    {:noreply, state}
+  end
+end
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 1: The BEAM is the Game Server -->
+        <div class="chapter">
+            <div class="chapter-kicker">I · DISTRIBUTED RUNTIME</div>
+            <h2>The BEAM is the Game Server</h2>
+            <p class="prose">
+                Traditional game development requires dedicated C++ physics clusters running Unreal or Unity server instances. 
+                For an estate of human practice, <strong>the Erlang BEAM runtime is the natural game server</strong>.
+            </p>
+            <p class="prose">
+                Discord proved this architecture at planet scale: Elixir handles concurrent rooms, presence, and real-time event distribution, 
+                while native Rust NIFs (Native Implemented Functions) step in only where heavy per-guild computation or cryptographic 
+                hashing requires zero-copy speed.
+            </p>
+            <p class="prose">
+                In Seitiate, every study, bench, or guild room is an isolated actor process. It maintains its own live occupants, 
+                its pending citation queue, and its active drafting session. A failure in one wing cannot cascade to another.
+            </p>
+        </div>
+
+        <!-- Chapter 2: Presence by Work in Progress -->
+        <div class="chapter">
+            <div class="chapter-kicker">II · EMBODIMENT WITHOUT AVATARS</div>
+            <h2>Presence by Work in Progress</h2>
+            <p class="prose">
+                The fatal trap of corporate "metaverses" was assuming that inhabiting a world requires rigged 3D polygonal avatars 
+                wandering through uncanny corporate lobbies.
+            </p>
+            <blockquote style="border-left: 2px solid var(--cyan); background: rgba(56, 189, 248, 0.04); padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 1.4rem 0; font-size: 0.94rem; color: #dedbd6;">
+                <strong>The Inhabitation Principle (MMO Memo §1.6):</strong> The estate is populated by other people's work in progress, not by their avatars. A convincingly inhabited world falls out of the presence primitive alone.
+            </blockquote>
+            <p class="prose">
+                When you enter the Scriptorium, you know it is alive not because a cartoon puppet waves at you, but because:
+            </p>
+            <p class="prose">
+                • <strong>The Desk Lamp Glows:</strong> You see that an author is active at desk #4, with manuscript <code>#227-remedy</code> currently open.<br>
+                • <strong>The Courier Moves:</strong> You see a newly resolved warrant indicator traverse from the Evidence Foundry.<br>
+                • <strong>The Quiet Rhythm of Thought:</strong> You perceive other minds grappling with real problems in real time.
+            </p>
+        </div>
+
+        <!-- Chapter 3: The Authoritative World Log -->
+        <div class="chapter">
+            <div class="chapter-kicker">III · THE WORLD BUS</div>
+            <h2>The Ledger as the Authoritative World Log</h2>
+            <p class="prose">
+                In an MMO, the game server simulates time. In the Seitiate estate, <strong>the Ledger is the world bus</strong>.
+                Every action—marking a warrant, publishing a review, transferring credit, affirming a document—is an immutable 
+                Envelope appended to the log.
+            </p>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="kicker">ORDERING PRIMITIVE</div>
+                    <h4>Monotonic Stream Sequences</h4>
+                    <p>Logical ordering via monotonically increasing sequence numbers per room, rather than unreliable wall-clock timestamps. Clients can reconnect and deterministically replay any missed room history.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="kicker">PROVENANCE PRIMITIVE</div>
+                    <h4>Causation & Correlation IDs</h4>
+                    <p>Every claim or state transition explicitly references the parent event that caused it. An audit trail can trace any paragraph back through centuries of laboratory runs without broken links.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 4: The SEIT Economy -->
+        <div class="chapter">
+            <div class="chapter-kicker">IV · THE MERCATUS</div>
+            <h2>The SEIT Credit Economy & Peer-Review Market</h2>
+            <p class="prose">
+                In the Forum and Mercatus, members encounter the estate's economy: <strong>SEIT credit</strong>.
+            </p>
+            <p class="prose">
+                Traditional academic publishing extracts free labor from scholars, locks their papers behind paywalls, and rewards reviewers 
+                with nothing. Web3 tokenomics, on the other hand, devolves into speculative pump-and-dump gambling.
+            </p>
+            <p class="prose">
+                The Seitiate economy avoids both traps:
+            </p>
+            <p class="prose">
+                1. <strong>Non-Extractive Credit:</strong> SEIT is an internal balance earned through verified intellectual labor—providing rigorous peer review, replicating experimental benchmarks, or checking evidence envelopes.<br>
+                2. <strong>Earned Review Capacity:</strong> You spend SEIT to commission independent verification of your own manuscripts from master scholars.<br>
+                3. <strong>Anti-Cheat Guarantees:</strong> Because every review transaction requires double-signed Notary receipts and verified evidence links, reciprocal review cartels and fraudulent spam are mathematically detectable.
+            </p>
+        </div>
+
+        <!-- Lens Navigation Strip -->
+        <div class="lens-nav">
+            <div class="lens-nav-kicker">EXPLORE THE STACK THROUGH DIFFERENT LENSES</div>
+            <div class="lens-grid">
+                <a class="lens-card" href="/palace-as-world.html">
+                    <div class="lens-tag">LENS 1 · WORLD</div>
+                    <h5>The Palace as World</h5>
+                    <p>The spatial walk, the rooms, Ivo at the gate, and the two-body architecture.</p>
+                </a>
+                <a class="lens-card" href="/cognitive-furniture.html">
+                    <div class="lens-tag">LENS 2 · FURNITURE</div>
+                    <h5>Cognitive Furniture</h5>
+                    <p>The Writing Desk, Evidence Courier, Sensor Benches, Honesty Floors, and the Keep's Chests.</p>
+                </a>
+                <a class="lens-card active" href="/game-engine.html">
+                    <div class="lens-tag">LENS 3 · ACTIVE</div>
+                    <h5>The World Machine</h5>
+                    <p>The estate as game server, presence by work-in-progress, SEIT credit, and state machines.</p>
+                </a>
+                <a class="lens-card" href="/harbor.html">
+                    <div class="lens-tag">LENS 4 · HARBOR</div>
+                    <h5>The Harbor & Verticals</h5>
+                    <p>How founder-owned verticals sit on the shared business layer.</p>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Seitiate Estate · Private Orientation · seitiate.com</p>
+    </footer>
+
+    <script>
+        const simData = {
+            beam: {
+                badge: "BEAM PROCESSES · RUNTIME",
+                title: "The BEAM is the Game Server",
+                desc: "Each room in the estate is an isolated Elixir GenServer. Presence, active drafts, and room conversations stay in memory with sub-millisecond dispatch. If a room crashes, its supervision tree restarts it instantly without disturbing neighboring cloisters.",
+                code: `defmodule Sakme.RoomChannel do\n  use GenServer\n  # Supervision tree isolates room state; crash in Scriptorium never touches Collegium\n  def handle_cast({:warrant_marked, actor_id, warrant_ref}, state) do\n    Envelope.broadcast_to_room(state.room_id, actor_id, warrant_ref)\n    {:noreply, state}\n  end\nend`
+            },
+            ledger: {
+                badge: "THE LEDGER · WORLD BUS",
+                title: "The Authoritative World Log",
+                desc: "Every room event is wrapped in a monotonic envelope: actor ID, stream sequence, correlation ID, and cryptographic signature. The log is the bus: reconnecting clients catch up deterministically without distributed lock contention.",
+                code: `{\n  "stream_id": "room:scriptorium:desk_4",\n  "seq": 10482,\n  "actor_id": "person_ivo_9921",\n  "event_type": "warrant_affirmed",\n  "causation_id": "evt_ef_resolve_8820",\n  "payload_digest": "sha256:a796595574a1b47bb3bceb217254cf0d0f6e77f646202eae7c8d660ad0a53a79",\n  "signature": "sig_ed25519_88a0..."\n}`
+            },
+            floor: {
+                badge: "RIGOR GATE · VERIFICATION",
+                title: "The Honesty Floor Invariant",
+                desc: "Before any benchmark is admitted as evidence, the Honesty Floor gate checks its epistemic category. Synthetic test suite passes validate execution syntax only and are stamped 'inconclusive'. Only genuine empirical runs with signed receipts earn a domain 'pass'.",
+                code: `def derive_verdict(run_metrics, domain_thresholds) do\n  case run_metrics.type do\n    :method_validation -> :inconclusive # PR #227 honesty floor\n    :empirical_run when run_metrics.error_rate < domain_thresholds.max -> :pass\n    _ -> :fail\n  end\nend`
+            },
+            keep: {
+                badge: "THE KEEP · FOUR CHESTS",
+                title: "Progressive Sovereign State Custody",
+                desc: "Human work moves through four immutable lifecycle stages: Arca (sovereign identity keys) → Horreum (unfiltered raw harvest) → Proprium (conscious author affirmation) → Summarium (the crystallized summit).",
+                code: `defmodule Seitas.StateTransition do\n  # Data ascends from raw gathering to sovereign essence\n  def promote(:horreum, item, actor_sig) do\n    with :ok <- verify_signature(item, actor_sig),\n         do: {:ok, %Proprium{item: item, affirmed_at: DateTime.utc_now()}}\n  end\nend`
+            }
+        };
+
+        function traceStep(element, stepKey) {
+            const data = simData[stepKey];
+            if (!data) return;
+
+            document.querySelectorAll('.pipeline-step').forEach(node => node.classList.remove('active'));
+            element.classList.add('active');
+
+            const details = document.getElementById('pipelineDetails');
+            details.style.opacity = '0.35';
+            details.style.transform = 'translateY(4px)';
+
+            setTimeout(() => {
+                document.getElementById('stepBadge').innerText = data.badge;
+                document.getElementById('stepTitle').innerText = data.title;
+                document.getElementById('stepDesc').innerText = data.desc;
+                document.getElementById('stepCode').innerText = data.code;
+
+                details.style.opacity = '1';
+                details.style.transform = 'translateY(0)';
+            }, 120);
+        }
+    </script>
+</body>
+</html>

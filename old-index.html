@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Seitiate — private index (archive)</title>
+    <meta name="description" content="Private orientation index for friends, collaborators, and contacts reviewing the Seitiate direction.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #08090b; --surface: #0f1114; --border: #1a1c22;
+            --text: #eceae7; --text-secondary: #8a8a90; --text-muted: #56585f;
+            --accent: #4ade80; --amber: #e0b34a;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+        a { color: inherit; text-decoration: none; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+        body > nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 14px 24px; display: flex; justify-content: space-between; align-items: center;
+            background: rgba(8, 9, 11, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);
+        }
+        body > nav .brand { display: flex; align-items: center; gap: 9px; font-size: 15px; font-weight: 500; }
+        body > nav .brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 2.2s infinite; }
+        body > nav .cur-link { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--accent); }
+        .doc { max-width: 860px; margin: 0 auto; padding: 112px 24px 54px; }
+        .banner {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.03em;
+            color: var(--accent); border: 1px solid rgba(74, 222, 128, 0.25); background: rgba(74, 222, 128, 0.05);
+            border-radius: 8px; padding: 10px 14px; margin-bottom: 2.4rem;
+        }
+        h1 { font-size: clamp(30px, 5vw, 44px); font-weight: 600; letter-spacing: -0.01em; line-height: 1.15; margin-bottom: 1.1rem; }
+        .lead { font-size: 1.08rem; color: var(--text-secondary); max-width: 690px; margin-bottom: 2.2rem; }
+        .lead strong { color: var(--text); font-weight: 500; }
+        .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 1.5rem; }
+        .card {
+            display: block; min-height: 138px; border: 1px solid var(--border); background: var(--surface);
+            border-radius: 12px; padding: 18px 20px;
+        }
+        .card:hover { border-color: rgba(74, 222, 128, 0.34); background: rgba(74, 222, 128, 0.04); }
+        .card .kicker { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--text-muted); letter-spacing: 0.04em; margin-bottom: 0.45rem; }
+        .card h2 { font-size: 1.04rem; font-weight: 500; margin-bottom: 0.35rem; }
+        .card p { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.55; }
+        .note {
+            margin-top: 1.6rem; border: 1px solid rgba(224, 179, 74, 0.25);
+            background: rgba(224, 179, 74, 0.05); border-radius: 10px; padding: 16px 18px;
+            color: var(--text-secondary); font-size: 0.92rem;
+        }
+        .note strong { color: var(--amber); font-weight: 500; }
+        footer { text-align: center; color: var(--text-muted); font-size: 0.78rem; padding: 24px 24px 54px; }
+        @media (max-width: 680px) {
+            .grid { grid-template-columns: 1fr; }
+            .doc { padding-top: 96px; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="brand"><span class="dot"></span>Seitiate private index (archive)</div>
+        <a href="/index.html" class="cur-link">→ New Lenses Index</a>
+    </nav>
+
+    <main class="doc">
+        <div class="banner">friends · collaborators · contacts · preserved original index</div>
+        <h1>Choose the door that matches the conversation.</h1>
+        <p class="lead">These pages are a private orientation set, not a public launch site. They are meant to help friends, collaborators, researchers, builders, and serious contacts understand the complete Seitiate picture we are building toward.</p>
+
+        <div class="grid">
+            <a class="card" href="/overview.html">
+                <div class="kicker">START HERE</div>
+                <h2>Company overview</h2>
+                <p>The plain-language Seitiate story: accountable AI work, the substrate, Evidence Foundry, and why the pieces belong together.</p>
+            </a>
+            <a class="card" href="/researcher.html">
+                <div class="kicker">FOR SCHOLARS</div>
+                <h2>Researchers</h2>
+                <p>Evidence Foundry as a truth-first research workspace: sources, evidence, claims, rigor review, and export.</p>
+            </a>
+            <a class="card" href="/baas.html">
+                <div class="kicker">FOR FOUNDERS</div>
+                <h2>Builders</h2>
+                <p>The early builder-facing idea: bring a repo, concierge onboarding, real users, and founder-owned verticals.</p>
+            </a>
+            <a class="card" href="/july-overview.html">
+                <div class="kicker">PARTNER BRIEF</div>
+                <h2>Partner brief</h2>
+                <p>The advisor/investor version: thesis, wedge, substrate, business model, and the kind of help that matters next.</p>
+            </a>
+            <a class="card" href="/harbor.html">
+                <div class="kicker">APPENDIX</div>
+                <h2>Stack map</h2>
+                <p>The deeper map of verticals, Seitiate+, the engine, Notary, and CES. Useful after the overview, not before it.</p>
+            </a>
+            <a class="card" href="/reality.html">
+                <div class="kicker">APPENDIX</div>
+                <h2>Roadmap</h2>
+                <p>The order of operations: research pilots, field branches, builder harbor, managed substrate, and trust root.</p>
+            </a>
+            <a class="card" href="/researchers-journey.html">
+                <div class="kicker">VISION NARRATIVE</div>
+                <h2>The researcher's journey</h2>
+                <p>A day inside the finished platform, told as a story. Pairs with the researcher pitch and the partner brief.</p>
+            </a>
+        </div>
+
+        <div class="note">
+            <strong>Private orientation, not public positioning.</strong>
+            These pages are for a few weeks from now, when the story should feel coherent before every piece is formally announced.
+        </div>
+    </main>
+
+    <footer>seitiate.com · private orientation index · 2026 · <a href="/index.html" style="color:var(--text-secondary);text-decoration:underline">view lenses index</a></footer>
+</body>
+</html>

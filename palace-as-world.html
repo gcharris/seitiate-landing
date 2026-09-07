@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>The Palace as World — Seitiate Estate</title>
+    <meta name="description" content="A spatial walk through the estate of human practice: from the salt-white harbor road up to the Keep above the cloisters.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #08090b;
+            --surface: #0f1114;
+            --surface-hover: #16181e;
+            --surface-active: #1c1f27;
+            --border: #1a1c22;
+            --border-hover: #2a2e39;
+            --text: #eceae7;
+            --text-secondary: #8a8a90;
+            --text-muted: #56585f;
+            --accent: #4ade80;
+            --accent-dim: rgba(74, 222, 128, 0.1);
+            --accent-glow: rgba(74, 222, 128, 0.25);
+            --amber: #e0b34a;
+            --amber-dim: rgba(224, 179, 74, 0.1);
+            --cyan: #38bdf8;
+            --cyan-dim: rgba(56, 189, 248, 0.1);
+            --purple: #c084fc;
+            --red: #f87171;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        a { color: inherit; text-decoration: none; }
+
+        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .4; transform: scale(0.92); } }
+        @keyframes subtleGlow { 0%, 100% { border-color: rgba(74, 222, 128, 0.2); } 50% { border-color: rgba(74, 222, 128, 0.45); } }
+
+        /* Navigation */
+        body > nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 14px 28px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+            background: rgba(8, 9, 11, 0.88); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border);
+        }
+        body > nav .brand { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 500; letter-spacing: -0.01em; }
+        body > nav .brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 2.5s infinite; }
+        body > nav .links { display: flex; align-items: center; justify-content: center; gap: 20px; font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; }
+        body > nav .links a { color: var(--text-secondary); white-space: nowrap; transition: color 0.15s ease; }
+        body > nav .links a:hover, body > nav .links a.cur { color: var(--accent); }
+        body > nav .home { color: var(--text-secondary); font-size: 0.85rem; justify-self: end; transition: color 0.15s ease; }
+        body > nav .home:hover { color: var(--text); }
+
+        /* Main Container */
+        .doc { max-width: 880px; margin: 0 auto; padding: 116px 24px 70px; }
+
+        /* Banners & Labels */
+        .banner {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; letter-spacing: 0.04em;
+            color: var(--accent); border: 1px solid var(--accent-glow); background: var(--accent-dim);
+            border-radius: 100px; padding: 6px 14px; margin-bottom: 2rem;
+        }
+
+        h1 { font-size: clamp(32px, 5.2vw, 48px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 1.2rem; }
+        .lead { font-size: 1.16rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 2.2rem; }
+        .lead strong { color: var(--text); font-weight: 600; }
+
+        /* Two Body Manifesto Pill */
+        .two-body-card {
+            border: 1px solid var(--border); background: linear-gradient(180deg, rgba(15, 17, 20, 0.8) 0%, rgba(10, 11, 14, 0.95) 100%);
+            border-radius: 14px; padding: 22px 26px; margin-bottom: 3.2rem; position: relative; overflow: hidden;
+        }
+        .two-body-card::before {
+            content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent 0%, var(--cyan) 50%, transparent 100%); opacity: 0.5;
+        }
+        .two-body-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+        .two-body-header .tag { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.05em; color: var(--cyan); }
+        .two-body-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .two-body-col h4 { font-size: 0.96rem; font-weight: 600; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .two-body-col p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; }
+        .two-body-col.seen h4 { color: var(--text); }
+        .two-body-col.unseen h4 { color: var(--accent); }
+
+        /* Interactive Map Widget */
+        .interactive-palace {
+            margin: 3.2rem 0; border: 1px solid var(--border); background: var(--surface);
+            border-radius: 16px; padding: 28px; box-shadow: 0 20px 40px -15px rgba(0,0,0,0.5);
+        }
+        .interactive-title { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .interactive-title h3 { font-size: 1.12rem; font-weight: 600; letter-spacing: -0.01em; }
+        .interactive-hint { font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; color: var(--text-muted); }
+
+        .palace-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 24px;
+        }
+        .room-node {
+            border: 1px solid var(--border); background: rgba(8, 9, 11, 0.6); border-radius: 12px;
+            padding: 16px; cursor: pointer; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+        .room-node:hover {
+            border-color: var(--border-hover); background: var(--surface-hover); transform: translateY(-2px);
+        }
+        .room-node.active {
+            border-color: var(--accent); background: rgba(74, 222, 128, 0.05);
+            box-shadow: 0 0 20px rgba(74, 222, 128, 0.12);
+        }
+        .room-node .tag { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--text-muted); margin-bottom: 6px; }
+        .room-node.active .tag { color: var(--accent); }
+        .room-node h4 { font-size: 0.98rem; font-weight: 600; margin-bottom: 4px; color: var(--text); }
+        .room-node p { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; }
+
+        .inspector-panel {
+            background: rgba(8, 9, 11, 0.9); border: 1px solid var(--border); border-radius: 12px;
+            padding: 22px 24px; transition: all 0.25s ease;
+        }
+        .inspector-badge {
+            display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+            padding: 3px 8px; border-radius: 6px; background: rgba(255,255,255,0.06); color: var(--text-muted); margin-bottom: 8px;
+        }
+        .inspector-panel h4 { font-size: 1.15rem; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+        .inspector-panel .desc { font-size: 0.92rem; color: var(--text-secondary); margin-bottom: 16px; }
+        .inspector-props { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding-top: 14px; border-top: 1px solid var(--border); }
+        .inspector-prop strong { display: block; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 4px; }
+        .inspector-prop span { font-size: 0.86rem; color: var(--text); }
+
+        /* Story Chapters */
+        .chapter { margin: 3.8rem 0; }
+        .chapter-kicker { font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; color: var(--amber); letter-spacing: 0.04em; margin-bottom: 0.6rem; }
+        .chapter h2 { font-size: 1.5rem; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 1.1rem; color: var(--text); }
+        p.prose { font-size: 1.02rem; color: var(--text-secondary); line-height: 1.75; margin-bottom: 1.2rem; }
+        p.prose strong { color: var(--text); font-weight: 500; }
+        p.prose em { color: #d0cee7; font-style: normal; }
+
+        blockquote.novella-quote {
+            border-left: 2px solid var(--amber); background: rgba(224, 179, 74, 0.04);
+            padding: 16px 20px; border-radius: 0 10px 10px 0; margin: 1.6rem 0; font-size: 0.96rem;
+            color: #d6d3ce; font-style: italic; line-height: 1.65;
+        }
+        blockquote.novella-quote span { display: block; font-style: normal; font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; color: var(--amber); margin-top: 8px; }
+
+        /* Lens Progression Footer */
+        .lens-nav {
+            margin-top: 4rem; border-top: 1px solid var(--border); padding-top: 2.4rem;
+        }
+        .lens-nav-kicker { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.04em; margin-bottom: 1rem; }
+        .lens-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+        .lens-card {
+            border: 1px solid var(--border); background: var(--surface); border-radius: 12px; padding: 18px;
+            display: block; transition: all 0.2s ease;
+        }
+        .lens-card:hover { border-color: var(--accent); background: rgba(74, 222, 128, 0.04); transform: translateY(-2px); }
+        .lens-card.active { border-color: var(--accent); background: rgba(74, 222, 128, 0.06); }
+        .lens-card .lens-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--accent); margin-bottom: 6px; }
+        .lens-card h5 { font-size: 0.95rem; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+        .lens-card p { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.45; }
+
+        footer { text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 48px 24px; font-family: 'JetBrains Mono', monospace; }
+
+        @media (max-width: 768px) {
+            .palace-grid { grid-template-columns: 1fr; }
+            .inspector-props { grid-template-columns: 1fr; }
+            .two-body-grid { grid-template-columns: 1fr; }
+            .lens-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="brand"><span class="dot"></span>Seitiate · Palace of Practice</div>
+        <div class="links">
+            <a href="/palace-as-world.html" class="cur">Lens 1: World</a>
+            <a href="/cognitive-furniture.html">Lens 2: Furniture</a>
+            <a href="/game-engine.html">Lens 3: World Machine</a>
+            <a href="/harbor.html">Lens 4: Harbor</a>
+            <a href="/architecture.html">Lens 5: Architecture</a>
+        </div>
+        <a href="/index.html" class="home">← Private Index</a>
+    </nav>
+
+    <main class="doc">
+        <div class="banner">private orientation · lens 1 · the palace as world</div>
+        <h1>The Palace as World</h1>
+        <p class="lead">
+            A spatial walk through the estate of human practice—from the salt-white road at the Portus, 
+            past Ivo at the gate, through the Scriptorium's Writing Desk and the Evidence Foundry cloisters, 
+            up to the Keep rising above the flagstones.
+        </p>
+
+        <!-- The Two Body Ruling Header -->
+        <div class="two-body-card">
+            <div class="two-body-header">
+                <span class="tag">TWO-BODY ESTATE ARCHITECTURE (RULED 2026-09-07)</span>
+                <span style="color: var(--text-muted); font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;">CONSTITUTION §1</span>
+            </div>
+            <div class="two-body-grid">
+                <div class="two-body-col seen">
+                    <h4><span>🏛️</span> Sakme — The Estate Seen</h4>
+                    <p>The home where people live, make, write, and perform. The customer umbrella, the studios, the guild halls, the Writing Desk, and the welcoming gate.</p>
+                </div>
+                <div class="two-body-col unseen">
+                    <h4><span>⚙️</span> Seitiate — The Engine Unseen</h4>
+                    <p>The plumbing beneath the floorboards. The BEAM runtime, PostgreSQL transactions, cryptographic signing, and background workers that keep the house warm.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Palace Map Widget -->
+        <div class="interactive-palace">
+            <div class="interactive-title">
+                <h3>Explore the Rooms of the Estate</h3>
+                <span class="interactive-hint">CLICK ANY ROOM TO INSPECT</span>
+            </div>
+
+            <div class="palace-grid">
+                <div class="room-node active" onclick="inspectRoom(this, 'porta')">
+                    <div class="tag">01 · APPROACH</div>
+                    <h4>The Porta & Gate</h4>
+                    <p>Ivo with his unlit lantern. Soft amber wax Hallmark struck above the arch.</p>
+                </div>
+                <div class="room-node" onclick="inspectRoom(this, 'scriptorium')">
+                    <div class="tag">02 · AUTHORING</div>
+                    <h4>The Scriptorium</h4>
+                    <p>The Writing Desk. Vellum manuscripts, quill in hand, typed claim marks.</p>
+                </div>
+                <div class="room-node" onclick="inspectRoom(this, 'cloister')">
+                    <div class="tag">03 · SEAM</div>
+                    <h4>The Cloister Seam</h4>
+                    <p>The evidence courier resolving [warrant:ef_claim] marks across the courtyard.</p>
+                </div>
+                <div class="room-node" onclick="inspectRoom(this, 'collegium')">
+                    <div class="tag">04 · RIGOR</div>
+                    <h4>The Collegium</h4>
+                    <p>Evidence Foundry & Sensarra. Calibration rigs and the strict Honesty Floor.</p>
+                </div>
+                <div class="room-node" onclick="inspectRoom(this, 'commons')">
+                    <div class="tag">05 · COMMONS</div>
+                    <h4>The Forum & Silentium</h4>
+                    <p>The makers' market, tutors' bench, and the chamber where nothing is recorded.</p>
+                </div>
+                <div class="room-node" onclick="inspectRoom(this, 'keep')">
+                    <div class="tag">06 · THE KEEP</div>
+                    <h4>Seitas (The Tower)</h4>
+                    <p>Four sovereign floors: Arca → Horreum → Proprium → Summarium.</p>
+                </div>
+            </div>
+
+            <div class="inspector-panel" id="inspector">
+                <span class="inspector-badge" id="inspectBadge">APPROACH & ACCESS</span>
+                <h4 id="inspectTitle">The Porta & The Gate</h4>
+                <p class="desc" id="inspectDesc">
+                    At the top of the ridge where the orchards thin against ancient stone walls stands the heavy timber gate. 
+                    Ivo holds his lantern. Above the arch, pressed into soft amber wax, is the Hallmark. 
+                    No pedigree is checked; a first mark weighs the same as a master's, but the stone remembers who struck it.
+                </p>
+                <div class="inspector-props">
+                    <div class="inspector-prop">
+                        <strong>PRIMARY FURNITURE</strong>
+                        <span id="inspectFurniture">The Timber Gate, Stone Arch, Wax Hallmark</span>
+                    </div>
+                    <div class="inspector-prop">
+                        <strong>HUMAN ACTIVITY</strong>
+                        <span id="inspectActivity">Entry, Greeting, Identity Presentation</span>
+                    </div>
+                    <div class="inspector-prop">
+                        <strong>TRUTH GUARANTEE</strong>
+                        <span id="inspectGuarantee">Unmarked entry permitted; false marks rejected</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Narrative Chapters Walkthrough -->
+        <div class="chapter">
+            <div class="chapter-kicker">I · THE HARBOR & THE GATE</div>
+            <h2>Nobody checks your pedigree at this door</h2>
+            <p class="prose">
+                The stranger comes up the salt-white road from the <strong>Portus</strong> before dawn. The town thins into orchard, 
+                and the orchard thins into stone wall, and at the top of the road stands the gate.
+            </p>
+            <blockquote class="novella-quote">
+                "Nobody does, the first time. That's not a mark against you. Costs nothing to walk in unmarked. 
+                Nobody checks your pedigree at this door—a first mark weighs exactly the same as a master's here, which is the whole point 
+                of having a door at all instead of a wall with no opening in it. What you can't do is fake having earned one."
+                <span>— Ivo, Keeper of the Gate (A Dream of the Estate)</span>
+            </blockquote>
+            <p class="prose">
+                Above the arch is the <strong>Hallmark</strong>, struck in soft wax. In the old days, visitors struggled with names. 
+                Under the ratified two-body architecture, it is simple: <strong>The estate you enter is Sakme.</strong> 
+                Seitiate is the unseen engine under the floorboards—the cold pipes and background machinery that keep the rooms warm.
+            </p>
+        </div>
+
+        <div class="chapter">
+            <div class="chapter-kicker">II · SCRIPTORIUM & THE DESK</div>
+            <h2>The singular writing surface of the estate</h2>
+            <p class="prose">
+                Past the Barbican where the Notary sits, the Scriptorium smells of tallow and vellum. At the center of the hall 
+                stands the <strong>Writing Desk</strong>.
+            </p>
+            <p class="prose">
+                Before today's remediation, the estate suffered from duplicate furniture: the scholar sat with an unlinked manuscript, 
+                while over in the laboratory, the scientists had erected an awkward wooden <em>&lt;textarea&gt;</em> directly onto their test benches, 
+                trying to write sentences where they were supposed to be titrating chemistry.
+            </p>
+            <p class="prose">
+                That clumsy textarea has been dragged out and dismantled. The <strong>Writing Desk</strong> is now the singular writing 
+                surface across all wings. As the scholar drafts long-form prose, they make an inline claim mark: 
+                <code>[warrant:ef_claim_4810a]</code>. They do not re-litigate the science; they bind their sentence to a living claim.
+            </p>
+        </div>
+
+        <div class="chapter">
+            <div class="chapter-kicker">III · THE RESOLVER SEAM</div>
+            <h2>The courier in the cloister</h2>
+            <p class="prose">
+                Running between the Scriptorium and the science wings is a vaulted cloister: the <strong>Evidence Resolver Seam</strong> 
+                (<code>GET /api/v1/evidence/resolve/:ref</code>).
+            </p>
+            <p class="prose">
+                When the scholar's quill attaches an evidence mark, an errand-runner walks across the flagstones to the Evidence Foundry. 
+                The courier returns to the desk carrying a verified slip:
+            </p>
+            <p class="prose">
+                • <strong>Claim Status:</strong> <code>grounded</code> (attested by data, uncontested under ADR-001).<br>
+                • <strong>Support Issuer:</strong> A Zenodo DOI, a Zotero research URI, or an <em>Empirical Own-Measurement Warrant</em>.<br>
+                • <strong>Cryptographic Seal:</strong> SHA-256 fingerprint + root digest.
+            </p>
+            <p class="prose">
+                A reader touching the margin of the manuscript touches the full empirical weight of the laboratory.
+            </p>
+        </div>
+
+        <div class="chapter">
+            <div class="chapter-kicker">IV · COLLEGIUM & THE HONESTY FLOOR</div>
+            <h2>Calibrating your scale is not a scientific pass</h2>
+            <p class="prose">
+                Across the courtyard in the <strong>Collegium</strong> (Evidence Foundry) and the <strong>Sensorium</strong> (Sensarra), 
+                researchers run calibration curves, microfluidic experiments, and biosensing benchmarks.
+            </p>
+            <p class="prose">
+                Here, PR #227 buried the estate's most dangerous flaw: <strong>the verdict floor inversion</strong>.
+            </p>
+            <p class="prose">
+                Previously, running a method-validation benchmark against known synthetic test data would, upon clean execution, 
+                slap a green <strong>PASS</strong> on the research run. A software check was masquerading as empirical proof. 
+                The Master of the Bench has restored the honesty floor: running a test to check that the machine executes merely proves 
+                the software works—it remains strictly <strong>inconclusive</strong>. Only true failures ground an immediate <strong>fail</strong>; 
+                a scientific pass requires a sealed canonical evidence envelope signed by the Notary.
+            </p>
+        </div>
+
+        <div class="chapter">
+            <div class="chapter-kicker">V · THE SILENTIUM & THE KEEP</div>
+            <h2>The unrecorded sanctuary and the four floors of Seitas</h2>
+            <p class="prose">
+                In the shaded corner of the cloister lies the <strong>Silentium</strong>—the Vipassana-born room where <em>nothing is recorded, 
+                no camera watches, and no receipts are minted</em>. The estate's honesty is proven as much by what it refuses to surveil 
+                as by what it hallmarks.
+            </p>
+            <p class="prose">
+                Rising above the whole palace is <strong>the Keep (Seitas)</strong>, four floors from stone to sky:
+            </p>
+            <p class="prose">
+                1. <strong>The Arca (The Vault):</strong> Deep in the bedrock. The strongbox of sovereign user keys. The user holds their own keys; if the estate falls, the user walks away intact.<br>
+                2. <strong>The Horreum (The Granary):</strong> The ground floor. Everything a life gathers—notes, papers, readings—kept unsorted and unjudged.<br>
+                3. <strong>The Proprium:</strong> The second floor. <em>What is properly yours.</em> Of everything gathered, what you affirm and stand behind.<br>
+                4. <strong>The Summarium:</strong> The sunlit summit. The crystallization of years into essence.
+            </p>
+        </div>
+
+        <!-- Lens Navigation Strip -->
+        <div class="lens-nav">
+            <div class="lens-nav-kicker">EXPLORE THE STACK THROUGH DIFFERENT LENSES</div>
+            <div class="lens-grid">
+                <a class="lens-card active" href="/palace-as-world.html">
+                    <div class="lens-tag">LENS 1 · ACTIVE</div>
+                    <h5>The Palace as World</h5>
+                    <p>The spatial walk, the rooms, Ivo at the gate, and how Sakme and Seitiate relate.</p>
+                </a>
+                <a class="lens-card" href="/cognitive-furniture.html">
+                    <div class="lens-tag">LENS 2 · FURNITURE</div>
+                    <h5>Cognitive Furniture</h5>
+                    <p>The Writing Desk, Evidence Courier, Sensor Benches, Honesty Floors, and the Keep's Chests.</p>
+                </a>
+                <a class="lens-card" href="/game-engine.html">
+                    <div class="lens-tag">LENS 3 · ENGINE</div>
+                    <h5>The World Machine</h5>
+                    <p>The estate as game server, presence by work-in-progress, SEIT credit, and state machines.</p>
+                </a>
+                <a class="lens-card" href="/harbor.html">
+                    <div class="lens-tag">LENS 4 · HARBOR</div>
+                    <h5>The Harbor & Verticals</h5>
+                    <p>How founder-owned verticals sit on the shared business layer.</p>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Seitiate Estate · Private Orientation · seitiate.com</p>
+    </footer>
+
+    <script>
+        const rooms = {
+            porta: {
+                badge: "APPROACH & ACCESS",
+                title: "The Porta & The Gate",
+                desc: "At the top of the ridge where the orchards thin against ancient stone walls stands the heavy timber gate. Ivo holds his unlit lantern. Above the arch, pressed into soft amber wax, is the Hallmark. No pedigree is checked; a first mark weighs the same as a master's, but the stone remembers who struck it.",
+                furniture: "The Timber Gate, Stone Arch, Wax Hallmark",
+                activity: "Entry, Greeting, Identity Presentation",
+                guarantee: "Unmarked entry permitted; false marks rejected"
+            },
+            scriptorium: {
+                badge: "AUTHORING & SCHOLARSHIP",
+                title: "The Scriptorium & The Writing Desk",
+                desc: "The manuscript desk where long-form prose and scientific papers are composed. The clumsy interim textarea previously in the lab is dismantled. The scholar writes prose and attaches typed marks: [warrant:ef_claim_4810a], linking sentences directly to living laboratory claims.",
+                furniture: "The Writing Desk, Vellum Folios, Claim Marks",
+                activity: "Drafting, Claim Attribution, Synthesis",
+                guarantee: "Single estate authoring surface; no disconnected textareas"
+            },
+            cloister: {
+                badge: "SEAM & RESOLUTION",
+                title: "The Cloister Seam (Evidence Courier)",
+                desc: "The covered stone passageway connecting the Writing Desk to Evidence Foundry (GET /api/v1/evidence/resolve/:ref). An errand-runner takes the author's marginal mark across the flags and returns carrying the verified claim card, support issuer, and cryptographic digest.",
+                furniture: "Pneumatic Tube, Vellum Slips, Resolver Endpoint",
+                activity: "Resolving Marks → Claim Cards → Warrants",
+                guarantee: "Every citation backed by an authentic warrant"
+            },
+            collegium: {
+                badge: "RIGOR & EXPERIMENTATION",
+                title: "The Collegium & Sensorium (Evidence Foundry)",
+                desc: "The test benches where electrochemistry, microfluidics, and biosensors run. Here the Honesty Floor is strictly guarded: software reproduction tests passing stay at 'inconclusive'. Only true failures ground a 'fail', and true passes require a sealed canonical evidence envelope.",
+                furniture: "Calibration Rigs, Test Benches, Evidence Envelopes",
+                activity: "Benchmarking, Signal Analysis, Rigor Checks",
+                guarantee: "Passing sanity checks never auto-promoted to scientific PASS"
+            },
+            commons: {
+                badge: "COMMUNITY & TRANQUILITY",
+                title: "The Forum, Mercatus & Silentium",
+                desc: "The public square where speech happens, the makers' market where peer review is bought and sold for credit (SEIT), and in the shaded corner, the Silentium: the Vipassana-born chamber where nothing is ever recorded, and no evidence is demanded.",
+                furniture: "The Rostra, Tutors' Bench, The Silentium Sanctuary",
+                activity: "Review-for-Credit, Market Encounters, Unrecorded Rest",
+                guarantee: "The estate refuses to surveil the sanctuary"
+            },
+            keep: {
+                badge: "THE LIVING CORE",
+                title: "Seitas (The Keep)",
+                desc: "The four-story tower at the center of the estate: the Arca holding user-sovereign keys in the rock; the Horreum holding everything gathered unsorted; the Proprium holding what you affirm as yours; and the Summarium holding the crystallized essence.",
+                furniture: "The Strongbox (Arca), The Granary, The Summit Desk",
+                activity: "Key Custody, Gathering, Affirmation, Crystallization",
+                guarantee: "User-held sovereign keys; the keep stands if the estate falls"
+            }
+        };
+
+        function inspectRoom(element, roomId) {
+            const data = rooms[roomId];
+            if (!data) return;
+
+            document.querySelectorAll('.room-node').forEach(node => node.classList.remove('active'));
+            if (element) element.classList.add('active');
+
+            const panel = document.getElementById('inspector');
+            panel.style.opacity = '0.4';
+            panel.style.transform = 'translateY(4px)';
+
+            setTimeout(() => {
+                document.getElementById('inspectBadge').innerText = data.badge;
+                document.getElementById('inspectTitle').innerText = data.title;
+                document.getElementById('inspectDesc').innerText = data.desc;
+                document.getElementById('inspectFurniture').innerText = data.furniture;
+                document.getElementById('inspectActivity').innerText = data.activity;
+                document.getElementById('inspectGuarantee').innerText = data.guarantee;
+
+                panel.style.opacity = '1';
+                panel.style.transform = 'translateY(0)';
+            }, 120);
+        }
+    </script>
+</body>
+</html>
