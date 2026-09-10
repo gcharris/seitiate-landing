@@ -4,9 +4,9 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <script src="/assets/gate.js"></script>
-<meta name="theme-color" content="#152b2d"><meta name="description" content="Enter an imagined Scriptorium, approach your desk, and let the room become a place to write.">
-<title>Seitiate · The Scriptorium</title>
-<link rel="stylesheet" href="style.css"><script src="app.js" defer></script>
+<meta name="theme-color" content="#152b2d"><meta name="description" content="Explore Seitiate from inside: the Scriptorium, laboratory, makers’ studio and marketplace.">
+<title>Seitiate · Rooms of the Estate</title>
+<link rel="stylesheet" href="style.css?v=estate-2"><script src="rooms.js?v=estate-2" defer></script><script src="app.js?v=estate-2" defer></script><script src="estate.js?v=estate-2" defer></script>
 </head>
 <body data-view="room">
 <main id="experience">
@@ -15,13 +15,16 @@
   <div id="seatedCamera"><img src="assets/room-reference.png" alt="The same family of Writing Desk, viewed from a seated position." draggable="false"></div>
   <div class="world-shade"></div><div class="grain"></div>
   <button id="deskHotspot" class="hotspot" aria-label="Approach your writing desk"><span class="target-ring"><span></span></span><span class="hotspot-label">Your writing desk <span>Approach ↗</span></span></button>
+  <nav id="roomDoors" aria-label="Doorways to neighbouring rooms"><button class="room-door door-left" id="previousRoom"></button><button class="room-door door-right" id="nextRoom"></button></nav>
   <div id="worldCaption"><span class="eyebrow">A PLACE TO RETURN TO</span><h1>The Scriptorium</h1><p id="sceneDescription">Your next chapter is just ahead.</p></div>
  </section>
  <header id="worldHeader" class="world-header"><a class="wordmark" href="/" aria-label="Return to the Seitiate index"><span class="emblem">✳</span><span>Seitiate<span class="wordmark-sub">An inhabited workspace</span></span></a><nav class="distances" aria-label="View distance"><button data-go="room" aria-current="step"><span>01</span> Room</button><span class="nav-line"></span><button data-go="desk"><span>02</span> Desk</button><span class="nav-line"></span><button data-go="page"><span>03</span> Page</button></nav><button id="tourButton" class="glass-button">▷ Guided tour</button></header>
- <div id="worldFooter" class="world-footer"><button id="backButton" class="glass-button" hidden>← Step back</button><div class="navigation-hint" id="navigationHint"><span>Drag to look</span><span>↑ Approach</span><span>Esc Back</span></div><div class="footer-right"><span class="concept-note">Interactive concept</span><button id="motionButton" class="icon-button" aria-label="Reduce motion" title="Reduce motion">◉</button><button id="fullscreenButton" class="icon-button" aria-label="Enter fullscreen" title="Fullscreen">⛶</button></div></div>
+ <div id="worldFooter" class="world-footer"><button id="backButton" class="glass-button" hidden>← Step back</button><div class="navigation-hint" id="navigationHint"><span>Drag to look · ↑ Approach</span></div><div class="footer-right"><button id="placesButton" class="glass-button">Explore rooms ◇</button><button id="motionButton" class="icon-button" aria-label="Reduce motion" title="Reduce motion">◉</button><button id="fullscreenButton" class="icon-button" aria-label="Enter fullscreen" title="Fullscreen">⛶</button></div></div>
  <div id="deskPrompt" class="desk-prompt" hidden><span>Make yourself comfortable.</span><button id="openPageButton" class="primary-button">Open your manuscript <span>↗</span></button></div>
  <div id="tourCaption" class="tour-caption" hidden aria-live="polite"></div>
  <section id="workspace" class="workspace" aria-label="Writing Desk" hidden inert></section>
+ <div id="roomTransition" aria-hidden="true"><span></span></div>
+ <dialog id="placesDialog"><div class="modal-heading"><h3>Where next?</h3><button id="closePlaces" aria-label="Close room chooser">×</button></div><p class="places-intro">One estate. Four ways to spend your time.</p><div id="placesGrid"></div></dialog>
  <div id="toast" role="status" class="toast" hidden></div>
 </main>
 </body></html>
