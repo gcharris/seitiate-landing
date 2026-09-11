@@ -1,6 +1,6 @@
 # seitiate-landing
 
-Landing page for [seitiate.com](https://seitiate.com) — the self-knowing engine. Open-source (AGPL-3.0).
+Landing page for [seitiate.com](https://seitiate.com) — the self-knowing engine. Proprietary; all rights reserved, no licence granted, forward licence undecided.
 
 Deployed via GitHub Pages with custom domain.
 
