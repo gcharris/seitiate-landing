@@ -4,8 +4,7 @@ Private orientation and standing-policy site for **seitiate.com** (GitHub Pages)
 
 ## Deployed Pages
 
-- `index.html` — Private orientation index linking to the Complete Estate Map and the four standing Principles & Policy pages
-- `estate-map.html` — Complete 3-Level Seitiate Estate Architecture, Product Families & Partner Map (`#overview`, `#sakme`, `#scientific`, `#ies`, `#centre`, `#matrix`)
+- `index.html` — Standing Principles & Policy index linking to the four standing pages
 - `principles.html` — Standing Principles
 - `licensing.html` — Licensing summary
 - `privacy.html` — Privacy & Portability (Ten Promises)
