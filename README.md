@@ -1,18 +1,21 @@
 # seitiate-landing
 
-Landing page for [seitiate.com](https://seitiate.com) — the self-knowing engine. Proprietary; all rights reserved, no licence granted, forward licence undecided.
+Private orientation and standing-policy site for **seitiate.com** (GitHub Pages).
 
-Deployed via GitHub Pages with custom domain.
+## Deployed Pages
 
-## Pilot verify page (Georgia buyer lab)
+- `index.html` — Private orientation index linking to the Complete Estate Map and the four standing Principles & Policy pages
+- `estate-map.html` — Complete 3-Level Seitiate Estate Architecture, Product Families & Partner Map (`#overview`, `#sakme`, `#scientific`, `#ies`, `#centre`, `#matrix`)
+- `principles.html` — Standing Principles
+- `licensing.html` — Licensing summary
+- `privacy.html` — Privacy & Portability (Ten Promises)
+- `terms.html` — Terms of Service
 
-Static demo for receipt QR scans (synthetic decision log, not production):
+## Required Site Assets
 
-- **URL:** `https://seitiate.com/v/ab12-7f/`
-- **Source:** `v/ab12-7f/index.html`
+- `assets/gate.js` — Client-side orientation gate
+- `robots.txt` — `Disallow: /`
+- `CNAME` — `seitiate.com`
+- `.nojekyll` — Static root serving marker
 
-## Setup
-
-1. Enable GitHub Pages (Settings → Pages → Deploy from branch: `main`, folder: `/ (root)`)
-2. Add custom domain: `seitiate.com`
-3. Configure DNS: CNAME record pointing `seitiate.com` → `<username>.github.io`
+*(Earlier June–September 2026 ad-hoc sharing pages and prototypes have been archived off-site with a full SHA-256 manifest so they are no longer served on `seitiate.com`.)*

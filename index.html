@@ -1,223 +1,318 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex, nofollow">
-    <title>Seitiate — private index</title>
-    <script src="/assets/gate.js"></script>
-    <meta name="description" content="Private orientation index for friends, collaborators, and contacts reviewing the Seitiate direction.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #08090b; --surface: #0f1114; --surface-hover: #15181e; --border: #1a1c22;
-            --text: #eceae7; --text-secondary: #8a8a90; --text-muted: #56585f;
-            --accent: #4ade80; --amber: #e0b34a; --cyan: #38bdf8; --purple: #c084fc;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; }
-        a { color: inherit; text-decoration: none; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
-        body > nav {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-            padding: 14px 28px; display: flex; justify-content: space-between; align-items: center;
-            background: rgba(8, 9, 11, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);
-        }
-        body > nav .brand { display: flex; align-items: center; gap: 9px; font-size: 15px; font-weight: 500; }
-        body > nav .brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 2.2s infinite; }
-        .doc { max-width: 880px; margin: 0 auto; padding: 112px 24px 54px; }
-        .banner {
-            font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.03em;
-            color: var(--accent); border: 1px solid rgba(74, 222, 128, 0.25); background: rgba(74, 222, 128, 0.05);
-            border-radius: 8px; padding: 8px 14px; margin-bottom: 2rem; display: inline-block;
-        }
-        h1 { font-size: clamp(30px, 5vw, 44px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 1.1rem; }
-        .lead { font-size: 1.08rem; color: var(--text-secondary); max-width: 740px; margin-bottom: 2.8rem; }
-        .lead strong { color: var(--text); font-weight: 500; }
-
-        /* Lenses Section */
-        .lens-header { margin: 2.4rem 0 1.2rem; display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid var(--border); padding-bottom: 0.8rem; }
-        .lens-header h2 { font-size: 1.2rem; font-weight: 600; letter-spacing: -0.01em; color: var(--text); }
-        .lens-header span { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-muted); }
-
-        .lenses-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 3.2rem; }
-        .lens-hero-card {
-            grid-column: span 4; border: 1px solid rgba(74, 222, 128, 0.35); background: linear-gradient(180deg, rgba(15, 17, 20, 0.95) 0%, rgba(10, 12, 15, 0.98) 100%);
-            border-radius: 14px; padding: 24px; position: relative; overflow: hidden; transition: all 0.2s ease;
-        }
-        .lens-hero-card::before {
-            content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-            background: linear-gradient(90deg, var(--accent) 0%, var(--cyan) 50%, var(--amber) 100%);
-        }
-        .lens-hero-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(74, 222, 128, 0.08); }
-        .lens-hero-card .kicker { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--accent); letter-spacing: 0.04em; margin-bottom: 0.4rem; }
-        .lens-hero-card h3 { font-size: 1.28rem; font-weight: 600; margin-bottom: 0.45rem; color: var(--text); }
-        .lens-hero-card p { color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; }
-
-        .lens-small-card {
-            display: block; border: 1px solid var(--border); background: var(--surface);
-            border-radius: 12px; padding: 18px 20px; transition: all 0.2s ease;
-        }
-        .lens-small-card:hover { border-color: rgba(255, 255, 255, 0.25); background: var(--surface-hover); transform: translateY(-2px); }
-        .lens-small-card.amber:hover { border-color: var(--amber); }
-        .lens-small-card.cyan:hover { border-color: var(--cyan); }
-        .lens-small-card.purple:hover { border-color: var(--purple); }
-        .lens-small-card.green:hover { border-color: var(--accent); }
-        .lens-small-card .kicker { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; letter-spacing: 0.04em; margin-bottom: 0.4rem; }
-        .lens-small-card.amber .kicker { color: var(--amber); }
-        .lens-small-card.cyan .kicker { color: var(--cyan); }
-        .lens-small-card.purple .kicker { color: var(--purple); }
-        .lens-small-card.green .kicker { color: var(--accent); }
-        .lens-small-card h4 { font-size: 1.02rem; font-weight: 600; margin-bottom: 0.35rem; color: var(--text); }
-        .lens-small-card p { color: var(--text-secondary); font-size: 0.86rem; line-height: 1.5; }
-
-        /* Audience Entry Doors Grid */
-        .doors-header { margin: 2rem 0 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.8rem; }
-        .doors-header h2 { font-size: 1.15rem; font-weight: 600; letter-spacing: -0.01em; color: var(--text); }
-        .doors-header p { font-size: 0.88rem; color: var(--text-muted); margin-top: 2px; }
-
-        .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 1rem; }
-        .card {
-            display: block; min-height: 130px; border: 1px solid var(--border); background: var(--surface);
-            border-radius: 12px; padding: 18px 20px; transition: all 0.15s ease;
-        }
-        .card:hover { border-color: rgba(74, 222, 128, 0.34); background: rgba(74, 222, 128, 0.03); }
-        .card .kicker { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--text-muted); letter-spacing: 0.04em; margin-bottom: 0.45rem; }
-        .card h3 { font-size: 1.02rem; font-weight: 500; margin-bottom: 0.35rem; color: var(--text); }
-        .card p { color: var(--text-secondary); font-size: 0.88rem; line-height: 1.55; }
-
-        .note {
-            margin-top: 2.8rem; border: 1px solid rgba(224, 179, 74, 0.25);
-            background: rgba(224, 179, 74, 0.05); border-radius: 10px; padding: 16px 18px;
-            color: var(--text-secondary); font-size: 0.92rem;
-        }
-        .note strong { color: var(--amber); font-weight: 500; }
-        footer { text-align: center; color: var(--text-muted); font-size: 0.78rem; padding: 36px 24px 54px; }
-
-        @media (max-width: 768px) {
-            .lenses-grid { grid-template-columns: 1fr; }
-            .lens-hero-card { grid-column: span 1; }
-            .grid { grid-template-columns: 1fr; }
-            .doc { padding-top: 96px; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Seitiate — Private Orientation &amp; Estate Map</title>
+<script src="/assets/gate.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #FAF8F5;
+    --bg-card: #FFFFFF;
+    --bg-subtle: #F3F0EB;
+    --text: #1A1A19;
+    --text-secondary: #5C5B57;
+    --text-muted: #8A8884;
+    --accent: #0F6E56;
+    --accent-soft: #E1F5EE;
+    --amber: #854F0B;
+    --amber-soft: #FAEEDA;
+    --coral: #993C1D;
+    --coral-soft: #FAECE7;
+    --border: #E5E2DC;
+    --border-hover: #C8C4BC;
+    --serif: 'Instrument Serif', Georgia, serif;
+    --sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 64px 28px 56px;
+    flex: 1;
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(32px, 5vw, 44px);
+    line-height: 1.15;
+    margin-bottom: 12px;
+    color: var(--text);
+  }
+  .subtitle {
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin-bottom: 36px;
+    max-width: 660px;
+  }
+  .hero-card {
+    display: block;
+    background: var(--bg-card);
+    border: 1.5px solid var(--accent);
+    border-radius: 14px;
+    padding: 28px 28px 24px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    margin-bottom: 36px;
+    box-shadow: 0 6px 24px rgba(15, 110, 86, 0.07);
+  }
+  .hero-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(15, 110, 86, 0.12);
+  }
+  .hero-badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .badge {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 999px;
+  }
+  .badge-teal { background: var(--accent-soft); color: var(--accent); }
+  .badge-amber { background: var(--amber-soft); color: var(--amber); }
+  .badge-coral { background: var(--coral-soft); color: var(--coral); }
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(24px, 3.5vw, 31px);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+  .hero-desc {
+    font-size: 14.5px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .hero-cta {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--accent);
+  }
+  .section-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 36px;
+  }
+  .card {
+    display: block;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+  }
+  .card:hover {
+    border-color: var(--border-hover);
+    box-shadow: 0 3px 14px rgba(0,0,0,0.04);
+    transform: translateY(-1px);
+  }
+  .card-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  .card-title {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--text);
+  }
+  .card-tag {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--text-muted);
+    background: var(--bg-subtle);
+    padding: 2px 8px;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+  .card-desc {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  footer {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 24px 28px 40px;
+    width: 100%;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+  }
+  @media (max-width: 640px) {
+    .container { padding: 42px 18px 36px; }
+    .hero-card { padding: 20px 18px; }
+    .grid-2 { grid-template-columns: 1fr; }
+  }
+</style>
 </head>
 <body>
-    <nav>
-        <div class="brand"><span class="dot"></span>Seitiate private index</div>
-        <a href="/old-index.html" style="font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; color: var(--text-secondary); text-decoration: none;">archived index →</a>
-    </nav>
 
-    <main class="doc">
-        <div class="banner">private orientation · estate lenses &amp; entry doors</div>
-        <h1>The Views of the Seitiate Stack</h1>
-        <p class="lead">
-            These pages are a private orientation set, not a public launch site. 
-            Because different conversations require different entry points, you can explore the complete 
-            Seitiate and Sakme picture through <strong>multiple architectural lenses</strong>, 
-            or select the specific door below that matches your conversation.
-        </p>
+<div class="container">
+  <div class="eyebrow">Seitiate Estate · Private Orientation</div>
+  <h1>Whole-Estate Architecture &amp; Standing Principles</h1>
+  <p class="subtitle">Current orientation to the Seitiate Estate across Sakme, the Scientific Platform, Partner Rooms, the Shared Centre, and our standing promises on data, licensing, and privacy.</p>
 
-        <!-- The Different Lenses of the Estate -->
-        <div class="lens-header">
-            <h2>The Lenses of the Estate</h2>
-            <span>FIVE COMPLEMENTARY VIEWS</span>
-        </div>
+  <a class="hero-card" href="/estate-map.html">
+    <div class="hero-badge-row">
+      <span class="badge badge-teal">Complete 3-Level Interactive Map</span>
+      <span class="badge badge-amber">Sakme · Scientific · Partner Rooms</span>
+      <span class="badge badge-coral">Centre · Household · Consilium</span>
+    </div>
+    <div class="hero-title">The Seitiate Estate — Progressive Overview, Product Families &amp; Partner Map</div>
+    <div class="hero-desc">
+      Explore the complete 3-level progressive architecture: Level 1 Whole-Estate SVG &amp; Nested/Intersecting Wheels, Level 2 drilldowns across <strong>Sakme</strong> (6 practices), the <strong>Scientific Platform</strong> (Evidence Foundry, Research Hub/Sensarra, HenniPenny Lab), <strong>Partner Rooms &amp; 4-Stage Bridge</strong> (IES xRusted, Hooshi, Startuplan, VisiWatt), and the <strong>Shared Centre</strong> (Seitiate+, Personal Assistant, Skills Shelf, Seity, Forge, Vault &amp; Notary), plus the Level 3 <strong>6-Column Component Matrix</strong>.
+    </div>
+    <div class="hero-cta">Open Complete Estate Map →</div>
+  </a>
 
-        <div class="lenses-grid">
-            <a class="lens-hero-card" href="/palace-as-world.html">
-                <div class="kicker">LENS 1 · SPATIAL, HUMAN &amp; ARCHITECTURAL</div>
-                <h3>The Palace as World</h3>
-                <p>
-                    A spatial walk through the estate of human practice: from the salt-white road at the Portus, 
-                    past Ivo at the gate, through the Scriptorium's Writing Desk and the Evidence Foundry cloisters, 
-                    up to the Keep. Features the two-body architecture (Sakme seen vs. Seitiate unseen) and an interactive room inspector.
-                </p>
-            </a>
+  <div class="section-label">Direct Section Jump — Complete Estate Map Views</div>
+  <div class="grid-2">
+    <a class="card" href="/estate-map.html#overview">
+      <div class="card-header">
+        <span class="card-title">Level 1 · Whole-Estate Overview</span>
+        <span class="card-tag">#overview</span>
+      </div>
+      <div class="card-desc">4-layer architecture diagram, 10 active specialist leads, and nested vs. intersecting feedback wheels.</div>
+    </a>
 
-            <a class="lens-small-card amber" href="/cognitive-furniture.html">
-                <div class="kicker">LENS 2 · INSTRUMENTS</div>
-                <h4>Cognitive Furniture</h4>
-                <p>The Writing Desk, the Evidence Courier seam, Sensor Benches, Honesty Floors, the Notary's Seal, and the Keep's Chests.</p>
-            </a>
+    <a class="card" href="/estate-map.html#sakme">
+      <div class="card-header">
+        <span class="card-title">2A · Sakme: House of Practices</span>
+        <span class="card-tag">#sakme</span>
+      </div>
+      <div class="card-desc">Arrival &amp; First Good Question, Writing Desk &amp; Video Lab, Specialist Stalls, Engineering Workshop, Sakme Office, and Academy.</div>
+    </a>
 
-            <a class="lens-small-card cyan" href="/game-engine.html">
-                <div class="kicker">LENS 3 · ENGINE</div>
-                <h4>The World Machine</h4>
-                <p>The estate as an MMO without twitch combat: BEAM game server, presence through work-in-progress, and the SEIT economy.</p>
-            </a>
+    <a class="card" href="/estate-map.html#scientific">
+      <div class="card-header">
+        <span class="card-title">2B · Scientific Platform</span>
+        <span class="card-tag">#scientific</span>
+      </div>
+      <div class="card-desc">Evidence Foundry claim/rigor checks, Research Hub (6 connectors &amp; 20 analyzers), and HenniPenny / Sensarra / Mendel field packs.</div>
+    </a>
 
-            <a class="lens-small-card purple" href="/harbor.html">
-                <div class="kicker">LENS 4 · HARBOR</div>
-                <h4>The Harbor &amp; Verticals</h4>
-                <p>How founder-owned verticals sit on the managed business layer, with the engine, Notary, and brain underneath.</p>
-            </a>
+    <a class="card" href="/estate-map.html#ies">
+      <div class="card-header">
+        <span class="card-title">2C · Partner Rooms &amp; 4-Stage Bridge</span>
+        <span class="card-tag">#ies</span>
+      </div>
+      <div class="card-desc">Repeatable 8-interface partner seam, IES xRusted &amp; Agent-SEO, Hooshi Voice, Security Sparring, and Lab-to-Office bridge.</div>
+    </a>
 
-            <a class="lens-small-card green" href="/architecture.html">
-                <div class="kicker">LENS 5 · ARCHITECTURE</div>
-                <h4>Substrate Architecture</h4>
-                <p>The managed engine: BEAM processes, Rust workers, memory models, and cryptographic notary trust root.</p>
-            </a>
-        </div>
+    <a class="card" href="/estate-map.html#centre">
+      <div class="card-header">
+        <span class="card-title">Shared Doorway, Seity, Forge &amp; Centre</span>
+        <span class="card-tag">#centre</span>
+      </div>
+      <div class="card-desc">Personal Assistant &amp; Skills Shelf, Seity (Codex, Canon, Doma), Seitiate+ Doorway, Forge, Vault/Router/Notary, and Mac/Cloud tiers.</div>
+    </a>
 
-        <!-- Direct Audience Entry Doors -->
-        <div class="doors-header">
-            <h2>Direct Entry Doors</h2>
-            <p>Choose the door that matches your specific conversation:</p>
-        </div>
+    <a class="card" href="/estate-map.html#matrix">
+      <div class="card-header">
+        <span class="card-title">Level 3 · 6-Column Matrix &amp; Household</span>
+        <span class="card-tag">#matrix</span>
+      </div>
+      <div class="card-desc">Component boundaries (stage, placement, maintainer, IP, commercial model), Build Pipeline, Consilium Lab, and 46-node inventory.</div>
+    </a>
+  </div>
 
-        <div class="grid">
-            <a class="card" href="/scriptorium/">
-                <div class="kicker">INTERACTIVE WALKTHROUGH</div>
-                <h3>Explore the inhabited estate</h3>
-                <p>Visit the Scriptorium, laboratory, makers’ studio and evening marketplace. Write, explore sample research, arrange a storyboard, and collect visual studies.</p>
-            </a>
-            <a class="card" href="/overview.html">
-                <div class="kicker">START HERE</div>
-                <h3>Company overview</h3>
-                <p>The plain-language Seitiate story: accountable AI work, the substrate, Evidence Foundry, and why the pieces belong together.</p>
-            </a>
-            <a class="card" href="/researcher.html">
-                <div class="kicker">FOR SCHOLARS</div>
-                <h3>Researchers</h3>
-                <p>Evidence Foundry as a truth-first research workspace: sources, evidence, claims, rigor review, and export.</p>
-            </a>
-            <a class="card" href="/baas.html">
-                <div class="kicker">FOR FOUNDERS</div>
-                <h3>Builders</h3>
-                <p>The early builder-facing idea: bring a repo, concierge onboarding, real users, and founder-owned verticals.</p>
-            </a>
-            <a class="card" href="/july-overview.html">
-                <div class="kicker">PARTNER BRIEF</div>
-                <h3>Partner brief</h3>
-                <p>The advisor/investor version: thesis, wedge, substrate, business model, and the kind of help that matters next.</p>
-            </a>
-            <a class="card" href="/architecture.html">
-                <div class="kicker">FOR ENGINEERS</div>
-                <h3>Architecture</h3>
-                <p>How Seitiate turns stateless AI tools into systems with memory, governance, portability, and reusable capabilities.</p>
-            </a>
-            <a class="card" href="/reality.html">
-                <div class="kicker">APPENDIX</div>
-                <h3>Roadmap</h3>
-                <p>The order of operations: research pilots, field branches, builder harbor, managed substrate, and trust root.</p>
-            </a>
-            <a class="card" href="/researchers-journey.html">
-                <div class="kicker">VISION NARRATIVE</div>
-                <h3>The researcher's journey</h3>
-                <p>A day inside the finished platform, told as a story. Pairs with the researcher pitch and the partner brief.</p>
-            </a>
-        </div>
+  <div class="section-label">Standing Principles, Licensing, Privacy &amp; Terms</div>
+  <div class="grid-2">
+    <a class="card" href="/principles.html">
+      <div class="card-header">
+        <span class="card-title">Principles</span>
+        <span class="card-tag">Why we build this way</span>
+      </div>
+      <div class="card-desc">How the workshop is organized, why your context stays yours, and how work moves between people and tools.</div>
+    </a>
 
-        <div class="note">
-            <strong>Private orientation, not public positioning.</strong>
-            These pages are for friends and collaborators reviewing the Seitiate and Sakme direction before formal announcement. 
-            Looking for the previous simple list? See the <a href="/old-index.html" style="color:var(--amber);text-decoration:underline">archived original index</a>.
-        </div>
-    </main>
+    <a class="card" href="/licensing.html">
+      <div class="card-header">
+        <span class="card-title">Licensing</span>
+        <span class="card-tag">What is open · what is ours</span>
+      </div>
+      <div class="card-desc">Plain-English summary of how the substrate, rooms, and your own work are licensed.</div>
+    </a>
 
-    <footer>seitiate.com · private orientation index · 2026 · <a href="/old-index.html" style="color:var(--text-muted);text-decoration:underline">original index archive</a></footer>
+    <a class="card" href="/privacy.html">
+      <div class="card-header">
+        <span class="card-title">Privacy &amp; Portability</span>
+        <span class="card-tag">Ten promises</span>
+      </div>
+      <div class="card-desc">What we store, what we never touch, how your keys and memory are held, and how to leave cleanly with everything you made.</div>
+    </a>
+
+    <a class="card" href="/terms.html">
+      <div class="card-header">
+        <span class="card-title">Terms of Service</span>
+        <span class="card-tag">Plain language</span>
+      </div>
+      <div class="card-desc">Your content is yours, no training on your work, clear billing, and the legal baseline while formal company registration completes.</div>
+    </a>
+  </div>
+</div>
+
+<footer>
+  <span>seitiate.com · Private Orientation</span>
+  <span>Updated November 2026</span>
+</footer>
+
 </body>
 </html>
