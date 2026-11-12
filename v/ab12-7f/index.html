@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Verify receipt NTRY-AB12-7F · Seitiate Trust Layer</title>
+<meta name="description" content="Human Work Receipt — a cryptographic attestation of work process, signed by an independent trust layer and verifiable offline.">
+<meta name="robots" content="noindex, nofollow">
+    <script src="/assets/gate.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #050608; }
+  * { box-sizing: border-box; }
+
+  .om-backdrop { min-height: 100vh; width: 100%; background: #e7e5dd; display: flex; flex-direction: column; align-items: center; gap: 44px; padding: 52px 24px; font-family: 'Space Grotesk', sans-serif; }
+  .om-grain { position: fixed; inset: 0; pointer-events: none; z-index: 9999; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  .om-sheet { position: relative; width: 880px; min-height: 1230px; background: #f7f6f0; box-shadow: 0 24px 64px rgba(0,0,0,0.16), 0 0 0 1px rgba(16,122,20,0.05); overflow: hidden; }
+  .om-content { position: relative; z-index: 2; padding: 78px 84px 70px; }
+
+  .dl-btn { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.04em; color: #107a14; text-decoration: none; border: 1px solid rgba(16,122,20,0.3); border-radius: 100px; padding: 7px 16px; background: rgba(16,122,20,0.03); transition: background .15s, box-shadow .15s; }
+  .dl-btn:hover { background: rgba(16,122,20,0.09); box-shadow: 0 0 10px rgba(16,122,20,0.18); }
+  .verify-cmd { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; line-height: 1.7; color: #b8e6bb; background: #0c0f0a; border: 1px solid rgba(16,122,20,0.4); border-radius: 6px; padding: 13px 16px; white-space: pre-wrap; word-break: break-all; overflow-x: auto; margin: 0; }
+  .verify-cmd .ok { color: #5fe07f; }
+  .om-note { width: 880px; max-width: 100%; background: rgba(255,255,255,0.4); border: 1px solid rgba(16,122,20,0.16); border-radius: 4px; padding: 17px 24px; }
+
+  /* tablets: fill width, but open the content well in past the engraved frame */
+  @media (max-width: 920px) {
+    .om-backdrop { padding: 22px 12px; gap: 26px; }
+    .om-sheet { width: 100% !important; min-width: 0; min-height: 0; }
+    .om-content { padding: 52px 48px 46px !important; }
+    .om-stack { flex-direction: column !important; align-items: stretch !important; }
+  }
+  /* phones: drop the engraved frame + document chrome entirely, give the content room */
+  @media (max-width: 600px) {
+    .om-sheet > div:not(.om-content) { display: none !important; }
+    .om-chrome { display: none !important; }
+    .om-recno { flex-direction: column !important; gap: 18px !important; }
+    .om-recno > div { border-right: none !important; padding: 0 !important; }
+    .om-content { padding: 32px 22px !important; }
+    .om-content h1 { font-size: 34px !important; }
+  }
+
+  @media print {
+    @page { size: A4; margin: 0; }
+    html, body { background: #fff; }
+    .om-backdrop { padding: 0 !important; background: #fff !important; gap: 0 !important; }
+    .om-sheet { box-shadow: none !important; page-break-after: always; width: 880px !important; }
+    .om-grain { display: none !important; }
+    .om-note { display: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="om-backdrop">
+
+  <div class="om-grain"></div>
+
+  <!-- ============================ PAGE 1 — THE RECEIPT ============================ -->
+  <div class="om-sheet">
+
+    <!-- watermark rosette -->
+    <div data-dc="rosette" style="position:absolute; left:50%; top:54%; transform:translate(-50%,-50%); width:760px; height:760px; opacity:0.05; pointer-events:none;"></div>
+    <!-- soft top glow -->
+    <div style="position:absolute; left:50%; top:-120px; transform:translateX(-50%); width:620px; height:340px; background:radial-gradient(ellipse at center, rgba(16,122,20,0.08), transparent 70%); pointer-events:none;"></div>
+
+    <!-- engraved double frame -->
+    <div style="position:absolute; inset:24px; border:1.5px solid rgba(16,122,20,0.34); pointer-events:none;"></div>
+    <div style="position:absolute; inset:31px; border:1px solid rgba(16,122,20,0.16); pointer-events:none;"></div>
+    <!-- corner diamonds -->
+    <div style="position:absolute; left:24px; top:24px; width:10px; height:10px; background:#107a14; transform:translate(-50%,-50%) rotate(45deg); box-shadow:0 0 8px rgba(16,122,20,0.7);"></div>
+    <div style="position:absolute; right:24px; top:24px; width:10px; height:10px; background:#107a14; transform:translate(50%,-50%) rotate(45deg); box-shadow:0 0 8px rgba(16,122,20,0.7);"></div>
+    <div style="position:absolute; left:24px; bottom:24px; width:10px; height:10px; background:#107a14; transform:translate(-50%,50%) rotate(45deg); box-shadow:0 0 8px rgba(16,122,20,0.7);"></div>
+    <div style="position:absolute; right:24px; bottom:24px; width:10px; height:10px; background:#107a14; transform:translate(50%,50%) rotate(45deg); box-shadow:0 0 8px rgba(16,122,20,0.7);"></div>
+    <!-- microtext strips -->
+    <div data-dc="microtext" style="position:absolute; left:31px; right:31px; top:38px; height:11px; overflow:hidden; font-family:'IBM Plex Mono',monospace; font-size:6px; letter-spacing:0.34em; color:rgba(16,122,20,0.28); white-space:nowrap;"></div>
+    <div data-dc="microtext" style="position:absolute; left:31px; right:31px; bottom:38px; height:11px; overflow:hidden; font-family:'IBM Plex Mono',monospace; font-size:6px; letter-spacing:0.34em; color:rgba(16,122,20,0.28); white-space:nowrap;"></div>
+
+    <!-- content -->
+    <div class="om-content">
+
+      <!-- running header -->
+      <div class="om-chrome" style="display:flex; justify-content:space-between; align-items:center; font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.26em; color:#8c8c80; text-transform:uppercase; margin-bottom:40px;">
+        <span>HUMAN WORK RECEIPT</span>
+        <span>NTRY-AB12-7F</span>
+        <span>PAGE 1 OF 2 — THE RECEIPT</span>
+      </div>
+
+      <!-- crest -->
+      <div style="display:flex; justify-content:center; margin-bottom:22px;">
+        <div data-dc="crest" style="width:88px; height:88px;"></div>
+      </div>
+
+      <div style="text-align:center;">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.4em; color:#107a14; text-transform:uppercase; margin-bottom:20px;">◆ &nbsp;INDEPENDENT TRUST LAYER&nbsp; ◆</div>
+        <h1 style="margin:0; font-family:'Space Grotesk',sans-serif; font-weight:400; font-size:52px; line-height:1.04; letter-spacing:0.01em; color:#17190f;">Human Work Receipt</h1>
+        <div style="margin-top:16px; font-family:'Space Grotesk',sans-serif; font-size:16px; letter-spacing:0.02em; color:#34362b;">Issued by <span style="color:#107a14;">Seitiate Trust Layer</span></div>
+        <div style="margin-top:10px; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.08em; color:#7c7c70;">Cryptographic attestation of work process</div>
+      </div>
+
+      <!-- divider -->
+      <div style="display:flex; align-items:center; gap:14px; margin:34px 0 30px;">
+        <div style="flex:1; height:1px; background:linear-gradient(90deg, transparent, rgba(16,122,20,0.4));"></div>
+        <div style="width:7px; height:7px; background:#107a14; transform:rotate(45deg); box-shadow:0 0 8px rgba(16,122,20,0.6);"></div>
+        <div style="flex:1; height:1px; background:linear-gradient(90deg, rgba(16,122,20,0.4), transparent);"></div>
+      </div>
+
+      <!-- receipt no / date -->
+      <div class="om-recno" style="display:flex; justify-content:center; gap:0; margin-bottom:34px;">
+        <div style="flex:1; text-align:center; padding:0 18px; border-right:1px solid rgba(16,122,20,0.14);">
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.3em; color:#8c8c80; text-transform:uppercase; margin-bottom:9px;">Receipt No.</div>
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:24px; font-weight:500; letter-spacing:0.06em; color:#107a14; text-shadow:0 0 14px rgba(16,122,20,0.4);">NTRY-AB12-7F</div>
+        </div>
+        <div style="flex:1; text-align:center; padding:0 18px;">
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.3em; color:#8c8c80; text-transform:uppercase; margin-bottom:9px;">Date of Issue</div>
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:24px; font-weight:500; letter-spacing:0.06em; color:#17190f;">2026-06-17</div>
+        </div>
+      </div>
+
+      <!-- this work was -->
+      <div style="border:1px solid rgba(16,122,20,0.14); background:rgba(16,122,20,0.03); padding:22px 26px; margin-bottom:18px; text-align:center;">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.3em; color:#8c8c80; text-transform:uppercase; margin-bottom:14px;">This work was</div>
+        <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:10px;">
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.04em; color:#107a14; border:1px solid rgba(16,122,20,0.3); border-radius:100px; padding:5px 16px;">AI-assisted</span>
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.04em; color:#107a14; border:1px solid rgba(16,122,20,0.3); border-radius:100px; padding:5px 16px;">human-directed</span>
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.04em; color:#107a14; border:1px solid rgba(16,122,20,0.3); border-radius:100px; padding:5px 16px;">QA-reviewed</span>
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.04em; color:#107a14; border:1px solid rgba(16,122,20,0.3); border-radius:100px; padding:5px 16px;">approved</span>
+        </div>
+        <div style="margin-top:13px; font-family:'Space Grotesk',sans-serif; font-size:13px; color:#6c6c60;">based on a signed decision trail</div>
+      </div>
+
+      <!-- computed human contribution -->
+      <div style="border:1px solid rgba(16,122,20,0.14); background:rgba(16,122,20,0.03); padding:20px 26px; margin-bottom:34px;">
+        <div style="display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.3em; color:#8c8c80; text-transform:uppercase;">Computed human contribution</div>
+          <div style="font-family:'Space Grotesk',sans-serif; font-size:30px; font-weight:500; letter-spacing:0.01em; color:#107a14; text-shadow:0 0 14px rgba(16,122,20,0.35);">Δ 73%</div>
+        </div>
+        <div style="height:7px; border-radius:4px; background:rgba(16,122,20,0.12); overflow:hidden; margin:13px 0 11px;">
+          <div style="height:100%; width:73%; background:#107a14; border-radius:4px; box-shadow:0 0 10px rgba(16,122,20,0.5);"></div>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.03em; color:#7c7c70; line-height:1.6;">Σ(human events × authority weight) ÷ Σ(all event weights) = 3.3 ÷ 4.5 — computed from the decision-trail event weights and included in the signed payload.</div>
+      </div>
+
+      <!-- particulars -->
+      <div style="margin-bottom:34px;">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.3em; color:#107a14; text-transform:uppercase;">Particulars</div>
+          <div style="flex:1; height:1px; background:rgba(16,122,20,0.14);"></div>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; border:1px solid rgba(16,122,20,0.12);">
+          <div style="padding:15px 20px; border-right:1px solid rgba(16,122,20,0.1); border-bottom:1px solid rgba(16,122,20,0.1);">
+            <div style="font-family:'IBM Plex Mono',monospace; font-size:8.5px; letter-spacing:0.24em; color:#8c8c80; text-transform:uppercase; margin-bottom:6px;">Agency account</div>
+            <div style="font-family:'Space Grotesk',sans-serif; font-size:15px; color:#17190f;">AI2Business</div>
+          </div>
+          <div style="padding:15px 20px; border-bottom:1px solid rgba(16,122,20,0.1);">
+            <div style="font-family:'IBM Plex Mono',monospace; font-size:8.5px; letter-spacing:0.24em; color:#8c8c80; text-transform:uppercase; margin-bottom:6px;">Client / project</div>
+            <div style="font-family:'Space Grotesk',sans-serif; font-size:15px; color:#17190f;">“Project Aurora” <span style="color:#7c7c70; font-size:12px;">(withheld)</span></div>
+          </div>
+          <div style="padding:15px 20px; border-right:1px solid rgba(16,122,20,0.1); border-bottom:1px solid rgba(16,122,20,0.1);">
+            <div style="font-family:'IBM Plex Mono',monospace; font-size:8.5px; letter-spacing:0.24em; color:#8c8c80; text-transform:uppercase; margin-bottom:6px;">Deliverable</div>
+            <div style="font-family:'Space Grotesk',sans-serif; font-size:15px; color:#17190f;">3-post social package</div>
+          </div>
+          <div style="padding:15px 20px; border-bottom:1px solid rgba(16,122,20,0.1);">
+            <div style="font-family:'IBM Plex Mono',monospace; font-size:8.5px; letter-spacing:0.24em; color:#8c8c80; text-transform:uppercase; margin-bottom:6px;">Disclosure mode</div>
+            <div style="font-family:'Space Grotesk',sans-serif; font-size:15px; color:#17190f;">role-only</div>
+          </div>
+          <div style="padding:15px 20px; border-right:1px solid rgba(16,122,20,0.1);">
+            <div style="font-family:'IBM Plex Mono',monospace; font-size:8.5px; letter-spacing:0.24em; color:#8c8c80; text-transform:uppercase; margin-bottom:6px;">AI tools disclosed</div>
+            <div style="font-family:'Space Grotesk',sans-serif; font-size:15px; color:#17190f;">ChatGPT, Midjourney</div>
+          </div>
+          <div style="padding:15px 20px;">
+            <div style="font-family:'IBM Plex Mono',monospace; font-size:8.5px; letter-spacing:0.24em; color:#8c8c80; text-transform:uppercase; margin-bottom:6px;">Evidence basis</div>
+            <div style="font-family:'Space Grotesk',sans-serif; font-size:15px; color:#17190f;">captured decision trail <span style="color:#7c7c70; font-size:12px;">(pilot)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- decision trail -->
+      <div style="margin-bottom:30px;">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.3em; color:#107a14; text-transform:uppercase;">Decision Trail</div>
+          <div style="flex:1; height:1px; background:rgba(16,122,20,0.14);"></div>
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.1em; color:#8c8c80; text-transform:none;">process only — no client content disclosed</div>
+        </div>
+        <div style="border:1px solid rgba(16,122,20,0.12);">
+          <div style="display:grid; grid-template-columns:1.4fr 1.4fr 1fr; background:rgba(16,122,20,0.05); border-bottom:1px solid rgba(16,122,20,0.14);">
+            <div style="padding:9px 18px; font-family:'IBM Plex Mono',monospace; font-size:8.5px; letter-spacing:0.24em; color:#107a14; text-transform:uppercase;">Stage</div>
+            <div style="padding:9px 18px; font-family:'IBM Plex Mono',monospace; font-size:8.5px; letter-spacing:0.24em; color:#107a14; text-transform:uppercase;">Party / Detail</div>
+            <div style="padding:9px 18px; font-family:'IBM Plex Mono',monospace; font-size:8.5px; letter-spacing:0.24em; color:#107a14; text-transform:uppercase;">Backing</div>
+          </div>
+          <div style="display:grid; grid-template-columns:1.4fr 1.4fr 1fr; border-bottom:1px solid rgba(16,122,20,0.08);">
+            <div style="padding:13px 18px; font-family:'Space Grotesk',sans-serif; font-size:14px; color:#17190f;">Brief &amp; creative direction</div>
+            <div style="padding:13px 18px; font-family:'Space Grotesk',sans-serif; font-size:14px; color:#3c3e32;">agency lead</div>
+            <div style="padding:13px 18px;"><span style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.05em; color:#107a14;">captured</span></div>
+          </div>
+          <div style="display:grid; grid-template-columns:1.4fr 1.4fr 1fr; border-bottom:1px solid rgba(16,122,20,0.08);">
+            <div style="padding:13px 18px; font-family:'Space Grotesk',sans-serif; font-size:14px; color:#17190f;">AI draft declared</div>
+            <div style="padding:13px 18px; font-family:'Space Grotesk',sans-serif; font-size:14px; color:#3c3e32;">ChatGPT / Midjourney</div>
+            <div style="padding:13px 18px;"><span style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.05em; color:#7c7c70;">logged</span></div>
+          </div>
+          <div style="display:grid; grid-template-columns:1.4fr 1.4fr 1fr; border-bottom:1px solid rgba(16,122,20,0.08);">
+            <div style="padding:13px 18px; font-family:'Space Grotesk',sans-serif; font-size:14px; color:#17190f;">Human edit &amp; rewrite</div>
+            <div style="padding:13px 18px; font-family:'Space Grotesk',sans-serif; font-size:14px; color:#3c3e32;">substantial</div>
+            <div style="padding:13px 18px;"><span style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.05em; color:#107a14;">captured</span></div>
+          </div>
+          <div style="display:grid; grid-template-columns:1.4fr 1.4fr 1fr; border-bottom:1px solid rgba(16,122,20,0.08);">
+            <div style="padding:13px 18px; font-family:'Space Grotesk',sans-serif; font-size:14px; color:#17190f;">Brand / QA review</div>
+            <div style="padding:13px 18px; font-family:'Space Grotesk',sans-serif; font-size:14px; color:#3c3e32;">reviewer (role)</div>
+            <div style="padding:13px 18px;"><span style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.05em; color:#107a14;">captured</span></div>
+          </div>
+          <div style="display:grid; grid-template-columns:1.4fr 1.4fr 1fr;">
+            <div style="padding:13px 18px; font-family:'Space Grotesk',sans-serif; font-size:14px; color:#17190f;">Final approval</div>
+            <div style="padding:13px 18px; font-family:'Space Grotesk',sans-serif; font-size:14px; color:#3c3e32;">accountable (role)</div>
+            <div style="padding:13px 18px;"><span style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.05em; color:#107a14;">signed</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- witnessed + seal -->
+      <div class="om-stack" style="display:flex; gap:28px; align-items:center; border-top:1px solid rgba(16,122,20,0.14); padding-top:30px;">
+        <div style="flex:1;">
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.3em; color:#107a14; text-transform:uppercase; margin-bottom:12px;">Witnessed</div>
+          <div style="font-family:'Space Grotesk',sans-serif; font-size:14px; line-height:1.7; color:#3c3e32;">Seitiate Trust Layer observed: trail submitted, receipt generated 2026-06-17, signer = <span style="color:#17190f;">AI2Business</span> (role-only), required fields complete.</div>
+        </div>
+        <div data-dc="seal" style="width:170px; height:170px; flex:none;"></div>
+      </div>
+
+      <!-- footer -->
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:34px; padding-top:18px; border-top:1px solid rgba(16,122,20,0.1); font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.06em; color:#8c8c80;">
+        <span>Privacy: no client content disclosed · Status: <span style="color:#107a14;">valid</span></span>
+        <span style="color:#107a14;">seitiate.com/v/ab12-7f</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================ PAGE 2 — THE VERIFICATION ============================ -->
+  <div class="om-sheet">
+
+    <div data-dc="rosette" style="position:absolute; left:50%; top:54%; transform:translate(-50%,-50%); width:760px; height:760px; opacity:0.05; pointer-events:none;"></div>
+    <div style="position:absolute; left:50%; top:-120px; transform:translateX(-50%); width:620px; height:340px; background:radial-gradient(ellipse at center, rgba(16,122,20,0.08), transparent 70%); pointer-events:none;"></div>
+
+    <div style="position:absolute; inset:24px; border:1.5px solid rgba(16,122,20,0.34); pointer-events:none;"></div>
+    <div style="position:absolute; inset:31px; border:1px solid rgba(16,122,20,0.16); pointer-events:none;"></div>
+    <div style="position:absolute; left:24px; top:24px; width:10px; height:10px; background:#107a14; transform:translate(-50%,-50%) rotate(45deg); box-shadow:0 0 8px rgba(16,122,20,0.7);"></div>
+    <div style="position:absolute; right:24px; top:24px; width:10px; height:10px; background:#107a14; transform:translate(50%,-50%) rotate(45deg); box-shadow:0 0 8px rgba(16,122,20,0.7);"></div>
+    <div style="position:absolute; left:24px; bottom:24px; width:10px; height:10px; background:#107a14; transform:translate(-50%,50%) rotate(45deg); box-shadow:0 0 8px rgba(16,122,20,0.7);"></div>
+    <div style="position:absolute; right:24px; bottom:24px; width:10px; height:10px; background:#107a14; transform:translate(50%,50%) rotate(45deg); box-shadow:0 0 8px rgba(16,122,20,0.7);"></div>
+    <div data-dc="microtext" style="position:absolute; left:31px; right:31px; top:38px; height:11px; overflow:hidden; font-family:'IBM Plex Mono',monospace; font-size:6px; letter-spacing:0.34em; color:rgba(16,122,20,0.28); white-space:nowrap;"></div>
+    <div data-dc="microtext" style="position:absolute; left:31px; right:31px; bottom:38px; height:11px; overflow:hidden; font-family:'IBM Plex Mono',monospace; font-size:6px; letter-spacing:0.34em; color:rgba(16,122,20,0.28); white-space:nowrap;"></div>
+
+    <div class="om-content">
+
+      <div class="om-chrome" style="display:flex; justify-content:space-between; align-items:center; font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.26em; color:#8c8c80; text-transform:uppercase; margin-bottom:40px;">
+        <span>HUMAN WORK RECEIPT</span>
+        <span>NTRY-AB12-7F</span>
+        <span>PAGE 2 OF 2 — THE VERIFICATION</span>
+      </div>
+
+      <div style="display:flex; justify-content:center; margin-bottom:22px;">
+        <div data-dc="crest" style="width:88px; height:88px;"></div>
+      </div>
+
+      <div style="text-align:center;">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.4em; color:#107a14; text-transform:uppercase; margin-bottom:20px;">✓ &nbsp;PUBLIC VERIFICATION&nbsp; ✓</div>
+        <h1 style="margin:0; font-family:'Space Grotesk',sans-serif; font-weight:400; font-size:46px; line-height:1.08; letter-spacing:0.01em; color:#17190f;">Verified by Seitiate Trust Layer</h1>
+        <div style="margin-top:14px; font-family:'IBM Plex Mono',monospace; font-size:13px; letter-spacing:0.06em; color:#107a14;">seitiate.com/v/ab12-7f</div>
+      </div>
+
+      <div style="display:flex; align-items:center; gap:14px; margin:34px 0 30px;">
+        <div style="flex:1; height:1px; background:linear-gradient(90deg, transparent, rgba(16,122,20,0.4));"></div>
+        <div style="width:7px; height:7px; background:#107a14; transform:rotate(45deg); box-shadow:0 0 8px rgba(16,122,20,0.6);"></div>
+        <div style="flex:1; height:1px; background:linear-gradient(90deg, rgba(16,122,20,0.4), transparent);"></div>
+      </div>
+
+      <!-- result banner -->
+      <div style="border:1px solid rgba(16,122,20,0.34); background:rgba(16,122,20,0.05); padding:22px 26px; margin-bottom:18px; text-align:center;">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.3em; color:#8c8c80; text-transform:uppercase; margin-bottom:10px;">Verification Result</div>
+        <div style="font-family:'Space Grotesk',sans-serif; font-size:18px; color:#107a14; text-shadow:0 0 14px rgba(16,122,20,0.35);">Receipt valid · signature valid · issued by an independent trust layer</div>
+      </div>
+      <div style="text-align:center; font-family:'Space Grotesk',sans-serif; font-size:13px; color:#6c6c60; margin-bottom:32px;">You don’t have to trust the agency’s word. Check the signed receipt against the published key.</div>
+
+      <!-- data + qr -->
+      <div class="om-stack" style="display:flex; gap:30px; margin-bottom:30px;">
+        <div style="flex:1; border:1px solid rgba(16,122,20,0.12);">
+          <div style="display:grid; grid-template-columns:auto 1fr; font-family:'IBM Plex Mono',monospace; font-size:12px;">
+            <div style="padding:11px 16px; color:#8c8c80; letter-spacing:0.1em; border-bottom:1px solid rgba(16,122,20,0.08); border-right:1px solid rgba(16,122,20,0.08);">Receipt status</div>
+            <div style="padding:11px 16px; color:#17190f; border-bottom:1px solid rgba(16,122,20,0.08);"><span style="color:#107a14;">valid</span> <span style="color:#7c7c70;">(not superseded / revoked)</span></div>
+            <div style="padding:11px 16px; color:#8c8c80; letter-spacing:0.1em; border-bottom:1px solid rgba(16,122,20,0.08); border-right:1px solid rgba(16,122,20,0.08);">Signature valid</div>
+            <div style="padding:11px 16px; color:#107a14; border-bottom:1px solid rgba(16,122,20,0.08);">yes</div>
+            <div style="padding:11px 16px; color:#8c8c80; letter-spacing:0.1em; border-bottom:1px solid rgba(16,122,20,0.08); border-right:1px solid rgba(16,122,20,0.08);">Algorithm</div>
+            <div style="padding:11px 16px; color:#17190f; border-bottom:1px solid rgba(16,122,20,0.08);">ECDSA-P256-SHA256</div>
+            <div style="padding:11px 16px; color:#8c8c80; letter-spacing:0.1em; border-bottom:1px solid rgba(16,122,20,0.08); border-right:1px solid rgba(16,122,20,0.08);">Issuer</div>
+            <div style="padding:11px 16px; color:#17190f; border-bottom:1px solid rgba(16,122,20,0.08);">Seitiate Trust Layer <span style="color:#7c7c70;">(independent)</span></div>
+            <div style="padding:11px 16px; color:#8c8c80; letter-spacing:0.1em; border-bottom:1px solid rgba(16,122,20,0.08); border-right:1px solid rgba(16,122,20,0.08);">Issuer key</div>
+            <div style="padding:11px 16px; color:#17190f; border-bottom:1px solid rgba(16,122,20,0.08);">71F2·2C00·EA3D <span style="color:#7c7c70;">(stl-demo-2026-06)</span></div>
+            <div style="padding:11px 16px; color:#8c8c80; letter-spacing:0.1em; border-bottom:1px solid rgba(16,122,20,0.08); border-right:1px solid rgba(16,122,20,0.08);">Payload hash</div>
+            <div style="padding:11px 16px; color:#17190f; border-bottom:1px solid rgba(16,122,20,0.08);">sha256 3b1e…a9c4</div>
+            <div style="padding:11px 16px; color:#8c8c80; letter-spacing:0.1em; border-bottom:1px solid rgba(16,122,20,0.08); border-right:1px solid rgba(16,122,20,0.08);">Issued</div>
+            <div style="padding:11px 16px; color:#17190f; border-bottom:1px solid rgba(16,122,20,0.08);">2026-06-17</div>
+            <div style="padding:11px 16px; color:#8c8c80; letter-spacing:0.1em; border-bottom:1px solid rgba(16,122,20,0.08); border-right:1px solid rgba(16,122,20,0.08);">Agency signer</div>
+            <div style="padding:11px 16px; color:#17190f; border-bottom:1px solid rgba(16,122,20,0.08);">AI2Business <span style="color:#7c7c70;">(role-only)</span></div>
+            <div style="padding:11px 16px; color:#8c8c80; letter-spacing:0.1em; border-bottom:1px solid rgba(16,122,20,0.08); border-right:1px solid rgba(16,122,20,0.08);">Template</div>
+            <div style="padding:11px 16px; color:#17190f; border-bottom:1px solid rgba(16,122,20,0.08);">human-provenance receipt v0.2</div>
+            <div style="padding:11px 16px; color:#8c8c80; letter-spacing:0.1em; border-right:1px solid rgba(16,122,20,0.08);">Content shown</div>
+            <div style="padding:11px 16px; color:#17190f;">none — process only</div>
+          </div>
+        </div>
+        <div style="width:188px; flex:none; text-align:center;">
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.3em; color:#8c8c80; text-transform:uppercase; margin-bottom:12px;">Scan to verify</div>
+          <div style="width:150px; height:150px; margin:0 auto; padding:9px; background:#ffffff; border:1px solid rgba(16,122,20,0.3);"><img src="qr.svg" alt="QR code linking to https://seitiate.com/v/ab12-7f/" width="132" height="132" style="display:block; width:100%; height:100%; image-rendering:pixelated;"></div>
+          <div style="margin-top:12px; font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.04em; color:#7c7c70; line-height:1.5;">seitiate.com/v/<br>ab12-7f</div>
+        </div>
+      </div>
+
+      <!-- evidence timeline -->
+      <div style="margin-bottom:24px;">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.3em; color:#107a14; text-transform:uppercase;">Evidence Timeline</div>
+          <div style="flex:1; height:1px; background:rgba(16,122,20,0.14);"></div>
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:9px; color:#8c8c80;">event classes only</div>
+        </div>
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:6px;">
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:#17190f; border:1px solid rgba(16,122,20,0.22); border-radius:100px; padding:6px 14px;">brief</span>
+          <span style="flex:1; height:1px; background:rgba(16,122,20,0.2);"></span>
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:#17190f; border:1px solid rgba(16,122,20,0.22); border-radius:100px; padding:6px 14px;">AI draft</span>
+          <span style="flex:1; height:1px; background:rgba(16,122,20,0.2);"></span>
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:#17190f; border:1px solid rgba(16,122,20,0.22); border-radius:100px; padding:6px 14px;">human edit</span>
+          <span style="flex:1; height:1px; background:rgba(16,122,20,0.2);"></span>
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:#17190f; border:1px solid rgba(16,122,20,0.22); border-radius:100px; padding:6px 14px;">QA</span>
+          <span style="flex:1; height:1px; background:rgba(16,122,20,0.2);"></span>
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:#ffffff; background:#107a14; border-radius:100px; padding:6px 14px; box-shadow:0 0 12px rgba(16,122,20,0.4);">approval</span>
+        </div>
+      </div>
+
+      <!-- verify it yourself -->
+      <div style="margin-bottom:26px;">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.3em; color:#107a14; text-transform:uppercase;">Verify it yourself</div>
+          <div style="flex:1; height:1px; background:rgba(16,122,20,0.14);"></div>
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:9px; color:#8c8c80;">offline · no trust required</div>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
+          <a class="dl-btn" href="receipt-payload.json" download="NTRY-AB12-7F-receipt-payload.json">⇩ Receipt payload (JSON)</a>
+          <a class="dl-btn" href="receipt-payload.json.sig" download="NTRY-AB12-7F-receipt-payload.json.sig">⇩ Signature</a>
+          <a class="dl-btn" href="/keys/stl-demo-2026-06.pem" download="stl-demo-2026-06.pem">⇩ Public key</a>
+        </div>
+        <pre class="verify-cmd">$ curl -s https://seitiate.com/keys/stl-demo-2026-06.pem &gt; trust-layer.pub
+$ curl -s https://seitiate.com/v/ab12-7f/receipt-payload.json &gt; receipt.json
+$ curl -s https://seitiate.com/v/ab12-7f/receipt-payload.json.sig &gt; receipt.json.sig
+$ openssl dgst -sha256 -verify trust-layer.pub -signature receipt.json.sig receipt.json
+<span class="ok">Verified OK</span></pre>
+      </div>
+
+      <!-- legend -->
+      <div style="border-top:1px solid rgba(16,122,20,0.1); padding-top:18px; margin-bottom:16px;">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; line-height:1.85; color:#5c5c50;">How each claim is backed — <span style="color:#107a14;">signed</span> = included in the signed receipt payload (issuer, time, hash) · <span style="color:#107a14;">captured</span> = recorded by the host connector or Orchestra · <span style="color:#107a14;">logged</span> = AI tool invocation recorded with zero human weight · <span style="color:#107a14;">computed</span> = scored by the Seitiate engine.</div>
+      </div>
+
+      <div style="font-family:'Space Grotesk',sans-serif; font-size:12.5px; line-height:1.7; color:#5c5c50; margin-bottom:0;">This receipt verifies that a neutral trust layer signed the agency’s decision-trail summary for this deliverable. It proves process evidence, timestamp, issuer, and approval trail; it does not disclose client content and does not claim perfect measurement of human contribution.</div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:30px; padding-top:18px; border-top:1px solid rgba(16,122,20,0.1); font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.06em; color:#8c8c80;">
+        <span>Privacy: no client content disclosed · Status: <span style="color:#107a14;">valid</span></span>
+        <span style="color:#107a14;">seitiate.com/v/ab12-7f</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- production note — annotation, outside the document -->
+  <div class="om-note">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.26em; color:#107a14; text-transform:uppercase; margin-bottom:8px;">◇ &nbsp;Public anchor · production mode</div>
+    <div style="font-family:'Space Grotesk',sans-serif; font-size:12.5px; line-height:1.65; color:#5c5c50;">The demo receipt above is locally signed and hash-linked. In production, the receipt hash can also be anchored to a public chain — adding independent timestamping and tamper monitoring.</div>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  var GREEN = '#107a14';
+
+  function hypo(size, R, r, d, loops, steps) {
+    var c = size / 2, p = '';
+    for (var i = 0; i <= steps; i++) {
+      var t = (i / steps) * Math.PI * 2 * loops;
+      var k = (R - r) / r;
+      var x = c + (R - r) * Math.cos(t) + d * Math.cos(k * t);
+      var y = c + (R - r) * Math.sin(t) - d * Math.sin(k * t);
+      p += (i ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1) + ' ';
+    }
+    return p;
+  }
+
+  function rosette() {
+    var S = 600;
+    return '<svg viewBox="0 0 ' + S + ' ' + S + '" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">' +
+      '<path d="' + hypo(S, S * 0.46, S * 0.31, S * 0.21, 9, 3000) + '" fill="none" stroke="' + GREEN + '" stroke-width="0.5"/>' +
+      '<path d="' + hypo(S, S * 0.40, S * 0.23, S * 0.15, 13, 3000) + '" fill="none" stroke="' + GREEN + '" stroke-width="0.4"/>' +
+      '<path d="' + hypo(S, S * 0.30, S * 0.18, S * 0.10, 7, 2400) + '" fill="none" stroke="' + GREEN + '" stroke-width="0.4"/>' +
+      '<circle cx="' + (S / 2) + '" cy="' + (S / 2) + '" r="' + (S * 0.47) + '" fill="none" stroke="' + GREEN + '" stroke-width="0.5"/>' +
+      '<circle cx="' + (S / 2) + '" cy="' + (S / 2) + '" r="' + (S * 0.16) + '" fill="none" stroke="' + GREEN + '" stroke-width="0.5"/>' +
+      '</svg>';
+  }
+
+  function crest() {
+    var pts = [], pts2 = [], i, a;
+    for (i = 0; i < 6; i++) { a = -Math.PI / 2 + i * Math.PI / 3; pts.push((44 + 40 * Math.cos(a)).toFixed(1) + ',' + (44 + 40 * Math.sin(a)).toFixed(1)); }
+    for (i = 0; i < 6; i++) { a = -Math.PI / 2 + i * Math.PI / 3; pts2.push((44 + 33 * Math.cos(a)).toFixed(1) + ',' + (44 + 33 * Math.sin(a)).toFixed(1)); }
+    return '<svg viewBox="0 0 88 88" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">' +
+      '<polygon points="' + pts.join(' ') + '" fill="none" stroke="' + GREEN + '" stroke-width="1.4" opacity="0.85"/>' +
+      '<polygon points="' + pts2.join(' ') + '" fill="none" stroke="' + GREEN + '" stroke-width="0.8" opacity="0.5"/>' +
+      '<text x="44" y="44" text-anchor="middle" dominant-baseline="central" font-family="Space Grotesk, sans-serif" font-size="34" font-weight="700" fill="' + GREEN + '" style="filter:drop-shadow(0 0 6px rgba(16,122,20,0.5))">S</text>' +
+      '</svg>';
+  }
+
+  function seal(label) {
+    var c = 120, ticks = '', i;
+    for (i = 0; i < 72; i++) {
+      var a = (i / 72) * Math.PI * 2;
+      var r1 = 90, r2 = i % 6 === 0 ? 80 : 85;
+      ticks += '<line x1="' + (c + r1 * Math.cos(a)).toFixed(2) + '" y1="' + (c + r1 * Math.sin(a)).toFixed(2) +
+        '" x2="' + (c + r2 * Math.cos(a)).toFixed(2) + '" y2="' + (c + r2 * Math.sin(a)).toFixed(2) +
+        '" stroke="' + GREEN + '" stroke-width="' + (i % 6 === 0 ? 1.1 : 0.6) + '" opacity="0.7"/>';
+    }
+    return '<svg viewBox="0 0 240 240" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">' +
+      '<defs>' +
+      '<path id="sealTop" d="M 32,120 A 88,88 0 0 1 208,120"/>' +
+      '<path id="sealBot" d="M 36,120 A 84,84 0 0 0 204,120"/>' +
+      '<filter id="sealGlow"><feGaussianBlur stdDeviation="1.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>' +
+      '</defs>' +
+      '<g style="filter:url(#sealGlow)">' +
+      '<circle cx="' + c + '" cy="' + c + '" r="108" fill="none" stroke="' + GREEN + '" stroke-width="2"/>' +
+      '<circle cx="' + c + '" cy="' + c + '" r="100" fill="none" stroke="' + GREEN + '" stroke-width="0.8" opacity="0.6"/>' +
+      '<circle cx="' + c + '" cy="' + c + '" r="64" fill="none" stroke="' + GREEN + '" stroke-width="1.4"/>' +
+      '<circle cx="' + c + '" cy="' + c + '" r="59" fill="none" stroke="' + GREEN + '" stroke-width="0.6" opacity="0.55"/>' +
+      '</g>' +
+      '<g>' + ticks + '</g>' +
+      '<text font-family="IBM Plex Mono, monospace" font-size="11.5" font-weight="500" letter-spacing="3" fill="' + GREEN + '"><textPath href="#sealTop" startOffset="50%" text-anchor="middle">SEITIATE · TRUST LAYER</textPath></text>' +
+      '<text font-family="IBM Plex Mono, monospace" font-size="9" font-weight="500" letter-spacing="2.5" fill="' + GREEN + '" opacity="0.8"><textPath href="#sealBot" startOffset="50%" text-anchor="middle">ATTESTATION OF PROCESS</textPath></text>' +
+      '<text x="' + c + '" y="104" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="38" font-weight="700" fill="' + GREEN + '" style="filter:drop-shadow(0 0 6px rgba(16,122,20,0.5))">S</text>' +
+      '<line x1="' + (c - 30) + '" y1="116" x2="' + (c + 30) + '" y2="116" stroke="' + GREEN + '" stroke-width="0.8" opacity="0.5"/>' +
+      '<text x="' + c + '" y="140" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="20" font-weight="700" letter-spacing="2" fill="' + GREEN + '" style="filter:drop-shadow(0 0 8px rgba(16,122,20,0.6))">' + label + '</text>' +
+      '<text x="' + c + '" y="156" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7.5" letter-spacing="1.5" fill="#6c6c60">71F2 · 2C00 · EA3D</text>' +
+      '</svg>';
+  }
+
+  // Build SVG nodes via DOMParser (trusted, self-generated markup) and append — no innerHTML.
+  function fill(sel, svgString) {
+    var nodes = document.querySelectorAll(sel);
+    for (var i = 0; i < nodes.length; i++) {
+      var parsed = new DOMParser().parseFromString(svgString, 'image/svg+xml').documentElement;
+      var node = nodes[i];
+      while (node.firstChild) node.removeChild(node.firstChild);
+      node.appendChild(document.importNode(parsed, true));
+    }
+  }
+
+  fill('[data-dc="rosette"]', rosette());
+  fill('[data-dc="crest"]', crest());
+  fill('[data-dc="seal"]', seal('VALID'));
+
+  var micro = '';
+  for (var m = 0; m < 14; m++) micro += 'SEITIATE · TRUST LAYER · INDEPENDENT · ATTESTATION OF PROCESS · NTRY-AB12-7F · ';
+  var mt = document.querySelectorAll('[data-dc="microtext"]');
+  for (var j = 0; j < mt.length; j++) mt[j].textContent = micro;
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>The harbor — verticals on a managed substrate</title>
+    <script src="/assets/gate.js"></script>
+    <meta name="description" content="Internal map: how founder-owned verticals sit on the Seitiate+ business layer, with the engine, Notary, and brain underneath.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #08090b; --surface: #0f1114; --border: #1a1c22;
+            --text: #eceae7; --text-secondary: #8a8a90; --text-muted: #56585f;
+            --accent: #4ade80; --amber: #e0b34a; --red: #d67a7a;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+        a { color: inherit; text-decoration: none; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+        body > nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 14px 24px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+            background: rgba(8, 9, 11, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);
+        }
+        body > nav .brand { display: flex; align-items: center; gap: 9px; font-size: 15px; font-weight: 500; }
+        body > nav .brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 2.2s infinite; }
+        body > nav .links { display: flex; align-items: center; justify-content: center; gap: 18px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; }
+        body > nav .links a { color: var(--text-secondary); white-space: nowrap; }
+        body > nav .links a:hover, body > nav .links a.cur { color: var(--accent); }
+        body > nav .home { color: var(--text-secondary); font-size: 0.85rem; justify-self: end; }
+        body > nav .home:hover { color: var(--text); }
+
+        .doc { max-width: 760px; margin: 0 auto; padding: 112px 24px 40px; }
+        .banner {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.03em;
+            color: var(--amber); border: 1px solid rgba(224, 179, 74, 0.25); background: rgba(224, 179, 74, 0.06);
+            border-radius: 8px; padding: 10px 14px; margin-bottom: 2.4rem;
+        }
+        h1 { font-size: clamp(26px, 4.5vw, 36px); font-weight: 600; letter-spacing: -0.01em; line-height: 1.2; margin-bottom: 1rem; }
+        .lead { font-size: 1.08rem; color: var(--text-secondary); margin-bottom: 2.6rem; }
+        h2 { font-size: 1.15rem; font-weight: 500; margin: 2.8rem 0 0.4rem; }
+        .h2note { color: var(--text-secondary); font-size: 0.92rem; margin-bottom: 1.1rem; }
+        p.body { color: var(--text-secondary); font-size: 0.96rem; margin-bottom: 0.8rem; }
+
+        .legend { display: flex; gap: 16px; flex-wrap: wrap; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.6rem; }
+        .legend span { display: flex; align-items: center; gap: 6px; }
+        .legend i { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+
+        .row { display: flex; align-items: flex-start; gap: 13px; padding: 15px 0; border-bottom: 1px solid var(--border); }
+        .row .rdot { width: 8px; height: 8px; border-radius: 50%; margin-top: 8px; flex-shrink: 0; }
+        .rdot.live { background: var(--accent); } .rdot.hand { background: var(--amber); } .rdot.no { background: var(--red); }
+        .row .name { flex: 1; }
+        .row .name strong { font-weight: 500; font-size: 0.98rem; }
+        .row .name span { display: block; color: var(--text-secondary); font-size: 0.85rem; margin-top: 3px; }
+        .pill { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; padding: 3px 10px; border-radius: 100px; letter-spacing: 0.03em; white-space: nowrap; margin-top: 4px; }
+        .pill.live { color: var(--accent); background: rgba(74, 222, 128, 0.1); border: 1px solid rgba(74, 222, 128, 0.22); }
+        .pill.hand { color: var(--amber); background: rgba(224, 179, 74, 0.1); border: 1px solid rgba(224, 179, 74, 0.22); }
+        .pill.no { color: var(--red); background: rgba(214, 122, 122, 0.1); border: 1px solid rgba(214, 122, 122, 0.22); }
+
+        .seam { text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-muted); margin: 1.4rem 0 0.2rem; letter-spacing: 0.02em; }
+        .seam .arrows { display: block; font-size: 0.85rem; line-height: 1; margin-bottom: 4px; }
+
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; margin-top: 0.6rem; }
+        .card.accent { border-color: rgba(74, 222, 128, 0.28); background: rgba(74, 222, 128, 0.04); }
+        .card .head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
+        .card .head h3 { font-size: 1rem; font-weight: 500; }
+        .card .tag { font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; color: var(--accent); border: 1px solid rgba(74, 222, 128, 0.22); padding: 2px 9px; border-radius: 100px; white-space: nowrap; }
+        .card p { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.6rem; }
+        .card p:last-child { margin-bottom: 0; }
+
+        .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 0.6rem; }
+        .grid2 .cell { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+        .grid2 .cell .lh { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+        .grid2 .cell .lh strong { font-size: 0.92rem; font-weight: 500; }
+        .grid2 .cell .st { font-family: 'JetBrains Mono', monospace; font-size: 0.64rem; color: var(--accent); }
+        .grid2 .cell .st.hand { color: var(--amber); }
+        .grid2 .cell ul { list-style: none; padding: 0; margin: 0; }
+        .grid2 .cell li { font-size: 0.82rem; color: var(--text-secondary); padding-left: 12px; position: relative; margin-bottom: 5px; }
+        .grid2 .cell li::before { content: "·"; position: absolute; left: 0; color: var(--text-muted); }
+
+        .moat { border: 1px solid rgba(74, 222, 128, 0.22); background: rgba(74, 222, 128, 0.04); border-radius: 12px; padding: 20px 22px; margin-top: 1.2rem; }
+        .moat h3 { color: var(--accent); font-weight: 500; font-size: 1rem; margin-bottom: 0.8rem; }
+        .moat .p { color: var(--text-secondary); font-size: 0.92rem; margin-bottom: 0.7rem; }
+        .moat .p:last-child { margin-bottom: 0; }
+        .moat .p strong { color: var(--text); font-weight: 500; }
+
+        .rule { border: 1px solid rgba(224, 179, 74, 0.25); background: rgba(224, 179, 74, 0.05); border-radius: 10px; padding: 18px 20px; margin-top: 1rem; }
+        .rule strong { color: var(--amber); font-weight: 500; }
+        .rule p { color: var(--text-secondary); font-size: 0.92rem; margin-top: 0.4rem; }
+
+        footer { text-align: center; color: var(--text-muted); font-size: 0.78rem; padding: 50px 24px; border-top: 1px solid var(--border); margin-top: 3rem; }
+        .pageset { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; margin-bottom: 16px; }
+        .pageset a { color: var(--text-secondary); }
+        .pageset a:hover { color: var(--text); }
+        .pageset a.cur { color: var(--accent); }
+
+        @media (max-width: 640px) {
+            body > nav { grid-template-columns: 1fr; justify-items: center; gap: 8px; }
+            body > nav .home { display: none; }
+            body > nav .links { width: 100%; justify-content: center; flex-wrap: wrap; gap: 8px 14px; overflow-x: visible; padding-bottom: 2px; }
+            .grid2 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="brand"><span class="dot"></span>Seitiate · Harbor</div>
+        <div class="links">
+            <a href="/palace-as-world.html">Lens 1: World</a>
+            <a href="/cognitive-furniture.html">Lens 2: Furniture</a>
+            <a href="/game-engine.html">Lens 3: World Machine</a>
+            <a href="/harbor.html" class="cur">Lens 4: Harbor</a>
+            <a href="/architecture.html">Lens 5: Architecture</a>
+        </div>
+        <a href="/index.html" class="home">← Seitiate Home</a>
+    </nav>
+
+    <div class="doc">
+        <div class="banner">appendix · stack map</div>
+        <h1>The harbor: verticals on a managed substrate</h1>
+        <p class="lead">How founder-owned products sit on the Seitiate+ business layer, with the engine, the trust layer, and the brain underneath. One picture of the architecture these pages are describing.</p>
+
+        <!-- ============ VERTICALS ============ -->
+        <h2>Verticals — founder-owned products</h2>
+        <p class="h2note">Each is an independent product home. The platform is neutral and horizontal — it serves whoever brings serious work through a thin contract.</p>
+        <div class="legend">
+            <span><i style="background:#4ade80"></i>research wedge</span>
+            <span><i style="background:#e0b34a"></i>field / founder branch</span>
+            <span><i style="background:#d67a7a"></i>paused partner</span>
+        </div>
+
+        <div class="row"><span class="rdot live"></span><div class="name"><strong>Evidence Foundry</strong><span>Truth-first research workspace — the cleanest door into the substrate. Research Facility trunk with Seitiate+ login graft. Not the company; the wedge that makes accountability concrete.</span></div><span class="pill live">research wedge</span></div>
+        <div class="row"><span class="rdot hand"></span><div class="name"><strong>Sensarra</strong><span>Electrochemistry / biosensor research branch. Standalone Dockerized product; proof of the trunk-and-branch pattern. Reaches the substrate only over thin HTTP seams.</span></div><span class="pill hand">biosensor branch</span></div>
+        <div class="row"><span class="rdot hand"></span><div class="name"><strong>Sakme</strong><span>Consumer creative writing. The original product surface and a creator-side proof for vertical membership, credits, and governed product surfaces.</span></div><span class="pill hand">creator vertical</span></div>
+        <div class="row"><span class="rdot hand"></span><div class="name"><strong>Writers Factory</strong><span>Narrative governance (N1–N5 structural taxonomy). A future branch of the same vertical pattern.</span></div><span class="pill hand">future vertical</span></div>
+        <div class="row"><span class="rdot hand"></span><div class="name"><strong>Solopreneur</strong><span>Founder ops for Georgian / CEE markets. Pre-formation peer repo (5-partner). The wedge is real; the doctrine says it needs a founder-owner before it can exist here.</span></div><span class="pill hand">candidate</span></div>
+        <div class="row"><span class="rdot no"></span><div class="name"><strong>Olimpo</strong><span>OEM partner pilot. Paused until the partner path is active again.</span></div><span class="pill no">paused</span></div>
+
+        <p class="seam"><span class="arrows">↓ ↓ ↓</span>thin HTTP seams · products reach the substrate over contracts, never by import</p>
+
+        <!-- ============ SEITIATE+ (BaaS) ============ -->
+        <h2>Seitiate+ — the business-as-a-service middleware</h2>
+        <p class="h2note">The layer that turns a product surface into a business: billing, credits, access, revenue-share, legal-entity ownership, and the graduation path. The engine runs the product; Notary vouches for trust; Seitiate+ runs the business.</p>
+
+        <div class="card accent">
+            <div class="head">
+                <h3>GitHub-with-substrate-and-billing</h3>
+                <span class="tag">ratified 2026-06-30 → 07-01</span>
+            </div>
+            <p>The destination: a founder brings real work, and it can run, take payment, and grow on shared rails. The first path is concierge onboarding; the self-serve machine comes later.</p>
+        </div>
+
+        <div class="grid2">
+            <div class="cell">
+                <div class="lh"><strong>Vertical customer lifecycle</strong><span class="st">lifecycle rail</span></div>
+                <ul>
+                    <li>apply → approve → subscribe → provision → credits → access</li>
+                    <li>Keyed on (tenant, vertical) — one service, three verticals</li>
+                    <li>Engine create-or-resolve-by-email seam #120 deployed</li>
+                </ul>
+            </div>
+            <div class="cell">
+                <div class="lh"><strong>Billing + credits (Paddle MoR)</strong><span class="st">commerce rail</span></div>
+                <ul>
+                    <li>Agent-C as merchant-of-record (Paddle wired, MoR-shaped)</li>
+                    <li>Per-vertical pricing admin + compute / costs (PR #116)</li>
+                    <li>Tier grants × exchange-rate peg · FIFO spend · expiry</li>
+                </ul>
+            </div>
+            <div class="cell">
+                <div class="lh"><strong>SEIT — the substrate credit</strong><span class="st">credit model</span></div>
+                <ul>
+                    <li>Closed-loop store credit (1 SEIT = $1); not a cryptocurrency</li>
+                    <li>Never redeemable · no inter-vertical transfer · graduation = conversion</li>
+                    <li>Per-(tenant, vertical) isolation keeps us out of money-transmission</li>
+                </ul>
+            </div>
+            <div class="cell">
+                <div class="lh"><strong>Opt-in shell + four roles</strong><span class="st hand">role model</span></div>
+                <ul>
+                    <li>Default-empty, role-scoped nav (capability_map catalog)</li>
+                    <li>Super-CTO · founder-owner · operator · tenant</li>
+                    <li>Phase 1 dispatched — no placeholder UIs by construction</li>
+                </ul>
+            </div>
+            <div class="cell">
+                <div class="lh"><strong>Owner-entity + revenue-share</strong><span class="st hand">graduation path</span></div>
+                <ul>
+                    <li>owner_entity per vertical (Agent-C → founder's GE LLC)</li>
+                    <li>Payouts to owner entities (escrow seed preserved, renamed)</li>
+                    <li>Fee placeholder ~15% incubation / ~10% post-graduation</li>
+                </ul>
+            </div>
+            <div class="cell">
+                <div class="lh"><strong>Graduation · Georgian entity</strong><span class="st hand">legal path</span></div>
+                <ul>
+                    <li>POA → form a Georgian Virtual-Zone LLC the founder owns</li>
+                    <li>0% corporate tax on exported IT; IP assigns to founder entity</li>
+                    <li>Held until §11 legal/tax counsel signs off</li>
+                </ul>
+            </div>
+        </div>
+
+        <p class="seam"><span class="arrows">↓ ↓ ↓</span>bridge-not-rewrite · products consume seams over HTTP, never co-build in the engine</p>
+
+        <!-- ============ FOUNDATION ============ -->
+        <h2>Engine · Trust · Brain — the foundation</h2>
+        <p class="h2note">Three repos underneath the harbor. The engine runs the agent loop; the trust layer attests what runs; the brain holds institutional memory. None are vertical-specific — they serve whoever attaches.</p>
+
+        <div class="card">
+            <div class="head"><h3>Seitiate — the engine</h3><span class="tag">proprietary · licence undecided</span></div>
+            <p>Harness control plane, talent registry, agent runtime. Codex (memory) · Canon (taste) · Governor (quality, two-layer) · crystallization→seity loop · Society of Thought · LLM orchestrator (9+ BYOK providers).</p>
+            <p>Elixir foundation: the forward engine core loop — session → signed memory → export → offline verify → retrieval. Integration target, not architecture hope.</p>
+        </div>
+        <div class="card">
+            <div class="head"><h3>Notary — the trust layer</h3><span class="tag">private · IP-sensitive</span></div>
+            <p>Trust backbone through the entire skill lifecycle: risk classification · sandboxing · certification gauntlet · ES256 attestation machinery · provenance chain.</p>
+            <p>Also the <strong>slop filter at vertical intake</strong> — the same certification that vets a skill vets a vertical (mechanical → risk-classify → intent check → sandbox → Governor). AI authorship is fine and expected (90%+ of repos); what we filter is slop, not AI. Load-bearing when hosting third-party verticals — "we run real businesses, so what runs is vetted."</p>
+        </div>
+        <div class="card">
+            <div class="head"><h3>CES — the brain</h3><span class="tag">coordination</span></div>
+            <p>Coordination, knowledge, memory, operational tooling. Memo→merge pipeline · task board · agent fleet coordination · NotebookLM institutional memory.</p>
+            <p><strong>Agentic Contract-CI</strong> lives here: governed merge path with independent LLM review, Tier-2 hold, phone approval, audit events — the builder-side proof the substrate governs our own agents.</p>
+            <p>Serves all verticals; never the Sakme / Sensarra runtime surface.</p>
+        </div>
+
+        <!-- ============ MOAT ============ -->
+        <h2>The moat under the harbor</h2>
+        <div class="moat">
+            <h3>What travels, and what can't be copied</h3>
+            <p class="p"><strong>The seity</strong> — accumulated, non-clonable steering judgment bonded to the human, portable across runtimes. We persist the human; we don't ship the agent runtime.</p>
+            <p class="p"><strong>Neutrality</strong> — a third party attests what a platform-owner cannot attest for itself.</p>
+            <p class="p"><strong>The provenance stamp that travels</strong> — engine-side verification works now; neutral Notary receipts are the next trust-root ceremony. That is the flank.</p>
+            <p class="p"><strong>The intake filter</strong> — the same Notary gauntlet that vets a skill vets a vertical before it runs. AI authorship is expected; slop is refused. The economics finish the job: every sandbox run costs the founder real SEIT credits.</p>
+        </div>
+
+        <!-- ============ THE RULE ============ -->
+        <h2>The one rule</h2>
+        <div class="rule">
+            <p><strong>We never create verticals — founders do.</strong></p>
+            <p>A vertical exists only when a real person owns it (their IP, their work, their revenue). Manufacture one ourselves to chase a market and we have rebuilt Sensarra — our thing to operate, not a founder's work on our platform. That is the anti-pattern. We are the harbor; we are never the fleet.</p>
+        </div>
+
+        <!-- Lens Navigation Strip -->
+        <div style="margin-top: 3.5rem; border-top: 1px solid var(--border); padding-top: 2rem;">
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.04em; margin-bottom: 1rem;">EXPLORE THE STACK THROUGH DIFFERENT LENSES</div>
+            <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;">
+                <a href="/palace-as-world.html" style="border: 1px solid var(--border); background: var(--surface); border-radius: 10px; padding: 14px; display: block;">
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--accent); margin-bottom: 4px;">LENS 1 · WORLD</div>
+                    <div style="font-size: 0.88rem; font-weight: 600; color: var(--text);">Palace as World</div>
+                </a>
+                <a href="/cognitive-furniture.html" style="border: 1px solid var(--border); background: var(--surface); border-radius: 10px; padding: 14px; display: block;">
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--amber); margin-bottom: 4px;">LENS 2 · FURNITURE</div>
+                    <div style="font-size: 0.88rem; font-weight: 600; color: var(--text);">Cognitive Furniture</div>
+                </a>
+                <a href="/game-engine.html" style="border: 1px solid var(--border); background: var(--surface); border-radius: 10px; padding: 14px; display: block;">
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: #38bdf8; margin-bottom: 4px;">LENS 3 · ENGINE</div>
+                    <div style="font-size: 0.88rem; font-weight: 600; color: var(--text);">The World Machine</div>
+                </a>
+                <a href="/harbor.html" style="border: 1px solid var(--amber); background: rgba(224, 179, 74, 0.06); border-radius: 10px; padding: 14px; display: block;">
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--amber); margin-bottom: 4px;">LENS 4 · ACTIVE</div>
+                    <div style="font-size: 0.88rem; font-weight: 600; color: var(--text);">The Harbor &amp; Verticals</div>
+                </a>
+                <a href="/architecture.html" style="border: 1px solid var(--border); background: var(--surface); border-radius: 10px; padding: 14px; display: block;">
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--accent); margin-bottom: 4px;">LENS 5 · ARCHITECTURE</div>
+                    <div style="font-size: 0.88rem; font-weight: 600; color: var(--text);">Architecture</div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <nav class="pageset">
+            <a href="/overview.html">overview</a>
+            <a href="/researcher.html">researchers</a>
+            <a href="/baas.html">builders</a>
+        </nav>
+        <p style="margin-top:10px;font-size:0.72rem"><a href="/overview.html" style="color:var(--text-muted)">← company overview</a> · <a href="/wheels-within-wheels.html" style="color:var(--text-muted)">partner brief</a> · <a href="/reality.html" style="color:var(--text-muted)">roadmap</a></p>
+        <span>Seitiate · stack map appendix · 2026</span>
+    </footer>
+</body>
+</html>

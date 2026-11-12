@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in or Apply as a Beta Tester — Seitiate+</title>
+    <meta name="description" content="Sign in to your Seitiate+ workspace or apply for invited Beta Tester access to Seitiate Personal Assistant, Multi-Agent Rooms, and Evidence Foundry.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #08090b; --surface: #0f1114; --surface-hover: #15181e; --border: #1e222b;
+            --text: #eceae7; --text-secondary: #8a8a90; --text-muted: #56585f;
+            --accent: #4ade80; --amber: #e0b34a; --cyan: #38bdf8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+        a { color: inherit; text-decoration: none; }
+        nav {
+            padding: 14px 28px; display: flex; justify-content: space-between; align-items: center;
+            background: rgba(8, 9, 11, 0.9); border-bottom: 1px solid var(--border);
+        }
+        nav .brand { display: flex; align-items: center; gap: 9px; font-size: 15px; font-weight: 600; }
+        nav .brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+        nav .back { font-size: 0.84rem; color: var(--text-secondary); }
+        nav .back:hover { color: var(--text); }
+
+        .container {
+            max-width: 920px; width: 100%; margin: 48px auto; padding: 0 24px; flex: 1;
+            display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 24px; align-items: start;
+        }
+        .card {
+            border: 1px solid var(--border); background: var(--surface); border-radius: 14px; padding: 30px;
+        }
+        .card.beta-card {
+            border-color: rgba(74, 222, 128, 0.4);
+            background: linear-gradient(180deg, rgba(15, 20, 18, 0.96) 0%, rgba(12, 14, 18, 0.99) 100%);
+        }
+        .kicker { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--accent); letter-spacing: 0.04em; margin-bottom: 6px; }
+        .kicker.cyan { color: var(--cyan); }
+        h1 { font-size: 1.55rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px; }
+        h2 { font-size: 1.25rem; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 8px; }
+        .sub { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 22px; }
+
+        .field { margin-bottom: 15px; }
+        label { display: block; font-size: 0.8rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 6px; }
+        input, select, textarea {
+            width: 100%; background: #08090b; border: 1px solid #282c37; border-radius: 8px;
+            padding: 10px 13px; color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.9rem; outline: none;
+        }
+        input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+        textarea { resize: vertical; min-height: 76px; }
+
+        .btn {
+            width: 100%; background: var(--accent); color: #08090b; border: none; border-radius: 8px;
+            padding: 11px 18px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: opacity 0.15s;
+        }
+        .btn:hover { opacity: 0.92; }
+        .btn-outline {
+            width: 100%; background: var(--surface-hover); color: var(--text); border: 1px solid var(--border);
+            border-radius: 8px; padding: 10px 18px; font-size: 0.88rem; font-weight: 500; cursor: pointer; margin-top: 10px;
+            display: inline-block; text-align: center;
+        }
+        .btn-outline:hover { border-color: rgba(255,255,255,0.3); }
+
+        .status-box {
+            display: none; margin-top: 16px; padding: 14px 16px; border-radius: 9px;
+            border: 1px solid rgba(74, 222, 128, 0.4); background: rgba(74, 222, 128, 0.08);
+            font-size: 0.85rem; color: var(--text);
+        }
+        .divider { height: 1px; background: var(--border); margin: 20px 0; }
+        .meta-note { font-size: 0.78rem; color: var(--text-muted); margin-top: 14px; }
+
+        footer {
+            border-top: 1px solid var(--border); padding: 20px 28px; font-size: 0.78rem;
+            color: var(--text-muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+        }
+        footer a { color: var(--text-secondary); }
+        @media (max-width: 760px) {
+            .container { grid-template-columns: 1fr; margin: 28px auto; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/" class="brand"><span class="dot"></span><span>Seitiate+</span></a>
+        <a href="/" class="back">← Back to Seitiate.com</a>
+    </nav>
+
+    <div class="container">
+        <!-- Left: Apply as a Beta Tester -->
+        <div class="card beta-card">
+            <div class="kicker">INVITED COHORT &amp; PARTNER ONBOARDING</div>
+            <h1>Apply as a Seitiate+ Beta Tester</h1>
+            <p class="sub">
+                Seitiate+ is onboarding beta testers across our Individual ($20/mo), Pro ($60/mo), and Max ($200/mo) workspaces.
+                Request your cohort invite below to activate your Personal Assistant, Sovereign Keep Space, and initial SEIT compute grant.
+            </p>
+
+            <form id="beta-form">
+                <div class="field">
+                    <label for="beta-name">Full Name</label>
+                    <input type="text" id="beta-name" name="name" placeholder="Ada Lovelace" required>
+                </div>
+                <div class="field">
+                    <label for="beta-email">Work or Academic Email</label>
+                    <input type="email" id="beta-email" name="email" placeholder="ada@analytical.org" required>
+                </div>
+                <div class="field">
+                    <label for="beta-focus">Primary Workspace Focus</label>
+                    <select id="beta-focus" name="focus">
+                        <option value="personal-assistant">Rung 1–2: Personal Assistant &amp; Sovereign Keep Space ($20/mo Starter)</option>
+                        <option value="research-foundry" selected>Rung 2–3: Evidence Foundry &amp; Multi-Agent Partner Rooms ($60/mo Pro)</option>
+                        <option value="harbor-builder">Rung 3–5: Harbor Vertical Builder &amp; 4-Way Engineering Rooms ($200/mo Max)</option>
+                        <option value="partner-review">Institutional / Payment Partner Verification Review</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="beta-notes">What would you like your Seitiate workspace to remember and build?</label>
+                    <textarea id="beta-notes" name="notes" placeholder="Briefly describe your workflow, research domain, or team room requirements..."></textarea>
+                </div>
+                <button type="submit" class="btn">Submit Beta Tester Application →</button>
+            </form>
+
+            <div id="beta-status" class="status-box"></div>
+            <p class="meta-note">
+                Reviewed daily by the Agent-C LLC engineering team. Approved beta testers receive a single-use workspace activation token and initial SEIT compute credits.
+            </p>
+        </div>
+
+        <!-- Right: Existing Member Sign-In -->
+        <div class="card">
+            <div class="kicker cyan">EXISTING WORKSPACE MEMBERS</div>
+            <h2>Sign in to Seitiate+</h2>
+            <p class="sub">Already have a workspace invite token or active Seitiate+ account? Sign in below.</p>
+
+            <form id="login-form">
+                <div class="field">
+                    <label for="login-email">Workspace Email</label>
+                    <input type="email" id="login-email" placeholder="you@company.com" required>
+                </div>
+                <div class="field">
+                    <label for="login-token">Invite Token or Passkey Code</label>
+                    <input type="password" id="login-token" placeholder="••••••••••••••••" required>
+                </div>
+                <button type="submit" class="btn">Continue to Workspace →</button>
+            </form>
+
+            <div id="login-status" class="status-box"></div>
+
+            <div class="divider"></div>
+            <p style="font-size: 0.82rem; color: var(--text-secondary);">
+                Looking for our vertical creative &amp; research workspace?
+            </p>
+            <a href="https://app.sakme.ai/login" class="btn-outline">Open Sakme Workspace Login →</a>
+        </div>
+    </div>
+
+    <footer>
+        <span>&copy; 2026 Agent-C LLC · Seitiate &amp; Seitiate+</span>
+        <span>
+            <a href="/terms.html">Terms of Use</a> &middot;
+            <a href="/privacy.html">Privacy Policy</a> &middot;
+            <a href="/licensing.html">Licensing</a>
+        </span>
+    </footer>
+
+    <script>
+        (function () {
+            var params = new URLSearchParams(window.location.search);
+            var plan = params.get("plan");
+            var select = document.getElementById("beta-focus");
+            if (plan === "starter" && select) select.value = "personal-assistant";
+            if (plan === "pro" && select) select.value = "research-foundry";
+            if (plan === "max" && select) select.value = "harbor-builder";
+
+            document.getElementById("beta-form").addEventListener("submit", function (e) {
+                e.preventDefault();
+                var name = document.getElementById("beta-name").value.trim();
+                var email = document.getElementById("beta-email").value.trim();
+                var focus = document.getElementById("beta-focus").value;
+                var status = document.getElementById("beta-status");
+                status.style.display = "block";
+                status.innerHTML = "<strong>Application recorded for " + email.replace(/</g, "&lt;") + ".</strong><br>" +
+                    "Your Seitiate+ Beta Tester request (" + focus.replace(/</g, "&lt;") + ") is queued for cohort activation. " +
+                    "For immediate partner or compliance verification access, email <a href='mailto:support@seitiate.com?subject=Seitiate%2B%20Beta%20Access%20(" +
+                    encodeURIComponent(name) + ")' style='color:#4ade80;text-decoration:underline;'>support@seitiate.com</a>.";
+            });
+
+            document.getElementById("login-form").addEventListener("submit", function (e) {
+                e.preventDefault();
+                var email = document.getElementById("login-email").value.trim();
+                var status = document.getElementById("login-status");
+                status.style.display = "block";
+                status.innerHTML = "<strong>Invite token required:</strong> We could not match an active beta session for <code>" +
+                    email.replace(/</g, "&lt;") + "</code>. Please complete the <strong>Apply as a Beta Tester</strong> form on the left to receive your activation token.";
+            });
+        })();
+    </script>
+</body>
+</html>
