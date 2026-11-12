@@ -303,7 +303,7 @@
       border: 1.5px dashed var(--ink2);
       display: inline-block;
     }
-    .swatch-ies {
+    .swatch-Partner Vertical {
       width: 24px;
       height: 13px;
       flex-shrink: 0;
@@ -577,19 +577,19 @@
       color: var(--ink2);
     }
 
-    /* IES Overlay Highlight Mode */
-    body.ies-overlay-active .non-ies-card {
+    /* Partner Vertical Overlay Highlight Mode */
+    body.Partner Vertical-overlay-active .non-Partner Vertical-card {
       opacity: 0.35;
     }
-    body.ies-overlay-active .ies-touchpoint {
+    body.Partner Vertical-overlay-active .Partner Vertical-touchpoint {
       border-color: var(--accent) !important;
       box-shadow: 0 0 0 2px var(--accent), 0 6px 18px rgba(75, 67, 168, 0.16);
       transform: translateY(-1px);
     }
-    body.ies-overlay-active svg .svg-non-ies {
+    body.Partner Vertical-overlay-active svg .svg-non-Partner Vertical {
       opacity: 0.28;
     }
-    body.ies-overlay-active svg .svg-ies {
+    body.Partner Vertical-overlay-active svg .svg-Partner Vertical {
       stroke-width: 2.2px;
     }
 
@@ -672,7 +672,7 @@
     <p class="kicker">THE SEITIATE ESTATE · PROGRESSIVE "WHEELS-WITHIN-WHEELS" ARCHITECTURE &amp; PARTNERSHIP MAP · NOVEMBER 2026</p>
     <h1>The Seitiate Estate: Your Assistant, Your Seity, and the Places People Do Their Work</h1>
     <p class="lede">
-      A progressive map of what we are building and how its pieces fit together—for <strong>Geoffrey</strong>, <strong>Ilia Kamyshev</strong>, and <strong>Sahar Moghimian</strong> (<strong>IES</strong>). Start at <strong>Level 1</strong> for the simple whole-estate picture, click any section to open <strong>Level 2</strong> (human experiences and product families), and expand <strong>Level 3</strong> inside any card for capabilities, current status vs. roadmap scope, and source links.
+      A progressive map of what we are building and how its pieces fit together—for <strong>Geoffrey</strong>, <strong>Partner Director Kamyshev</strong>, and <strong>Partner Lead Moghimian</strong> (<strong>Partner Vertical</strong>). Start at <strong>Level 1</strong> for the simple whole-estate picture, click any section to open <strong>Level 2</strong> (human experiences and product families), and expand <strong>Level 3</strong> inside any card for capabilities, current status vs. roadmap scope, and source links.
     </p>
 
     <div class="controls-bar">
@@ -710,10 +710,10 @@
         <button
           type="button"
           role="tab"
-          id="nav-btn-ies"
+          id="nav-btn-Partner Vertical"
           aria-selected="false"
-          aria-controls="view-ies"
-          onclick="drillTo('ies')"
+          aria-controls="view-Partner Vertical"
+          onclick="drillTo('Partner Vertical')"
           class="tab-btn">
           2C · Partner Rooms &amp; Lab-to-Office
         </button>
@@ -750,11 +750,11 @@
         </button>
         <button
           type="button"
-          id="ies-overlay-btn"
+          id="Partner Vertical-overlay-btn"
           aria-pressed="false"
           onclick="toggleIesOverlay()"
           class="overlay-btn">
-          Highlight Where IES &amp; VisiWatt Connect: OFF
+          Highlight Where Partner Vertical &amp; VisiWatt Connect: OFF
         </button>
       </div>
     </div>
@@ -762,7 +762,7 @@
     <div class="visual-legend" aria-label="Visual key">
       <span class="legend-item"><span class="swatch-solid"></span> <strong>Solid border:</strong> Built in code or active in the pilot (see Level 3 for live vs. fixture detail)</span>
       <span class="legend-item"><span class="swatch-dashed"></span> <strong>Dashed border:</strong> Designed &amp; on the roadmap (space for what comes next)</span>
-      <span class="legend-item"><span class="swatch-ies"></span> <strong>Indigo highlight:</strong> Where IES (Ilia &amp; Sahar) connects or collaborates</span>
+      <span class="legend-item"><span class="swatch-Partner Vertical"></span> <strong>Indigo highlight:</strong> Where Partner Vertical (Partner Director &amp; Partner Lead) connects or collaborates</span>
     </div>
   </header>
 
@@ -793,17 +793,17 @@
           <g class="svg-clickable" onclick="drillTo('centre')" onkeydown="handleSvgKeydown(event, 'centre')" role="button" tabindex="0" aria-label="Drill down into Layer 1: Your Doorway, Personal Assistant, Skills Shelf, and Seity">
             <rect x="16" y="14" width="948" height="92" rx="10" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.2"/>
             <text x="32" y="36" font-family="var(--mono)" font-size="11" font-weight="600" fill="var(--accent)">1 · YOUR DOORWAY, YOUR ASSISTANT &amp; YOUR SEITY (SEITIATE+) — CLICK TO DRILL DOWN ›</text>
-            <g class="svg-ies">
+            <g class="svg-Partner Vertical">
               <rect x="32" y="46" width="290" height="48" rx="6" fill="var(--paper)" stroke="var(--accent)" stroke-width="1"/>
               <text x="44" y="66" font-size="13.5" font-weight="600" fill="var(--ink)">Personal Assistant &amp; Skills Shelf</text>
               <text x="44" y="83" font-size="11.5" fill="var(--ink2)">Named coordinator · Freedom Dial · Reusable Skills</text>
             </g>
-            <g class="svg-ies">
+            <g class="svg-Partner Vertical">
               <rect x="338" y="46" width="300" height="48" rx="6" fill="var(--paper)" stroke="var(--accent)" stroke-width="1"/>
               <text x="350" y="66" font-size="13.5" font-weight="600" fill="var(--ink)">Your Seity (Yours to Keep, Never Pooled)</text>
               <text x="350" y="83" font-size="11" fill="var(--ink2)">Codex (memory) · Adopted Canon · Doma</text>
             </g>
-            <g class="svg-ies">
+            <g class="svg-Partner Vertical">
               <rect x="654" y="46" width="294" height="48" rx="6" fill="var(--paper)" stroke="var(--accent)" stroke-width="1"/>
               <text x="666" y="66" font-size="13.5" font-weight="600" fill="var(--ink)">Seitiate+ Single Front Door</text>
               <text x="666" y="83" font-size="11" fill="var(--ink2)">One sign-in · Single intake · Model controls</text>
@@ -816,22 +816,22 @@
             <text x="30" y="144" font-family="var(--mono)" font-size="11" font-weight="600" fill="var(--teal)">2A · SAKME — THE HOUSE OF PRACTICES (CLICK TO OPEN ›)</text>
             <text x="30" y="161" font-size="12" fill="var(--ink2)">"When no one has a job, they will have a sakme"</text>
 
-            <g class="svg-non-ies">
+            <g class="svg-non-Partner Vertical">
               <rect x="30" y="172" width="190" height="48" rx="6" fill="var(--paper)" stroke="var(--teal)" stroke-width="1"/>
               <text x="40" y="191" font-size="12.5" font-weight="600" fill="var(--ink)">Everyday Trades &amp; Records</text>
               <text x="40" y="207" font-size="11" fill="var(--ink2)">Bring a file · First Good Question</text>
             </g>
-            <g class="svg-non-ies">
+            <g class="svg-non-Partner Vertical">
               <rect x="228" y="172" width="190" height="48" rx="6" fill="var(--paper)" stroke="var(--teal)" stroke-width="1"/>
               <text x="238" y="191" font-size="12.5" font-weight="600" fill="var(--ink)">Writers Factory &amp; Video Lab</text>
               <text x="238" y="207" font-size="10.8" fill="var(--ink2)">5 registers · Creative Video Lab</text>
             </g>
-            <g class="svg-non-ies">
+            <g class="svg-non-Partner Vertical">
               <rect x="30" y="228" width="190" height="48" rx="6" fill="var(--paper)" stroke="var(--teal)" stroke-width="1" stroke-dasharray="4 3"/>
               <text x="40" y="247" font-size="12.5" font-weight="600" fill="var(--ink)">Specialist Stalls &amp; Bazaar</text>
               <text x="40" y="263" font-size="11" fill="var(--ink2)">9 spaces · Private work → Offer</text>
             </g>
-            <g class="svg-ies">
+            <g class="svg-Partner Vertical">
               <rect x="228" y="228" width="190" height="48" rx="6" fill="var(--paper)" stroke="var(--accent)" stroke-width="1.4" stroke-dasharray="4 3"/>
               <text x="238" y="247" font-size="12.5" font-weight="600" fill="var(--ink)">Sakme Office &amp; Academy</text>
               <text x="238" y="263" font-size="11" fill="var(--ink2)">7 office tools · Deep-Tech &amp; general</text>
@@ -839,7 +839,7 @@
           </g>
 
           <!-- LAYER 2B: SCIENTIFIC PLATFORM -->
-          <g class="svg-clickable svg-ies" onclick="drillTo('scientific')" onkeydown="handleSvgKeydown(event, 'scientific')" role="button" tabindex="0" aria-label="Drill down into 2B: Scientific Platform">
+          <g class="svg-clickable svg-Partner Vertical" onclick="drillTo('scientific')" onkeydown="handleSvgKeydown(event, 'scientific')" role="button" tabindex="0" aria-label="Drill down into 2B: Scientific Platform">
             <rect x="444" y="122" width="286" height="166" rx="10" fill="var(--teal-soft)" stroke="var(--teal)" stroke-width="1.3"/>
             <text x="458" y="144" font-family="var(--mono)" font-size="11" font-weight="600" fill="var(--teal)">2B · SCIENTIFIC PLATFORM (OPEN ›)</text>
             <text x="458" y="161" font-size="12" fill="var(--ink2)">Individual researchers &amp; funded labs</text>
@@ -853,11 +853,11 @@
             <text x="468" y="263" font-size="11" fill="var(--ink2)">HenniPenny (NILM) · Sensarra · Mendel</text>
           </g>
 
-          <!-- LAYER 2C: PARTNER ROOMS (IES & REPEATABLE PARTNER PATH) -->
-          <g class="svg-clickable svg-ies" onclick="drillTo('ies')" onkeydown="handleSvgKeydown(event, 'ies')" role="button" tabindex="0" aria-label="Drill down into 2C: Partner Rooms and Lab-to-Office Bridge">
+          <!-- LAYER 2C: PARTNER ROOMS (Partner Vertical & REPEATABLE PARTNER PATH) -->
+          <g class="svg-clickable svg-Partner Vertical" onclick="drillTo('Partner Vertical')" onkeydown="handleSvgKeydown(event, 'Partner Vertical')" role="button" tabindex="0" aria-label="Drill down into 2C: Partner Rooms and Lab-to-Office Bridge">
             <rect x="742" y="122" width="222" height="166" rx="10" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.5"/>
             <text x="756" y="144" font-family="var(--mono)" font-size="11" font-weight="600" fill="var(--accent)">2C · PARTNER ROOMS (OPEN ›)</text>
-            <text x="756" y="161" font-size="11.2" fill="var(--ink2)">IES flagship + partner room seam</text>
+            <text x="756" y="161" font-size="11.2" fill="var(--ink2)">Partner Vertical flagship + partner room seam</text>
 
             <rect x="756" y="172" width="194" height="48" rx="6" fill="var(--paper)" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="4 3"/>
             <text x="766" y="191" font-size="12.5" font-weight="600" fill="var(--ink)">xRusted &amp; Agent-SEO</text>
@@ -872,19 +872,19 @@
           <g class="svg-clickable" onclick="drillTo('centre')" onkeydown="handleSvgKeydown(event, 'centre')" role="button" tabindex="0" aria-label="Drill down into Layer 3: Shared Composable Workspaces and Forge">
             <rect x="16" y="304" width="948" height="82" rx="10" fill="var(--tint)" stroke="var(--rule)" stroke-width="1.2"/>
             <text x="32" y="325" font-family="var(--mono)" font-size="11" font-weight="600" fill="var(--ink2)">3 · SHARED COMPOSABLE WORKSPACES — SOVEREIGN MAC TIER OR CLOUD TIER (CONNECTED ACROSS ROOMS)</text>
-            <g class="svg-ies">
+            <g class="svg-Partner Vertical">
               <rect x="32" y="335" width="218" height="38" rx="6" fill="var(--paper)" stroke="var(--rule)"/>
               <text x="141" y="358" font-size="12.5" font-weight="600" text-anchor="middle" fill="var(--ink)">The Desk &amp; Binder (Long Work)</text>
             </g>
-            <g class="svg-ies">
+            <g class="svg-Partner Vertical">
               <rect x="262" y="335" width="224" height="38" rx="6" fill="var(--paper)" stroke="var(--rule)" stroke-dasharray="4 3"/>
               <text x="374" y="358" font-size="12.5" font-weight="600" text-anchor="middle" fill="var(--ink)">Workbenches &amp; Eng. Workshop</text>
             </g>
-            <g class="svg-ies">
+            <g class="svg-Partner Vertical">
               <rect x="498" y="335" width="224" height="38" rx="6" fill="var(--paper)" stroke="var(--rule)"/>
               <text x="610" y="358" font-size="12.5" font-weight="600" text-anchor="middle" fill="var(--ink)">Sealed Evidence (evidence.v1)</text>
             </g>
-            <g class="svg-non-ies">
+            <g class="svg-non-Partner Vertical">
               <rect x="734" y="335" width="214" height="38" rx="6" fill="var(--paper)" stroke="var(--rule)" stroke-dasharray="4 3"/>
               <text x="841" y="358" font-size="12.5" font-weight="600" text-anchor="middle" fill="var(--ink)">Forge &amp; Shared Undertakings</text>
             </g>
@@ -894,27 +894,27 @@
           <g class="svg-clickable" onclick="drillTo('centre')" onkeydown="handleSvgKeydown(event, 'centre')" role="button" tabindex="0" aria-label="Drill down into Layer 4: The Eight-Interface Seam and Shared Seitiate Centre">
             <rect x="16" y="402" width="948" height="84" rx="10" fill="var(--coral-soft)" stroke="var(--coral)" stroke-width="1.2"/>
             <text x="32" y="423" font-family="var(--mono)" font-size="11" font-weight="600" fill="var(--coral)">4 · THE EIGHT-INTERFACE SEAM &amp; SHARED SEITIATE CENTRE — CLICK TO DRILL DOWN ›</text>
-            <g class="svg-ies">
+            <g class="svg-Partner Vertical">
               <rect x="32" y="434" width="146" height="38" rx="5" fill="var(--paper)" stroke="var(--coral)" stroke-width="0.9"/>
               <text x="105" y="457" font-size="12" font-weight="600" text-anchor="middle" fill="var(--ink)">Identity &amp; Tenancy</text>
             </g>
-            <g class="svg-ies">
+            <g class="svg-Partner Vertical">
               <rect x="188" y="434" width="146" height="38" rx="5" fill="var(--paper)" stroke="var(--coral)" stroke-width="0.9"/>
               <text x="261" y="457" font-size="12" font-weight="600" text-anchor="middle" fill="var(--ink)">Encrypted Memory</text>
             </g>
-            <g class="svg-ies">
+            <g class="svg-Partner Vertical">
               <rect x="344" y="434" width="146" height="38" rx="5" fill="var(--paper)" stroke="var(--coral)" stroke-width="0.9"/>
               <text x="417" y="457" font-size="12" font-weight="600" text-anchor="middle" fill="var(--ink)">Vault &amp; Model Router</text>
             </g>
-            <g class="svg-ies">
+            <g class="svg-Partner Vertical">
               <rect x="500" y="434" width="146" height="38" rx="5" fill="var(--paper)" stroke="var(--coral)" stroke-width="0.9"/>
               <text x="573" y="457" font-size="12" font-weight="600" text-anchor="middle" fill="var(--ink)">Ledger &amp; Notary</text>
             </g>
-            <g class="svg-ies">
+            <g class="svg-Partner Vertical">
               <rect x="656" y="434" width="142" height="38" rx="5" fill="var(--paper)" stroke="var(--coral)" stroke-width="0.9"/>
               <text x="727" y="457" font-size="12" font-weight="600" text-anchor="middle" fill="var(--ink)">Person's Door</text>
             </g>
-            <g class="svg-ies">
+            <g class="svg-Partner Vertical">
               <rect x="808" y="434" width="140" height="38" rx="5" fill="var(--paper)" stroke="var(--coral)" stroke-width="0.9"/>
               <text x="878" y="457" font-size="12" font-weight="600" text-anchor="middle" fill="var(--ink)">Room Seam &amp; Billing</text>
             </g>
@@ -922,7 +922,7 @@
         </svg>
         </div>
         <figcaption>
-          <strong>Level 1 — How the whole estate fits together:</strong> Every person has one account and one personal assistant doorway. <strong>Sakme</strong> and the <strong>Scientific Platform</strong> are sibling product collections—neither is nested inside the other—and outside partner rooms like IES’s <strong>xRusted</strong> and <strong>Hooshi</strong> connect through the same eight-interface seam without pooling a person’s private memory or holding raw keys. <em>Click any region in the diagram or any summary card below to drill down to Level 2.</em>
+          <strong>Level 1 — How the whole estate fits together:</strong> Every person has one account and one personal assistant doorway. <strong>Sakme</strong> and the <strong>Scientific Platform</strong> are sibling product collections—neither is nested inside the other—and outside partner rooms like Partner Vertical’s <strong>xRusted</strong> and <strong>Hooshi</strong> connect through the same eight-interface seam without pooling a person’s private memory or holding raw keys. <em>Click any region in the diagram or any summary card below to drill down to Level 2.</em>
         </figcaption>
       </figure>
 
@@ -933,7 +933,7 @@
       </div>
 
       <div class="grid-3" style="margin-bottom: 16px;">
-        <button type="button" onclick="drillTo('sakme')" class="wheel-card ies-touchpoint">
+        <button type="button" onclick="drillTo('sakme')" class="wheel-card Partner Vertical-touchpoint">
           <div>
             <div class="card-eyebrow"><span>Sibling Collection 2A</span><span>6 Human Experiences</span></div>
             <h3>Sakme — The House of Practices</h3>
@@ -944,23 +944,23 @@
           <span class="drill-cta">Open 6 Sakme Experiences (Level 2 &amp; 3) →</span>
         </button>
 
-        <button type="button" onclick="drillTo('scientific')" class="wheel-card ies-touchpoint">
+        <button type="button" onclick="drillTo('scientific')" class="wheel-card Partner Vertical-touchpoint">
           <div>
             <div class="card-eyebrow"><span>Sibling Collection 2B</span><span>Foundry · Hub · Labs</span></div>
             <h3>Scientific Platform &amp; Domain Labs</h3>
             <p>
-              For individual researchers and funded labs: customer-facing <strong>Evidence Foundry</strong> (claim support &amp; rigor checks), <strong>Research Hub</strong> (literature/structure connectors &amp; 20 analyzers including optional <strong>Sensarra</strong>), and <strong>HenniPenny Lab</strong> (Sahar &amp; Ilia under Prof. Henni).
+              For individual researchers and funded labs: customer-facing <strong>Evidence Foundry</strong> (claim support &amp; rigor checks), <strong>Research Hub</strong> (literature/structure connectors &amp; 20 analyzers including optional <strong>Sensarra</strong>), and <strong>HenniPenny Lab</strong> (Partner Lead &amp; Partner Director under Prof. Henni).
             </p>
           </div>
           <span class="drill-cta">Open Scientific Platform (Level 2 &amp; 3) →</span>
         </button>
 
-        <button type="button" onclick="drillTo('ies')" class="wheel-card ies-touchpoint">
+        <button type="button" onclick="drillTo('Partner Vertical')" class="wheel-card Partner Vertical-touchpoint">
           <div>
-            <div class="card-eyebrow"><span>Partner Collection 2C</span><span>IES + Repeatable Seam</span></div>
-            <h3>Partner Rooms (IES) &amp; Lab-to-Office Bridge</h3>
+            <div class="card-eyebrow"><span>Partner Collection 2C</span><span>Partner Vertical + Repeatable Seam</span></div>
+            <h3>Partner Rooms (Partner Vertical) &amp; Lab-to-Office Bridge</h3>
             <p>
-              Shows our repeatable partner-room path alongside flagship IES products (<strong>xRusted &amp; Agent-SEO</strong>, <strong>Hooshi Voice</strong>, <strong>Security Sparring</strong>) and the 4-stage bridge connecting <strong>HenniPenny / Foundry</strong> to <strong>Sakme Office</strong>.
+              Shows our repeatable partner-room path alongside flagship Partner Vertical products (<strong>xRusted &amp; Agent-SEO</strong>, <strong>Hooshi Voice</strong>, <strong>Security Sparring</strong>) and the 4-stage bridge connecting <strong>HenniPenny / Foundry</strong> to <strong>Sakme Office</strong>.
             </p>
           </div>
           <span class="drill-cta">Open Partner Rooms &amp; Lab-to-Office Bridge →</span>
@@ -968,7 +968,7 @@
       </div>
 
       <div class="grid-2" style="margin-bottom: 24px;">
-        <button type="button" onclick="drillTo('centre')" class="wheel-card ies-touchpoint">
+        <button type="button" onclick="drillTo('centre')" class="wheel-card Partner Vertical-touchpoint">
           <div>
             <div class="card-eyebrow"><span>Layers 1, 3 &amp; 4</span><span>Shared Spine (Never Duplicated)</span></div>
             <h3>Your Doorway, Assistant, Seity, Forge &amp; The Centre</h3>
@@ -979,7 +979,7 @@
           <span class="drill-cta">Open Shared Doorway, Seity, Forge &amp; Centre →</span>
         </button>
 
-        <button type="button" onclick="drillTo('matrix')" class="wheel-card ies-touchpoint">
+        <button type="button" onclick="drillTo('matrix')" class="wheel-card Partner Vertical-touchpoint">
           <div>
             <div class="card-eyebrow"><span>Boundaries &amp; Governance</span><span>Matrix + Household + Consilium</span></div>
             <h3>Component Boundaries, Commercial Matrix &amp; How We Build It</h3>
@@ -1001,7 +1001,7 @@
           </p>
         </div>
         <div class="grid-4">
-          <div class="exp-card non-ies-card">
+          <div class="exp-card non-Partner Vertical-card">
             <div class="card-eyebrow"><span>1 · Inside a Practice</span><span>Built Primitives + V0/V1</span></div>
             <h3>Work → Counted Evidence → Next Question</h3>
             <p>
@@ -1010,7 +1010,7 @@
             <span class="loop-pill">Do → Count / Seal → Revise ↺</span>
           </div>
 
-          <div class="exp-card ies-touchpoint horizon-planned">
+          <div class="exp-card Partner Vertical-touchpoint horizon-planned">
             <div class="card-eyebrow"><span>2 · Person &amp; Seity</span><span>Local Built · Auto Loop Planned</span></div>
             <h3>Action → Tentative Observation → Adopted Canon</h3>
             <p>
@@ -1019,7 +1019,7 @@
             <span class="loop-pill">Act → Observe → Adopt ↺</span>
           </div>
 
-          <div class="exp-card ies-touchpoint horizon-planned">
+          <div class="exp-card Partner Vertical-touchpoint horizon-planned">
             <div class="card-eyebrow"><span>3 · Lab to Office</span><span>Proposed Bridge</span></div>
             <h3>Lab Provenance → ISO / BOM → Storefront</h3>
             <p>
@@ -1032,7 +1032,7 @@
             <div class="card-eyebrow"><span>4 · Household &amp; Intersecting Wheels</span><span>Pipeline Live · Intersection Intended</span></div>
             <h3>Build Loop + Intersecting Roadmap &amp; Model Rings</h3>
             <p>
-              <strong>Live nested loop:</strong> isolated worktree build → cross-family review → gatekeeper landing &amp; <strong>Role Doma</strong> update. <strong>Intended intersecting wheels:</strong> in the Scheduler’s intended design, one subroutine consults the <strong>AI capability &amp; cost matrix</strong> (who/which model can execute) while another intersects <strong>roadmap &amp; priority coordination</strong> (informally referred to as a <em>"4D Kanban"</em>—not a rigid 4-axis spec) to identify the next project on deck. <em>Architectural inference:</em> execution outcomes can update both capability/cost evidence and roadmap readiness while keeping <strong>human &amp; lead priority ownership</strong> strictly in charge (matrix cheapness alone never sets product priority).
+              <strong>Live nested loop:</strong> isolated worktree build → cross-family review → gatekeeper landing &amp; <strong>Role Doma</strong> update. <strong>Intended intersecting wheels:</strong> in the Scheduler’s intended design, one subroutine consults the <strong>AI capability &amp; cost matrix</strong> (who/which model can execute) while another intersects <strong>roadmap &amp; priority coordination</strong> (informally referred to as a <em>"4D Kanban"</em>—not a Contract Engined 4-axis spec) to identify the next project on deck. <em>Architectural inference:</em> execution outcomes can update both capability/cost evidence and roadmap readiness while keeping <strong>human &amp; lead priority ownership</strong> strictly in charge (matrix cheapness alone never sets product priority).
             </p>
             <span class="loop-pill">Roadmap Ring ∩ Capability-Cost Ring ↺</span>
           </div>
@@ -1057,7 +1057,7 @@
 
       <div class="grid-3">
         <!-- Card 1A: Who Comes & The First Good Question -->
-        <article class="exp-card non-ies-card">
+        <article class="exp-card non-Partner Vertical-card">
           <div>
             <div class="card-eyebrow">
               <span>1 · Arrival &amp; Everyday Practice</span>
@@ -1083,7 +1083,7 @@
         </article>
 
         <!-- Card 1B: The Desk, Writers Factory & Creative Video Lab -->
-        <article class="exp-card non-ies-card">
+        <article class="exp-card non-Partner Vertical-card">
           <div>
             <div class="card-eyebrow">
               <span>2 · Long Work &amp; Creative Rooms</span>
@@ -1109,7 +1109,7 @@
         </article>
 
         <!-- Card 1C: Nine Spaces, Specialist Stalls & The Bazaar -->
-        <article class="exp-card non-ies-card horizon-planned">
+        <article class="exp-card non-Partner Vertical-card horizon-planned">
           <div>
             <div class="card-eyebrow">
               <span>3 · Livelihood &amp; Marketplace</span>
@@ -1135,7 +1135,7 @@
         </article>
 
         <!-- Card 1D: Shared Undertakings & Continuing Associations -->
-        <article class="exp-card non-ies-card horizon-planned">
+        <article class="exp-card non-Partner Vertical-card horizon-planned">
           <div>
             <div class="card-eyebrow">
               <span>4 · Working With Others</span>
@@ -1147,7 +1147,7 @@
             </p>
             <ul>
               <li><strong>Scoped Collaboration:</strong> An author and an editor, or an operations specialist and a bookkeeper, work on shared material while keeping their own Seity and Canon separate.</li>
-              <li><strong>Origin &amp; Disposition:</strong> Contributions stay tracked as <em>suggested, disputed, chosen, or restricted</em> across project boundaries as designed.</li>
+              <li><strong>OContract Enginen &amp; Disposition:</strong> Contributions stay tracked as <em>suggested, disputed, chosen, or restricted</em> across project boundaries as designed.</li>
             </ul>
           </div>
           <details class="level3-disclosure" name="sakme-level3">
@@ -1160,11 +1160,11 @@
         </article>
 
         <!-- Card 1E: Sakme Office (General + Deep-Tech Templates) -->
-        <article class="exp-card ies-touchpoint horizon-planned">
+        <article class="exp-card Partner Vertical-touchpoint horizon-planned">
           <div>
             <div class="card-eyebrow">
               <span>5 · Independent Back Office</span>
-              <span>Designed · IES Bridge</span>
+              <span>Designed · Partner Vertical Bridge</span>
             </div>
             <h3>Sakme Office: General Practice &amp; Deep-Tech Templates</h3>
             <p>
@@ -1172,7 +1172,7 @@
             </p>
             <ul>
               <li><strong>Seven Core Tools:</strong> Inbox, Contacts &amp; CRM, Invoices &amp; Payments, Money-In/Money-Out Books, Calendar, Company Binder, and Morning Brief.</li>
-              <li><strong>Templates for Every Practice:</strong> Serves solo consultants, tradespeople, and creatives—and includes the 5-track <strong>Hardware &amp; Deep-Tech Founder</strong> template (<code>[PCB, Patent, Dev, Outbound Sales, Infra]</code>) where Ilia's <code>Startuplan</code> and <code>VisiWatt</code> modules connect.</li>
+              <li><strong>Templates for Every Practice:</strong> Serves solo consultants, tradespeople, and creatives—and includes the 5-track <strong>Hardware &amp; Deep-Tech Founder</strong> template (<code>[PCB, Patent, Dev, Outbound Sales, Infra]</code>) where Partner Director's <code>Startuplan</code> and <code>VisiWatt</code> modules connect.</li>
             </ul>
           </div>
           <details class="level3-disclosure" name="sakme-level3">
@@ -1185,7 +1185,7 @@
         </article>
 
         <!-- Card 1F: Academy Library & Guided Learning Projects -->
-        <article class="exp-card ies-touchpoint horizon-planned">
+        <article class="exp-card Partner Vertical-touchpoint horizon-planned">
           <div>
             <div class="card-eyebrow">
               <span>6 · Learning by Doing</span>
@@ -1215,7 +1215,7 @@
         <span><strong>Connected Shared Spine:</strong> All 6 Sakme experiences connect to the same <strong>Seitiate+ Entrance</strong>, <strong>Personal Assistant &amp; Skills Shelf</strong>, <strong>Seity</strong>, planned <strong>Forge</strong> workspaces, and <strong>8-Interface Centre Seam</strong>.</span>
         <div style="display: flex; gap: 8px;">
           <button type="button" onclick="drillTo('centre')" class="crumb-link">View Doorway, Seity, Forge &amp; Centre →</button>
-          <button type="button" onclick="drillTo('ies')" class="crumb-link">View Partner Rooms &amp; Lab-to-Office Bridge →</button>
+          <button type="button" onclick="drillTo('Partner Vertical')" class="crumb-link">View Partner Rooms &amp; Lab-to-Office Bridge →</button>
         </div>
       </div>
     </div>
@@ -1236,7 +1236,7 @@
 
       <div class="grid-3">
         <!-- Scientific Card 1: Evidence Foundry (Customer-Facing Product) -->
-        <article class="exp-card ies-touchpoint">
+        <article class="exp-card Partner Vertical-touchpoint">
           <div>
             <div class="card-eyebrow">
               <span>1 · Customer-Facing Scholarly Product</span>
@@ -1261,7 +1261,7 @@
         </article>
 
         <!-- Scientific Card 2: Research Hub & Optional Sensarra -->
-        <article class="exp-card ies-touchpoint">
+        <article class="exp-card Partner Vertical-touchpoint">
           <div>
             <div class="card-eyebrow">
               <span>2 · Portable Harness &amp; Assistant Use</span>
@@ -1273,7 +1273,7 @@
             </p>
             <ul>
               <li><strong>6 V1 Connectors:</strong> <em>PubMed, OpenAlex, EuropePMC, ClinicalTrials.gov, ChEMBL, RCSB PDB</em>—built and verified on fixtures today, with live external cloud querying gated on V0 roadmap wiring.</li>
-              <li><strong>20 Analyzers &amp; Optional Sensarra:</strong> Classification, spectral, calibration, and Josephine's <strong>Sensarra</strong> electrochemical/microfluidic suite (originally started for Josephine's research, with its analyzer and <code>evidence.v1</code> provenance patterns generalized across the Scientific Platform) sealing hash-checked <code>evidence.v1</code> bundles.</li>
+              <li><strong>20 Analyzers &amp; Optional Sensarra:</strong> Classification, spectral, calibration, and Clinical Companion's <strong>Sensarra</strong> electrochemical/microfluidic suite (oContract Enginenally started for Clinical Companion's research, with its analyzer and <code>evidence.v1</code> provenance patterns generalized across the Scientific Platform) sealing hash-checked <code>evidence.v1</code> bundles.</li>
             </ul>
           </div>
           <details class="level3-disclosure" name="sci-level3">
@@ -1286,18 +1286,18 @@
         </article>
 
         <!-- Scientific Card 3: HenniPenny Lab & Domain Field Packs -->
-        <article class="exp-card ies-touchpoint">
+        <article class="exp-card Partner Vertical-touchpoint">
           <div>
             <div class="card-eyebrow">
               <span>3 · Domain Field Packs &amp; Labs</span>
               <span>HenniPenny Live</span>
             </div>
-            <h3>HenniPenny Lab (Sahar &amp; Ilia / Prof. Henni) &amp; Field Packs</h3>
+            <h3>HenniPenny Lab (Partner Lead &amp; Partner Director / Prof. Henni) &amp; Field Packs</h3>
             <p>
               Domain-specific scientific workbenches plug into the trunk via the <code>researchharness.field_packs</code> entry-point architecture without forking the core platform.
             </p>
             <ul>
-              <li><strong>HenniPenny Lab (<code>energy.nilm</code>):</strong> Live appliance energy-disaggregation workbench (<code>workbench.hennipenny.com</code>) built for <strong>Sahar Moghimian and Ilia Kamyshev</strong> under <strong>Prof. Henni</strong>.</li>
+              <li><strong>HenniPenny Lab (<code>energy.nilm</code>):</strong> Live appliance energy-disaggregation workbench (<code>workbench.hennipenny.com</code>) built for <strong>Partner Lead Moghimian and Partner Director Kamyshev</strong> under <strong>Prof. Henni</strong>.</li>
               <li><strong>Sibling Pack Directions:</strong> Optional <strong>Sensarra</strong> (electrochemistry/biosensors) and <strong>Mendel</strong> (genomics).</li>
             </ul>
           </div>
@@ -1314,7 +1314,7 @@
       <div class="shared-spine-strip">
         <span><strong>Connected Bridge:</strong> Sealed <code>evidence.v1</code> bundles from <strong>Research Hub</strong>, <strong>HenniPenny Lab</strong>, and <strong>Evidence Foundry</strong> connect directly into the <strong>Patent &amp; ISO Binder</strong> in <strong>Sakme Office</strong>.</span>
         <div style="display: flex; gap: 8px;">
-          <button type="button" onclick="drillTo('ies')" class="crumb-link">Open 4-Stage Lab-to-Office Bridge →</button>
+          <button type="button" onclick="drillTo('Partner Vertical')" class="crumb-link">Open 4-Stage Lab-to-Office Bridge →</button>
           <button type="button" onclick="drillTo('sakme')" class="crumb-link">Open Sakme Office →</button>
         </div>
       </div>
@@ -1322,24 +1322,24 @@
   </section>
 
   <!-- ===================================================================== -->
-  <!-- VIEW 2C (LEVEL 2 & 3): PARTNER ROOMS (IES) & LAB-TO-OFFICE BRIDGE     -->
+  <!-- VIEW 2C (LEVEL 2 & 3): PARTNER ROOMS (Partner Vertical) & LAB-TO-OFFICE BRIDGE     -->
   <!-- ===================================================================== -->
-  <section id="view-ies" class="drill-view" data-view-id="ies" hidden="until-found" aria-label="Level 2 Drilldown: Partner Rooms and Lab-to-Office Bridge">
+  <section id="view-Partner Vertical" class="drill-view" data-view-id="Partner Vertical" hidden="until-found" aria-label="Level 2 Drilldown: Partner Rooms and Lab-to-Office Bridge">
     <div class="section-block collection-frame purple-accent">
       <div class="section-header">
-        <p class="kicker">LEVEL 2 DRILLDOWN · PARTNER PRODUCT COLLECTION 2C · IES &amp; REPEATABLE PARTNER SEAM</p>
-        <h2>Partner Rooms (IES Flagship + Repeatable App Seam) &amp; The "Lab-to-Office" Bridge</h2>
+        <p class="kicker">LEVEL 2 DRILLDOWN · PARTNER PRODUCT COLLECTION 2C · Partner Vertical &amp; REPEATABLE PARTNER SEAM</p>
+        <h2>Partner Rooms (Partner Vertical Flagship + Repeatable App Seam) &amp; The "Lab-to-Office" Bridge</h2>
         <p class="small">
-          Any outside partner room or vertical app can join the estate through the same repeatable room seam (R1 vertical registry, room-scoped tokens, Person's Door grants, and two-direction billing). For our flagship partner <strong>IES (Ilia Kamyshev &amp; Sahar Moghimian / VisiWatt)</strong>, this also connects the <strong>Scientific Platform</strong> (<code>HenniPenny Lab</code>, <code>Evidence Foundry</code>, <code>Research Hub</code>) to the <strong>Hardware &amp; Deep-Tech Founder</strong> template inside <strong>Sakme Office</strong> and <strong>xRusted</strong>.
+          Any outside partner room or vertical app can join the estate through the same repeatable room seam (R1 vertical registry, room-scoped tokens, Person's Door grants, and two-direction billing). For our flagship partner <strong>Partner Vertical (Partner Director Kamyshev &amp; Partner Lead Moghimian / VisiWatt)</strong>, this also connects the <strong>Scientific Platform</strong> (<code>HenniPenny Lab</code>, <code>Evidence Foundry</code>, <code>Research Hub</code>) to the <strong>Hardware &amp; Deep-Tech Founder</strong> template inside <strong>Sakme Office</strong> and <strong>xRusted</strong>.
         </p>
       </div>
 
-      <!-- PART A: IES PARTNER ROOMS & REPEATABLE PARTNER PATH -->
+      <!-- PART A: Partner Vertical PARTNER ROOMS & REPEATABLE PARTNER PATH -->
       <div class="grid-3" style="margin-bottom: 20px;">
-        <article class="exp-card ies-touchpoint horizon-planned">
+        <article class="exp-card Partner Vertical-touchpoint horizon-planned">
           <div>
             <div class="card-eyebrow">
-              <span>1 · IES Product · Hosted on IES Servers</span>
+              <span>1 · Partner Vertical Product · Hosted on Partner Vertical Servers</span>
               <span>Specified · Ready to Wire</span>
             </div>
             <h3>xRusted Website Engine &amp; Agent-SEO Converter</h3>
@@ -1347,16 +1347,16 @@
               Compiles a Typed Site AST (<code>SiteAstV1</code>) into both a fast human website and a V0 <strong>Agent Doorway</strong> (<code>/llms.txt</code>, <code>/.well-known/agent.json</code>, read-only MCP, JSON-LD actions, and signed <code>evidence.v1</code> publish receipts), plus a WordPress/PHP-to-Agent Readiness diagnostic audit and converter.
             </p>
           </div>
-          <details class="level3-disclosure" name="ies-level3">
+          <details class="level3-disclosure" name="Partner Vertical-level3">
             <summary>Level 3 · Capabilities, Status &amp; Source Detail</summary>
             <div class="level3-body">
-              <strong>Stage:</strong> Specified in Partner Architecture · Runs on IES Servers Under IES Name.<br>
-              <strong>Architecture Provenance:</strong> Stays 100% IES’s product. Wired across the proposed 8-endpoint <code>xRusted</code> HTTP partner contract (5 core room endpoints + 3 additive Agent-SEO &amp; readiness endpoints), with optional later RFC 9421 Web Bot Auth visiting-agent verification.
+              <strong>Stage:</strong> Specified in Partner Architecture · Runs on Partner Vertical Servers Under Partner Vertical Name.<br>
+              <strong>Architecture Provenance:</strong> Stays 100% Partner Vertical’s product. Wired across the proposed 8-endpoint <code>xRusted</code> HTTP partner contract (5 core room endpoints + 3 additive Agent-SEO &amp; readiness endpoints), with optional later RFC 9421 Web Bot Auth visiting-agent verification.
             </div>
           </details>
         </article>
 
-        <article class="exp-card ies-touchpoint">
+        <article class="exp-card Partner Vertical-touchpoint">
           <div>
             <div class="card-eyebrow">
               <span>2 · External Product + Open Topic</span>
@@ -1364,19 +1364,19 @@
             </div>
             <h3>Hooshi Voice &amp; Website Security Sparring</h3>
             <p>
-              <strong>Hooshi</strong> is IES's built external speech transcription product, with a planned consent-gated Seitiate+ audio proxy. Alongside it sits the proposed <strong>Website Security &amp; Agent-SEO Sparring</strong> opponent (owner-verified probing that proposes dry-run <code>xRusted</code> patches).
+              <strong>Hooshi</strong> is Partner Vertical's built external speech transcription product, with a planned consent-gated Seitiate+ audio proxy. Alongside it sits the proposed <strong>Website Security &amp; Agent-SEO Sparring</strong> opponent (owner-verified probing that proposes dry-run <code>xRusted</code> patches).
             </p>
           </div>
-          <details class="level3-disclosure" name="ies-level3">
+          <details class="level3-disclosure" name="Partner Vertical-level3">
             <summary>Level 3 · Capabilities, Status &amp; Source Detail</summary>
             <div class="level3-body">
-              <strong>Stage:</strong> Hooshi external service built by IES; Estate proxy <code>POST /api/v1/audio/transcribe</code> &amp; consent integration Planned · Security Sparring (<code>ies_sparring</code>) Open Discussion Topic.<br>
-              <strong>Architecture Provenance:</strong> IES &amp; Seitiate Partner Integration Architecture. Sparring ownership (IES, Estate, or shared) is an open collaboration topic.
+              <strong>Stage:</strong> Hooshi external service built by Partner Vertical; Estate proxy <code>POST /api/v1/audio/transcribe</code> &amp; consent integration Planned · Security Sparring (<code>ies_sparring</code>) Open Discussion Topic.<br>
+              <strong>Architecture Provenance:</strong> Partner Vertical &amp; Seitiate Partner Integration Architecture. Sparring ownership (Partner Vertical, Estate, or shared) is an open collaboration topic.
             </div>
           </details>
         </article>
 
-        <article class="exp-card ies-touchpoint horizon-planned">
+        <article class="exp-card Partner Vertical-touchpoint horizon-planned">
           <div>
             <div class="card-eyebrow">
               <span>3 · Repeatable Partner Path</span>
@@ -1384,14 +1384,14 @@
             </div>
             <h3>How Any Partner App Joins &amp; Startuplan Ownership</h3>
             <p>
-              Outside partner rooms plug into the 8-interface Centre seam without surrendering their own servers, brand, or IP. For <strong>Startuplan</strong>, partner architecture preserves <strong>IES ownership</strong> with hosted usage rights kept strictly distinct from repository code-copy permission.
+              Outside partner rooms plug into the 8-interface Centre seam without surrendering their own servers, brand, or IP. For <strong>Startuplan</strong>, partner architecture preserves <strong>Partner Vertical ownership</strong> with hosted usage rights kept strictly distinct from repository code-copy permission.
             </p>
           </div>
-          <details class="level3-disclosure" name="ies-level3">
+          <details class="level3-disclosure" name="Partner Vertical-level3">
             <summary>Level 3 · Capabilities, Status &amp; Source Detail</summary>
             <div class="level3-body">
               <strong>Stage:</strong> R1 Vertical Registry &amp; <code>/billing/access</code> Built in code · Room-scoped JWTs, production Person's Door grants &amp; <code>/billing/meter</code> Planned.<br>
-              <strong>Architecture Provenance:</strong> Partner Room Seam &amp; Commercial Separation Architecture. Startuplan remains IES-owned, with hosted-use rights kept strictly distinct from any permission to copy code into estate repositories.
+              <strong>Architecture Provenance:</strong> Partner Room Seam &amp; Commercial Separation Architecture. Startuplan remains Partner Vertical-owned, with hosted-use rights kept strictly distinct from any permission to copy code into estate repositories.
             </div>
           </details>
         </article>
@@ -1400,7 +1400,7 @@
       <!-- PART B: 4-STAGE LAB-TO-OFFICE BRIDGE -->
       <h3 style="font-family: var(--serif); font-size: 20px; font-weight: 500; margin: 18px 0 10px;">The 4-Stage "Lab-to-Office" Bridge (How HenniPenny, Startuplan &amp; Sakme Office Connect)</h3>
       <div class="grid-4" style="margin-bottom: 20px;">
-        <div class="exp-card ies-touchpoint">
+        <div class="exp-card Partner Vertical-touchpoint">
           <div class="card-eyebrow">
             <span>Stage 1 · Research Hub</span>
             <span>Fixture-Tested + V0 Roadmap</span>
@@ -1411,36 +1411,36 @@
           </p>
         </div>
 
-        <div class="exp-card ies-touchpoint">
+        <div class="exp-card Partner Vertical-touchpoint">
           <div class="card-eyebrow">
             <span>Stage 2 · HenniPenny &amp; Foundry</span>
             <span>Deployed + V0/V1 Roadmap</span>
           </div>
           <h3>2. Lab Workbench, Claim Graph &amp; Rigor</h3>
           <p>
-            In <strong>HenniPenny Lab</strong> (<code>workbench.hennipenny.com</code>, built for Sahar &amp; Ilia under Prof. Henni), appliance disaggregation runs in the workbench and imports into HenniPenny's <strong>Evidence Foundry</strong> lab workspace (<code>app.hennipenny.com</code>; general product workspace at <code>app.evidencefoundry.com</code>) for deterministic claim-support and rigor checks (with live DOI workflow on the roadmap).
+            In <strong>HenniPenny Lab</strong> (<code>workbench.hennipenny.com</code>, built for Partner Lead &amp; Partner Director under Prof. Henni), appliance disaggregation runs in the workbench and imports into HenniPenny's <strong>Evidence Foundry</strong> lab workspace (<code>app.hennipenny.com</code>; general product workspace at <code>app.evidencefoundry.com</code>) for deterministic claim-support and rigor checks (with live DOI workflow on the roadmap).
           </p>
         </div>
 
-        <div class="exp-card ies-touchpoint horizon-planned">
+        <div class="exp-card Partner Vertical-touchpoint horizon-planned">
           <div class="card-eyebrow">
             <span>Stage 3 · Proposed Bridge</span>
             <span>Walkthrough &amp; Design</span>
           </div>
           <h3>3. Patent Binder, ISO Revisions &amp; PCB BOM</h3>
           <p>
-            Links timestamped, hash-checked <code>evidence.v1</code> research provenance (supporting patent preparation in the Company Binder) with IES’s <code>Startuplan</code> <strong>ISO 9001/15489 DocumentRevision &amp; Auditor</strong>, <strong>TRL/MRL Readiness Radar</strong>, and <strong>Hardware BOM / JLCPCB-LCSC</strong> procurement alerts.
+            Links timestamped, hash-checked <code>evidence.v1</code> research provenance (supporting patent preparation in the Company Binder) with Partner Vertical’s <code>Startuplan</code> <strong>ISO 9001/15489 DocumentRevision &amp; Auditor</strong>, <strong>TRL/MRL Readiness Radar</strong>, and <strong>Hardware BOM / JLCPCB-LCSC</strong> procurement alerts.
           </p>
         </div>
 
-        <div class="exp-card ies-touchpoint horizon-planned">
+        <div class="exp-card Partner Vertical-touchpoint horizon-planned">
           <div class="card-eyebrow">
             <span>Stage 4 · Office &amp; Storefront</span>
             <span>Designed / Specified</span>
           </div>
           <h3>4. Sakme Office CRM &amp; xRusted Storefront</h3>
           <p>
-            <strong>Sakme Office</strong> runs the 5-step owner-approval loop across CRM (<code>Deal → Contract → Invoice</code>), Books, and Morning Brief, while IES’s <strong>xRusted</strong> publishes the public human website and Agent-SEO doorway (<code>/llms.txt</code>, <code>/.well-known/agent.json</code>).
+            <strong>Sakme Office</strong> runs the 5-step owner-approval loop across CRM (<code>Deal → Contract → Invoice</code>), Books, and Morning Brief, while Partner Vertical’s <strong>xRusted</strong> publishes the public human website and Agent-SEO doorway (<code>/llms.txt</code>, <code>/.well-known/agent.json</code>).
           </p>
         </div>
       </div>
@@ -1490,7 +1490,7 @@
 
       <div class="grid-3">
         <!-- Card 4A: Personal Assistant & Reusable Skills Shelf -->
-        <article class="exp-card ies-touchpoint">
+        <article class="exp-card Partner Vertical-touchpoint">
           <div>
             <div class="card-eyebrow">
               <span>1 · Coordinator + Skills Shelf</span>
@@ -1515,7 +1515,7 @@
         </article>
 
         <!-- Card 4B: Your Seity & Connected Sources at the Person's Door -->
-        <article class="exp-card ies-touchpoint">
+        <article class="exp-card Partner Vertical-touchpoint">
           <div>
             <div class="card-eyebrow">
               <span>2 · Sovereign Memory &amp; Intake</span>
@@ -1539,7 +1539,7 @@
         </article>
 
         <!-- Card 4C: Seitiate+ Single Front Door & Controls -->
-        <article class="exp-card ies-touchpoint">
+        <article class="exp-card Partner Vertical-touchpoint">
           <div>
             <div class="card-eyebrow">
               <span>3 · Single Front Door (Seitiate+)</span>
@@ -1563,7 +1563,7 @@
         </article>
 
         <!-- Card 4D: Forge & Engineering Workshop (Shared Layer 3) -->
-        <article class="exp-card ies-touchpoint horizon-planned">
+        <article class="exp-card Partner Vertical-touchpoint horizon-planned">
           <div>
             <div class="card-eyebrow">
               <span>4 · Layer 3 Workspaces &amp; Forge</span>
@@ -1587,7 +1587,7 @@
         </article>
 
         <!-- Card 4E: Vault, Model Router & Notary -->
-        <article class="exp-card ies-touchpoint">
+        <article class="exp-card Partner Vertical-touchpoint">
           <div>
             <div class="card-eyebrow">
               <span>5 · Keys, Models &amp; Witness</span>
@@ -1608,7 +1608,7 @@
         </article>
 
         <!-- Card 4F: Two Tiers, One Build -->
-        <article class="exp-card ies-touchpoint">
+        <article class="exp-card Partner Vertical-touchpoint">
           <div>
             <div class="card-eyebrow">
               <span>6 · Sovereign Mac &amp; Cloud Tiers</span>
@@ -1646,7 +1646,7 @@
         </div>
         <div role="group" aria-label="Filter matrix rows" style="display: flex; flex-wrap: wrap; gap: 6px;">
           <button type="button" id="filter-btn-all" aria-pressed="true" onclick="filterRows('all')" class="tab-btn">All (8)</button>
-          <button type="button" id="filter-btn-ies" aria-pressed="false" onclick="filterRows('ies')" class="tab-btn">IES Rooms &amp; Topics (3)</button>
+          <button type="button" id="filter-btn-Partner Vertical" aria-pressed="false" onclick="filterRows('Partner Vertical')" class="tab-btn">Partner Vertical Rooms &amp; Topics (3)</button>
           <button type="button" id="filter-btn-bridge" aria-pressed="false" onclick="filterRows('bridge')" class="tab-btn">Proposed Bridge &amp; Walkthrough (3)</button>
           <button type="button" id="filter-btn-estate" aria-pressed="false" onclick="filterRows('estate')" class="tab-btn">Estate Sibling Collections &amp; Centre (2)</button>
         </div>
@@ -1672,45 +1672,45 @@
             </tr>
           </thead>
           <tbody id="matrix-tbody">
-            <tr data-bucket="ies">
+            <tr data-bucket="Partner Vertical">
               <th scope="row">xRusted + Agent-SEO Converter (<code>vertical_id=xrusted</code>)</th>
-              <td><strong>Specified</strong> (Partner architecture defined; IES build pending)</td>
-              <td>Hosted IES partner room across the proposed 8-endpoint <code>xRusted</code> HTTP contract (5 core room endpoints + 3 additive Agent-SEO &amp; readiness endpoints), with optional later RFC 9421 Web Bot Auth visiting-agent verification.</td>
-              <td><strong>IES</strong> (Ilia &amp; Sahar)</td>
-              <td><strong>IES</strong> (runs on IES servers and remains IES's product under IES's name)</td>
+              <td><strong>Specified</strong> (Partner architecture defined; Partner Vertical build pending)</td>
+              <td>Hosted Partner Vertical partner room across the proposed 8-endpoint <code>xRusted</code> HTTP contract (5 core room endpoints + 3 additive Agent-SEO &amp; readiness endpoints), with optional later RFC 9421 Web Bot Auth visiting-agent verification.</td>
+              <td><strong>Partner Vertical</strong> (Partner Director &amp; Partner Lead)</td>
+              <td><strong>Partner Vertical</strong> (runs on Partner Vertical servers and remains Partner Vertical's product under Partner Vertical's name)</td>
               <td><strong>Two-Direction Partner Model:</strong> Direct supplier capacity when used by the estate, and metered room subscriptions / credit usage with configurable revenue-share or partner cooperation mode.</td>
             </tr>
-            <tr data-bucket="ies">
+            <tr data-bucket="Partner Vertical">
               <th scope="row">Hooshi Voice Proxy (<code>vertical_id=hooshi</code>)</th>
-              <td><strong>External Service Built by IES</strong>; Estate proxy <code>POST /api/v1/audio/transcribe</code> &amp; consent integration <strong>Planned</strong></td>
-              <td>Hosted IES audio service called via planned Seitiate+ audio proxy behind durable user consent and zero-training terms on the proxy route.</td>
-              <td><strong>IES</strong> (service) + <strong>Seitiate+ Platform Team</strong> (planned consent &amp; proxy)</td>
-              <td><strong>IES</strong> (external speech service owned and operated by IES)</td>
+              <td><strong>External Service Built by Partner Vertical</strong>; Estate proxy <code>POST /api/v1/audio/transcribe</code> &amp; consent integration <strong>Planned</strong></td>
+              <td>Hosted Partner Vertical audio service called via planned Seitiate+ audio proxy behind durable user consent and zero-training terms on the proxy route.</td>
+              <td><strong>Partner Vertical</strong> (service) + <strong>Seitiate+ Platform Team</strong> (planned consent &amp; proxy)</td>
+              <td><strong>Partner Vertical</strong> (external speech service owned and operated by Partner Vertical)</td>
               <td><strong>Two-Direction Partner Model:</strong> Prepaid voice transcription capacity for estate usage and per-minute credit metering for platform rooms.</td>
             </tr>
-            <tr data-bucket="ies">
+            <tr data-bucket="Partner Vertical">
               <th scope="row">Website Security &amp; Agent-SEO Sparring (<code>vertical_id=ies_sparring</code>)</th>
               <td><strong>Designed / Open Collaboration Topic</strong></td>
               <td>Owner-verified (<code>DNS TXT</code> / <code>.well-known</code>) scoped security &amp; prompt-injection probing proposing dry-run <code>xRusted</code> AST patches (<code>dry_run: true</code>).</td>
-              <td><strong>Proposal:</strong> IES (probing service) + Seitiate+ Platform Team (room seam)</td>
-              <td><strong>Open Discussion</strong> (whether operated as an IES product, an Estate room, or a shared collaboration)</td>
+              <td><strong>Proposal:</strong> Partner Vertical (probing service) + Seitiate+ Platform Team (room seam)</td>
+              <td><strong>Open Discussion</strong> (whether operated as an Partner Vertical product, an Estate room, or a shared collaboration)</td>
               <td><strong>Proposal:</strong> Add-on subscription or per-audit credit pack once ownership and scope terms are agreed.</td>
             </tr>
             <tr data-bucket="bridge">
               <th scope="row">Hardware BOM, Costing &amp; Supplier (<code>JLCPCB / LCSC</code>) Alerts</th>
               <td><strong>Pricing &amp; BOM Module Built in Startuplan</strong>; LCSC supplier alert workflow demonstrated in partner prototype</td>
-              <td><strong>Proposed Connection:</strong> Link into the <em>Hardware &amp; Deep-Tech Founder</em> <code>Sakme Office</code> template (<code>PCB</code> track) either as an IES-hosted service or selectively integrated module.</td>
-              <td><strong>Proposal:</strong> IES (BOM/supplier rules) + Sakme Product Team (office surface)</td>
-              <td><strong>IES</strong> (<code>Startuplan</code> remains IES-owned, with hosted usage rights kept strictly distinct from repository code-copy permission)</td>
+              <td><strong>Proposed Connection:</strong> Link into the <em>Hardware &amp; Deep-Tech Founder</em> <code>Sakme Office</code> template (<code>PCB</code> track) either as an Partner Vertical-hosted service or selectively integrated module.</td>
+              <td><strong>Proposal:</strong> Partner Vertical (BOM/supplier rules) + Sakme Product Team (office surface)</td>
+              <td><strong>Partner Vertical</strong> (<code>Startuplan</code> remains Partner Vertical-owned, with hosted usage rights kept strictly distinct from repository code-copy permission)</td>
               <td><strong>Proposal:</strong> Partner-pack / metered room usage when used by external hardware teams in <code>Sakme Office</code>, alongside partner cooperation mode for VisiWatt.</td>
             </tr>
             <tr data-bucket="bridge">
               <th scope="row">ISO 9001 / 15489 <code>DocumentRevision</code> &amp; Auditor + Readiness Radar</th>
               <td><strong><code>DocumentRevision</code> &amp; Readiness Modules in Startuplan</strong>; ISO Auditor workflow demonstrated in partner prototype</td>
               <td><strong>Proposed Connection:</strong> Bridge <code>Evidence Foundry</code> (<code>evidence.v1</code> research provenance) and <code>Sakme Office</code> (<code>Company binder</code> / <code>Patent</code> track).</td>
-              <td><strong>Proposal:</strong> Co-maintained (Sakme Product Team, Scientific Platform Team, IES)</td>
-              <td><strong>IES</strong> (<code>Startuplan</code> remains IES-owned, with hosted usage rights kept strictly distinct from repository code-copy permission)</td>
-              <td><strong>Proposal:</strong> Shared Deep-Tech Office capability (partner cooperation mode for IES/VisiWatt; optional metered enterprise compliance pack if commercialized).</td>
+              <td><strong>Proposal:</strong> Co-maintained (Sakme Product Team, Scientific Platform Team, Partner Vertical)</td>
+              <td><strong>Partner Vertical</strong> (<code>Startuplan</code> remains Partner Vertical-owned, with hosted usage rights kept strictly distinct from repository code-copy permission)</td>
+              <td><strong>Proposal:</strong> Shared Deep-Tech Office capability (partner cooperation mode for Partner Vertical/VisiWatt; optional metered enterprise compliance pack if commercialized).</td>
             </tr>
             <tr data-bucket="bridge">
               <th scope="row">Customer Office UX Patterns vs. Agent Pipeline Mechanisms</th>
@@ -1724,7 +1724,7 @@
               <th scope="row">Scientific Platform (Sibling to Sakme): <code>Evidence Foundry</code>, <code>Research Hub / Sensarra</code>, &amp; <code>HenniPenny Lab</code></th>
               <td><strong><code>Evidence Foundry</code> &amp; <code>HenniPenny</code> Deployed (deterministic claim/rigor checks live); <code>research-hub</code> 6 connectors (fixture-verified; live query wiring gated on V0 roadmap) &amp; 20 analyzers Built in code; Assistant CLI/MCP lookup, triage, 3D, live DOI &amp; Lab-Roster Access Open</strong></td>
               <td><strong>Sibling Product Collection + Proposed Connection to <code>Sakme Office</code>:</strong> Links a founder's <code>Sakme Office</code> to an authorized lab (<code>Evidence Foundry</code>) and field pack (<code>HenniPenny</code> <code>energy.nilm</code>, optional <code>Sensarra</code> calibration direction, <code>Mendel</code> genomics) without copying personal memory or credentials.</td>
-              <td><strong>Estate (Scientific Platform Team)</strong> with Sahar &amp; Ilia as flagship HenniPenny / VisiWatt users</td>
+              <td><strong>Estate (Scientific Platform Team)</strong> with Partner Lead &amp; Partner Director as flagship HenniPenny / VisiWatt users</td>
               <td><strong>Estate-maintained trunk (<code>research-facility</code>, <code>research-hub</code> / <code>researchharness</code>) + independently deployable domain field packs (<code>researchharness.field_packs</code> entry-point architecture: <code>hennipenny</code> <code>energy.nilm</code>, <code>sensarra</code>, <code>mendel</code>)</strong> — legal ownership is not derived from repository placement</td>
               <td><strong>Freemium + SEIT Credits:</strong> Free local lookups/sealing/verifying; paid cloud compute, storage &amp; DOI workflows; <strong>platform model-use fee is waived with BYOK (the researcher's own API key), while the upstream model provider still charges the key holder directly</strong>; partner cooperation mode for HenniPenny/VisiWatt.</td>
             </tr>
@@ -1771,15 +1771,15 @@
             <div class="card-eyebrow"><span>3 · Consilium (§5A Forum &amp; Lab)</span><span>Intended Architecture · Lab Drafts</span></div>
             <h3>Consilium &amp; Intersecting Scheduler Wheels</h3>
             <p>
-              Conceived as the forum where specialist agents interact, share roadmaps, and propose plans and priorities—though historically it stopped at early sketches (<code>Kanban of Leads</code> v1, specialized Consilium deliberation gates, and Pavel's substrate integration designs). The phrase <strong>"4D Kanban"</strong> is an informal shorthand for multi-dimensional coordination rather than a formal four-axis spec. In the <strong>intended intersecting-wheels architecture</strong> (not claimed as running in today's scheduler), one subroutine consults the <strong>AI capability &amp; cost matrix</strong> while another intersects <strong>roadmap/priority coordination</strong> to identify the next project on deck. <em>Architectural inference:</em> execution outcomes can update both capability/cost evidence and roadmap readiness, while <strong>human and lead decision ownership</strong> stays strictly in charge (matrix cheapness alone never dictates priority).
+              Conceived as the forum where specialist agents interact, share roadmaps, and propose plans and priorities—though historically it stopped at early sketches (<code>Kanban of Leads</code> v1, specialized Consilium deliberation gates, and the Co-Design Partner's substrate integration designs). The phrase <strong>"4D Kanban"</strong> is an informal shorthand for multi-dimensional coordination rather than a formal four-axis spec. In the <strong>intended intersecting-wheels architecture</strong> (not claimed as running in today's scheduler), one subroutine consults the <strong>AI capability &amp; cost matrix</strong> while another intersects <strong>roadmap/priority coordination</strong> to identify the next project on deck. <em>Architectural inference:</em> execution outcomes can update both capability/cost evidence and roadmap readiness, while <strong>human and lead decision ownership</strong> stays strictly in charge (matrix cheapness alone never dictates priority).
             </p>
           </div>
 
-          <div class="exp-card ies-touchpoint">
+          <div class="exp-card Partner Vertical-touchpoint">
             <div class="card-eyebrow"><span>4 · Partner Boundary</span><span>Clean Separation</span></div>
-            <h3>How This Relates to Ilia's Paperclip Setup</h3>
+            <h3>How This Relates to Partner Director's Paperclip Setup</h3>
             <p>
-              Ilia’s builds run on IES's own CI and servers. From his <code>VisiWatt</code> office demonstrations, we evaluate his <strong>customer-facing office ideas</strong> (Department Head delegation, 1-line LCSC stock alert rules, CRM, ISO auditor) for <strong>Sakme Office</strong> and inspect any reusable <strong>agent skill-hygiene</strong> pattern—without replacing our multi-repo git/review pipeline.
+              Partner Director’s builds run on Partner Vertical's own CI and servers. From his <code>VisiWatt</code> office demonstrations, we evaluate his <strong>customer-facing office ideas</strong> (Department Head delegation, 1-line LCSC stock alert rules, CRM, ISO auditor) for <strong>Sakme Office</strong> and inspect any reusable <strong>agent skill-hygiene</strong> pattern—without replacing our multi-repo git/review pipeline.
             </p>
           </div>
         </div>
@@ -1791,8 +1791,8 @@
           </p>
           <ul class="small" style="padding-left: 20px;">
             <li><strong>Two Tiers, One Build:</strong> Sovereign Tier (local machine, keys at home) and Cloud Tier (hosted, keys in Vault custody with access receipts).</li>
-            <li><strong>Your Seity:</strong> Codex (dated memory), Canon (explicitly adopted standards), Source-not-proof (Origin Ledger provenance), Doma (role/life context; <code>role_doma</code> is shipped for local role context while personal <code>DomaAssembly</code>, automatic correction learning, and multi-Doma union remain planned, with no hard 50 KB cap promise), and Yours-to-keep (never pooled into shared training).</li>
-            <li><strong>Assistant, Skills Shelf &amp; Desktop Surface:</strong> Person, Named Assistant (Active Secretary V0 conversation/search in flight; 90% assistant / 5–10% reflection is a design emphasis, not a measured quota), Character, Continuous Conversation, Answer Panel, Reusable Skills Shelf (15 built engine skill packages + Author/Exemplar character skills; unified Foundation shelf planned), Voice (external Hooshi service built by IES; estate consent proxy planned), Isolated Browser &amp; Controlled Routines (planned), Freedom Dial, Approval Cards, Reviewer in Shadow, Your Readings (kept distinct from Seity extractor), Habits &amp; Watches, and Connected Sources (built connector modules + Context Wizard + scoped outbound PII masking on supported routes).</li>
+            <li><strong>Your Seity:</strong> Codex (dated memory), Canon (explicitly adopted standards), Source-not-proof (OContract Enginen Ledger provenance), Doma (role/life context; <code>role_doma</code> is shipped for local role context while personal <code>DomaAssembly</code>, automatic correction learning, and multi-Doma union remain planned, with no hard 50 KB cap promise), and Yours-to-keep (never pooled into shared training).</li>
+            <li><strong>Assistant, Skills Shelf &amp; Desktop Surface:</strong> Person, Named Assistant (Active Secretary V0 conversation/search in flight; 90% assistant / 5–10% reflection is a design emphasis, not a measured quota), Character, Continuous Conversation, Answer Panel, Reusable Skills Shelf (15 built engine skill packages + Author/Exemplar character skills; unified Foundation shelf planned), Voice (external Hooshi service built by Partner Vertical; estate consent proxy planned), Isolated Browser &amp; Controlled Routines (planned), Freedom Dial, Approval Cards, Reviewer in Shadow, Your Readings (kept distinct from Seity extractor), Habits &amp; Watches, and Connected Sources (built connector modules + Context Wizard + scoped outbound PII masking on supported routes).</li>
             <li><strong>Shared Furniture, Forge &amp; Making:</strong> Writing Desk, Work Store, Binder, Maker's Workbench, Creative Video Workshop (storyboards/rough cuts), and planned Forge versioned workspaces &amp; customer Engineering Workshop (kept distinct from current GitHub development), with "Two moments are yours" (first mark + final yes/no).</li>
             <li><strong>The Eight-Interface Centre Seam &amp; Guards:</strong> (1) Identity &amp; Tenancy (room-scoped tokens proposed), (2) Memory, (3) Secrets Vault (BYOK built; Option B subscription bridge proposed), (4) Receipts &amp; Notary (<code>evidence.v1</code> + <code>closedclaw</code>), (5) Approvals, (6) Sharing / Bonds / Person's Door (production UI, room grants &amp; departure planned), (7) Messaging (Telegram account-link endpoints shipped on engine; bot V0 in flight; THUG relay), (8) Model Access &amp; Router (own keys → subscription bridge → platform credits; managed credit completion <code>/llm-complete</code> is designed, not currently being built), plus Privacy Before Models (supported managed routes enforce zero-retention terms, without claiming a universal guarantee across all external endpoints) and Safe-Tool Governor.</li>
             <li><strong>The Door &amp; Operations:</strong> Sign-In (<code>seitiate.app/login</code>), Append-Only Credit Ledger, Per-Room Pools &amp; R1 Registry (built) vs. Unified Balance, <code>/billing/meter</code> (Engine &amp; Seitiate+ Platform Teams), Full Payments &amp; Spend Limits/Warnings (policy targets 80% warning / 100% cap; spend cap setter and desktop vs. Telegram 80% notice coverage remain partial in V0), Messaging Side Doors, and Machine Noise Kept Below.</li>
@@ -1815,7 +1815,7 @@
 </main>
 
 <script>
-  const VIEW_ORDER = ['overview', 'sakme', 'scientific', 'ies', 'centre', 'matrix'];
+  const VIEW_ORDER = ['overview', 'sakme', 'scientific', 'Partner Vertical', 'centre', 'matrix'];
   const VIEW_META = {
     overview: {
       label: 'Level 1 · Whole-Estate Overview',
@@ -1829,8 +1829,8 @@
       label: 'Level 2 · 2B: Scientific Platform (Foundry, Hub & Labs)',
       depth: 'Level 2 (Product Family) + Level 3 Disclosures'
     },
-    ies: {
-      label: 'Level 2 · 2C: Partner Rooms (IES + Repeatable Seam) & 4-Stage Bridge',
+    Partner Vertical: {
+      label: 'Level 2 · 2C: Partner Rooms (Partner Vertical + Repeatable Seam) & 4-Stage Bridge',
       depth: 'Level 2 (Partner Family & Bridge) + Level 3 Disclosures'
     },
     centre: {
@@ -1944,12 +1944,12 @@
   }
 
   function toggleIesOverlay() {
-    const btn = document.getElementById('ies-overlay-btn');
-    const active = document.body.classList.toggle('ies-overlay-active');
+    const btn = document.getElementById('Partner Vertical-overlay-btn');
+    const active = document.body.classList.toggle('Partner Vertical-overlay-active');
     btn.setAttribute('aria-pressed', active ? 'true' : 'false');
     btn.textContent = active
-      ? 'Highlight Where IES & VisiWatt Connect: ON'
-      : 'Highlight Where IES & VisiWatt Connect: OFF';
+      ? 'Highlight Where Partner Vertical & VisiWatt Connect: ON'
+      : 'Highlight Where Partner Vertical & VisiWatt Connect: OFF';
   }
 
   function filterRows(bucket) {
@@ -1963,7 +1963,7 @@
         row.style.display = 'none';
       }
     });
-    ['all', 'ies', 'bridge', 'estate'].forEach((id) => {
+    ['all', 'Partner Vertical', 'bridge', 'estate'].forEach((id) => {
       const btn = document.getElementById('filter-btn-' + id);
       if (btn) {
         btn.setAttribute('aria-pressed', id === bucket ? 'true' : 'false');
@@ -1988,7 +1988,7 @@
     });
   }
 
-  // Activate view from URL hash (#overview, #sakme, #scientific, #ies, #centre, #matrix)
+  // Activate view from URL hash (#overview, #sakme, #scientific, #Partner Vertical, #centre, #matrix)
   function activateViewFromHash(initialLoad) {
     const rawHash = (window.location.hash || '').replace(/^#/, '').trim().toLowerCase();
     if (!rawHash) return;

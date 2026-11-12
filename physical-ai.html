@@ -459,11 +459,11 @@
 
       <!-- RIGHT: Runtime Path Separation + Default-OFF Consent + Generative Modes + WS Security Seam -->
       <div style="display: flex; flex-direction: column; gap: 16px;">
-        <!-- 0. ARCHITECT-8448 P2.15 Runtime Path & Explicit Wearer/Bystander Consent -->
+        <!-- 0. architecture-spec Waveguide Architecture Runtime Path & Explicit Wearer/Bystander Consent -->
         <section class="surface-card" aria-labelledby="runtime-consent-heading">
           <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px;">
             <h2 id="runtime-consent-heading" style="margin: 0; font-size: 16px; font-weight: 800;">
-              0. Runtime Path &amp; Consent Gate (`ARCHITECT-8448` `P2.15`)
+              0. Runtime Path &amp; Consent Gate (`architecture-spec` `Waveguide Architecture`)
             </h2>
             <span id="capture-badge-pill" class="badge-pill" style="background: rgba(148,163,184,0.18); color: #cbd5e1; border: 1px solid rgba(148,163,184,0.35);">
               CAPTURE OFF
@@ -585,12 +585,12 @@
           </p>
 
           <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px;" role="group" aria-label="Simulated Spoken Directives (Requires Path 2 Mic Consent)">
-            <button type="button" class="voice-chip" data-voice="Pavel status">🎙 “Pavel status”</button>
+            <button type="button" class="voice-chip" data-voice="Systems Partner status">🎙 “Systems Partner status”</button>
             <button type="button" class="voice-chip" data-voice="Give me choices">🎙 “Give me choices”</button>
             <button type="button" class="voice-chip" data-voice="Approve">🎙 “Approve”</button>
             <button type="button" class="voice-chip" data-voice="Ask Codex">🎙 “Ask Codex”</button>
             <button type="button" class="voice-chip" data-voice="Household radar">🎙 “Household radar”</button>
-            <button type="button" class="voice-chip" data-voice="Thomas numbers">🎙 “Thomas numbers”</button>
+            <button type="button" class="voice-chip" data-voice="Partner Lead numbers">🎙 “Partner Lead numbers”</button>
             <button type="button" class="voice-chip" data-voice="Next">🎙 “Next”</button>
           </div>
 
@@ -698,8 +698,8 @@
         renderer: 'seitiate',           // 'seitiate' | 'meta'
         runtimePath: 'display_web_app', // 'display_web_app' | 'dat_companion'
         bystanderAck: false,
-        micConsent: false,              // default OFF (ARCHITECT-8448 P2.15)
-        camConsent: false,              // default OFF (ARCHITECT-8448 P2.15)
+        micConsent: false,              // default OFF (architecture-spec Waveguide Architecture)
+        camConsent: false,              // default OFF (architecture-spec Waveguide Architecture)
         tokenJti: '9f4c…e1a2',
         tokenConsumed: true,
         queueDepth: 1,
@@ -715,29 +715,29 @@
         teleprompterIndex: 0,
         morphAlpha: 1,
         pinchFlash: 0,
-        lastVoiceTranscript: '“Pavel status”',
+        lastVoiceTranscript: '“Systems Partner status”',
         isRunning: true,
         rafId: 0
       };
 
       const WHISPER_CARDS = [
         {
-          lead: 'PAVEL',
+          lead: 'Systems Partner',
           line1: 'TRANSACTION PLAN',
           line2: 'READY',
           accent: AMBER_SIGNAL,
           ringProgress: 0.86,
           words: 4,
-          spoken: 'Pavel’s Rigi V8 transaction plan is ready for your decision.'
+          spoken: 'Systems Partner’s Contract Engine V8 transaction plan is ready for your decision.'
         },
         {
-          lead: 'THOMAS',
+          lead: 'Partner Lead',
           line1: 'PR #6 GREEN',
           line2: '57 / 57',
           accent: PHOSPHOR_GREEN,
           ringProgress: 1.0,
           words: 5,
-          spoken: 'Questcraft PR #6 passed all 57 checks with zero lock collisions.'
+          spoken: 'Studio Atlas PR #6 passed all 57 checks with zero lock collisions.'
         },
         {
           lead: 'ARCHITECT',
@@ -757,8 +757,8 @@
       ];
 
       const RADAR_NODES = [
-        { angle: -3 * Math.PI / 4, label: 'PAVEL', status: 'GATE', progress: 0.86, color: AMBER_SIGNAL },
-        { angle: -Math.PI / 4, label: 'THOMAS', status: 'OK', progress: 1.0, color: PHOSPHOR_GREEN },
+        { angle: -3 * Math.PI / 4, label: 'Systems Partner', status: 'GATE', progress: 0.86, color: AMBER_SIGNAL },
+        { angle: -Math.PI / 4, label: 'Partner Lead', status: 'OK', progress: 1.0, color: PHOSPHOR_GREEN },
         { angle: 3 * Math.PI / 4, label: 'COUNCIL', status: 'OK', progress: 0.90, color: PHOSPHOR_GREEN },
         { angle: Math.PI / 4, label: 'ENGINE', status: 'OK', progress: 0.95, color: PHOSPHOR_GREEN }
       ];
@@ -885,7 +885,7 @@
           pinchLabel.textContent = `INDEX PINCH → Cycle Choice (Now: ${current.num}. ${current.label})`;
           decisionQuickRow.style.display = 'flex';
         } else if (STATE.mode === 'radar') {
-          pinchLabel.textContent = 'INDEX PINCH → Focus Active Gate (Pavel)';
+          pinchLabel.textContent = 'INDEX PINCH → Focus Active Gate (Systems Partner)';
           decisionQuickRow.style.display = 'none';
         } else {
           pinchLabel.textContent = `INDEX PINCH → Next Beat (${STATE.teleprompterIndex + 1} / ${TELEPROMPTER_BEATS.length})`;
@@ -965,7 +965,7 @@
         STATE.pinchFlash = 1;
         triggerMorph();
         const chosen = DECISION_CHOICES[index];
-        secretaryFeedback.innerHTML = `<strong style="color:#00FF66;">Madam Secretary:</strong> Sealed <strong>${chosen.num}. ${chosen.label}</strong> on Pavel’s transaction plan — receipt logged.`;
+        secretaryFeedback.innerHTML = `<strong style="color:#00FF66;">Madam Secretary:</strong> Sealed <strong>${chosen.num}. ${chosen.label}</strong> on Systems Partner’s transaction plan — receipt logged.`;
         updateUIControls();
         announcePolite(`Confirmed option ${chosen.num}: ${chosen.label}.`);
       }
@@ -994,7 +994,7 @@
         } else if (STATE.mode === 'radar') {
           STATE.whisperIndex = 0;
           setMode('whisper');
-          secretaryFeedback.innerHTML = `<strong style="color:#00FF66;">Single Pinch:</strong> Focused active amber gate — Pavel Transaction Plan Ready.`;
+          secretaryFeedback.innerHTML = `<strong style="color:#00FF66;">Single Pinch:</strong> Focused active amber gate — Systems Partner Transaction Plan Ready.`;
         } else if (STATE.mode === 'teleprompter') {
           STATE.teleprompterIndex = (STATE.teleprompterIndex + 1) % TELEPROMPTER_BEATS.length;
           triggerMorph();
@@ -1034,7 +1034,7 @@
         }
         if (lower.includes('radar') || lower.includes('household') || lower.includes('leads') || lower.includes('overview')) {
           setMode('radar');
-          secretaryFeedback.innerHTML = `<strong style="color:#00FF66;">Madam Secretary (${STATE.lastVoiceTranscript}):</strong> 3 green leads nominal; Pavel has 1 amber gate ready.`;
+          secretaryFeedback.innerHTML = `<strong style="color:#00FF66;">Madam Secretary (${STATE.lastVoiceTranscript}):</strong> 3 green leads nominal; Systems Partner has 1 amber gate ready.`;
           return;
         }
         if (lower.includes('number') || lower.includes('teleprompter') || lower.includes('spend') || lower.includes('vault') || lower.includes('next')) {
@@ -1050,7 +1050,7 @@
           secretaryFeedback.innerHTML = `<strong style="color:#00FF66;">Madam Secretary (${STATE.lastVoiceTranscript}):</strong> Big-Number Lens → <strong>${beat.top}: ${beat.hero}</strong>.`;
           return;
         }
-        if (lower.includes('thomas') || lower.includes('questcraft')) {
+        if (lower.includes('Partner Lead') || lower.includes('studio-atlas')) {
           STATE.whisperIndex = 1;
           setMode('whisper');
           secretaryFeedback.innerHTML = `<strong style="color:#00FF66;">Madam Secretary (${STATE.lastVoiceTranscript}):</strong> ${WHISPER_CARDS[1].spoken}`;
@@ -1063,7 +1063,7 @@
           return;
         }
 
-        // Default: Pavel Ambient Whisper
+        // Default: Systems Partner Ambient Whisper
         STATE.whisperIndex = 0;
         setMode('whisper');
         secretaryFeedback.innerHTML = `<strong style="color:#00FF66;">Madam Secretary (${STATE.lastVoiceTranscript}):</strong> ${WHISPER_CARDS[0].spoken}`;
@@ -1272,7 +1272,7 @@
           return;
         }
 
-        drawWaveguideText('PAVEL PLAN', 300, 86, {
+        drawWaveguideText('Systems Partner PLAN', 300, 86, {
           size: 46,
           color: AMBER_SIGNAL,
           weight: 800,
@@ -1384,8 +1384,8 @@
         });
 
         // 4 Corner Callsigns in 44px-46px high-contrast type — zero overlap with center ring!
-        drawWaveguideText('PAVEL', 44, 92, { size: 46, color: AMBER_SIGNAL, align: 'left', weight: 800, tracking: 2.5, maxWidth: 235 });
-        drawWaveguideText('THOMAS', 556, 92, { size: 44, color: PHOSPHOR_GREEN, align: 'right', weight: 800, tracking: 2, maxWidth: 245 });
+        drawWaveguideText('Systems Partner', 44, 92, { size: 46, color: AMBER_SIGNAL, align: 'left', weight: 800, tracking: 2.5, maxWidth: 235 });
+        drawWaveguideText('Partner Lead', 556, 92, { size: 44, color: PHOSPHOR_GREEN, align: 'right', weight: 800, tracking: 2, maxWidth: 245 });
         drawWaveguideText('COUNCIL', 44, 514, { size: 44, color: PHOSPHOR_GREEN, align: 'left', weight: 800, tracking: 2, maxWidth: 245 });
         drawWaveguideText('ENGINE', 556, 514, { size: 44, color: PHOSPHOR_GREEN, align: 'right', weight: 800, tracking: 2, maxWidth: 235 });
       }
@@ -1466,9 +1466,9 @@
         // Cramped multi-column notification cards with tiny 13px-15px body text
         const cards = [
           {
-            title: 'Telegram • Founders & Architecture Room (Pavel)',
+            title: 'Telegram • Founders & Architecture Room (Systems Partner)',
             time: '2m ago • Swipe Right > Twist Wrist to Reply',
-            body1: 'Pavel: Have you reviewed the updated Rigi V8 state-free question plan basis',
+            body1: 'Systems Partner: Have you reviewed the updated Contract Engine V8 state-free question plan basis',
             body2: 'hashes and Role Doma supersession boundary before we lock the schema today?'
           },
           {
@@ -1478,7 +1478,7 @@
             body2: 'like me to search the web for project management tips or set a reminder?'
           },
           {
-            title: 'GitHub • thomasdephuoc/gaming_IDE Pull Request #6',
+            title: 'GitHub • Partner Leaddephuoc/gaming_IDE Pull Request #6',
             time: '5m ago • Pinch + Hold + Swipe Down for More Actions',
             body1: '57 checks passed on branch seitiate/nov12-rts-engine-and-playbook (+2,453',
             body2: '-334 lines across locks.js, liveAdapter.js, NOV12-RTS-SPRINT.md)...'
