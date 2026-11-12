@@ -1,0 +1,1820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="/assets/gate.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Waveguide Generative UI Engine (600x600 Optical HUD) | Seitiate Hypernova Prototype</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", system-ui, sans-serif;
+      background-color: var(--background, #0b0e14);
+      color: var(--foreground, #f1f5f9);
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .app-shell {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 20px 20px 36px;
+    }
+
+    .surface-card {
+      background-color: var(--card, #131822);
+      color: var(--foreground, #f1f5f9);
+      border: 1px solid var(--border, rgba(148, 163, 184, 0.22));
+      border-radius: 16px;
+      padding: 18px;
+    }
+
+    .muted-copy {
+      color: var(--muted-foreground, #94a3b8);
+    }
+
+    /* Accessible visually-hidden utility */
+    .visually-hidden:where(:not(:focus-within, :active)) {
+      position: absolute !important;
+      clip-path: inset(50%) !important;
+      overflow: hidden !important;
+      width: 1px !important;
+      height: 1px !important;
+      margin: -1px !important;
+      padding: 0 !important;
+      border: 0 !important;
+      white-space: nowrap !important;
+    }
+
+    /* High-contrast keyboard focus ring */
+    :where(button, input):focus-visible {
+      outline: 3px solid #00FF66;
+      outline-offset: 3px;
+    }
+
+    /* Native switch progressive enhancement styling */
+    input[type="checkbox"][switch] {
+      accent-color: #00FF66;
+      width: 20px;
+      height: 20px;
+      margin: 0;
+      cursor: pointer;
+    }
+
+    input[type="checkbox"][switch]:focus-visible {
+      outline: 3px solid #FFB000;
+      outline-offset: 4px;
+    }
+
+    .consent-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-block-size: 42px;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      background: rgba(0, 0, 0, 0.22);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .consent-row[data-disabled="true"] {
+      opacity: 0.58;
+    }
+
+    .sec-btn {
+      min-block-size: 36px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      background: rgba(15, 23, 42, 0.7);
+      color: #f1f5f9;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .sec-btn:hover {
+      border-color: #00FF66;
+    }
+
+    /* Main responsive 2-column workbench */
+    .workbench-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 640px) minmax(320px, 1fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    @media (max-width: 1060px) {
+      .workbench-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Heavy 600x600 optical HUD stage with content-visibility optimization */
+    .hud-stage-wrapper {
+      content-visibility: auto;
+      contain-intrinsic-size: auto none auto 640px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Right-eye monocular waveguide frame */
+    .waveguide-bezel {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      aspect-ratio: 1 / 1;
+      border-radius: 28px;
+      overflow: hidden;
+      background: #000000;
+      border: 2px solid rgba(0, 255, 102, 0.38);
+      box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.65),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+      transition: border-color 220ms ease, box-shadow 220ms ease;
+    }
+
+    .waveguide-bezel[data-renderer="meta"] {
+      border-color: rgba(248, 113, 113, 0.65);
+      box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.65),
+        0 0 28px rgba(239, 68, 68, 0.22);
+    }
+
+    /* Simulated 2m real-world sightline behind transparent waveguide glass */
+    .real-world-backdrop {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 260ms ease;
+      background:
+        radial-gradient(circle at 72% 24%, rgba(253, 224, 71, 0.22), transparent 34%),
+        linear-gradient(180deg, #1e293b 0%, #334155 46%, #1f2937 47%, #0f172a 100%);
+    }
+
+    .real-world-backdrop::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        /* Architectural horizon & street perspective lines at ~2m+ */
+        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px) 0 0 / 60px 60px,
+        linear-gradient(0deg, rgba(255,255,255,0.04) 1px, transparent 1px) 0 0 / 60px 60px;
+    }
+
+    .waveguide-bezel[data-glass="true"] .real-world-backdrop {
+      opacity: 1;
+    }
+
+    /* In real optical waveguides, #000000 emits 0 photons -> 100% see-through via screen blend! */
+    #waveguide-canvas {
+      position: relative;
+      z-index: 2;
+      display: block;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+
+    .waveguide-bezel[data-glass="true"] #waveguide-canvas {
+      mix-blend-mode: screen;
+    }
+
+    /* Top comparison bar buttons */
+    .compare-toggle-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    @media (max-width: 680px) {
+      .compare-toggle-group {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .compare-btn {
+      min-block-size: 52px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1.5px solid var(--border, rgba(148, 163, 184, 0.26));
+      background: var(--card, #131822);
+      color: var(--foreground, #f1f5f9);
+      font-size: 14px;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      transition: transform 120ms ease, border-color 160ms ease, background-color 160ms ease;
+    }
+
+    .compare-btn:hover {
+      border-color: rgba(148, 163, 184, 0.55);
+    }
+
+    .compare-btn[aria-pressed="true"][data-target="seitiate"] {
+      border-color: #00FF66;
+      background: rgba(0, 255, 102, 0.11);
+    }
+
+    .compare-btn[aria-pressed="true"][data-target="meta"] {
+      border-color: #f87171;
+      background: rgba(248, 113, 113, 0.13);
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+    }
+
+    .mode-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .mode-btn {
+      min-block-size: 46px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border, rgba(148, 163, 184, 0.25));
+      background: transparent;
+      color: var(--foreground, #f1f5f9);
+      font-size: 13px;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      transition: border-color 140ms ease, background-color 140ms ease;
+    }
+
+    .mode-btn:hover {
+      border-color: rgba(0, 255, 102, 0.5);
+    }
+
+    .mode-btn[aria-pressed="true"] {
+      border-color: #00FF66;
+      background: rgba(0, 255, 102, 0.12);
+    }
+
+    .pinch-cta {
+      width: 100%;
+      min-block-size: 54px;
+      padding: 12px 18px;
+      border-radius: 12px;
+      border: 2px solid #00FF66;
+      background: rgba(0, 255, 102, 0.14);
+      color: var(--foreground, #ffffff);
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      transition: transform 90ms ease, background-color 140ms ease;
+    }
+
+    .pinch-cta:hover {
+      background: rgba(0, 255, 102, 0.22);
+    }
+
+    .pinch-cta:active {
+      transform: scale(0.985);
+    }
+
+    .voice-chip {
+      min-block-size: 36px;
+      padding: 6px 11px;
+      border-radius: 999px;
+      border: 1px solid var(--border, rgba(148, 163, 184, 0.3));
+      background: transparent;
+      color: var(--foreground, #f1f5f9);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color 140ms ease, background-color 140ms ease;
+    }
+
+    .voice-chip:hover {
+      border-color: #FFB000;
+      background: rgba(255, 176, 0, 0.12);
+    }
+
+    .telemetry-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    @media (max-width: 560px) {
+      .telemetry-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    .metric-box {
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border, rgba(148, 163, 184, 0.22));
+      background: var(--card, #131822);
+    }
+
+    .metric-val {
+      font-size: 18px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div style="background:rgba(8,9,11,0.94);border-bottom:1px solid #1e222b;padding:10px 24px;display:flex;justify-content:space-between;align-items:center;font-family:'Inter',-apple-system,sans-serif;font-size:13px;color:#eceae7;position:sticky;top:0;z-index:9999;">
+  <div style="display:flex;align-items:center;gap:14px;">
+    <a href="/" style="color:#4ade80;font-weight:600;text-decoration:none;">← Seitiate Home</a>
+    <span style="color:#56585f;">|</span>
+    <span style="color:#8a8a90;">Physical AI Future · Meta Ray-Ban Display 600×600 Waveguide Generative UI &amp; Neural Band</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:14px;">
+    <a href="/five-rungs.html" style="color:#8a8a90;text-decoration:none;">5-Rung Ladder</a>
+    <a href="/wheels-within-wheels.html" style="color:#8a8a90;text-decoration:none;">Wheels Within Wheels</a>
+    <a href="/login/" style="background:#4ade80;color:#08090b;font-weight:600;padding:5px 12px;border-radius:6px;text-decoration:none;">Log in / Beta Access →</a>
+  </div>
+</div>
+
+  <!-- Centralized polite & critical live regions for assistive tech announcements -->
+  <div id="hud-announcer" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+  <div id="hud-critical-alert" class="visually-hidden" role="alert" aria-live="assertive" aria-atomic="true"></div>
+
+  <div class="app-shell">
+    <header style="margin-bottom: 18px;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px;">
+        <div>
+          <p class="muted-copy" style="margin: 0 0 4px; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;">
+            Meta Ray-Ban Display (Hypernova) • Right-Eye Monocular 600×600 Waveguide Engine
+          </p>
+          <h1 style="margin: 0; font-size: 24px; font-weight: 800; letter-spacing: -0.02em;">
+            Seitiate Optical Generative UI vs. Stock Meta HUD
+          </h1>
+        </div>
+
+        <label for="glass-preview-toggle" style="display: inline-flex; align-items: center; gap: 10px; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--border, rgba(148,163,184,0.28)); background: var(--card, #131822); cursor: pointer; font-size: 13px; font-weight: 600;">
+          <span>2m Real-World Glass Sightline</span>
+          <input id="glass-preview-toggle" type="checkbox" switch>
+        </label>
+      </div>
+
+      <!-- Primary A/B Optical Comparison Toggle -->
+      <div class="compare-toggle-group" role="group" aria-label="Optical HUD Renderer Comparison">
+        <button type="button" id="btn-renderer-seitiate" class="compare-btn" data-target="seitiate" aria-pressed="true">
+          <div>
+            <div style="font-size: 15px; font-weight: 800;">Seitiate Optical Generative UI</div>
+            <div class="muted-copy" style="font-size: 12px; font-weight: 500; margin-top: 2px;">
+              #000000 clear glass • 44–64px #00FF66 / #FFB000 • ≤12 words • 1 pinch + Madam Secretary
+            </div>
+          </div>
+          <span class="badge-pill" style="background: rgba(0,255,102,0.16); color: #00FF66; border: 1px solid rgba(0,255,102,0.4);">
+            ZERO STRAIN
+          </span>
+        </button>
+
+        <button type="button" id="btn-renderer-meta" class="compare-btn" data-target="meta" aria-pressed="false">
+          <div>
+            <div style="font-size: 15px; font-weight: 800;">Meta Stock Cramped UI (Why It Hurts Your Eyes)</div>
+            <div class="muted-copy" style="font-size: 12px; font-weight: 500; margin-top: 2px;">
+              Milky grey card haze • 13–16px dense paragraphs • Twist/swipe menu maze • "Hey Meta"
+            </div>
+          </div>
+          <span class="badge-pill" style="background: rgba(248,113,113,0.16); color: #f87171; border: 1px solid rgba(248,113,113,0.4);">
+            EYE STRAIN
+          </span>
+        </button>
+      </div>
+    </header>
+
+    <main class="workbench-grid">
+      <!-- LEFT: True 600x600 Optical Waveguide Stage + Live Optical Telemetry -->
+      <div class="hud-stage-wrapper" id="hud-stage-container">
+        <div class="waveguide-bezel" id="waveguide-bezel" data-renderer="seitiate" data-glass="false">
+          <div class="real-world-backdrop" aria-hidden="true"></div>
+          <canvas
+            id="waveguide-canvas"
+            width="600"
+            height="600"
+            role="img"
+            aria-label="600 by 600 pixel right-eye waveguide optical HUD display. Click or press Space to trigger single index pinch."
+          ></canvas>
+        </div>
+
+        <!-- Live Optical Physics Telemetry Bar -->
+        <div class="telemetry-grid" aria-label="Live Waveguide Optical Telemetry">
+          <div class="metric-box">
+            <div class="muted-copy" style="font-size: 12px; font-weight: 600;">Words on Lens</div>
+            <div id="metric-words" class="metric-val" style="color: #00FF66;">4 / 15 max</div>
+          </div>
+          <div class="metric-box">
+            <div class="muted-copy" style="font-size: 12px; font-weight: 600;">Smallest Glyph</div>
+            <div id="metric-font" class="metric-val" style="color: #00FF66;">46 px</div>
+          </div>
+          <div class="metric-box">
+            <div class="muted-copy" style="font-size: 12px; font-weight: 600;">Lit Waveguide Area</div>
+            <div id="metric-lit" class="metric-val" style="color: #00FF66;">4.8% (Clear)</div>
+          </div>
+          <div class="metric-box">
+            <div class="muted-copy" style="font-size: 12px; font-weight: 600;">2m Focal Strain</div>
+            <div id="metric-strain" class="metric-val" style="color: #00FF66;">NONE</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Runtime Path Separation + Default-OFF Consent + Generative Modes + WS Security Seam -->
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <!-- 0. ARCHITECT-8448 P2.15 Runtime Path & Explicit Wearer/Bystander Consent -->
+        <section class="surface-card" aria-labelledby="runtime-consent-heading">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px;">
+            <h2 id="runtime-consent-heading" style="margin: 0; font-size: 16px; font-weight: 800;">
+              0. Runtime Path &amp; Consent Gate (`ARCHITECT-8448` `P2.15`)
+            </h2>
+            <span id="capture-badge-pill" class="badge-pill" style="background: rgba(148,163,184,0.18); color: #cbd5e1; border: 1px solid rgba(148,163,184,0.35);">
+              CAPTURE OFF
+            </span>
+          </div>
+
+          <div class="mode-grid" role="group" aria-label="Meta Wearables Integration Path" style="margin-bottom: 10px;">
+            <button type="button" id="btn-path-webapp" class="mode-btn" data-runtime-path="display_web_app" aria-pressed="true">
+              <div style="color: #00FF66; font-weight: 800;">Path 1 • Display Web App</div>
+              <div class="muted-copy" style="font-size: 12px; margin-top: 2px;">600×600 HUD + W3C Band • Zero Mic/Cam</div>
+            </button>
+            <button type="button" id="btn-path-dat" class="mode-btn" data-runtime-path="dat_companion" aria-pressed="false">
+              <div style="color: #FFB000; font-weight: 800;">Path 2 • DAT Companion</div>
+              <div class="muted-copy" style="font-size: 12px; margin-top: 2px;">Mobile SDK • Opt-In Turn Capture (Scope HOLD)</div>
+            </button>
+          </div>
+
+          <p id="consent-privacy-hint" class="muted-copy" style="margin: 0 0 8px; font-size: 12px;">
+            Default capture is <strong>OFF</strong> with <code>ephemeral_turn_only</code> retention (zero automatic storage). Enabling Path 2 audio or POV capture requires owner session + explicit wearer &amp; bystander LED acknowledgement, and displays a visible HUD capture badge.
+          </p>
+
+          <div style="display: flex; flex-direction: column; gap: 6px;">
+            <label for="bystander-ack-toggle" class="consent-row" id="row-bystander-ack">
+              <span>1. Wearer &amp; Bystander Hardware LED Notice Unobstructed</span>
+              <input id="bystander-ack-toggle" type="checkbox" switch aria-describedby="consent-privacy-hint">
+            </label>
+            <label for="mic-consent-toggle" class="consent-row" id="row-mic-consent" data-disabled="true">
+              <span>2. Opt-In Turn Mic (`audio:capture` • Path 2 Only)</span>
+              <input id="mic-consent-toggle" type="checkbox" switch aria-describedby="consent-privacy-hint">
+            </label>
+            <label for="cam-consent-toggle" class="consent-row" id="row-cam-consent" data-disabled="true">
+              <span>3. Opt-In POV Snapshot (`camera:capture` • Path 2 Only)</span>
+              <input id="cam-consent-toggle" type="checkbox" switch aria-describedby="consent-privacy-hint">
+            </label>
+          </div>
+
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 10px;">
+            <span id="consent-status-line" class="muted-copy" style="font-size: 12px;">
+              Path 1 (`display_web_app`): browser &amp; server enforce <code>mode_forbids_capture</code>.
+            </span>
+            <button
+              type="button"
+              id="btn-revoke-capture"
+              style="min-block-size: 36px; padding: 6px 12px; border-radius: 8px; border: 1.5px solid rgba(248,113,113,0.65); background: rgba(239,68,68,0.16); color: #fecaca; font-size: 12px; font-weight: 800; cursor: pointer; white-space: nowrap;"
+            >
+              Revoke &amp; Stop Capture
+            </button>
+          </div>
+        </section>
+
+        <!-- 1. The 4 Generative Optical HUD Modes -->
+        <section class="surface-card" aria-labelledby="modes-heading">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px;">
+            <h2 id="modes-heading" style="margin: 0; font-size: 16px; font-weight: 800;">
+              1. Generative Optical Layout Modes
+            </h2>
+            <span class="muted-copy" style="font-size: 12px; font-weight: 600;">Keys 1–4</span>
+          </div>
+
+          <div class="mode-grid" role="group" aria-label="Waveguide Generative UI Modes">
+            <button type="button" class="mode-btn" data-mode="whisper" aria-pressed="true">
+              <div style="color: #00FF66; font-weight: 800;">Mode 1 • Ambient Whisper</div>
+              <div class="muted-copy" style="font-size: 12px; margin-top: 2px;">4 words + status ring</div>
+            </button>
+
+            <button type="button" class="mode-btn" data-mode="decision" aria-pressed="false">
+              <div style="color: #FFB000; font-weight: 800;">Mode 2 • 3-Choice Card</div>
+              <div class="muted-copy" style="font-size: 12px; margin-top: 2px;">48px blocks (1 / 2 / 3)</div>
+            </button>
+
+            <button type="button" class="mode-btn" data-mode="radar" aria-pressed="false">
+              <div style="color: #00FF66; font-weight: 800;">Mode 3 • Household Radar</div>
+              <div class="muted-copy" style="font-size: 12px; margin-top: 2px;">Radial lead gauge, 0 prose</div>
+            </button>
+
+            <button type="button" class="mode-btn" data-mode="teleprompter" aria-pressed="false">
+              <div style="color: #FFB000; font-weight: 800;">Mode 4 • Big-Number Lens</div>
+              <div class="muted-copy" style="font-size: 12px; margin-top: 2px;">56–64px single beat</div>
+            </button>
+          </div>
+        </section>
+
+        <!-- 2. Single-Gesture Neural Band Control (Zero Menu Maze) -->
+        <section class="surface-card" aria-labelledby="gesture-heading">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px;">
+            <h2 id="gesture-heading" style="margin: 0; font-size: 16px; font-weight: 800;">
+              2. Neural Band W3C Gesture Input (`Arrow*` / `Enter`)
+            </h2>
+            <span class="badge-pill" style="background: rgba(255,176,0,0.15); color: #FFB000;">PATH 1 SANCTIONED</span>
+          </div>
+          <p class="muted-copy" style="margin: 0 0 12px; font-size: 13px;">
+            Tap the lens, press <kbd style="padding: 1px 6px; border-radius: 4px; border: 1px solid rgba(148,163,184,0.4); font-size: 12px;">Space</kbd>, or click below to simulate W3C gesture navigation without audio/camera access:
+          </p>
+
+          <button type="button" id="btn-single-pinch" class="pinch-cta">
+            <span id="pinch-label">INDEX PINCH → Open 3-Choice Decision</span>
+            <span style="font-size: 12px; padding: 4px 8px; border-radius: 6px; background: rgba(0,0,0,0.35); color: #00FF66;">
+              SPACE / CLICK LENS
+            </span>
+          </button>
+
+          <div id="decision-quick-row" style="display: none; gap: 8px; margin-top: 10px;">
+            <button type="button" class="voice-chip" data-confirm-choice="0" style="flex: 1; border-color: rgba(0,255,102,0.45);">
+              Confirm Selected Choice (<kbd>Enter</kbd>)
+            </button>
+          </div>
+        </section>
+
+        <!-- 3. Consented Turn Input -> Madam Secretary -->
+        <section class="surface-card" aria-labelledby="voice-heading">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px;">
+            <h2 id="voice-heading" style="margin: 0; font-size: 16px; font-weight: 800;">
+              3. Turn-Scoped Directive → Madam Secretary
+            </h2>
+            <span class="badge-pill" style="background: rgba(0,255,102,0.14); color: #00FF66;">EPHEMERAL TURN</span>
+          </div>
+          <p class="muted-copy" style="margin: 0 0 10px; font-size: 13px;">
+            Typed commands work in both paths. Simulated spoken chips test the live server gate (rejected unless <strong>Path 2 + Bystander LED + Opt-In Mic</strong> are enabled):
+          </p>
+
+          <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px;" role="group" aria-label="Simulated Spoken Directives (Requires Path 2 Mic Consent)">
+            <button type="button" class="voice-chip" data-voice="Pavel status">🎙 “Pavel status”</button>
+            <button type="button" class="voice-chip" data-voice="Give me choices">🎙 “Give me choices”</button>
+            <button type="button" class="voice-chip" data-voice="Approve">🎙 “Approve”</button>
+            <button type="button" class="voice-chip" data-voice="Ask Codex">🎙 “Ask Codex”</button>
+            <button type="button" class="voice-chip" data-voice="Household radar">🎙 “Household radar”</button>
+            <button type="button" class="voice-chip" data-voice="Thomas numbers">🎙 “Thomas numbers”</button>
+            <button type="button" class="voice-chip" data-voice="Next">🎙 “Next”</button>
+          </div>
+
+          <form id="voice-form" style="display: flex; gap: 8px;">
+            <label for="voice-input" class="visually-hidden">Type a text directive to Madam Secretary</label>
+            <input
+              id="voice-input"
+              type="text"
+              placeholder="Type text directive (works with Capture OFF, e.g. 'Radar', 'Approve')…"
+              style="flex: 1; min-block-size: 40px; padding: 8px 12px; border-radius: 10px; border: 1px solid var(--border, rgba(148,163,184,0.32)); background: rgba(0,0,0,0.22); color: var(--foreground, #f1f5f9); font-size: 13px;"
+            >
+            <button
+              type="submit"
+              style="min-block-size: 40px; padding: 8px 14px; border-radius: 10px; border: 1px solid rgba(255,176,0,0.55); background: rgba(255,176,0,0.16); color: var(--foreground, #f1f5f9); font-size: 13px; font-weight: 700; cursor: pointer;"
+            >
+              Send Text
+            </button>
+          </form>
+
+          <div id="secretary-feedback" class="muted-copy" style="margin-top: 10px; font-size: 12px; padding: 8px 10px; border-radius: 8px; background: rgba(0,0,0,0.22);">
+            <strong style="color: #00FF66;">Madam Secretary:</strong> Capture is <strong>OFF by default</strong> (<code>visible_capture_indicator="off"</code>). Use Neural Band / text in Path 1, or enable Path 2 + Wearer/Bystander consent for spoken turns.
+          </div>
+        </section>
+
+        <!-- 4. Audience-Scoped WS Token & 8-Slot Backpressure Seam -->
+        <section class="surface-card" aria-labelledby="security-seam-heading">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px;">
+            <h2 id="security-seam-heading" style="margin: 0; font-size: 15px; font-weight: 800;">
+              4. `aud="wearables.hud-stream"` Token &amp; Backpressure Seam
+            </h2>
+            <span class="badge-pill" style="background: rgba(0,255,102,0.14); color: #00FF66;">ZERO BARE TENANT_ID</span>
+          </div>
+          <div id="ws-seam-readout" style="font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11.5px; padding: 9px 10px; border-radius: 8px; background: rgba(0,0,0,0.32); border: 1px solid rgba(148,163,184,0.2); margin-bottom: 10px; line-height: 1.5;">
+            aud="wearables.hud-stream" • jti=9f4c…e1a2 (consumed=true, ttl=120s) • room="madam-secretary"<br>
+            max_frame=16,384 B • queue=1/8 (evicted_normal=0, dropped_critical=0)
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;" role="group" aria-label="WebSocket Security and Backpressure Contract Tests">
+            <button type="button" class="sec-btn" id="btn-mint-jti">Mint Single-Use Token</button>
+            <button type="button" class="sec-btn" id="btn-test-bare-tenant">Test Bare ?tenant_id= (4401)</button>
+            <button type="button" class="sec-btn" id="btn-test-replay">Test JTI Replay (4401)</button>
+            <button type="button" class="sec-btn" id="btn-test-burst">Burst 12 Frames (8-Slot Queue)</button>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    (() => {
+      // Progressive enhancement check for native HTML switch attribute across all switch inputs
+      const glassToggle = document.getElementById('glass-preview-toggle');
+      const bystanderAckToggle = document.getElementById('bystander-ack-toggle');
+      const micConsentToggle = document.getElementById('mic-consent-toggle');
+      const camConsentToggle = document.getElementById('cam-consent-toggle');
+      [glassToggle, bystanderAckToggle, micConsentToggle, camConsentToggle].forEach((sw) => {
+        if (sw && !('switch' in HTMLInputElement.prototype)) {
+          sw.setAttribute('role', 'switch');
+        }
+      });
+
+      const canvas = document.getElementById('waveguide-canvas');
+      const ctx = canvas.getContext('2d');
+      const bezel = document.getElementById('waveguide-bezel');
+      const stageContainer = document.getElementById('hud-stage-container');
+      const announcer = document.getElementById('hud-announcer');
+      const criticalAlert = document.getElementById('hud-critical-alert');
+
+      const btnSeitiate = document.getElementById('btn-renderer-seitiate');
+      const btnMeta = document.getElementById('btn-renderer-meta');
+      const btnPathWebapp = document.getElementById('btn-path-webapp');
+      const btnPathDat = document.getElementById('btn-path-dat');
+      const captureBadgePill = document.getElementById('capture-badge-pill');
+      const consentStatusLine = document.getElementById('consent-status-line');
+      const rowMicConsent = document.getElementById('row-mic-consent');
+      const rowCamConsent = document.getElementById('row-cam-consent');
+      const btnRevokeCapture = document.getElementById('btn-revoke-capture');
+      const wsSeamReadout = document.getElementById('ws-seam-readout');
+      const btnMintJti = document.getElementById('btn-mint-jti');
+      const btnTestBareTenant = document.getElementById('btn-test-bare-tenant');
+      const btnTestReplay = document.getElementById('btn-test-replay');
+      const btnTestBurst = document.getElementById('btn-test-burst');
+
+      const modeButtons = Array.from(document.querySelectorAll('.mode-btn[data-mode]'));
+      const pinchBtn = document.getElementById('btn-single-pinch');
+      const pinchLabel = document.getElementById('pinch-label');
+      const decisionQuickRow = document.getElementById('decision-quick-row');
+      const confirmChoiceBtn = document.querySelector('[data-confirm-choice]');
+      const voiceChips = Array.from(document.querySelectorAll('.voice-chip[data-voice]'));
+      const voiceForm = document.getElementById('voice-form');
+      const voiceInput = document.getElementById('voice-input');
+      const secretaryFeedback = document.getElementById('secretary-feedback');
+
+      const metricWords = document.getElementById('metric-words');
+      const metricFont = document.getElementById('metric-font');
+      const metricLit = document.getElementById('metric-lit');
+      const metricStrain = document.getElementById('metric-strain');
+
+      const PHOSPHOR_GREEN = '#00FF66';
+      const AMBER_SIGNAL = '#FFB000';
+      const PURE_BLACK = '#000000';
+
+      const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+      const STATE = {
+        renderer: 'seitiate',           // 'seitiate' | 'meta'
+        runtimePath: 'display_web_app', // 'display_web_app' | 'dat_companion'
+        bystanderAck: false,
+        micConsent: false,              // default OFF (ARCHITECT-8448 P2.15)
+        camConsent: false,              // default OFF (ARCHITECT-8448 P2.15)
+        tokenJti: '9f4c…e1a2',
+        tokenConsumed: true,
+        queueDepth: 1,
+        evictedNormal: 0,
+        droppedCritical: 0,
+        lastWsEvent: 'connection.ready',
+        mode: 'whisper',                // 'whisper' | 'decision' | 'radar' | 'teleprompter'
+        glassBackdrop: false,
+        whisperIndex: 0,
+        selectedChoice: 0,              // 0: Approve, 1: Hold, 2: Ask Codex
+        confirmedChoice: null,
+        confirmedAt: 0,
+        teleprompterIndex: 0,
+        morphAlpha: 1,
+        pinchFlash: 0,
+        lastVoiceTranscript: '“Pavel status”',
+        isRunning: true,
+        rafId: 0
+      };
+
+      const WHISPER_CARDS = [
+        {
+          lead: 'PAVEL',
+          line1: 'TRANSACTION PLAN',
+          line2: 'READY',
+          accent: AMBER_SIGNAL,
+          ringProgress: 0.86,
+          words: 4,
+          spoken: 'Pavel’s Rigi V8 transaction plan is ready for your decision.'
+        },
+        {
+          lead: 'THOMAS',
+          line1: 'PR #6 GREEN',
+          line2: '57 / 57',
+          accent: PHOSPHOR_GREEN,
+          ringProgress: 1.0,
+          words: 5,
+          spoken: 'Questcraft PR #6 passed all 57 checks with zero lock collisions.'
+        },
+        {
+          lead: 'ARCHITECT',
+          line1: 'BRIDGE R1 + R2',
+          line2: 'VERIFIED',
+          accent: PHOSPHOR_GREEN,
+          ringProgress: 0.92,
+          words: 5,
+          spoken: 'Subscription bridge R1 and R2 staged packets verified green.'
+        }
+      ];
+
+      const DECISION_CHOICES = [
+        { num: '1', label: 'APPROVE', color: PHOSPHOR_GREEN },
+        { num: '2', label: 'HOLD', color: AMBER_SIGNAL },
+        { num: '3', label: 'ASK CODEX', color: PHOSPHOR_GREEN }
+      ];
+
+      const RADAR_NODES = [
+        { angle: -3 * Math.PI / 4, label: 'PAVEL', status: 'GATE', progress: 0.86, color: AMBER_SIGNAL },
+        { angle: -Math.PI / 4, label: 'THOMAS', status: 'OK', progress: 1.0, color: PHOSPHOR_GREEN },
+        { angle: 3 * Math.PI / 4, label: 'COUNCIL', status: 'OK', progress: 0.90, color: PHOSPHOR_GREEN },
+        { angle: Math.PI / 4, label: 'ENGINE', status: 'OK', progress: 0.95, color: PHOSPHOR_GREEN }
+      ];
+
+      const TELEPROMPTER_BEATS = [
+        { top: 'PR #6 READY', hero: '57 / 57', bottom: 'CHECKS GREEN', accent: PHOSPHOR_GREEN, words: 6 },
+        { top: 'WRITE LOCKS', hero: '0 HITS', bottom: 'ISLAND CLEAR', accent: PHOSPHOR_GREEN, words: 6 },
+        { top: 'VAULT TODAY', hero: '$1.42', bottom: 'SUB-FIRST ON', accent: AMBER_SIGNAL, words: 6 },
+        { top: 'NEXT MOVE', hero: 'SHIP PR #6', bottom: 'PINCH TO SEAL', accent: AMBER_SIGNAL, words: 7 }
+      ];
+
+      // High-DPI 600x600 setup
+      function configureCanvasDPI() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+        canvas.width = Math.round(600 * dpr);
+        canvas.height = Math.round(600 * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      configureCanvasDPI();
+      window.addEventListener('resize', configureCanvasDPI);
+
+      // Debounced polite ARIA live region announcement + critical assertive alert
+      let announceTimer = 0;
+      function announcePolite(message) {
+        window.clearTimeout(announceTimer);
+        announceTimer = window.setTimeout(() => {
+          if (announcer) {
+            announcer.textContent = message;
+          }
+        }, 140);
+      }
+
+      function announceCritical(message) {
+        if (criticalAlert) {
+          criticalAlert.textContent = '';
+          window.setTimeout(() => {
+            criticalAlert.textContent = message;
+          }, 20);
+        }
+      }
+
+      function computeVisibleCaptureIndicator() {
+        if (STATE.runtimePath !== 'dat_companion' || !STATE.bystanderAck) {
+          return 'off';
+        }
+        if (STATE.micConsent && STATE.camConsent) return 'mic_and_camera_live';
+        if (STATE.micConsent) return 'mic_live';
+        if (STATE.camConsent) return 'camera_live';
+        return 'off';
+      }
+
+      function triggerMorph() {
+        STATE.morphAlpha = reducedMotionQuery.matches ? 1 : 0.18;
+      }
+
+      function updateUIControls() {
+        const isSeitiate = STATE.renderer === 'seitiate';
+        const isDat = STATE.runtimePath === 'dat_companion';
+        const indicator = computeVisibleCaptureIndicator();
+
+        btnSeitiate.setAttribute('aria-pressed', String(isSeitiate));
+        btnMeta.setAttribute('aria-pressed', String(!isSeitiate));
+        btnPathWebapp.setAttribute('aria-pressed', String(!isDat));
+        btnPathDat.setAttribute('aria-pressed', String(isDat));
+        bezel.dataset.renderer = STATE.renderer;
+        bezel.dataset.glass = String(STATE.glassBackdrop);
+
+        if (bystanderAckToggle) bystanderAckToggle.checked = STATE.bystanderAck;
+        if (micConsentToggle) micConsentToggle.checked = isDat && STATE.bystanderAck && STATE.micConsent;
+        if (camConsentToggle) camConsentToggle.checked = isDat && STATE.bystanderAck && STATE.camConsent;
+        if (rowMicConsent) rowMicConsent.dataset.disabled = String(!(isDat && STATE.bystanderAck));
+        if (rowCamConsent) rowCamConsent.dataset.disabled = String(!(isDat && STATE.bystanderAck));
+
+        if (captureBadgePill) {
+          if (indicator === 'off') {
+            captureBadgePill.textContent = 'CAPTURE OFF';
+            captureBadgePill.style.background = 'rgba(148,163,184,0.18)';
+            captureBadgePill.style.color = '#cbd5e1';
+            captureBadgePill.style.borderColor = 'rgba(148,163,184,0.35)';
+          } else {
+            const labelMap = {
+              mic_live: '● MIC LIVE (LED ON)',
+              camera_live: '● CAM LIVE (LED ON)',
+              mic_and_camera_live: '● MIC + CAM LIVE'
+            };
+            captureBadgePill.textContent = labelMap[indicator];
+            captureBadgePill.style.background = 'rgba(255,176,0,0.2)';
+            captureBadgePill.style.color = '#FFB000';
+            captureBadgePill.style.borderColor = 'rgba(255,176,0,0.6)';
+          }
+        }
+
+        if (consentStatusLine) {
+          if (!isDat) {
+            consentStatusLine.innerHTML = 'Path 1 (<code>display_web_app</code>): browser &amp; server enforce <code>mode_forbids_capture</code>.';
+          } else if (!STATE.bystanderAck) {
+            consentStatusLine.innerHTML = 'Path 2 (<code>dat_companion</code>): acknowledge Wearer &amp; Bystander Hardware LED first.';
+          } else if (indicator === 'off') {
+            consentStatusLine.innerHTML = 'Path 2 ready • Capture remains <strong>OFF</strong> until Mic or POV switch is enabled.';
+          } else {
+            consentStatusLine.innerHTML = `Active indicator: <code>${indicator}</code> • Retention: <code>ephemeral_turn_only</code>.`;
+          }
+        }
+
+        if (wsSeamReadout) {
+          wsSeamReadout.innerHTML =
+            `aud="wearables.hud-stream" • mode="${STATE.runtimePath}" • jti=${STATE.tokenJti} (consumed=${STATE.tokenConsumed})<br>` +
+            `last_event=${STATE.lastWsEvent} • max_frame=16,384 B • queue=${STATE.queueDepth}/8 (evicted_normal=${STATE.evictedNormal}, dropped_critical=${STATE.droppedCritical})`;
+        }
+
+        modeButtons.forEach((btn) => {
+          btn.setAttribute('aria-pressed', String(btn.dataset.mode === STATE.mode));
+        });
+
+        // Update Single Pinch CTA label per active mode
+        if (!isSeitiate) {
+          pinchLabel.textContent = 'Switch Back to Seitiate HUD (Zero Strain)';
+          decisionQuickRow.style.display = 'none';
+        } else if (STATE.mode === 'whisper') {
+          pinchLabel.textContent = 'INDEX PINCH → Expand Into 3-Choice Card';
+          decisionQuickRow.style.display = 'none';
+        } else if (STATE.mode === 'decision') {
+          const current = DECISION_CHOICES[STATE.selectedChoice];
+          pinchLabel.textContent = `INDEX PINCH → Cycle Choice (Now: ${current.num}. ${current.label})`;
+          decisionQuickRow.style.display = 'flex';
+        } else if (STATE.mode === 'radar') {
+          pinchLabel.textContent = 'INDEX PINCH → Focus Active Gate (Pavel)';
+          decisionQuickRow.style.display = 'none';
+        } else {
+          pinchLabel.textContent = `INDEX PINCH → Next Beat (${STATE.teleprompterIndex + 1} / ${TELEPROMPTER_BEATS.length})`;
+          decisionQuickRow.style.display = 'none';
+        }
+
+        // Update Optical Telemetry Bar
+        if (!isSeitiate) {
+          metricWords.textContent = '74 words (!)';
+          metricWords.style.color = '#f87171';
+          metricFont.textContent = '13 px (Squint)';
+          metricFont.style.color = '#f87171';
+          metricLit.textContent = '41.2% Haze';
+          metricLit.style.color = '#f87171';
+          metricStrain.textContent = 'HIGH RIVALRY';
+          metricStrain.style.color = '#f87171';
+        } else {
+          let wordCount = 4;
+          let minPx = 46;
+          let litPct = '4.8% (Clear)';
+          if (STATE.mode === 'whisper') {
+            wordCount = WHISPER_CARDS[STATE.whisperIndex].words;
+            minPx = 46;
+            litPct = '4.8% (Clear)';
+          } else if (STATE.mode === 'decision') {
+            wordCount = STATE.confirmedChoice !== null ? 4 : 7;
+            minPx = 48;
+            litPct = '6.4% (Clear)';
+          } else if (STATE.mode === 'radar') {
+            wordCount = 6;
+            minPx = 44;
+            litPct = '5.2% (Clear)';
+          } else if (STATE.mode === 'teleprompter') {
+            wordCount = TELEPROMPTER_BEATS[STATE.teleprompterIndex].words;
+            minPx = 52;
+            litPct = '5.6% (Clear)';
+          }
+          metricWords.textContent = `${wordCount} / 15 max`;
+          metricWords.style.color = PHOSPHOR_GREEN;
+          metricFont.textContent = `${minPx} px`;
+          metricFont.style.color = PHOSPHOR_GREEN;
+          metricLit.textContent = litPct;
+          metricLit.style.color = PHOSPHOR_GREEN;
+          metricStrain.textContent = 'ZERO STRAIN';
+          metricStrain.style.color = PHOSPHOR_GREEN;
+        }
+
+        renderOnce(performance.now());
+      }
+
+      function setRenderer(target) {
+        STATE.renderer = target;
+        triggerMorph();
+        updateUIControls();
+        announcePolite(
+          target === 'seitiate'
+            ? 'Switched to Seitiate Zero-Strain Waveguide Optical HUD.'
+            : 'Switched to Meta Stock Cramped UI comparison showing small 13 pixel text and milky lens haze.'
+        );
+      }
+
+      function setMode(mode) {
+        STATE.renderer = 'seitiate';
+        STATE.mode = mode;
+        STATE.confirmedChoice = null;
+        triggerMorph();
+        updateUIControls();
+        announcePolite(`Waveguide morphed to ${mode} mode.`);
+      }
+
+      function confirmDecision(index) {
+        STATE.renderer = 'seitiate';
+        STATE.mode = 'decision';
+        STATE.selectedChoice = index;
+        STATE.confirmedChoice = index;
+        STATE.confirmedAt = performance.now();
+        STATE.pinchFlash = 1;
+        triggerMorph();
+        const chosen = DECISION_CHOICES[index];
+        secretaryFeedback.innerHTML = `<strong style="color:#00FF66;">Madam Secretary:</strong> Sealed <strong>${chosen.num}. ${chosen.label}</strong> on Pavel’s transaction plan — receipt logged.`;
+        updateUIControls();
+        announcePolite(`Confirmed option ${chosen.num}: ${chosen.label}.`);
+      }
+
+      function handleSinglePinch() {
+        STATE.pinchFlash = 1;
+        if (STATE.renderer === 'meta') {
+          setRenderer('seitiate');
+          return;
+        }
+        if (STATE.mode === 'whisper') {
+          setMode('decision');
+          secretaryFeedback.innerHTML = `<strong style="color:#FFB000;">Single Pinch:</strong> Opened 3-Choice Decision Card (<code>48px</code> targets). Say “Approve” or pinch to cycle.`;
+        } else if (STATE.mode === 'decision') {
+          if (STATE.confirmedChoice !== null) {
+            STATE.confirmedChoice = null;
+            STATE.mode = 'radar';
+            triggerMorph();
+            secretaryFeedback.innerHTML = `<strong style="color:#00FF66;">Single Pinch:</strong> Returned to Household Radar Ring.`;
+          } else {
+            STATE.selectedChoice = (STATE.selectedChoice + 1) % DECISION_CHOICES.length;
+            const cur = DECISION_CHOICES[STATE.selectedChoice];
+            secretaryFeedback.innerHTML = `<strong style="color:#FFB000;">Single Pinch:</strong> Highlighted <strong>${cur.num}. ${cur.label}</strong>. Say “Confirm” or press Enter to seal.`;
+          }
+          updateUIControls();
+        } else if (STATE.mode === 'radar') {
+          STATE.whisperIndex = 0;
+          setMode('whisper');
+          secretaryFeedback.innerHTML = `<strong style="color:#00FF66;">Single Pinch:</strong> Focused active amber gate — Pavel Transaction Plan Ready.`;
+        } else if (STATE.mode === 'teleprompter') {
+          STATE.teleprompterIndex = (STATE.teleprompterIndex + 1) % TELEPROMPTER_BEATS.length;
+          triggerMorph();
+          const beat = TELEPROMPTER_BEATS[STATE.teleprompterIndex];
+          secretaryFeedback.innerHTML = `<strong style="color:#FFB000;">Single Pinch:</strong> Advanced Big-Number Lens to <strong>${beat.hero}</strong>.`;
+          updateUIControls();
+        }
+      }
+
+      function handleVoiceDirective(rawPhrase) {
+        const phrase = (rawPhrase || '').trim();
+        if (!phrase) return;
+        const lower = phrase.toLowerCase();
+        STATE.renderer = 'seitiate';
+        STATE.lastVoiceTranscript = `“${phrase}”`;
+
+        if (lower.includes('approve') || lower.includes('option 1') || lower.includes('option one') || lower === '1' || lower.includes('ship')) {
+          confirmDecision(0);
+          return;
+        }
+        if (lower.includes('hold') || lower.includes('wait') || lower.includes('option 2') || lower === '2') {
+          confirmDecision(1);
+          return;
+        }
+        if (lower.includes('codex') || lower.includes('option 3') || lower === '3') {
+          confirmDecision(2);
+          return;
+        }
+        if (lower.includes('confirm') || lower.includes('seal')) {
+          confirmDecision(STATE.selectedChoice);
+          return;
+        }
+        if (lower.includes('choice') || lower.includes('decide') || lower.includes('options')) {
+          setMode('decision');
+          secretaryFeedback.innerHTML = `<strong style="color:#00FF66;">Madam Secretary (${STATE.lastVoiceTranscript}):</strong> Morphed to 3-Choice Card — say “Approve”, “Hold”, or “Ask Codex”.`;
+          return;
+        }
+        if (lower.includes('radar') || lower.includes('household') || lower.includes('leads') || lower.includes('overview')) {
+          setMode('radar');
+          secretaryFeedback.innerHTML = `<strong style="color:#00FF66;">Madam Secretary (${STATE.lastVoiceTranscript}):</strong> 3 green leads nominal; Pavel has 1 amber gate ready.`;
+          return;
+        }
+        if (lower.includes('number') || lower.includes('teleprompter') || lower.includes('spend') || lower.includes('vault') || lower.includes('next')) {
+          if (STATE.mode === 'teleprompter' && lower.includes('next')) {
+            STATE.teleprompterIndex = (STATE.teleprompterIndex + 1) % TELEPROMPTER_BEATS.length;
+          } else if (lower.includes('spend') || lower.includes('vault')) {
+            STATE.teleprompterIndex = 2;
+          } else {
+            STATE.teleprompterIndex = 0;
+          }
+          setMode('teleprompter');
+          const beat = TELEPROMPTER_BEATS[STATE.teleprompterIndex];
+          secretaryFeedback.innerHTML = `<strong style="color:#00FF66;">Madam Secretary (${STATE.lastVoiceTranscript}):</strong> Big-Number Lens → <strong>${beat.top}: ${beat.hero}</strong>.`;
+          return;
+        }
+        if (lower.includes('thomas') || lower.includes('questcraft')) {
+          STATE.whisperIndex = 1;
+          setMode('whisper');
+          secretaryFeedback.innerHTML = `<strong style="color:#00FF66;">Madam Secretary (${STATE.lastVoiceTranscript}):</strong> ${WHISPER_CARDS[1].spoken}`;
+          return;
+        }
+        if (lower.includes('bridge') || lower.includes('architect')) {
+          STATE.whisperIndex = 2;
+          setMode('whisper');
+          secretaryFeedback.innerHTML = `<strong style="color:#00FF66;">Madam Secretary (${STATE.lastVoiceTranscript}):</strong> ${WHISPER_CARDS[2].spoken}`;
+          return;
+        }
+
+        // Default: Pavel Ambient Whisper
+        STATE.whisperIndex = 0;
+        setMode('whisper');
+        secretaryFeedback.innerHTML = `<strong style="color:#00FF66;">Madam Secretary (${STATE.lastVoiceTranscript}):</strong> ${WHISPER_CARDS[0].spoken}`;
+      }
+
+      // -------------------------------------------------------------------
+      // Canvas Optical Drawing Helpers (600x600 Coordinate Space)
+      // -------------------------------------------------------------------
+
+      function drawRoundedRect(x, y, w, h, r) {
+        ctx.beginPath();
+        ctx.roundRect(x, y, w, h, r);
+      }
+
+      function drawWaveguideText(text, x, y, {
+        size = 52,
+        color = PHOSPHOR_GREEN,
+        align = 'center',
+        weight = 800,
+        tracking = 2.5,
+        glow = 12,
+        maxWidth = 532
+      } = {}) {
+        ctx.save();
+        ctx.font = `${weight} ${size}px -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif`;
+        ctx.textAlign = align;
+        ctx.textBaseline = 'middle';
+        if ('letterSpacing' in ctx) {
+          ctx.letterSpacing = `${tracking}px`;
+        }
+        ctx.fillStyle = color;
+        ctx.shadowColor = color;
+        ctx.shadowBlur = glow;
+        ctx.fillText(text, x, y, maxWidth);
+        ctx.restore();
+      }
+
+      function drawOpticalCornerFiducials(now) {
+        // Minimal zero-clutter optical corner ticks + live mic pulse dot (0 tiny text!)
+        ctx.save();
+        ctx.strokeStyle = 'rgba(0, 255, 102, 0.32)';
+        ctx.lineWidth = 3;
+        const m = 24;
+        const len = 18;
+        // Top-left
+        ctx.beginPath();
+        ctx.moveTo(m, m + len);
+        ctx.lineTo(m, m);
+        ctx.lineTo(m + len, m);
+        // Top-right
+        ctx.moveTo(600 - m - len, m);
+        ctx.lineTo(600 - m, m);
+        ctx.lineTo(600 - m, m + len);
+        // Bottom-left
+        ctx.moveTo(m, 600 - m - len);
+        ctx.lineTo(m, 600 - m);
+        ctx.lineTo(m + len, 600 - m);
+        // Bottom-right
+        ctx.moveTo(600 - m - len, 600 - m);
+        ctx.lineTo(600 - m, 600 - m);
+        ctx.lineTo(600 - m, 600 - m - len);
+        ctx.stroke();
+
+        // Explicit visible capture indicator ONLY when Path 2 + Wearer/Bystander Consent is active (default OFF!)
+        const activeCapture = computeVisibleCaptureIndicator();
+        if (activeCapture !== 'off') {
+          const pulse = reducedMotionQuery.matches ? 1 : 0.72 + 0.28 * Math.sin(now * 0.005);
+          const badgeText = activeCapture === 'mic_and_camera_live'
+            ? 'MIC+CAM'
+            : activeCapture === 'camera_live'
+              ? 'CAM LIVE'
+              : 'MIC LIVE';
+          ctx.save();
+          ctx.strokeStyle = AMBER_SIGNAL;
+          ctx.lineWidth = 3;
+          ctx.shadowColor = AMBER_SIGNAL;
+          ctx.shadowBlur = 10 * pulse;
+          drawRoundedRect(178, 16, 244, 46, 23);
+          ctx.stroke();
+          ctx.fillStyle = AMBER_SIGNAL;
+          ctx.beginPath();
+          ctx.arc(204, 39, 7, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+          drawWaveguideText(badgeText, 314, 40, {
+            size: 34,
+            color: AMBER_SIGNAL,
+            weight: 800,
+            tracking: 1.5,
+            glow: 8,
+            maxWidth: 186
+          });
+        }
+
+        // Pinch flash ring feedback
+        if (STATE.pinchFlash > 0.02) {
+          ctx.strokeStyle = `rgba(0, 255, 102, ${STATE.pinchFlash * 0.65})`;
+          ctx.lineWidth = 5;
+          drawRoundedRect(14, 14, 572, 572, 24);
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+
+      // MODE 1: Ambient Whisper Card (4-5 words total, 48px-60px type + optical status ring)
+      function renderWhisperMode(now) {
+        const card = WHISPER_CARDS[STATE.whisperIndex];
+        const cx = 300;
+        const cy = 175;
+        const radius = 64;
+        const pulse = reducedMotionQuery.matches ? 1 : 0.82 + 0.18 * Math.sin(now * 0.0045);
+
+        ctx.save();
+        // Track ring
+        ctx.lineWidth = 10;
+        ctx.strokeStyle = 'rgba(0, 255, 102, 0.16)';
+        ctx.beginPath();
+        ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // Active status arc
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = card.accent;
+        ctx.shadowColor = card.accent;
+        ctx.shadowBlur = 16 * pulse;
+        ctx.beginPath();
+        ctx.arc(cx, cy, radius, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * card.ringProgress);
+        ctx.stroke();
+
+        // Inner beacon core
+        ctx.fillStyle = card.accent;
+        ctx.beginPath();
+        ctx.arc(cx, cy, 14, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        // 4 Big Words total — 46px to 60px high-contrast strokes
+        drawWaveguideText(card.lead, 300, 315, {
+          size: 46,
+          color: card.accent,
+          weight: 800,
+          tracking: 4
+        });
+        drawWaveguideText(card.line1, 300, 392, {
+          size: 52,
+          color: PHOSPHOR_GREEN,
+          weight: 800,
+          tracking: 2
+        });
+        drawWaveguideText(card.line2, 300, 466, {
+          size: 60,
+          color: PHOSPHOR_GREEN,
+          weight: 900,
+          tracking: 3
+        });
+
+        // Graphical single-pinch pill bar at bottom (zero words needed — crisp glyph)
+        ctx.save();
+        ctx.strokeStyle = 'rgba(255, 176, 0, 0.65)';
+        ctx.lineWidth = 3;
+        drawRoundedRect(230, 534, 140, 22, 11);
+        ctx.stroke();
+        ctx.fillStyle = AMBER_SIGNAL;
+        ctx.beginPath();
+        ctx.arc(262, 545, 5, 0, Math.PI * 2);
+        ctx.arc(338, 545, 5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      // MODE 2: 3-Choice Decision Card (48px blocks: 1 APPROVE / 2 HOLD / 3 ASK CODEX)
+      function renderDecisionMode(now) {
+        if (STATE.confirmedChoice !== null) {
+          const chosen = DECISION_CHOICES[STATE.confirmedChoice];
+          ctx.save();
+          ctx.strokeStyle = chosen.color;
+          ctx.shadowColor = chosen.color;
+          ctx.shadowBlur = 20;
+          ctx.lineWidth = 10;
+          ctx.beginPath();
+          ctx.arc(300, 220, 74, 0, Math.PI * 2);
+          ctx.stroke();
+
+          // Thick check glyph
+          ctx.lineCap = 'round';
+          ctx.lineJoin = 'round';
+          ctx.beginPath();
+          ctx.moveTo(266, 222);
+          ctx.lineTo(292, 248);
+          ctx.lineTo(340, 196);
+          ctx.stroke();
+          ctx.restore();
+
+          drawWaveguideText(chosen.label, 300, 368, {
+            size: 58,
+            color: chosen.color,
+            weight: 900,
+            tracking: 3
+          });
+          drawWaveguideText('SEALED', 300, 444, {
+            size: 48,
+            color: PHOSPHOR_GREEN,
+            weight: 800,
+            tracking: 5
+          });
+          return;
+        }
+
+        drawWaveguideText('PAVEL PLAN', 300, 86, {
+          size: 46,
+          color: AMBER_SIGNAL,
+          weight: 800,
+          tracking: 3
+        });
+
+        const startY = 148;
+        const blockH = 114;
+        const gap = 22;
+
+        DECISION_CHOICES.forEach((choice, idx) => {
+          const y = startY + idx * (blockH + gap);
+          const isSelected = idx === STATE.selectedChoice;
+          const strokeCol = isSelected ? choice.color : 'rgba(0, 255, 102, 0.34)';
+
+          ctx.save();
+          ctx.lineWidth = isSelected ? 5 : 2.5;
+          ctx.strokeStyle = strokeCol;
+          if (isSelected) {
+            ctx.shadowColor = choice.color;
+            ctx.shadowBlur = 16;
+          }
+          drawRoundedRect(46, y, 508, blockH, 22);
+          ctx.stroke();
+
+          // Number pill badge
+          ctx.fillStyle = isSelected ? choice.color : 'rgba(0, 255, 102, 0.16)';
+          drawRoundedRect(66, y + 20, 74, 74, 16);
+          ctx.fill();
+          ctx.restore();
+
+          drawWaveguideText(choice.num, 103, y + 58, {
+            size: 48,
+            color: isSelected ? PURE_BLACK : choice.color,
+            weight: 900,
+            tracking: 0,
+            glow: 0
+          });
+
+          drawWaveguideText(choice.label, 168, y + 58, {
+            size: 48,
+            color: isSelected ? choice.color : PHOSPHOR_GREEN,
+            align: 'left',
+            weight: 800,
+            tracking: 2.5,
+            glow: isSelected ? 14 : 6,
+            maxWidth: 360
+          });
+        });
+      }
+
+      // MODE 3: Household Radar Ring (Visual radial gauge, 44px-48px callsigns, 0 small text)
+      function renderRadarMode(now) {
+        const cx = 300;
+        const cy = 302;
+        const ringR = 114;
+        const pulse = reducedMotionQuery.matches ? 1 : 0.72 + 0.28 * Math.sin(now * 0.005);
+
+        ctx.save();
+        // Outer subtle compass guide
+        ctx.strokeStyle = 'rgba(0, 255, 102, 0.2)';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.arc(cx, cy, ringR, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // 4 quadrant radial health arcs at diagonal bearings (-135°, -45°, +135°, +45°)
+        RADAR_NODES.forEach((node) => {
+          const span = 1.05;
+          const start = node.angle - span / 2;
+          const end = start + span * node.progress;
+          const isGate = node.status === 'GATE';
+
+          ctx.save();
+          ctx.lineWidth = isGate ? 14 : 10;
+          ctx.lineCap = 'round';
+          ctx.strokeStyle = node.color;
+          ctx.shadowColor = node.color;
+          ctx.shadowBlur = isGate ? 18 * pulse : 10;
+          ctx.beginPath();
+          ctx.arc(cx, cy, ringR, start, end);
+          ctx.stroke();
+
+          // Beacon node on ring + short radial tick pointing toward corner callsign
+          const bx = cx + Math.cos(node.angle) * ringR;
+          const by = cy + Math.sin(node.angle) * ringR;
+          ctx.fillStyle = node.color;
+          ctx.beginPath();
+          ctx.arc(bx, by, isGate ? 10 : 7, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        });
+        ctx.restore();
+
+        // Center Hero Count: "1 GATE"
+        drawWaveguideText('1', cx, cy - 22, {
+          size: 62,
+          color: AMBER_SIGNAL,
+          weight: 900,
+          tracking: 1,
+          maxWidth: 160
+        });
+        drawWaveguideText('GATE', cx, cy + 32, {
+          size: 44,
+          color: AMBER_SIGNAL,
+          weight: 800,
+          tracking: 3,
+          maxWidth: 170
+        });
+
+        // 4 Corner Callsigns in 44px-46px high-contrast type — zero overlap with center ring!
+        drawWaveguideText('PAVEL', 44, 92, { size: 46, color: AMBER_SIGNAL, align: 'left', weight: 800, tracking: 2.5, maxWidth: 235 });
+        drawWaveguideText('THOMAS', 556, 92, { size: 44, color: PHOSPHOR_GREEN, align: 'right', weight: 800, tracking: 2, maxWidth: 245 });
+        drawWaveguideText('COUNCIL', 44, 514, { size: 44, color: PHOSPHOR_GREEN, align: 'left', weight: 800, tracking: 2, maxWidth: 245 });
+        drawWaveguideText('ENGINE', 556, 514, { size: 44, color: PHOSPHOR_GREEN, align: 'right', weight: 800, tracking: 2, maxWidth: 235 });
+      }
+
+      // MODE 4: Teleprompter / Big-Number Lens (56px-64px single beat + progress segments)
+      function renderTeleprompterMode() {
+        const beat = TELEPROMPTER_BEATS[STATE.teleprompterIndex];
+
+        // Top 4 segmented progress bars (graphical cadence, zero numbers)
+        ctx.save();
+        const segW = 112;
+        const segGap = 16;
+        const startX = (600 - (segW * 4 + segGap * 3)) / 2;
+        for (let i = 0; i < TELEPROMPTER_BEATS.length; i++) {
+          const active = i === STATE.teleprompterIndex;
+          ctx.fillStyle = active ? beat.accent : 'rgba(0, 255, 102, 0.22)';
+          if (active) {
+            ctx.shadowColor = beat.accent;
+            ctx.shadowBlur = 12;
+          } else {
+            ctx.shadowBlur = 0;
+          }
+          drawRoundedRect(startX + i * (segW + segGap), 76, segW, 10, 5);
+          ctx.fill();
+        }
+        ctx.restore();
+
+        drawWaveguideText(beat.top, 300, 198, {
+          size: 52,
+          color: PHOSPHOR_GREEN,
+          weight: 800,
+          tracking: 3
+        });
+
+        drawWaveguideText(beat.hero, 300, 314, {
+          size: 64,
+          color: beat.accent,
+          weight: 900,
+          tracking: 3,
+          glow: 18
+        });
+
+        drawWaveguideText(beat.bottom, 300, 430, {
+          size: 52,
+          color: PHOSPHOR_GREEN,
+          weight: 800,
+          tracking: 2.5
+        });
+      }
+
+      // COMPARISON: Meta's Stock Cramped Ray-Ban Display OS (Why It Hurts Your Eyes)
+      function renderMetaStockCrampedUI() {
+        ctx.save();
+        // 1. Milky translucent grey/blue background veil that floods the right eye with stray waveguide light!
+        ctx.fillStyle = 'rgba(34, 40, 52, 0.88)';
+        drawRoundedRect(18, 18, 564, 564, 22);
+        ctx.fill();
+
+        // Top tiny status bar (12px-13px micro-clutter)
+        ctx.fillStyle = '#cbd5e1';
+        ctx.font = '600 13px system-ui, sans-serif';
+        ctx.textAlign = 'left';
+        ctx.fillText('10:42 AM  •  Meta AI Connected  •  Neural Band 84%  •  Wi-Fi 5G', 38, 44);
+
+        // Nested tab strip requiring horizontal swipe + wrist twist
+        const tabs = ['Home', 'Chats (14)', 'Notifications (9)', 'Meta AI', 'Settings > Display'];
+        let tx = 36;
+        tabs.forEach((t, idx) => {
+          ctx.fillStyle = idx === 1 ? 'rgba(59, 130, 246, 0.45)' : 'rgba(255, 255, 255, 0.08)';
+          drawRoundedRect(tx, 60, 102, 28, 8);
+          ctx.fill();
+          ctx.fillStyle = '#e2e8f0';
+          ctx.font = '500 12px system-ui, sans-serif';
+          ctx.fillText(t, tx + 8, 78);
+          tx += 108;
+        });
+
+        // Cramped multi-column notification cards with tiny 13px-15px body text
+        const cards = [
+          {
+            title: 'Telegram • Founders & Architecture Room (Pavel)',
+            time: '2m ago • Swipe Right > Twist Wrist to Reply',
+            body1: 'Pavel: Have you reviewed the updated Rigi V8 state-free question plan basis',
+            body2: 'hashes and Role Doma supersession boundary before we lock the schema today?'
+          },
+          {
+            title: 'Meta AI Assistant ("Say Hey Meta to summarize")',
+            time: 'Just now • Generic Cloud Summary (No Repo Context)',
+            body1: 'Meta AI: It looks like your group is chatting about software plans! Would you',
+            body2: 'like me to search the web for project management tips or set a reminder?'
+          },
+          {
+            title: 'GitHub • thomasdephuoc/gaming_IDE Pull Request #6',
+            time: '5m ago • Pinch + Hold + Swipe Down for More Actions',
+            body1: '57 checks passed on branch seitiate/nov12-rts-engine-and-playbook (+2,453',
+            body2: '-334 lines across locks.js, liveAdapter.js, NOV12-RTS-SPRINT.md)...'
+          }
+        ];
+
+        let cy = 104;
+        cards.forEach((c) => {
+          ctx.fillStyle = 'rgba(15, 23, 42, 0.78)';
+          drawRoundedRect(36, cy, 528, 114, 12);
+          ctx.fill();
+          ctx.strokeStyle = 'rgba(148, 163, 184, 0.25)';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+
+          ctx.fillStyle = '#f8fafc';
+          ctx.font = '700 14px system-ui, sans-serif';
+          ctx.fillText(c.title, 50, cy + 26);
+
+          ctx.fillStyle = '#94a3b8';
+          ctx.font = '500 12px system-ui, sans-serif';
+          ctx.fillText(c.time, 50, cy + 46);
+
+          ctx.fillStyle = '#cbd5e1';
+          ctx.font = '400 13px system-ui, sans-serif';
+          ctx.fillText(c.body1, 50, cy + 72);
+          ctx.fillText(c.body2, 50, cy + 92);
+          cy += 126;
+        });
+
+        // Confusing Neural Band multi-gesture cheat sheet bar at bottom
+        ctx.fillStyle = 'rgba(239, 68, 68, 0.22)';
+        drawRoundedRect(36, 490, 528, 74, 12);
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(248, 113, 113, 0.65)';
+        ctx.stroke();
+
+        ctx.fillStyle = '#fecaca';
+        ctx.font = '700 13px system-ui, sans-serif';
+        ctx.fillText('WHY THIS STRAINS YOUR RIGHT EYE AT 2m FOCAL DISTANCE:', 50, 514);
+        ctx.font = '500 12px system-ui, sans-serif';
+        ctx.fillText('• 74 tiny 12–14px words + milky backdrop veil force monocular squinting', 50, 534);
+        ctx.fillText('• 6 gestures (Thumb Swipe, Wrist Twist, Double Pinch, Hold) + dumb Meta AI', 50, 552);
+        ctx.restore();
+      }
+
+      function renderOnce(now) {
+        // Pure #000000 clear (= 0 photons emitted = transparent waveguide glass!)
+        ctx.fillStyle = PURE_BLACK;
+        ctx.fillRect(0, 0, 600, 600);
+
+        if (STATE.renderer === 'meta') {
+          renderMetaStockCrampedUI();
+          return;
+        }
+
+        ctx.save();
+        ctx.globalAlpha = STATE.morphAlpha;
+        drawOpticalCornerFiducials(now);
+
+        if (STATE.mode === 'whisper') {
+          renderWhisperMode(now);
+        } else if (STATE.mode === 'decision') {
+          renderDecisionMode(now);
+        } else if (STATE.mode === 'radar') {
+          renderRadarMode(now);
+        } else if (STATE.mode === 'teleprompter') {
+          renderTeleprompterMode();
+        }
+        ctx.restore();
+      }
+
+      function tick(now) {
+        if (!STATE.isRunning) return;
+        if (STATE.morphAlpha < 1) {
+          STATE.morphAlpha = Math.min(1, STATE.morphAlpha + 0.08);
+        }
+        if (STATE.pinchFlash > 0) {
+          STATE.pinchFlash = Math.max(0, STATE.pinchFlash - 0.06);
+        }
+        renderOnce(now);
+        if (!reducedMotionQuery.matches) {
+          STATE.rafId = window.requestAnimationFrame(tick);
+        }
+      }
+
+      function startLoop() {
+        if (STATE.isRunning && STATE.rafId) return;
+        STATE.isRunning = true;
+        renderOnce(performance.now());
+        if (!reducedMotionQuery.matches) {
+          STATE.rafId = window.requestAnimationFrame(tick);
+        }
+      }
+
+      function stopLoop() {
+        STATE.isRunning = false;
+        if (STATE.rafId) {
+          window.cancelAnimationFrame(STATE.rafId);
+          STATE.rafId = 0;
+        }
+      }
+
+      // Efficient background processing: pause rAF when offscreen or tab hidden
+      stageContainer.addEventListener('contentvisibilityautostatechange', (event) => {
+        if (event.skipped) {
+          stopLoop();
+        } else {
+          startLoop();
+        }
+      });
+
+      if (!('contentVisibility' in document.documentElement.style) && 'IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              startLoop();
+            } else {
+              stopLoop();
+            }
+          });
+        }, { rootMargin: '200px' });
+        io.observe(stageContainer);
+      }
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          stopLoop();
+        } else {
+          startLoop();
+        }
+      });
+
+      // Wire interactive controls
+      btnSeitiate.addEventListener('click', () => setRenderer('seitiate'));
+      btnMeta.addEventListener('click', () => setRenderer('meta'));
+
+      glassToggle.addEventListener('change', () => {
+        STATE.glassBackdrop = glassToggle.checked;
+        updateUIControls();
+        announcePolite(
+          STATE.glassBackdrop
+            ? '2 meter real-world see-through glass backdrop enabled.'
+            : 'Pure black optical waveguide bench view enabled.'
+        );
+      });
+
+      modeButtons.forEach((btn) => {
+        btn.addEventListener('click', () => setMode(btn.dataset.mode));
+      });
+
+      pinchBtn.addEventListener('click', handleSinglePinch);
+      canvas.addEventListener('click', handleSinglePinch);
+
+      confirmChoiceBtn.addEventListener('click', () => {
+        confirmDecision(STATE.selectedChoice);
+      });
+
+      // Wire Path 1 / Path 2 separation & Default-OFF Wearer/Bystander Consent controls
+      function setRuntimePath(nextPath) {
+        STATE.runtimePath = nextPath;
+        if (nextPath === 'display_web_app') {
+          STATE.micConsent = false;
+          STATE.camConsent = false;
+          STATE.lastWsEvent = 'connection.ready(display_web_app)';
+          announcePolite('Switched to Path 1 Display Web App. Audio and camera capture are forbidden.');
+        } else {
+          STATE.lastWsEvent = 'connection.ready(dat_companion)';
+          announcePolite('Switched to Path 2 Device Access Toolkit Companion. Capture remains off until wearer and bystander consent switches are enabled.');
+        }
+        updateUIControls();
+      }
+
+      btnPathWebapp.addEventListener('click', () => setRuntimePath('display_web_app'));
+      btnPathDat.addEventListener('click', () => setRuntimePath('dat_companion'));
+
+      bystanderAckToggle.addEventListener('change', () => {
+        STATE.bystanderAck = bystanderAckToggle.checked;
+        if (!STATE.bystanderAck) {
+          STATE.micConsent = false;
+          STATE.camConsent = false;
+        }
+        updateUIControls();
+        announcePolite(
+          STATE.bystanderAck
+            ? 'Wearer and bystander hardware LED acknowledgement enabled.'
+            : 'Bystander LED acknowledgement cleared; capture disabled.'
+        );
+      });
+
+      micConsentToggle.addEventListener('change', () => {
+        if (STATE.runtimePath !== 'dat_companion') {
+          micConsentToggle.checked = false;
+          STATE.lastWsEvent = '403:mode_forbids_capture';
+          secretaryFeedback.innerHTML = `<strong style="color:#f87171;">Server Gate (403 mode_forbids_capture):</strong> Path 1 Display Web Apps cannot enable microphone capture. Switch to Path 2 DAT Companion first.`;
+          updateUIControls();
+          announceCritical('Blocked: Path 1 Display Web App forbids microphone capture.');
+          return;
+        }
+        if (!STATE.bystanderAck) {
+          micConsentToggle.checked = false;
+          STATE.lastWsEvent = '422:bystander_ack_required';
+          secretaryFeedback.innerHTML = `<strong style="color:#FFB000;">Consent Gate (422):</strong> Enable Switch 1 (Wearer &amp; Bystander Hardware LED Notice) before turning on microphone capture.`;
+          updateUIControls();
+          announceCritical('Enable wearer and bystander hardware LED acknowledgement before turning on microphone capture.');
+          return;
+        }
+        STATE.micConsent = micConsentToggle.checked;
+        STATE.lastWsEvent = STATE.micConsent ? 'consent.mic_live' : 'consent.mic_off';
+        updateUIControls();
+        announcePolite(STATE.micConsent ? 'Turn-scoped microphone capture enabled with visible HUD badge.' : 'Microphone capture disabled.');
+      });
+
+      camConsentToggle.addEventListener('change', () => {
+        if (STATE.runtimePath !== 'dat_companion') {
+          camConsentToggle.checked = false;
+          STATE.lastWsEvent = '403:mode_forbids_capture';
+          secretaryFeedback.innerHTML = `<strong style="color:#f87171;">Server Gate (403 mode_forbids_capture):</strong> Path 1 Display Web Apps cannot enable camera capture. Switch to Path 2 DAT Companion first.`;
+          updateUIControls();
+          announceCritical('Blocked: Path 1 Display Web App forbids camera capture.');
+          return;
+        }
+        if (!STATE.bystanderAck) {
+          camConsentToggle.checked = false;
+          STATE.lastWsEvent = '422:bystander_ack_required';
+          secretaryFeedback.innerHTML = `<strong style="color:#FFB000;">Consent Gate (422):</strong> Enable Switch 1 (Wearer &amp; Bystander Hardware LED Notice) before turning on POV snapshot capture.`;
+          updateUIControls();
+          announceCritical('Enable wearer and bystander hardware LED acknowledgement before turning on camera capture.');
+          return;
+        }
+        STATE.camConsent = camConsentToggle.checked;
+        STATE.lastWsEvent = STATE.camConsent ? 'consent.camera_live' : 'consent.camera_off';
+        updateUIControls();
+        announcePolite(STATE.camConsent ? 'Turn-scoped POV camera snapshot enabled with visible HUD badge.' : 'Camera capture disabled.');
+      });
+
+      btnRevokeCapture.addEventListener('click', () => {
+        STATE.micConsent = false;
+        STATE.camConsent = false;
+        STATE.lastWsEvent = 'CRITICAL:capture.revoked';
+        STATE.queueDepth = Math.min(8, STATE.queueDepth + 1);
+        secretaryFeedback.innerHTML = `<strong style="color:#f87171;">Kill Switch (CRITICAL capture.revoked):</strong> Microphone &amp; camera immediately halted; visible capture indicator set to <code>off</code>.`;
+        updateUIControls();
+        announceCritical('Capture revoked immediately. Microphone and camera are off.');
+      });
+
+      btnMintJti.addEventListener('click', () => {
+        const randHex = Math.floor(Math.random() * 0xffffff).toString(16).padStart(6, '0');
+        STATE.tokenJti = `${randHex.slice(0, 4)}…${randHex.slice(2)}`;
+        STATE.tokenConsumed = true;
+        STATE.lastWsEvent = 'token.minted_and_bound';
+        updateUIControls();
+        announcePolite(`Minted fresh single-use wearables stream token ${STATE.tokenJti}.`);
+      });
+
+      btnTestBareTenant.addEventListener('click', () => {
+        STATE.lastWsEvent = 'CLOSE 4401:bare_tenant_id_forbidden';
+        secretaryFeedback.innerHTML = `<strong style="color:#f87171;">WS Handshake Rejected (4401 bare_tenant_id_forbidden):</strong> Bare <code>?tenant_id=</code> and <code>X-Tenant-ID</code> are forbidden; server requires <code>aud="wearables.hud-stream"</code>.`;
+        updateUIControls();
+        announceCritical('WebSocket rejected with code 4401: bare tenant ID forbidden.');
+      });
+
+      btnTestReplay.addEventListener('click', () => {
+        STATE.lastWsEvent = `CLOSE 4401:token_replay_detected(${STATE.tokenJti})`;
+        secretaryFeedback.innerHTML = `<strong style="color:#f87171;">WS Handshake Rejected (4401 token_replay_detected):</strong> Single-use JTI <code>${STATE.tokenJti}</code> was already consumed; mint a fresh short-lived token.`;
+        updateUIControls();
+        announceCritical('WebSocket rejected with code 4401: single-use token replay detected.');
+      });
+
+      btnTestBurst.addEventListener('click', () => {
+        STATE.queueDepth = 8;
+        STATE.evictedNormal += 4;
+        STATE.droppedCritical = 0;
+        STATE.lastWsEvent = 'hud.backpressure(8/8)';
+        secretaryFeedback.innerHTML = `<strong style="color:#FFB000;">Bounded 8-Slot Queue Backpressure:</strong> 12-frame burst (2 CRITICAL + 10 NORMAL) capped at <code>8/8</code> — evicted 4 oldest NORMAL whispers, preserved 100% of CRITICAL gates.`;
+        updateUIControls();
+        announcePolite('Simulated 12-frame burst: queue capped at 8, 4 oldest normal frames evicted, zero critical frames dropped.');
+      });
+
+      voiceChips.forEach((chip) => {
+        chip.addEventListener('click', () => {
+          if (STATE.runtimePath !== 'dat_companion') {
+            STATE.lastWsEvent = 'capture.rejected(mode_forbids_capture)';
+            secretaryFeedback.innerHTML = `<strong style="color:#f87171;">capture.rejected (mode_forbids_capture):</strong> Spoken chip blocked in Path 1 Display Web App. Use typed text / Neural Band, or enable Path 2 + Wearer/Bystander Mic Consent.`;
+            updateUIControls();
+            announceCritical('Spoken audio blocked: Path 1 Display Web App forbids microphone capture.');
+            return;
+          }
+          if (!STATE.bystanderAck || !STATE.micConsent) {
+            STATE.lastWsEvent = 'capture.rejected(mic_consent_required)';
+            secretaryFeedback.innerHTML = `<strong style="color:#FFB000;">capture.rejected (mic_consent_required):</strong> Enable Wearer/Bystander LED + Opt-In Turn Mic in Card 0 before sending spoken audio.`;
+            updateUIControls();
+            announceCritical('Spoken audio blocked: explicit microphone consent is required.');
+            return;
+          }
+          STATE.lastWsEvent = 'capture.accepted(ephemeral_turn_only)';
+          handleVoiceDirective(chip.dataset.voice);
+          updateUIControls();
+        });
+      });
+
+      voiceForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (voiceInput.value.trim()) {
+          STATE.lastWsEvent = 'text.directive';
+          handleVoiceDirective(voiceInput.value);
+          voiceInput.value = '';
+          updateUIControls();
+        }
+      });
+
+      // Keyboard shortcuts (Space = Single Index Pinch, Enter = Confirm in Decision mode, 1-4 = Modes)
+      window.addEventListener('keydown', (e) => {
+        const activeTag = document.activeElement ? document.activeElement.tagName : '';
+        if (activeTag === 'INPUT' || activeTag === 'TEXTAREA') return;
+
+        if (e.code === 'Space' && activeTag !== 'BUTTON') {
+          e.preventDefault();
+          handleSinglePinch();
+        } else if (e.key === 'Enter' && STATE.renderer === 'seitiate' && STATE.mode === 'decision' && activeTag !== 'BUTTON') {
+          e.preventDefault();
+          confirmDecision(STATE.selectedChoice);
+        } else if (e.key === '1') {
+          setMode('whisper');
+        } else if (e.key === '2') {
+          setMode('decision');
+        } else if (e.key === '3') {
+          setMode('radar');
+        } else if (e.key === '4') {
+          setMode('teleprompter');
+        }
+      });
+
+      updateUIControls();
+      startLoop();
+    })();
+  </script>
+</body>
+</html>

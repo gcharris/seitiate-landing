@@ -1,2202 +1,918 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"><head>
   <script src="/assets/gate.js"></script>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Seitiate+ — Fractal Customer Ladder, Paddle v2 Tiers &amp; Capability Configurator</title>
-  <style>
-    :root {
-      color-scheme: dark;
-      --sp-bg: #0b0d10;
-      --sp-surface: #14171c;
-      --sp-surface-raised: #1a1e24;
-      --sp-surface-hover: #20262e;
-      --sp-border: #262b33;
-      --sp-border-strong: #363e4a;
-      --sp-text: #e8ecf1;
-      --sp-text-muted: #9aa3ae;
-      --sp-text-faint: #6c7683;
-      --sp-accent: #7fd1b9;
-      --sp-accent-ink: #082019;
-      --sp-accent-soft: rgba(127, 209, 185, 0.13);
-      --sp-warn: #e0a158;
-      --sp-warn-soft: rgba(224, 161, 88, 0.14);
-      --sp-purple: #b592ff;
-      --sp-purple-soft: rgba(181, 146, 255, 0.14);
-      --sp-blue: #6fb6ff;
-      --sp-blue-soft: rgba(111, 182, 255, 0.14);
-      --sp-error: #e06868;
-      --sp-radius: 10px;
-      --sp-radius-sm: 6px;
-      --sp-font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
-      --sp-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      background: var(--sp-bg);
-      color: var(--sp-text);
-      font-family: var(--sp-font);
-      line-height: 1.45;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* Accessible focus indicators everywhere */
-    button:focus-visible,
-    input:focus-visible,
-    select:focus-visible,
-    [role="tab"]:focus-visible {
-      outline: 2px solid var(--sp-accent);
-      outline-offset: 2px;
-    }
-
-    /* Top Bar */
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 30;
-      background: rgba(11, 13, 16, 0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--sp-border);
-      padding: 12px 24px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .brand-mark {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      background: linear-gradient(135deg, var(--sp-accent), #3a8f78);
-      color: var(--sp-accent-ink);
-      font-weight: 800;
-      font-size: 15px;
-      display: grid;
-      place-items: center;
-      letter-spacing: -0.03em;
-    }
-
-    .brand-title {
-      font-size: 15px;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-    }
-
-    .brand-sub {
-      font-size: 12px;
-      color: var(--sp-text-muted);
-    }
-
-    .topbar-controls {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .term-switcher {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--sp-surface);
-      border: 1px solid var(--sp-border);
-      border-radius: var(--sp-radius-sm);
-      padding: 4px 10px;
-      font-size: 12px;
-      color: var(--sp-text-muted);
-    }
-
-    .term-switcher select {
-      background: var(--sp-surface-raised);
-      color: var(--sp-accent);
-      border: 1px solid var(--sp-border-strong);
-      border-radius: 4px;
-      padding: 4px 8px;
-      font-size: 12px;
-      font-weight: 600;
-      min-height: 32px;
-    }
-
-    /* Preset Bar */
-    .preset-bar {
-      max-width: 1480px;
-      margin: 16px auto 0;
-      padding: 0 24px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .preset-label {
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--sp-text-muted);
-      margin-right: 4px;
-    }
-
-    .btn {
-      appearance: none;
-      border: 1px solid var(--sp-border-strong);
-      background: var(--sp-surface);
-      color: var(--sp-text);
-      font-family: inherit;
-      font-size: 12.5px;
-      font-weight: 600;
-      padding: 8px 13px;
-      min-height: 38px;
-      border-radius: var(--sp-radius-sm);
-      cursor: pointer;
-      transition: background 0.15s ease, border-color 0.15s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .btn:hover {
-      background: var(--sp-surface-hover);
-      border-color: var(--sp-accent);
-    }
-
-    .btn-primary {
-      background: var(--sp-accent);
-      color: var(--sp-accent-ink);
-      border-color: var(--sp-accent);
-      font-weight: 700;
-    }
-
-    .btn-primary:hover {
-      background: #94dec9;
-      border-color: #94dec9;
-    }
-
-    .btn-preset-active {
-      border-color: var(--sp-accent);
-      background: var(--sp-accent-soft);
-      color: var(--sp-accent);
-    }
-
-    /* Main Workspace Grid */
-    .workspace {
-      max-width: 1480px;
-      margin: 16px auto 48px;
-      padding: 0 24px;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 410px;
-      gap: 22px;
-      align-items: start;
-    }
-
-    @media (max-width: 1140px) {
-      .workspace {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* Section Cards */
-    .panel {
-      background: var(--sp-surface);
-      border: 1px solid var(--sp-border);
-      border-radius: var(--sp-radius);
-      padding: 18px 20px;
-      margin-bottom: 18px;
-    }
-
-    .panel-header {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 8px;
-      margin-bottom: 14px;
-    }
-
-    .wheel-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-family: var(--sp-mono);
-      font-size: 11px;
-      font-weight: 600;
-      padding: 3px 8px;
-      border-radius: 999px;
-      background: var(--sp-accent-soft);
-      color: var(--sp-accent);
-      border: 1px solid rgba(127, 209, 185, 0.3);
-    }
-
-    .wheel-tag-purple {
-      background: var(--sp-purple-soft);
-      color: var(--sp-purple);
-      border-color: rgba(181, 146, 255, 0.3);
-    }
-
-    .wheel-tag-warn {
-      background: var(--sp-warn-soft);
-      color: var(--sp-warn);
-      border-color: rgba(224, 161, 88, 0.3);
-    }
-
-    .panel-title {
-      margin: 4px 0 0;
-      font-size: 16px;
-      font-weight: 700;
-    }
-
-    .panel-desc {
-      margin: 2px 0 0;
-      font-size: 13px;
-      color: var(--sp-text-muted);
-    }
-
-    /* Outer Wheel: 4 Master Rungs */
-    .rung-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    @media (max-width: 820px) {
-      .rung-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    .rung-btn {
-      text-align: left;
-      background: var(--sp-surface-raised);
-      border: 1px solid var(--sp-border);
-      border-radius: var(--sp-radius-sm);
-      padding: 12px 13px;
-      color: var(--sp-text);
-      cursor: pointer;
-      transition: border-color 0.15s ease, background 0.15s ease;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      min-height: 108px;
-    }
-
-    .rung-btn:hover {
-      background: var(--sp-surface-hover);
-      border-color: var(--sp-border-strong);
-    }
-
-    .rung-btn[aria-pressed="true"] {
-      background: rgba(127, 209, 185, 0.09);
-      border: 1.5px solid var(--sp-accent);
-      box-shadow: inset 0 0 0 1px rgba(127, 209, 185, 0.18);
-    }
-
-    .rung-num {
-      font-family: var(--sp-mono);
-      font-size: 11px;
-      color: var(--sp-accent);
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-
-    .rung-name {
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .rung-caption {
-      font-size: 12px;
-      color: var(--sp-text-muted);
-      line-height: 1.35;
-    }
-
-    /* Inner Wheel #1: Sub-Tiers (kind = plan | assigned) */
-    .subtier-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    @media (max-width: 720px) {
-      .subtier-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .subtier-card {
-      text-align: left;
-      background: var(--sp-surface-raised);
-      border: 1px solid var(--sp-border);
-      border-radius: var(--sp-radius-sm);
-      padding: 12px 14px;
-      color: var(--sp-text);
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-
-    .subtier-card[aria-pressed="true"] {
-      border: 1.5px solid var(--sp-purple);
-      background: rgba(181, 146, 255, 0.08);
-    }
-
-    .subtier-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 6px;
-    }
-
-    .kind-pill {
-      font-family: var(--sp-mono);
-      font-size: 10.5px;
-      padding: 2px 6px;
-      border-radius: 4px;
-      background: rgba(255, 255, 255, 0.06);
-      color: var(--sp-text-muted);
-    }
-
-    .subtier-price {
-      font-size: 17px;
-      font-weight: 800;
-      color: var(--sp-text);
-    }
-
-    .subtier-meta {
-      font-size: 12px;
-      color: var(--sp-text-muted);
-    }
-
-    /* Room Partner Config Bar (shown in Rung 4 & Rung 1 Room Selector) */
-    .partner-meta-bar {
-      margin-top: 12px;
-      padding-top: 12px;
-      border-top: 1px solid var(--sp-border);
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      gap: 10px;
-    }
-
-    .field-group {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .field-group label {
-      font-size: 11.5px;
-      font-weight: 600;
-      color: var(--sp-text-muted);
-    }
-
-    .field-group input,
-    .field-group select {
-      background: var(--sp-bg);
-      border: 1px solid var(--sp-border-strong);
-      border-radius: var(--sp-radius-sm);
-      color: var(--sp-text);
-      padding: 7px 10px;
-      font-size: 12.5px;
-      font-family: inherit;
-      min-height: 36px;
-    }
-
-    /* Tabs (Modern Web Guidance compliant: button role="tab" + pseudo-element underline, not color alone) */
-    .tablist {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-      border-bottom: 1px solid var(--sp-border);
-      margin-bottom: 14px;
-    }
-
-    .tab-btn {
-      position: relative;
-      appearance: none;
-      background: transparent;
-      border: none;
-      color: var(--sp-text-muted);
-      font-family: inherit;
-      font-size: 13px;
-      font-weight: 600;
-      padding: 10px 14px;
-      min-height: 44px;
-      cursor: pointer;
-    }
-
-    .tab-btn:hover {
-      color: var(--sp-text);
-    }
-
-    .tab-btn[aria-selected="true"] {
-      color: var(--sp-text);
-    }
-
-    .tab-btn[aria-selected="true"]::after {
-      content: "";
-      position: absolute;
-      inset-inline: 8px;
-      bottom: -1px;
-      border-block-end: 3px solid var(--sp-accent);
-      border-radius: 2px;
-    }
-
-    /* Filter Toolbar */
-    .catalog-toolbar {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-
-    .search-input {
-      flex: 1 1 240px;
-      background: var(--sp-bg);
-      border: 1px solid var(--sp-border-strong);
-      border-radius: var(--sp-radius-sm);
-      color: var(--sp-text);
-      padding: 9px 12px;
-      font-size: 13px;
-      min-height: 40px;
-    }
-
-    .bucket-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .bucket-pill {
-      appearance: none;
-      background: var(--sp-surface-raised);
-      border: 1px solid var(--sp-border);
-      color: var(--sp-text-muted);
-      border-radius: 999px;
-      padding: 6px 12px;
-      min-height: 36px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    .bucket-pill[aria-pressed="true"] {
-      background: var(--sp-accent-soft);
-      color: var(--sp-accent);
-      border-color: var(--sp-accent);
-    }
-
-    /* Family Group Header + Indeterminate Select-All Checkbox */
-    .family-section {
-      margin-bottom: 18px;
-    }
-
-    .family-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 6px 10px;
-      background: rgba(255, 255, 255, 0.025);
-      border: 1px solid var(--sp-border);
-      border-radius: var(--sp-radius-sm);
-      margin-bottom: 8px;
-    }
-
-    .family-select-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      min-height: 44px;
-      padding-right: 8px;
-    }
-
-    /* Checkboxes: Brand-consistent accent-color >= 3:1 contrast + @supports not fallback */
-    input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
-      accent-color: var(--sp-accent);
-      cursor: pointer;
-      flex-shrink: 0;
-    }
-
-    @supports not (accent-color: #7fd1b9) {
-      input[type="checkbox"] {
-        appearance: none;
-        background: var(--sp-bg);
-        border: 2px solid var(--sp-border-strong);
-        border-radius: 4px;
-        position: relative;
-      }
-      input[type="checkbox"]:checked {
-        background: var(--sp-accent);
-        border-color: var(--sp-accent);
-      }
-      input[type="checkbox"]:checked::after {
-        content: "";
-        position: absolute;
-        left: 4px;
-        top: 1px;
-        width: 5px;
-        height: 9px;
-        border: solid var(--sp-accent-ink);
-        border-width: 0 2px 2px 0;
-        transform: rotate(45deg);
-      }
-    }
-
-    /* Capability Cards + Child-State-Based Styling (:has + @supports not fallback) */
-    .cap-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    @media (max-width: 760px) {
-      .cap-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .cap-card {
-      background: var(--sp-surface-raised);
-      border: 1px solid var(--sp-border);
-      border-radius: var(--sp-radius-sm);
-      padding: 12px 14px;
-      transition: border-color 0.14s ease, background 0.14s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 8px;
-    }
-
-    .cap-card:hover {
-      border-color: var(--sp-border-strong);
-    }
-
-    .cap-card:has(.cap-checkbox:checked) {
-      border-color: var(--sp-accent);
-      background: rgba(127, 209, 185, 0.075);
-      box-shadow: inset 0 0 0 1px rgba(127, 209, 185, 0.15);
-    }
-
-    @supports not selector(:has(*)) {
-      .cap-card.is-checked {
-        border-color: var(--sp-accent);
-        background: rgba(127, 209, 185, 0.075);
-        box-shadow: inset 0 0 0 1px rgba(127, 209, 185, 0.15);
-      }
-    }
-
-    .cap-label {
-      display: flex;
-      align-items: flex-start;
-      gap: 11px;
-      cursor: pointer;
-      min-height: 44px;
-    }
-
-    .cap-label input[type="checkbox"] {
-      margin-top: 2px;
-    }
-
-    .cap-title {
-      font-size: 13.5px;
-      font-weight: 700;
-      color: var(--sp-text);
-    }
-
-    .cap-slug {
-      font-family: var(--sp-mono);
-      font-size: 11px;
-      color: var(--sp-text-faint);
-      display: block;
-      margin-top: 1px;
-    }
-
-    .cap-desc {
-      font-size: 12px;
-      color: var(--sp-text-muted);
-      margin: 4px 0 0;
-    }
-
-    .cap-footer {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 6px;
-      padding-top: 6px;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-      font-size: 11.5px;
-    }
-
-    .badge {
-      font-family: var(--sp-mono);
-      font-size: 10.5px;
-      font-weight: 700;
-      padding: 2px 7px;
-      border-radius: 4px;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .badge-free {
-      background: rgba(127, 209, 185, 0.14);
-      color: var(--sp-accent);
-    }
-
-    .badge-line-item {
-      background: var(--sp-purple-soft);
-      color: var(--sp-purple);
-    }
-
-    .badge-metered {
-      background: var(--sp-blue-soft);
-      color: var(--sp-blue);
-    }
-
-    .badge-marketplace {
-      background: var(--sp-warn-soft);
-      color: var(--sp-warn);
-    }
-
-    .badge-guarded {
-      background: rgba(224, 104, 104, 0.16);
-      color: var(--sp-error);
-    }
-
-    /* Inner Wheel #2: Partner's Own Customer Tiers Simulator */
-    .wheel2-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 12.5px;
-      margin-top: 8px;
-    }
-
-    .wheel2-table th,
-    .wheel2-table td {
-      text-align: left;
-      padding: 8px 10px;
-      border-bottom: 1px solid var(--sp-border);
-    }
-
-    .wheel2-table th {
-      color: var(--sp-text-muted);
-      font-weight: 600;
-      font-size: 11.5px;
-    }
-
-    .clearing-box {
-      margin-top: 12px;
-      background: var(--sp-bg);
-      border: 1px solid var(--sp-border-strong);
-      border-radius: var(--sp-radius-sm);
-      padding: 12px 14px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
-      gap: 10px;
-    }
-
-    .metric-label {
-      font-size: 11px;
-      color: var(--sp-text-muted);
-    }
-
-    .metric-val {
-      font-family: var(--sp-mono);
-      font-size: 15px;
-      font-weight: 700;
-      margin-top: 2px;
-    }
-
-    /* Sticky Summary Drawer */
-    .summary-drawer {
-      position: sticky;
-      top: 74px;
-      background: var(--sp-surface);
-      border: 1px solid var(--sp-border-strong);
-      border-radius: var(--sp-radius);
-      padding: 18px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .drawer-title {
-      font-size: 15px;
-      font-weight: 700;
-      margin: 0;
-    }
-
-    .cost-hero {
-      background: var(--sp-bg);
-      border: 1px solid var(--sp-border);
-      border-radius: var(--sp-radius-sm);
-      padding: 12px 14px;
-    }
-
-    .cost-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      font-size: 12.5px;
-      padding: 4px 0;
-      color: var(--sp-text-muted);
-    }
-
-    .cost-row strong {
-      color: var(--sp-text);
-      font-family: var(--sp-mono);
-    }
-
-    .cost-total {
-      border-top: 1px solid var(--sp-border-strong);
-      margin-top: 6px;
-      padding-top: 8px;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--sp-text);
-    }
-
-    .cost-total strong {
-      color: var(--sp-accent);
-      font-size: 17px;
-    }
-
-    .code-preview {
-      background: #07090c;
-      border: 1px solid var(--sp-border);
-      border-radius: var(--sp-radius-sm);
-      padding: 10px 12px;
-      font-family: var(--sp-mono);
-      font-size: 11px;
-      color: #c8d3e0;
-      max-height: 210px;
-      overflow: auto;
-      white-space: pre;
-      margin: 0;
-    }
-
-    .guarded-alert {
-      background: rgba(224, 104, 104, 0.11);
-      border: 1px solid rgba(224, 104, 104, 0.35);
-      border-radius: var(--sp-radius-sm);
-      padding: 9px 11px;
-      font-size: 11.5px;
-      color: #f3b5b5;
-    }
-
-    /* Native Modal Dialog (Modern Web Guidance compliant: overscroll-behavior: contain, no body overflow:hidden) */
-    dialog {
-      background: var(--sp-surface);
-      color: var(--sp-text);
-      border: 1px solid var(--sp-border-strong);
-      border-radius: var(--sp-radius);
-      padding: 0;
-      width: min(920px, 94vw);
-      max-height: 88vh;
-      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.65);
-    }
-
-    dialog:modal {
-      overscroll-behavior: contain;
-    }
-
-    dialog::backdrop {
-      background: rgba(5, 7, 10, 0.76);
-      backdrop-filter: blur(4px);
-      overflow: hidden;
-      overscroll-behavior: contain;
-    }
-
-    .dialog-inner {
-      padding: 20px 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      max-height: 88vh;
-      overflow-y: auto;
-    }
-
-    .dialog-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      border-bottom: 1px solid var(--sp-border);
-      padding-bottom: 12px;
-    }
-
-    .dialog-code {
-      background: #07090c;
-      border: 1px solid var(--sp-border);
-      border-radius: var(--sp-radius-sm);
-      padding: 14px;
-      font-family: var(--sp-mono);
-      font-size: 12px;
-      overflow: auto;
-      max-height: 46vh;
-      white-space: pre;
-      margin: 0;
-    }
-
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
-  </style>
-</head>
-<body>
-  <header class="topbar">
-    <div class="brand">
-      <div class="brand-mark" aria-hidden="true">S+</div>
-      <div>
-        <div class="brand-title">Seitiate+ &middot; Fractal Customer Ladder &amp; Capability Configurator</div>
-        <div class="brand-sub">Outer Master Rungs &rarr; Inner Paddle v2 <code>plan + line_item + assigned</code> &rarr; Partner Vertical Wheel</div>
-      </div>
-    </div>
-
-    <div class="topbar-controls">
-      <div class="term-switcher">
-        <label for="rung4-term-select">Rung 4 Candidate Name:</label>
-        <select id="rung4-term-select">
-          <option value="Room Partner" selected>Room Partner (Recommended #1)</option>
-          <option value="Room Builder">Room Builder (Runner-Up #2)</option>
-          <option value="Pavilion Partner">Pavilion Partner (Candidate #3)</option>
-          <option value="Foundry Partner">Foundry Partner (Collides w/ Evidence Foundry)</option>
-        </select>
-      </div>
-      <button type="button" class="btn btn-primary" id="open-manifest-btn">
-        Inspect Charter &amp; Manifest JSON
-      </button>
-    </div>
-  </header>
-
-  <!-- 1-Click Scenario Presets -->
-  <section class="preset-bar" aria-label="Architecture Presets">
-    <span class="preset-label">1-Click Presets:</span>
-    <button type="button" class="btn btn-preset-active" data-preset="questcraft">
-      Load Thomas / Questcraft Command (Rung 4)
-    </button>
-    <button type="button" class="btn" data-preset="imperfective">
-      Load Thomas / Imperfective Context App (Rung 4 Guarded)
-    </button>
-    <button type="button" class="btn" data-preset="sensarra">
-      Load Sensarra Bio-Lab Suite (Rung 4 + 3P Science)
-    </button>
-    <button type="button" class="btn" data-preset="sakme_user">
-      Load Rung 1: &ldquo;Just a Sakme Account&rdquo;
-    </button>
-    <button type="button" class="btn" data-preset="sovereign">
-      Load Rung 2: Sovereign Member
-    </button>
-    <button type="button" class="btn" data-preset="clear">
-      Clear All Checkboxes
-    </button>
-  </section>
-
-  <main class="workspace">
-    <div>
-      <!-- OUTER WHEEL: 4 MASTER RUNGS -->
-      <section class="panel" aria-labelledby="outer-wheel-heading">
-        <div class="panel-header">
-          <div>
-            <span class="wheel-tag">OUTER WHEEL &middot; vertical_id = &quot;platform&quot;</span>
-            <h2 class="panel-title" id="outer-wheel-heading">1. Master Estate Customer Ladder (Select Participation Rung)</h2>
-            <p class="panel-desc">Composable roles over one <code>Person = Tenant</code> sovereign identity. Every Master Rung spins its own Inner Sub-Tier Wheel below.</p>
-          </div>
-        </div>
-        <div class="rung-grid" id="rung-grid"></div>
-      </section>
-
-      <!-- INNER WHEEL #1: SUB-TIERS INSIDE SELECTED MASTER RUNG -->
-      <section class="panel" aria-labelledby="inner-wheel1-heading">
-        <div class="panel-header">
-          <div>
-            <span class="wheel-tag wheel-tag-purple">INNER WHEEL #1 &middot; PricingTier.kind IN ('plan', 'assigned')</span>
-            <h2 class="panel-title" id="inner-wheel1-heading">2. Base Sub-Tier Inside <span id="active-rung-label">Room Partner</span></h2>
-            <p class="panel-desc">Maps 1:1 to the primary <code>plan</code> item in Paddle Billing v2 <code>items[0]</code> (or an <code>assigned</code> co-built charter).</p>
-          </div>
-        </div>
-        <div class="subtier-grid" id="subtier-grid"></div>
-
-        <!-- Room Partner Metadata / Rung 1 Room Picker -->
-        <div class="partner-meta-bar" id="partner-meta-bar">
-          <div class="field-group">
-            <label for="room-slug-input">Room Slug (<code>rooms.vertical_id</code>)</label>
-            <input id="room-slug-input" type="text" value="questcraft" />
-          </div>
-          <div class="field-group">
-            <label for="room-origins-input">Dynamic CORS Allowed Origins (No Redeploy)</label>
-            <input id="room-origins-input" type="text" value="http://localhost:3000, https://questcraft.gg" />
-          </div>
-          <div class="field-group">
-            <label for="funding-waterfall-select">Metered Compute Funding Waterfall</label>
-            <select id="funding-waterfall-select">
-              <option value="partner_pool_first" selected>1. Partner SEIT Pool &rarr; 2. User Wallet &rarr; 3. BYOK</option>
-              <option value="user_wallet_first">1. End-User SEIT Wallet &rarr; 2. BYOK &rarr; 3. Hard Cap</option>
-              <option value="byok_only">End-User BYOK Pass-Through ($0 Markup)</option>
-            </select>
-          </div>
-          <div class="field-group">
-            <label for="volume-slider">Projected Monthly Tasks / Invocations: <span id="volume-label">2,500</span></label>
-            <input id="volume-slider" type="range" min="200" max="20000" step="100" value="2500" />
-          </div>
-        </div>
-      </section>
-
-      <!-- CAPABILITIES & INNER WHEEL #2 TABS -->
-      <section class="panel">
-        <div role="tablist" aria-label="Configurator Views" focusgroup="tablist nomemory" class="tablist">
-          <button type="button" role="tab" id="tab-catalog" aria-selected="true" aria-controls="panel-catalog" class="tab-btn">
-            3. Checkable Estate &amp; Marketplace Capabilities (<span id="checked-count-badge">0</span>)
-          </button>
-          <button type="button" role="tab" id="tab-wheel2" aria-selected="false" aria-controls="panel-wheel2" tabindex="-1" class="tab-btn">
-            4. Inner Wheel #2: Vertical's Own Customer Tiers &amp; Clearinghouse
-          </button>
-        </div>
-
-        <!-- TAB PANEL 1: CAPABILITIES CHECKBOX CATALOG -->
-        <div id="panel-catalog" role="tabpanel" aria-labelledby="tab-catalog">
-          <div class="catalog-toolbar">
-            <label for="cap-search" class="sr-only">Search capabilities</label>
-            <input id="cap-search" class="search-input" type="search" placeholder="Filter 24 audited organs, 4D Kanban, Skin Crafter, Analyzers, Roblox MCP, Stalls..." />
-            <div class="bucket-pills" role="group" aria-label="Filter by commercial routing bucket">
-              <button type="button" class="bucket-pill" data-bucket="all" aria-pressed="true">All Buckets</button>
-              <button type="button" class="bucket-pill" data-bucket="instant_enable" aria-pressed="false">Free / Included</button>
-              <button type="button" class="bucket-pill" data-bucket="subscribe_or_meter" aria-pressed="false">Seitiate+ Paid (line_item / SEIT)</button>
-              <button type="button" class="bucket-pill" data-bucket="marketplace_route" aria-pressed="false">3rd-Party Marketplace Proxy</button>
-            </div>
-          </div>
-
-          <div id="catalog-families"></div>
-        </div>
-
-        <!-- TAB PANEL 2: INNER WHEEL #2 (VERTICAL CUSTOMER TIERS & CLEARINGHOUSE) -->
-        <div id="panel-wheel2" role="tabpanel" aria-labelledby="tab-wheel2" hidden>
-          <span class="wheel-tag wheel-tag-warn">INNER WHEEL #2 &middot; vertical_id = &quot;<span id="wheel2-room-slug">questcraft</span>&quot;</span>
-          <h3 class="panel-title" style="margin-top:8px;">How Your Vertical Spins Its Own <code>plan + line_item</code> Wheel for Rung 1 Users</h3>
-          <p class="panel-desc">
-            Every Rung 4 room row inherits the exact same <code>pricing_tiers</code> schema (<code>UniqueConstraint('vertical_id', 'tier_key')</code>) so Thomas sets his own player tiers while <code>Seitiate+</code> acts as single Paddle Merchant-of-Record, deducts checked Estate &amp; 3P Marketplace costs, and settles net share!
-          </p>
-
-          <div class="partner-meta-bar" style="border-top:none; margin-top:6px; padding-top:4px;">
-            <div class="field-group">
-              <label for="sim-paid-users">Simulated Paid Room Users (Rung 1): <span id="sim-users-label">120</span></label>
-              <input id="sim-paid-users" type="range" min="10" max="2000" step="10" value="120" />
-            </div>
-            <div class="field-group">
-              <label for="sim-arpu">Avg Vertical Subscription + Add-On Price ($/mo): $<span id="sim-arpu-label">24</span></label>
-              <input id="sim-arpu" type="range" min="5" max="99" step="1" value="24" />
-            </div>
-          </div>
-
-          <table class="wheel2-table">
-            <thead>
-              <tr>
-                <th>Vertical <code>tier_key</code></th>
-                <th><code>PricingTier.kind</code></th>
-                <th>Customer Price</th>
-                <th>Included Room SEIT</th>
-                <th>Paddle Price Mapping</th>
-              </tr>
-            </thead>
-            <tbody id="wheel2-tbody"></tbody>
-          </table>
-
-          <div class="clearing-box" id="clearing-box"></div>
-        </div>
-      </section>
-    </div>
-
-    <!-- LIVE PARTNERSHIP, PADDLE items[] & MANIFEST DRAWER -->
-    <aside class="summary-drawer" aria-label="Live Partnership Cost and Paddle Summary">
-      <div>
-        <span class="wheel-tag">LIVE PADDLE v2 + LEDGER QUOTE</span>
-        <h2 class="drawer-title" style="margin-top:6px;" id="drawer-heading">Room Partner Charter Summary</h2>
-      </div>
-
-      <div class="cost-hero">
-        <div class="cost-row">
-          <span>Base Sub-Tier (<code>kind='plan'</code>):</span>
-          <strong id="sum-base-usd">$0.00/mo</strong>
-        </div>
-        <div class="cost-row">
-          <span>Checked Add-Ons (<code id="sum-li-count">0</code> <code>line_item</code>s):</span>
-          <strong id="sum-addons-usd">$0.00/mo</strong>
-        </div>
-        <div class="cost-row cost-total">
-          <span>Paddle Recurring Checkout Total:</span>
-          <strong id="sum-recurring-total">$0.00/mo</strong>
-        </div>
-      </div>
-
-      <div class="cost-hero">
-        <div class="cost-row">
-          <span>Included Monthly Allowance:</span>
-          <strong id="sum-included-seit">50.00 SEIT</strong>
-        </div>
-        <div class="cost-row">
-          <span>Est. Estate Metered Compute:</span>
-          <strong id="sum-metered-seit">0.00 SEIT/mo</strong>
-        </div>
-        <div class="cost-row">
-          <span>Est. 3P Marketplace Proxy Burn:</span>
-          <strong id="sum-3p-seit">0.00 SEIT/mo</strong>
-        </div>
-        <div class="cost-row">
-          <span>3P Vendor / Creator Hold (7d):</span>
-          <strong id="sum-3p-creator">$0.00</strong>
-        </div>
-        <div class="cost-row">
-          <span>Seitiate+ Proxy Routing Margin:</span>
-          <strong id="sum-3p-margin">$0.00</strong>
-        </div>
-        <div class="cost-row cost-total">
-          <span>Net Overage After Included SEIT:</span>
-          <strong id="sum-net-seit">$0.00/mo</strong>
-        </div>
-      </div>
-
-      <div id="guarded-banner" class="guarded-alert" hidden>
-        <strong>GUARDED CAPABILITY SELECTED:</strong> <code>Person's Door</code> activates Sandbox mock briefs immediately; Production requires Audience Approval + explicit per-user <code>DoorGrantRow</code> (<code>'person left'</code> revokes cleanly).
-      </div>
-
-      <div>
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
-          <span style="font-size:11.5px; font-weight:700; color:var(--sp-text-muted);">Paddle v2 Multi-Item <code>items[]</code> Payload</span>
-          <span style="font-size:11px; color:var(--sp-accent); font-family:var(--sp-mono);">O(N+M) Flat Prices</span>
-        </div>
-        <pre class="code-preview" id="paddle-items-preview"></pre>
-      </div>
-
-      <div>
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
-          <span style="font-size:11.5px; font-weight:700; color:var(--sp-text-muted);">Zero-Patch Bootstrap CLI</span>
-        </div>
-        <pre class="code-preview" id="cli-preview" style="max-height:76px;"></pre>
-      </div>
-
-      <div style="display:flex; gap:8px;">
-        <button type="button" class="btn btn-primary" style="flex:1; justify-content:center;" id="drawer-open-modal-btn">
-          Export Manifest &amp; Term Sheet
-        </button>
-        <button type="button" class="btn" id="copy-manifest-quick-btn">
-          Copy JSON
-        </button>
-      </div>
-      <div style="font-size:11px; color:var(--sp-text-faint);">
-        Constitutional F25 Notice: <code>1 SEIT = $1.00</code> store credit for platform &amp; room usage only (non-withdrawable, non-transferable). Practitioner &amp; Partner payouts settle in USD after dispute hold.
-      </div>
-    </aside>
-  </main>
-
-  <!-- NATIVE MODAL DIALOG FOR FULL MANIFEST + COMMERCIAL CHARTER -->
-  <dialog id="manifest-dialog" closedby="any" aria-labelledby="dialog-title">
-    <div class="dialog-inner">
-      <div class="dialog-header">
-        <div>
-          <span class="wheel-tag">seitiate.partner-manifest.v1</span>
-          <h2 id="dialog-title" style="margin:4px 0 0; font-size:17px;">Generated Charter &amp; Machine-Readable Manifest</h2>
-        </div>
-        <div style="display:flex; gap:8px;">
-          <button type="button" class="btn btn-primary" id="dialog-copy-btn">Copy Full JSON</button>
-          <button type="button" class="btn" id="dialog-close-btn">Close</button>
-        </div>
-      </div>
-      <p style="margin:0; font-size:13px; color:var(--sp-text-muted);" id="dialog-human-summary"></p>
-      <pre class="dialog-code" id="dialog-manifest-json"></pre>
-    </div>
-  </dialog>
-
-  <script>
-    (function () {
-      const supportsHas = typeof CSS !== "undefined" && CSS.supports && CSS.supports("selector(:has(*))");
-
-      // 1. Master Customer Ladder (Outer Wheel) + Inner Wheel #1 Sub-Tiers
-      const MASTER_RUNGS = [
-        {
-          rung: 1,
-          key: "room_member",
-          getName: () => "Room Member",
-          caption: "“Just an account on Sakme” (or Questcraft / Sensarra). Single-room SSO & scoped wallet.",
-          plans: [
-            { key: "sakme_free", name: "Sakme Free Entry", kind: "plan", usd: 0, seit: 10, splitPct: 0, pri: "pri_01sakmefree0", meta: "10 starter SEIT · Sakme room only" },
-            { key: "sakme_making", name: "Sakme Making", kind: "plan", usd: 12, seit: 12, splitPct: 0, pri: "pri_01sakmemake12", meta: "12 SEIT/mo · Skin Crafter personal" },
-            { key: "sakme_workshop", name: "Sakme Workshop", kind: "plan", usd: 29, seit: 32, splitPct: 0, pri: "pri_01sakmework29", meta: "32 SEIT/mo · Priority room assistant" }
-          ]
-        },
-        {
-          rung: 2,
-          key: "sovereign_member",
-          getName: () => "Sovereign Member",
-          caption: "Seitiate+ personal account: Argon assistant, Keep, Seity, /sources, BYOK & Person's Door.",
-          plans: [
-            { key: "sovereign_free", name: "Personal Explorer", kind: "plan", usd: 0, seit: 5, splitPct: 0, pri: "pri_01sovfree00", meta: "5 welcome SEIT · Basic Keep & BYOK" },
-            { key: "sovereign_starter", name: "Seitiate+ Sovereign", kind: "plan", usd: 20, seit: 20, splitPct: 0, pri: "pri_01sovplus20", meta: "20 SEIT/mo · Named Assistant + Seity" },
-            { key: "sovereign_pro", name: "Sovereign Scholar", kind: "plan", usd: 60, seit: 65, splitPct: 0, pri: "pri_01sovpro60", meta: "65 SEIT/mo · Research Shelf included" }
-          ]
-        },
-        {
-          rung: 3,
-          key: "practitioner_creator",
-          getName: () => "Practitioner / Stall Creator",
-          caption: "Publishes Hallmarked Talents (notary.v1 + evidence.v1), Analyzers & Stalls to Marketplace.",
-          plans: [
-            { key: "creator_bench", name: "Open Practitioner Bench", kind: "plan", usd: 0, seit: 10, splitPct: 20, pri: "pri_01crebench0", meta: "80% Creator / 20% Estate · 7d payout hold" },
-            { key: "creator_atelier", name: "Certified Atelier", kind: "plan", usd: 39, seit: 40, splitPct: 12, pri: "pri_01createl39", meta: "88% Creator / 12% Estate · Priority Notary" },
-            { key: "creator_guild", name: "Specialist Doma Charter", kind: "assigned", usd: 0, seit: 100, splitPct: 10, pri: "assigned_doma_charter", meta: "Custom institutional stall agreement" }
-          ]
-        },
-        {
-          rung: 4,
-          key: "room_partner",
-          getName: () => state.rung4Term,
-          caption: "Brings an external vertical app/UI (like Thomas's Questcraft) & wires into Estate organs.",
-          plans: [
-            { key: "partner_incubate", name: "Incubate Charter (90d)", kind: "assigned", usd: 0, seit: 50, splitPct: 20, pri: "assigned_incubate_90d", meta: "$0 base · 50 Sandbox SEIT · 20% net share" },
-            { key: "partner_graduate", name: "Graduate Studio", kind: "plan", usd: 99, seit: 50, splitPct: 15, pri: "pri_01rpgrad99", meta: "$99/mo · 50 SEIT/mo · 15% net share" },
-            { key: "partner_manage", name: "Scale / Manage SLA", kind: "plan", usd: 299, seit: 200, splitPct: 10, pri: "pri_01rpmanage299", meta: "$299/mo · 200 SEIT/mo · 10% net share" }
-          ]
-        }
-      ];
-
-      // 2. 24 Real Audited Estate & Marketplace Capabilities across 7 Families
-      const CAPABILITIES = [
-        // Family 1: Orchestration & Multi-Agent Governance
-        {
-          slug: "consilium.kanban_4d_locks",
-          name: "4D Kanban D3 Glob Write-Lock Solver",
-          family: "1. Orchestration, Locks & Multi-Agent Governance",
-          bucket: "instant_enable",
-          kind: "included",
-          monthlyUsd: 0,
-          unitSeit: 0,
-          desc: "consilium/kanban/solver.py (_paths_collide) — prevents parallel RTS/coding worker file collisions.",
-          rateLabel: "$0 · Instant SDK + Gate"
-        },
-        {
-          slug: "engine.task_dag_siege",
-          name: "Task DAG Lifecycle & Parallel siege() Dispatcher",
-          family: "1. Orchestration, Locks & Multi-Agent Governance",
-          bucket: "subscribe_or_meter",
-          kind: "metered_seit",
-          monthlyUsd: 0,
-          unitSeit: 0.01,
-          callFactor: 1.0,
-          desc: "Unified single-gateway Task queue + WebSocket stream (hides run-before-claim & UUID seams).",
-          rateLabel: "0.01 SEIT / orchestrated task"
-        },
-        {
-          slug: "engine.vibe_coder_reducer",
-          name: "4-Role Vibe-Coder Deterministic State Reducer",
-          family: "1. Orchestration, Locks & Multi-Agent Governance",
-          bucket: "instant_enable",
-          kind: "included",
-          monthlyUsd: 0,
-          unitSeit: 0,
-          desc: "Architect / Builder / Playtester / Lorekeeper 37-test state kernel (developer-room-lab).",
-          rateLabel: "$0 · Included Kernel"
-        },
-        {
-          slug: "engine.code_canon_governor",
-          name: "7-Category Code Canon “Boss Gate” & Postmortem Guard",
-          family: "1. Orchestration, Locks & Multi-Agent Governance",
-          bucket: "subscribe_or_meter",
-          kind: "line_item",
-          paddlePriceId: "pri_01licodecanon29",
-          monthlyUsd: 29,
-          unitSeit: 0,
-          desc: "canon_code_router.py + safety_postmortem.py automated verification gate before task completion.",
-          rateLabel: "+$29/mo Paddle line_item"
-        },
-        {
-          slug: "engine.doma_bond_approvals",
-          name: "Role Doma (bond_delegations) & High-Consequence Gate",
-          family: "1. Orchestration, Locks & Multi-Agent Governance",
-          bucket: "instant_enable",
-          kind: "included",
-          monthlyUsd: 0,
-          unitSeit: 0,
-          desc: "Scoped worker delegations + interactive 403 approval_required human challenge (“Amber Diamond”).",
-          rateLabel: "$0 · Included in Rung 4"
-        },
-
-        // Family 2: Intelligence, Vault & Provenance
-        {
-          slug: "vault.multi_model_router",
-          name: "Seitiate Vault Multi-Model Router & sever() Failover",
-          family: "2. Intelligence, Vault Routing & Notary Provenance",
-          bucket: "subscribe_or_meter",
-          kind: "metered_seit",
-          monthlyUsd: 0,
-          unitSeit: 0.018,
-          callFactor: 1.0,
-          desc: "Claude, GPT, Gemini, Grok, Kimi & DeepSeek with circuit-breaker failover + conservative reserve/settle.",
-          rateLabel: "1.20x Wholesale SEIT ($0 BYOK)"
-        },
-        {
-          slug: "notary.c2pa_es256_receipts",
-          name: "Notary ES256 C2PA Receipts & Hosted Receipt Store",
-          family: "2. Intelligence, Vault Routing & Notary Provenance",
-          bucket: "subscribe_or_meter",
-          kind: "line_item",
-          paddlePriceId: "pri_01lireceiptstore15",
-          monthlyUsd: 15,
-          unitSeit: 0.005,
-          callFactor: 0.4,
-          desc: "RECEIPT_STORE_HOSTING line_item + cryptographic notary.v1 DecisionEvent signing & public verifier.",
-          rateLabel: "+$15/mo line_item + 0.005 SEIT"
-        },
-        {
-          slug: "plus.sso_and_seit_ledger",
-          name: "Signed-in-with-Seitiate SSO & Scoped SEIT Wallet",
-          family: "2. Intelligence, Vault Routing & Notary Provenance",
-          bucket: "instant_enable",
-          kind: "included",
-          monthlyUsd: 0,
-          unitSeit: 0,
-          desc: "Decode-only JWT boundary, CommandScopeEnvelope (command-scope.v1) cost telemetry & exact-bucket refunds.",
-          rateLabel: "$0 · Core Door Substrate"
-        },
-
-        // Family 3: Personal Context & Continuity
-        {
-          slug: "context.persons_door_brief",
-          name: "Person's Door Guarded One-Page Reading Brief",
-          family: "3. Personal Context & Continuity Organs (Guarded)",
-          bucket: "subscribe_or_meter",
-          kind: "line_item",
-          paddlePriceId: "pri_01lipersonsdoor49",
-          monthlyUsd: 49,
-          unitSeit: 0,
-          guarded: true,
-          desc: "0044_assistant_reading_briefs (W2.1/W2.6) — audience-bound personal context brief; 'person left' revokes.",
-          rateLabel: "+$49/mo Guarded line_item"
-        },
-        {
-          slug: "context.seity_move37",
-          name: "Seity FACT/READING Ledger & Move 37 Lateral Engine",
-          family: "3. Personal Context & Continuity Organs (Guarded)",
-          bucket: "subscribe_or_meter",
-          kind: "metered_seit",
-          monthlyUsd: 0,
-          unitSeit: 0.05,
-          callFactor: 0.25,
-          desc: "Separates verified FACT from revisable READING and proposes cross-domain lateral hypotheses.",
-          rateLabel: "0.05 SEIT / synthesis"
-        },
-        {
-          slug: "context.keep_codex_vault",
-          name: "Encrypted Keep & Sovereign Document Memory",
-          family: "3. Personal Context & Continuity Organs (Guarded)",
-          bucket: "instant_enable",
-          kind: "included",
-          monthlyUsd: 0,
-          unitSeit: 0,
-          desc: "User-owned Keep storage & scoped RAG retrieval (included in Rung 2; requires Door grant for Rung 4).",
-          rateLabel: "Included w/ User Consent"
-        },
-
-        // Family 4: Creative & 3D World Engines
-        {
-          slug: "creative.skin_crafter_pbr",
-          name: "5-Layer Procedural Skin Crafter & 3D PBR Compiler",
-          family: "4. Creative, 3D World & Procedural UI Engines",
-          bucket: "subscribe_or_meter",
-          kind: "line_item",
-          paddlePriceId: "pri_01liskincrafter19",
-          monthlyUsd: 19,
-          unitSeit: 0,
-          desc: "84 styles, 161 palettes & Three.js PBR material channels (WOOD, METAL, STONE, CIRCUIT) from JSON seed.",
-          rateLabel: "+$19/mo Paddle line_item"
-        },
-        {
-          slug: "creative.marina_importer",
-          name: "Marina Creator Corpus & Archive Importer (W1.2)",
-          family: "4. Creative, 3D World & Procedural UI Engines",
-          bucket: "subscribe_or_meter",
-          kind: "metered_seit",
-          monthlyUsd: 0,
-          unitSeit: 0.02,
-          callFactor: 0.15,
-          desc: "Ingests creator archives, lore bibles, and structured asset metadata with provenance hashes.",
-          rateLabel: "0.02 SEIT / import batch"
-        },
-
-        // Family 5: Certified First-Party Skills
-        {
-          slug: "skills.research_shelf_7",
-          name: "Certified Research Shelf (7 Skills: PRISMA, Citation Audit…)",
-          family: "5. Certified First-Party Skills (Registry)",
-          bucket: "subscribe_or_meter",
-          kind: "line_item",
-          paddlePriceId: "pri_01liresearch25",
-          monthlyUsd: 25,
-          unitSeit: 0,
-          desc: "citation_audit, prisma_screening, evidence_table, claim_extractor, method_critique, contradiction_scan.",
-          rateLabel: "+$25/mo Shelf line_item"
-        },
-        {
-          slug: "skills.workbench_core_3",
-          name: "Workbench Core Skills (Brief Writer, Meeting Distiller, Spec Linter)",
-          family: "5. Certified First-Party Skills (Registry)",
-          bucket: "instant_enable",
-          kind: "included",
-          monthlyUsd: 0,
-          unitSeit: 0,
-          desc: "Deterministic structured output skills available immediately across personal and partner rooms.",
-          rateLabel: "$0 · Free Starter Shelf"
-        },
-        {
-          slug: "skills.workbench_audit_4",
-          name: "Governance Audit Skills (Contract Redline, Cost Anomaly, Timeline)",
-          family: "5. Certified First-Party Skills (Registry)",
-          bucket: "subscribe_or_meter",
-          kind: "metered_seit",
-          monthlyUsd: 0,
-          unitSeit: 0.03,
-          callFactor: 0.2,
-          desc: "Deep document & ledger verification skills backed by Notary evidence.v1 citations.",
-          rateLabel: "0.03 SEIT / skill run"
-        },
-
-        // Family 6: Scientific & Dynamical Analyzers
-        {
-          slug: "analyzers.spectral_koopman_3",
-          name: "Temporal Regime, PIT Audit & 2D Koopman Shift Pack (3 Analyzers)",
-          family: "6. ResearchHarness Scientific & Dynamical Analyzers (21)",
-          bucket: "subscribe_or_meter",
-          kind: "metered_seit",
-          monthlyUsd: 0,
-          unitSeit: 0.15,
-          callFactor: 0.1,
-          desc: "Fisher-studentized CT-OU GLR & Koopman operator shift detection for telemetry, game economies & sensors.",
-          rateLabel: "0.15 SEIT / regime analysis"
-        },
-        {
-          slug: "analyzers.electrochem_18",
-          name: "Electrochemistry & Biosensor Calibration Suite (18 Analyzers)",
-          family: "6. ResearchHarness Scientific & Dynamical Analyzers (21)",
-          bucket: "subscribe_or_meter",
-          kind: "line_item",
-          paddlePriceId: "pri_01lielectrochem99",
-          monthlyUsd: 99,
-          unitSeit: 0.20,
-          callFactor: 0.15,
-          desc: "Randles-Sevcik, Nyquist EIS, Cottrell, SWV peak deconvolution & LoD calibration (Sensarra grade).",
-          rateLabel: "+$99/mo Lab line_item + 0.20 SEIT"
-        },
-
-        // Family 7: Connectors & 3rd-Party Marketplace Proxy
-        {
-          slug: "connectors.first_party_20",
-          name: "First-Party Connected Sources (20 OAuth/Keep Connectors)",
-          family: "7. Connectors & 3rd-Party Marketplace Routed Modules",
-          bucket: "instant_enable",
-          kind: "included",
-          monthlyUsd: 0,
-          unitSeit: 0,
-          desc: "GitHub, GDrive, Gmail, Slack, Linear, Notion, Discord, Obsidian, Zotero, Health/Oura/Whoop (source_catalog.yaml).",
-          rateLabel: "$0 Personal / Scoped OAuth"
-        },
-        {
-          slug: "marketplace.roblox_studio_cloud",
-          name: "Roblox Studio MCP + Open Cloud Luau Publisher",
-          family: "7. Connectors & 3rd-Party Marketplace Routed Modules",
-          bucket: "marketplace_route",
-          kind: "marketplace_proxy",
-          monthlyUsd: 0,
-          unitSeit: 0.04,
-          callFactor: 0.3,
-          creatorPct: 75,
-          desc: "Seitiate+ vaults Open Cloud keys, proxies Luau publish & mints ES256 receipt (Questcraft Phase 4).",
-          rateLabel: "0.04 SEIT/pub · 75/25 Split Proxy"
-        },
-        {
-          slug: "marketplace.talent_rts_economy",
-          name: "@practitioner/rts-economy-auditor@1.4 (Hallmarked Talent)",
-          family: "7. Connectors & 3rd-Party Marketplace Routed Modules",
-          bucket: "marketplace_route",
-          kind: "marketplace_proxy",
-          monthlyUsd: 0,
-          unitSeit: 0.12,
-          callFactor: 0.15,
-          creatorPct: 80,
-          desc: "Rung 3 Practitioner Stall (notary.v1 + evidence.v1). Simulates resource sinks & inflation; 7d PayoutHold.",
-          rateLabel: "0.12 SEIT/run · 80% Creator / 20% S+"
-        },
-        {
-          slug: "marketplace.skin_pack_nordic",
-          name: "@atelier/nordic-forge-pbr-pack@2.1 (Creator 3D Skin Stall)",
-          family: "7. Connectors & 3rd-Party Marketplace Routed Modules",
-          bucket: "marketplace_route",
-          kind: "line_item",
-          paddlePriceId: "pri_01li3pnordic12",
-          monthlyUsd: 12,
-          unitSeit: 0,
-          creatorPct: 80,
-          desc: "Curated 3D island PBR textures & UI runes licensed monthly via Seitiate+ Marketplace split.",
-          rateLabel: "+$12/mo Stall line_item (80/20)"
-        },
-        {
-          slug: "marketplace.edison_scientific",
-          name: "Edison Scientific Literature & Chem Agent Bridge",
-          family: "7. Connectors & 3rd-Party Marketplace Routed Modules",
-          bucket: "marketplace_route",
-          kind: "marketplace_proxy",
-          monthlyUsd: 0,
-          unitSeit: 0.35,
-          callFactor: 0.12,
-          creatorPct: 85,
-          desc: "Brokered wholesale access to Edison Scientific synthesis without separate vendor contract or key.",
-          rateLabel: "0.35 SEIT/query · 85/15 Proxy"
-        },
-        {
-          slug: "marketplace.bio_foundation_pack",
-          name: "BindingDB + Aptable + Atomica + Mammal Bio-Models",
-          family: "7. Connectors & 3rd-Party Marketplace Routed Modules",
-          bucket: "marketplace_route",
-          kind: "marketplace_proxy",
-          monthlyUsd: 0,
-          unitSeit: 0.25,
-          callFactor: 0.12,
-          creatorPct: 80,
-          desc: "Managed GPU inference & ligand-binding lookup routed through Seitiate+ single billing proxy.",
-          rateLabel: "0.25 SEIT/inf · 80/20 Proxy"
-        }
-      ];
-
-      const PRESETS = {
-        questcraft: {
-          rung: 4,
-          planIndex: 0,
-          roomSlug: "questcraft",
-          origins: "http://localhost:3000, http://localhost:3001, http://localhost:3002, https://questcraft.gg",
-          volume: 2500,
-          checked: [
-            "consilium.kanban_4d_locks",
-            "engine.task_dag_siege",
-            "engine.vibe_coder_reducer",
-            "engine.code_canon_governor",
-            "engine.doma_bond_approvals",
-            "vault.multi_model_router",
-            "notary.c2pa_es256_receipts",
-            "plus.sso_and_seit_ledger",
-            "creative.skin_crafter_pbr",
-            "marketplace.roblox_studio_cloud",
-            "marketplace.talent_rts_economy"
-          ]
-        },
-        imperfective: {
-          rung: 4,
-          planIndex: 1,
-          roomSlug: "imperfective",
-          origins: "http://localhost:5173, https://imperfective.app",
-          volume: 1800,
-          checked: [
-            "plus.sso_and_seit_ledger",
-            "vault.multi_model_router",
-            "context.persons_door_brief",
-            "context.seity_move37",
-            "notary.c2pa_es256_receipts",
-            "skills.workbench_core_3"
-          ]
-        },
-        sensarra: {
-          rung: 4,
-          planIndex: 2,
-          roomSlug: "sensarra-partner-lab",
-          origins: "https://lab.sensarra.bio",
-          volume: 4000,
-          checked: [
-            "plus.sso_and_seit_ledger",
-            "vault.multi_model_router",
-            "notary.c2pa_es256_receipts",
-            "skills.research_shelf_7",
-            "analyzers.spectral_koopman_3",
-            "analyzers.electrochem_18",
-            "marketplace.edison_scientific",
-            "marketplace.bio_foundation_pack"
-          ]
-        },
-        sakme_user: {
-          rung: 1,
-          planIndex: 1,
-          roomSlug: "sakme",
-          origins: "https://sakme.ge",
-          volume: 300,
-          checked: [
-            "plus.sso_and_seit_ledger",
-            "skills.workbench_core_3"
-          ]
-        },
-        sovereign: {
-          rung: 2,
-          planIndex: 1,
-          roomSlug: "personal-keep",
-          origins: "https://seitiate.app",
-          volume: 900,
-          checked: [
-            "plus.sso_and_seit_ledger",
-            "vault.multi_model_router",
-            "context.keep_codex_vault",
-            "context.seity_move37",
-            "connectors.first_party_20",
-            "skills.workbench_core_3",
-            "skills.research_shelf_7"
-          ]
-        },
-        clear: {
-          rung: 4,
-          planIndex: 0,
-          roomSlug: "new-vertical-room",
-          origins: "http://localhost:3000",
-          volume: 1000,
-          checked: ["plus.sso_and_seit_ledger"]
-        }
-      };
-
-      const state = {
-        rung4Term: "Room Partner",
-        activeRung: 4,
-        activePlanIndex: 0,
-        roomSlug: "questcraft",
-        origins: "http://localhost:3000, http://localhost:3001, http://localhost:3002, https://questcraft.gg",
-        fundingWaterfall: "partner_pool_first",
-        volume: 2500,
-        bucketFilter: "all",
-        searchQuery: "",
-        checked: new Set(PRESETS.questcraft.checked),
-        simPaidUsers: 120,
-        simArpu: 24
-      };
-
-      // DOM References
-      const rungGridEl = document.getElementById("rung-grid");
-      const subtierGridEl = document.getElementById("subtier-grid");
-      const activeRungLabelEl = document.getElementById("active-rung-label");
-      const catalogFamiliesEl = document.getElementById("catalog-families");
-      const checkedCountBadgeEl = document.getElementById("checked-count-badge");
-      const roomSlugInput = document.getElementById("room-slug-input");
-      const roomOriginsInput = document.getElementById("room-origins-input");
-      const waterfallSelect = document.getElementById("funding-waterfall-select");
-      const volumeSlider = document.getElementById("volume-slider");
-      const volumeLabel = document.getElementById("volume-label");
-      const dialog = document.getElementById("manifest-dialog");
-
-      function getCurrentRungObj() {
-        return MASTER_RUNGS.find((r) => r.rung === state.activeRung) || MASTER_RUNGS[3];
-      }
-
-      function getCurrentPlanObj() {
-        const rungObj = getCurrentRungObj();
-        return rungObj.plans[state.activePlanIndex] || rungObj.plans[0];
-      }
-
-      function renderRungs() {
-        rungGridEl.innerHTML = "";
-        MASTER_RUNGS.forEach((r) => {
-          const btn = document.createElement("button");
-          btn.type = "button";
-          btn.className = "rung-btn";
-          btn.setAttribute("aria-pressed", String(r.rung === state.activeRung));
-          btn.innerHTML = `
-            <span class="rung-num">Rung ${r.rung}</span>
-            <span class="rung-name">${escapeHtml(r.getName())}</span>
-            <span class="rung-caption">${escapeHtml(r.caption)}</span>
-          `;
-          btn.addEventListener("click", () => {
-            state.activeRung = r.rung;
-            state.activePlanIndex = 0;
-            renderAll();
-          });
-          rungGridEl.appendChild(btn);
-        });
-      }
-
-      function renderSubTiers() {
-        const rungObj = getCurrentRungObj();
-        activeRungLabelEl.textContent = `Rung ${rungObj.rung}: ${rungObj.getName()}`;
-        document.getElementById("drawer-heading").textContent = `${rungObj.getName()} Charter & Cost Summary`;
-
-        subtierGridEl.innerHTML = "";
-        rungObj.plans.forEach((p, idx) => {
-          const btn = document.createElement("button");
-          btn.type = "button";
-          btn.className = "subtier-card";
-          btn.setAttribute("aria-pressed", String(idx === state.activePlanIndex));
-          btn.innerHTML = `
-            <div class="subtier-top">
-              <strong style="font-size:13.5px;">${escapeHtml(p.name)}</strong>
-              <span class="kind-pill">kind='${p.kind}'</span>
-            </div>
-            <div class="subtier-price">$${p.usd}/mo</div>
-            <div class="subtier-meta">${escapeHtml(p.meta)}</div>
-          `;
-          btn.addEventListener("click", () => {
-            state.activePlanIndex = idx;
-            renderAll();
-          });
-          subtierGridEl.appendChild(btn);
-        });
-
-        document.getElementById("partner-meta-bar").style.display = state.activeRung === 4 ? "grid" : "none";
-      }
-
-      function renderCatalog() {
-        checkedCountBadgeEl.textContent = String(state.checked.size);
-        const q = state.searchQuery.trim().toLowerCase();
-
-        const families = [];
-        const byFamily = new Map();
-        CAPABILITIES.forEach((cap) => {
-          const matchesBucket = state.bucketFilter === "all" || cap.bucket === state.bucketFilter;
-          const matchesSearch =
-            !q ||
-            cap.name.toLowerCase().includes(q) ||
-            cap.slug.toLowerCase().includes(q) ||
-            cap.desc.toLowerCase().includes(q) ||
-            cap.family.toLowerCase().includes(q);
-          if (!matchesBucket || !matchesSearch) return;
-          if (!byFamily.has(cap.family)) {
-            byFamily.set(cap.family, []);
-            families.push(cap.family);
-          }
-          byFamily.get(cap.family).push(cap);
-        });
-
-        catalogFamiliesEl.innerHTML = "";
-
-        if (families.length === 0) {
-          catalogFamiliesEl.innerHTML = `<p style="color:var(--sp-text-muted); font-size:13px;">No capabilities match your current filter.</p>`;
-          return;
-        }
-
-        families.forEach((fam, famIdx) => {
-          const items = byFamily.get(fam);
-          const section = document.createElement("div");
-          section.className = "family-section";
-
-          const header = document.createElement("div");
-          header.className = "family-header";
-
-          const groupCheckId = `fam-check-${famIdx}`;
-          const checkedInFam = items.filter((c) => state.checked.has(c.slug)).length;
-
-          const label = document.createElement("label");
-          label.className = "family-select-label";
-          label.setAttribute("for", groupCheckId);
-
-          const groupCheckbox = document.createElement("input");
-          groupCheckbox.type = "checkbox";
-          groupCheckbox.id = groupCheckId;
-          groupCheckbox.checked = checkedInFam === items.length && items.length > 0;
-          // Indeterminate state set via JS DOM property per Modern Web Guidance
-          groupCheckbox.indeterminate = checkedInFam > 0 && checkedInFam < items.length;
-
-          groupCheckbox.addEventListener("change", () => {
-            const shouldCheck = groupCheckbox.checked;
-            items.forEach((c) => {
-              if (shouldCheck) state.checked.add(c.slug);
-              else state.checked.delete(c.slug);
-            });
-            renderAll();
-          });
-
-          const titleSpan = document.createElement("span");
-          titleSpan.textContent = fam;
-
-          label.appendChild(groupCheckbox);
-          label.appendChild(titleSpan);
-
-          const countSpan = document.createElement("span");
-          countSpan.style.fontSize = "11.5px";
-          countSpan.style.color = "var(--sp-text-muted)";
-          countSpan.textContent = `${checkedInFam}/${items.length} enabled`;
-
-          header.appendChild(label);
-          header.appendChild(countSpan);
-          section.appendChild(header);
-
-          const grid = document.createElement("div");
-          grid.className = "cap-grid";
-
-          items.forEach((cap) => {
-            const isChecked = state.checked.has(cap.slug);
-            const card = document.createElement("div");
-            card.className = "cap-card" + (!supportsHas && isChecked ? " is-checked" : "");
-
-            const checkId = `cap-${cap.slug.replace(/[^a-z0-9]/gi, "-")}`;
-            let badgeClass = "badge-free";
-            let bucketText = "instant_enable";
-            if (cap.bucket === "subscribe_or_meter" && cap.kind === "line_item") {
-              badgeClass = "badge-line-item";
-              bucketText = "Paddle line_item";
-            } else if (cap.bucket === "subscribe_or_meter") {
-              badgeClass = "badge-metered";
-              bucketText = "Metered SEIT";
-            } else if (cap.bucket === "marketplace_route") {
-              badgeClass = "badge-marketplace";
-              bucketText = "3P Marketplace Proxy";
-            }
-
-            card.innerHTML = `
-              <div>
-                <label class="cap-label" for="${checkId}">
-                  <input type="checkbox" class="cap-checkbox" id="${checkId}" ${isChecked ? "checked" : ""} />
-                  <span>
-                    <span class="cap-title">${escapeHtml(cap.name)}</span>
-                    <span class="cap-slug">${escapeHtml(cap.slug)}</span>
-                    <p class="cap-desc">${escapeHtml(cap.desc)}</p>
-                  </span>
-                </label>
-              </div>
-              <div class="cap-footer">
-                <span style="display:inline-flex; gap:5px; flex-wrap:wrap;">
-                  <span class="badge ${badgeClass}">${escapeHtml(bucketText)}</span>
-                  ${cap.guarded ? '<span class="badge badge-guarded">GUARDED DOOR</span>' : ""}
-                </span>
-                <strong style="font-family:var(--sp-mono); color:var(--sp-text);">${escapeHtml(cap.rateLabel)}</strong>
-              </div>
-            `;
-
-            const inputEl = card.querySelector("input");
-            inputEl.addEventListener("change", () => {
-              if (inputEl.checked) state.checked.add(cap.slug);
-              else state.checked.delete(cap.slug);
-              if (!supportsHas) {
-                card.classList.toggle("is-checked", inputEl.checked);
-              }
-              renderAll();
-            });
-
-            grid.appendChild(card);
-          });
-
-          section.appendChild(grid);
-          catalogFamiliesEl.appendChild(section);
-        });
-      }
-
-      function computeTotals() {
-        const rungObj = getCurrentRungObj();
-        const planObj = getCurrentPlanObj();
-        const selectedCaps = CAPABILITIES.filter((c) => state.checked.has(c.slug));
-
-        const lineItems = selectedCaps.filter((c) => c.kind === "line_item" && c.monthlyUsd > 0);
-        const addonsUsd = lineItems.reduce((acc, c) => acc + c.monthlyUsd, 0);
-        const recurringTotalUsd = planObj.usd + addonsUsd;
-
-        let estateMeteredSeit = 0;
-        let marketplaceSeit = 0;
-        let creatorHoldUsd = 0;
-        let seitiateProxyMarginUsd = 0;
-
-        selectedCaps.forEach((c) => {
-          if (c.bucket === "subscribe_or_meter" && c.unitSeit > 0) {
-            const calls = state.volume * (c.callFactor || 0.2);
-            estateMeteredSeit += calls * c.unitSeit;
-          } else if (c.bucket === "marketplace_route") {
-            if (c.unitSeit > 0) {
-              const calls = state.volume * (c.callFactor || 0.2);
-              const burn = calls * c.unitSeit;
-              marketplaceSeit += burn;
-              const cPct = (c.creatorPct || 80) / 100;
-              creatorHoldUsd += burn * cPct;
-              seitiateProxyMarginUsd += burn * (1 - cPct);
-            } else if (c.kind === "line_item" && c.monthlyUsd > 0) {
-              const cPct = (c.creatorPct || 80) / 100;
-              creatorHoldUsd += c.monthlyUsd * cPct;
-              seitiateProxyMarginUsd += c.monthlyUsd * (1 - cPct);
-            }
-          }
-        });
-
-        const totalBurnSeit = estateMeteredSeit + marketplaceSeit;
-        const netOverageSeit = Math.max(0, totalBurnSeit - planObj.seit);
-        const hasGuarded = selectedCaps.some((c) => c.guarded);
-
-        return {
-          rungObj,
-          planObj,
-          selectedCaps,
-          lineItems,
-          addonsUsd,
-          recurringTotalUsd,
-          estateMeteredSeit,
-          marketplaceSeit,
-          creatorHoldUsd,
-          seitiateProxyMarginUsd,
-          netOverageSeit,
-          hasGuarded
-        };
-      }
-
-      function buildManifestObject(totals) {
-        const slug = (state.roomSlug || "custom-room").trim().toLowerCase().replace(/[^a-z0-9-_]/g, "-");
-        const origins = state.origins
-          .split(",")
-          .map((s) => s.trim())
-          .filter(Boolean);
-
-        const paddleItems = [];
-        if (totals.planObj.kind === "plan" && totals.planObj.usd > 0) {
-          paddleItems.push({
-            price_id: totals.planObj.pri,
-            tier_key: totals.planObj.key,
-            kind: "plan",
-            quantity: 1,
-            monthly_usd: totals.planObj.usd.toFixed(2)
-          });
-        }
-        totals.lineItems.forEach((li) => {
-          paddleItems.push({
-            price_id: li.paddlePriceId,
-            capability_slug: li.slug,
-            kind: "line_item",
-            quantity: 1,
-            monthly_usd: li.monthlyUsd.toFixed(2)
-          });
-        });
-
-        return {
-          $schema: "https://seitiate.app/schemas/partner-manifest.v1.json",
-          schema_version: "seitiate.partner-manifest.v1",
-          manifest_version: "2026-11-11.1",
-          outer_wheel: {
-            master_rung: totals.rungObj.rung,
-            rung_key: totals.rungObj.key,
-            display_label: totals.rungObj.getName()
-          },
-          inner_wheel_subscription: {
-            base_tier_key: totals.planObj.key,
-            base_kind: totals.planObj.kind,
-            monthly_recurring_total_usd: totals.recurringTotalUsd.toFixed(2),
-            included_monthly_seit: totals.planObj.seit.toFixed(2),
-            estate_net_revenue_share_pct: totals.planObj.splitPct,
-            paddle_v2_items: paddleItems
-          },
-          room: {
-            vertical_id: slug,
-            allowed_origins: origins,
-            single_gateway_url: "https://api.seitiate.app/api/v1/partner/v1",
-            ws_url: "wss://api.seitiate.app/api/v1/partner/v1/ws",
-            stay_open_modes: ["mock", "sandbox", "live"]
-          },
-          funding_waterfall: state.fundingWaterfall,
-          capabilities: totals.selectedCaps.map((c) => ({
-            slug: c.slug,
-            bucket: c.bucket,
-            pricing_kind: c.kind,
-            monthly_usd: c.monthlyUsd.toFixed(2),
-            unit_seit: c.unitSeit.toFixed(4),
-            ...(c.guarded ? { guarded_consent: "persons_door_grant_required" } : {}),
-            ...(c.creatorPct ? { split: { vendor_or_creator_pct: c.creatorPct, seitiate_pct: 100 - c.creatorPct } } : {})
-          })),
-          estimated_monthly_economics: {
-            projected_invocations: state.volume,
-            estate_metered_seit: totals.estateMeteredSeit.toFixed(2),
-            marketplace_proxy_seit: totals.marketplaceSeit.toFixed(2),
-            net_overage_after_allowance_usd: totals.netOverageSeit.toFixed(2)
-          }
-        };
-      }
-
-      function renderSummaryAndWheel2() {
-        const totals = computeTotals();
-        document.getElementById("sum-base-usd").textContent = `$${totals.planObj.usd.toFixed(2)}/mo`;
-        document.getElementById("sum-li-count").textContent = String(totals.lineItems.length);
-        document.getElementById("sum-addons-usd").textContent = `$${totals.addonsUsd.toFixed(2)}/mo`;
-        document.getElementById("sum-recurring-total").textContent = `$${totals.recurringTotalUsd.toFixed(2)}/mo`;
-
-        document.getElementById("sum-included-seit").textContent = `${totals.planObj.seit.toFixed(2)} SEIT`;
-        document.getElementById("sum-metered-seit").textContent = `${totals.estateMeteredSeit.toFixed(2)} SEIT/mo`;
-        document.getElementById("sum-3p-seit").textContent = `${totals.marketplaceSeit.toFixed(2)} SEIT/mo`;
-        document.getElementById("sum-3p-creator").textContent = `$${totals.creatorHoldUsd.toFixed(2)}`;
-        document.getElementById("sum-3p-margin").textContent = `$${totals.seitiateProxyMarginUsd.toFixed(2)}`;
-        document.getElementById("sum-net-seit").textContent = `$${totals.netOverageSeit.toFixed(2)}/mo`;
-
-        document.getElementById("guarded-banner").hidden = !totals.hasGuarded;
-
-        const manifest = buildManifestObject(totals);
-        const paddlePayload = {
-          custom_data: {
-            tenant_id: "tenant-partner-01",
-            vertical_id: state.activeRung === 1 ? state.roomSlug : "platform"
-          },
-          items: manifest.inner_wheel_subscription.paddle_v2_items.length
-            ? manifest.inner_wheel_subscription.paddle_v2_items.map((i) => ({
-                price_id: i.price_id,
-                quantity: 1
-              }))
-            : [{ note: `Assigned / $0 Charter (${totals.planObj.key}) — no card charge today` }]
-        };
-
-        document.getElementById("paddle-items-preview").textContent = JSON.stringify(paddlePayload, null, 2);
-        document.getElementById("cli-preview").textContent =
-          `npx @seitiate/partner-sdk init \\\n  --room ${manifest.room.vertical_id} \\\n  --manifest ./seitiate-partner-manifest.json`;
-
-        // Update Modal contents if opened
-        document.getElementById("dialog-manifest-json").textContent = JSON.stringify(manifest, null, 2);
-        document.getElementById("dialog-human-summary").textContent =
-          `${totals.rungObj.getName()} (${totals.planObj.name}) for room "${manifest.room.vertical_id}": ` +
-          `$${totals.recurringTotalUsd.toFixed(2)}/mo recurring (${totals.lineItems.length} Paddle line_item add-ons) + ` +
-          `$${totals.netOverageSeit.toFixed(2)}/mo estimated SEIT overage across ${totals.selectedCaps.length} enabled capabilities.`;
-
-        // Render Inner Wheel #2 (Vertical's Own Customer Tiers & Clearinghouse)
-        const slug = manifest.room.vertical_id;
-        document.getElementById("wheel2-room-slug").textContent = slug;
-        const tbody = document.getElementById("wheel2-tbody");
-        tbody.innerHTML = `
-          <tr>
-            <td><code>${escapeHtml(slug)}/free</code></td>
-            <td><span class="kind-pill">plan</span></td>
-            <td>$0.00/mo</td>
-            <td>10 SEIT starter</td>
-            <td><code>activate_free_tier</code> (no card)</td>
-          </tr>
-          <tr>
-            <td><code>${escapeHtml(slug)}/member_core</code></td>
-            <td><span class="kind-pill">plan</span></td>
-            <td>$${state.simArpu.toFixed(2)}/mo</td>
-            <td>${Math.round(state.simArpu * 0.75)} SEIT/mo</td>
-            <td><code>pri_${escapeHtml(slug.slice(0, 8))}_core</code></td>
-          </tr>
-          <tr>
-            <td><code>${escapeHtml(slug)}/studio_pro</code></td>
-            <td><span class="kind-pill">plan</span></td>
-            <td>$${(state.simArpu * 2).toFixed(2)}/mo</td>
-            <td>${Math.round(state.simArpu * 1.6)} SEIT/mo</td>
-            <td><code>pri_${escapeHtml(slug.slice(0, 8))}_pro</code></td>
-          </tr>
-          <tr>
-            <td><code>${escapeHtml(slug)}/addon_power_pack</code></td>
-            <td><span class="kind-pill">line_item</span></td>
-            <td>+$9.00/mo</td>
-            <td>+5 SEIT/mo</td>
-            <td>Appended to <code>items[]</code></td>
-          </tr>
-        `;
-
-        const grossUsd = state.simPaidUsers * state.simArpu;
-        const paddleFeeUsd = grossUsd * 0.05 + state.simPaidUsers * 0.5;
-        const estateCogsUsd = totals.recurringTotalUsd + totals.netOverageSeit;
-        const distributableNet = Math.max(0, grossUsd - paddleFeeUsd - estateCogsUsd);
-        const estateSharePct = totals.planObj.splitPct || 15;
-        const estateShareUsd = distributableNet * (estateSharePct / 100);
-        const partnerNetPayoutUsd = Math.max(0, distributableNet - estateShareUsd);
-
-        document.getElementById("clearing-box").innerHTML = `
-          <div>
-            <div class="metric-label">Gross Vertical Paddle Rev</div>
-            <div class="metric-val">$${grossUsd.toFixed(2)}</div>
-          </div>
-          <div>
-            <div class="metric-label">Paddle MoR Tax/Fee (~5%+$0.50)</div>
-            <div class="metric-val" style="color:var(--sp-text-muted);">-$${paddleFeeUsd.toFixed(2)}</div>
-          </div>
-          <div>
-            <div class="metric-label">Estate + 3P Capability COGS</div>
-            <div class="metric-val" style="color:var(--sp-warn);">-$${estateCogsUsd.toFixed(2)}</div>
-          </div>
-          <div>
-            <div class="metric-label">Estate Charter Share (${estateSharePct}%)</div>
-            <div class="metric-val" style="color:var(--sp-purple);">-$${estateShareUsd.toFixed(2)}</div>
-          </div>
-          <div>
-            <div class="metric-label">Net Monthly Partner Payout</div>
-            <div class="metric-val" style="color:var(--sp-accent);">$${partnerNetPayoutUsd.toFixed(2)}</div>
-          </div>
-        `;
-      }
-
-      function renderAll() {
-        renderRungs();
-        renderSubTiers();
-        renderCatalog();
-        renderSummaryAndWheel2();
-      }
-
-      function escapeHtml(str) {
-        return String(str)
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;");
-      }
-
-      // Event Listeners: Rung 4 Term Switcher
-      document.getElementById("rung4-term-select").addEventListener("change", (e) => {
-        state.rung4Term = e.target.value;
-        renderAll();
-      });
-
-      // Presets
-      document.querySelectorAll("[data-preset]").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const key = btn.getAttribute("data-preset");
-          const p = PRESETS[key];
-          if (!p) return;
-          document.querySelectorAll("[data-preset]").forEach((b) => b.classList.remove("btn-preset-active"));
-          btn.classList.add("btn-preset-active");
-
-          state.activeRung = p.rung;
-          state.activePlanIndex = p.planIndex;
-          state.roomSlug = p.roomSlug;
-          state.origins = p.origins;
-          state.volume = p.volume;
-          state.checked = new Set(p.checked);
-
-          roomSlugInput.value = state.roomSlug;
-          roomOriginsInput.value = state.origins;
-          volumeSlider.value = String(state.volume);
-          volumeLabel.textContent = state.volume.toLocaleString();
-          renderAll();
-        });
-      });
-
-      // Partner Meta Inputs
-      roomSlugInput.addEventListener("input", () => {
-        state.roomSlug = roomSlugInput.value;
-        renderSummaryAndWheel2();
-      });
-      roomOriginsInput.addEventListener("input", () => {
-        state.origins = roomOriginsInput.value;
-        renderSummaryAndWheel2();
-      });
-      waterfallSelect.addEventListener("change", () => {
-        state.fundingWaterfall = waterfallSelect.value;
-        renderSummaryAndWheel2();
-      });
-      volumeSlider.addEventListener("input", () => {
-        state.volume = Number(volumeSlider.value);
-        volumeLabel.textContent = state.volume.toLocaleString();
-        renderSummaryAndWheel2();
-      });
-
-      // Search & Bucket Filter
-      document.getElementById("cap-search").addEventListener("input", (e) => {
-        state.searchQuery = e.target.value;
-        renderCatalog();
-      });
-
-      document.querySelectorAll("[data-bucket]").forEach((pill) => {
-        pill.addEventListener("click", () => {
-          state.bucketFilter = pill.getAttribute("data-bucket");
-          document.querySelectorAll("[data-bucket]").forEach((p) =>
-            p.setAttribute("aria-pressed", String(p === pill))
-          );
-          renderCatalog();
-        });
-      });
-
-      // Inner Wheel #2 Sliders
-      document.getElementById("sim-paid-users").addEventListener("input", (e) => {
-        state.simPaidUsers = Number(e.target.value);
-        document.getElementById("sim-users-label").textContent = String(state.simPaidUsers);
-        renderSummaryAndWheel2();
-      });
-      document.getElementById("sim-arpu").addEventListener("input", (e) => {
-        state.simArpu = Number(e.target.value);
-        document.getElementById("sim-arpu-label").textContent = String(state.simArpu);
-        renderSummaryAndWheel2();
-      });
-
-      // Accessible Tabs with Arrow-Key Navigation
-      const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
-      function activateTab(selectedTab, moveFocus) {
-        tabs.forEach((tab) => {
-          const isSelected = tab === selectedTab;
-          tab.setAttribute("aria-selected", String(isSelected));
-          tab.tabIndex = isSelected ? 0 : -1;
-          const panel = document.getElementById(tab.getAttribute("aria-controls"));
-          if (panel) panel.hidden = !isSelected;
-        });
-        if (moveFocus) selectedTab.focus();
-      }
-      tabs.forEach((tab, index) => {
-        tab.addEventListener("click", () => activateTab(tab, false));
-        tab.addEventListener("keydown", (e) => {
-          if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
-            e.preventDefault();
-            const nextIdx = e.key === "ArrowRight" ? (index + 1) % tabs.length : (index - 1 + tabs.length) % tabs.length;
-            activateTab(tabs[nextIdx], true);
-          }
-        });
-      });
-
-      // Native Dialog Modal + Light-Dismiss Fallback per Modern Web Guidance
-      function openManifestModal() {
-        renderSummaryAndWheel2();
-        dialog.showModal();
-      }
-      document.getElementById("open-manifest-btn").addEventListener("click", openManifestModal);
-      document.getElementById("drawer-open-modal-btn").addEventListener("click", openManifestModal);
-      document.getElementById("dialog-close-btn").addEventListener("click", () => dialog.close("close"));
-
-      dialog.addEventListener("close", () => {
-        dialog.returnValue = "";
-      });
-
-      if (!("closedBy" in HTMLDialogElement.prototype)) {
-        dialog.addEventListener("click", (event) => {
-          const rect = dialog.getBoundingClientRect();
-          const clickedInDialog =
-            rect.top <= event.clientY &&
-            event.clientY <= rect.top + rect.height &&
-            rect.left <= event.clientX &&
-            event.clientX <= rect.left + rect.width;
-          if (!clickedInDialog) {
-            dialog.close();
-          }
-        });
-      }
-
-      // Copy Manifest Buttons
-      function copyManifestText(btn) {
-        const text = document.getElementById("dialog-manifest-json").textContent;
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(text);
-        }
-        const orig = btn.textContent;
-        btn.textContent = "Copied!";
-        setTimeout(() => {
-          btn.textContent = orig;
-        }, 1400);
-      }
-      document.getElementById("copy-manifest-quick-btn").addEventListener("click", (e) => copyManifestText(e.currentTarget));
-      document.getElementById("dialog-copy-btn").addEventListener("click", (e) => copyManifestText(e.currentTarget));
-
-      // Initial Render
-      renderAll();
-    })();
-  </script>
-</body>
-</html>
+<!--
+Static rendering of the whole-platform diagrams, generated from the data block below.
+To redraw after STACK changes: update the data, re-render the source file, save its rendered page here.
+DATA:
+{
+  "title": "Your Assistant — The Whole Platform",
+  "readDate": "27 September 2026",
+  "snapshot": "17186fa83851598e054670e5ad289456f9c4b73c",
+  "components": [
+    {
+      "id": "person",
+      "name": "You",
+      "layer": "person",
+      "description": "Your intent, your decisions. Your work and your seity belong to you.",
+      "today": {
+        "state": "person",
+        "description": "You remain the owner. A person, a login and an office grant are different things.",
+        "stackPart": "I §§2,7; X §§1–2",
+        "evidenceTags": [
+          "RULED"
+        ]
+      },
+      "detail": ""
+    },
+    {
+      "id": "assistant",
+      "name": "Your assistant",
+      "layer": "assistant",
+      "description": "The name you give it. One helper beside you—staff you can replace, serving the seity you keep.",
+      "today": {
+        "state": "partial",
+        "description": "Chat and naming components exist; the complete personal Assistant is unfinished. Naming screens still conflate assistant and seity.",
+        "stackPart": "I §1; XII §§1,4.7,5",
+        "evidenceTags": [
+          "PARTIAL",
+          "DEFECT"
+        ]
+      },
+      "detail": ""
+    },
+    {
+      "id": "character",
+      "name": "Character",
+      "layer": "assistant",
+      "description": "Tells the truth, knows when to be quiet, treats you with care, and never makes you audit it.",
+      "today": {
+        "state": "direction",
+        "description": "These commitments are design direction; they are not verified as a complete product behaviour.",
+        "stackPart": "XII §1",
+        "evidenceTags": [
+          "DOCTRINE"
+        ]
+      },
+      "detail": ""
+    },
+    {
+      "id": "codex",
+      "name": "Memory · Codex",
+      "layer": "seity",
+      "description": "What you remember and learn accumulates across your life and keeps its source.",
+      "today": {
+        "state": "built",
+        "description": "Memory storage, retrieval and capture exist. This does not establish cross-session recall in the personal Assistant.",
+        "stackPart": "II §2; XII §5",
+        "evidenceTags": [
+          "SHIPPED"
+        ]
+      },
+      "detail": ""
+    },
+    {
+      "id": "canon",
+      "name": "Standards · Canon",
+      "layer": "seity",
+      "description": "Your chosen examples, taste and standards guide the work.",
+      "today": {
+        "state": "built",
+        "description": "Stored exemplars and scoring exist; the newer engine’s Canon surface remains partial.",
+        "stackPart": "II §§2–3",
+        "evidenceTags": [
+          "SHIPPED",
+          "PARTIAL"
+        ]
+      },
+      "detail": ""
+    },
+    {
+      "id": "memory-source",
+      "name": "Source, not proof",
+      "layer": "seity",
+      "description": "A memory distinguishes your words, the Assistant’s reading, a document and another person.",
+      "today": {
+        "state": "partial",
+        "description": "Source and confidence fields exist. Review, decay and the full correction experience are missing.",
+        "stackPart": "XII §§4.4,5–6",
+        "evidenceTags": [
+          "SHIPPED",
+          "GAP"
+        ]
+      },
+      "detail": ""
+    },
+    {
+      "id": "doma",
+      "name": "Working context · Doma",
+      "layer": "seity",
+      "description": "For each task, the Assistant loads a fitting view of your seity—not your whole life.",
+      "today": {
+        "state": "partial",
+        "description": "One context can be assembled within a size budget; combining several contexts is incomplete.",
+        "stackPart": "II §3; XII §§4.4,5",
+        "evidenceTags": [
+          "PARTIAL"
+        ]
+      },
+      "detail": ""
+    },
+    {
+      "id": "ownership",
+      "name": "Yours to keep",
+      "layer": "seity",
+      "description": "Your seity is bonded to you, never pooled for others’ models, and leaves with you.",
+      "today": {
+        "state": "partial",
+        "description": "Seity archive export exists. Full human binding and export of vault keys remain unfinished.",
+        "stackPart": "I §§2,5; II §§2–3; X §1",
+        "evidenceTags": [
+          "SHIPPED",
+          "PARTIAL",
+          "GAP"
+        ]
+      },
+      "detail": ""
+    },
+    {
+      "id": "desktop",
+      "name": "One conversation",
+      "layer": "assistant-tools",
+      "description": "Type and talk on the visual desktop; the conversation stays with the same Assistant.",
+      "today": {
+        "state": "partial",
+        "description": "A global chat panel and Telegram components exist; the continuous desktop experience is incomplete.",
+        "stackPart": "V §4; XII §§1,4.14,5",
+        "evidenceTags": [
+          "PARTIAL"
+        ]
+      },
+      "detail": ""
+    },
+    {
+      "id": "answers",
+      "name": "Answer panel",
+      "layer": "assistant-tools",
+      "description": "Rich answers open beside the conversation as views of your own work, with revisions kept.",
+      "today": {
+        "state": "gap",
+        "description": "No answer panel, artifact record or locked-down panel frame is built.",
+        "stackPart": "XII §4.14; XI §I",
+        "evidenceTags": [
+          "GAP"
+        ]
+      },
+      "detail": "Chapters, images, diagrams, decks, short video and interactive pages are views onto the Writing Desk store. Edits reach the Assistant before its next reply. Publishing is your explicit choice. Generated media is saved immediately to your storage with its provenance. Generated code is isolated without network access by default, cookies or credentials."
+    },
+    {
+      "id": "voice",
+      "name": "Voice",
+      "layer": "assistant-tools",
+      "description": "Talk, dictate and listen; your device handles speech first, then accepted recordings are deleted.",
+      "today": {
+        "state": "gap",
+        "description": "No customer dictation, spoken conversation or readout is built.",
+        "stackPart": "XII §4.13; XI §I",
+        "evidenceTags": [
+          "GAP"
+        ]
+      },
+      "detail": "On-device speech is preferred wherever it meets the quality bar. Provider speech goes through the platform under zero-retention terms. Transcripts carry the source “the person’s own words”. Narration of finished work is a separate creative use."
+    },
+    {
+      "id": "browser",
+      "name": "Its own browser",
+      "layer": "assistant-tools",
+      "description": "Web tasks run in your estate’s browser, with separate site grants—not in your everyday browser.",
+      "today": {
+        "state": "gap",
+        "description": "No estate browser, login broker, per-grant compartments or browser receipts are built.",
+        "stackPart": "XII §4.12; XI §I",
+        "evidenceTags": [
+          "GAP"
+        ]
+      },
+      "detail": "Signing in there is consent. Hosted sessions stay in the vault; local sessions stay on your machine. Receipts keep the domain and action, never the page. Unknown outcomes are not automatically retried. A repeated task pauses if its outcome check fails."
+    },
+    {
+      "id": "dial",
+      "name": "Freedom dial",
+      "layer": "assistant-tools",
+      "description": "Ask me · Routine acts allowed · Trusted scope. It offers a step up; you confirm.",
+      "today": {
+        "state": "gap",
+        "description": "Permission profiles exist; the three positions are not mapped or connected to the Assistant.",
+        "stackPart": "XII §§4.1,5–6",
+        "evidenceTags": [
+          "SHIPPED — staging only",
+          "GAP"
+        ]
+      },
+      "detail": ""
+    },
+    {
+      "id": "cards",
+      "name": "Approval cards",
+      "layer": "assistant-tools",
+      "description": "One act, one card, your tap. Silence means no; irreversible and cross-owner acts always ask.",
+      "today": {
+        "state": "partial",
+        "description": "Cards exist for the Director. Per-person delivery, expiry and resuming approved work have gaps.",
+        "stackPart": "XII §§4.1,5–6",
+        "evidenceTags": [
+          "SHIPPED — Director only",
+          "GAP"
+        ]
+      },
+      "detail": ""
+    },
+    {
+      "id": "reviewer",
+      "name": "Reviewer in shadow",
+      "layer": "assistant-tools",
+      "description": "An independent reviewer records what it would approve while you keep deciding.",
+      "today": {
+        "state": "gap",
+        "description": "A laboratory reviewer exists; its shadow seat in the Assistant is not built.",
+        "stackPart": "XII §§4.2,6",
+        "evidenceTags": [
+          "GAP"
+        ]
+      },
+      "detail": "Shadow use comes first. It can only approve what the dial permits. Turning on automatic approval requires a later decision after real-use evidence; completion of this map does not grant that authority."
+    },
+    {
+      "id": "sketch",
+      "name": "Your readings",
+      "layer": "assistant-tools",
+      "description": "You mark first; possible meanings stay open until you say you are ready to plan.",
+      "today": {
+        "state": "unwired",
+        "description": "The sketch object is built; conversation wiring is held and is not authorized to proceed.",
+        "stackPart": "XII §§4.6,5–6",
+        "evidenceTags": [
+          "PARTIAL",
+          "GAP"
+        ]
+      },
+      "detail": "A plain execution task can skip the sketch. Rejected readings stay in the Assistant’s room and do not become memory without affirmation. The person closes by being ready, not by selecting a winning reading."
+    },
+    {
+      "id": "habits",
+      "name": "Habits & watches",
+      "layer": "assistant-tools",
+      "description": "Routines you consent to watch while you are away, log their reads and pause when goals fail.",
+      "today": {
+        "state": "gap",
+        "description": "Personal routines, event triggers, read logs and unattended memory access remain unbuilt.",
+        "stackPart": "XII §§4.5,4.12,6",
+        "evidenceTags": [
+          "GAP"
+        ]
+      },
+      "detail": ""
+    },
+    {
+      "id": "sources",
+      "name": "Your connected sources",
+      "layer": "assistant-tools",
+      "description": "You grant access to mail, files and calendars as needed; reach never grants permission to act.",
+      "today": {
+        "state": "partial",
+        "description": "Gmail and Drive reads exist; Calendar, write-back and Assistant-specific grant controls are incomplete.",
+        "stackPart": "XII §§4.3,5–6",
+        "evidenceTags": [
+          "SHIPPED",
+          "PARTIAL",
+          "GAP"
+        ]
+      },
+      "detail": ""
+    },
+    {
+      "id": "writers",
+      "name": "Writers Factory",
+      "layer": "rooms",
+      "description": "Long prose, novels and screenplays keep continuity and your chosen intent.",
+      "today": {
+        "state": "partial",
+        "description": "Writing methods and a making screen exist; the named room entrance is absent from Sakme.",
+        "stackPart": "I §3; V §1; XI §V",
+        "evidenceTags": [
+          "GAP — Sakme entrance"
+        ]
+      },
+      "detail": "The practices index records the making screen and version preservation as shipped. The absence in Part V concerns the Sakme entrance, not all writing capability in the estate."
+    },
+    {
+      "id": "evidence",
+      "name": "Evidence Foundry",
+      "layer": "rooms",
+      "description": "Research connects claims to evidence, and helps you build a lab.",
+      "today": {
+        "state": "partial",
+        "description": "A separate research product is documented; its Sakme entrance and making-method integration are gaps.",
+        "stackPart": "I §3; V §1; XI §V",
+        "evidenceTags": [
+          "GAP — Sakme entrance"
+        ]
+      },
+      "detail": "The making-rooms index names research-facility as the product and marks the creative method within Evidence Foundry as an open gap. Research claims remain subject to warrant; they cannot be made true by a personal ruling."
+    },
+    {
+      "id": "workshop",
+      "name": "Workshop",
+      "layer": "rooms",
+      "description": "Make video, apps, crafts and labs; keep the version you accept.",
+      "today": {
+        "state": "partial",
+        "description": "Video and making-screen components exist; the complete room is not established by STACK.",
+        "stackPart": "I §3; XII §4.6",
+        "evidenceTags": [
+          "PARTIAL"
+        ]
+      },
+      "detail": "The practices index names the video lab and a keep/reopen method. It records wildcard generation, preserved versions and the human-selection screen as shipped. This is not evidence that the whole room is complete."
+    },
+    {
+      "id": "developer",
+      "name": "Developer Room",
+      "layer": "rooms",
+      "description": "Dispatch code work, inspect the checks, and approve its impact.",
+      "today": {
+        "state": "partial",
+        "description": "A governed-code frontend exists; its backend connection is not confirmed in Sakme.",
+        "stackPart": "V §3; VI §7; XI §V",
+        "evidenceTags": [
+          "PARTIAL"
+        ]
+      },
+      "detail": ""
+    },
+    {
+      "id": "company",
+      "name": "One-person company",
+      "layer": "rooms",
+      "description": "Staff prepare the work; you approve sends, spends, filings, signatures and deletions.",
+      "today": {
+        "state": "gap",
+        "description": "A paused sketch with no product repository; no completed company room is documented.",
+        "stackPart": "I §3; Appendices E",
+        "evidenceTags": [
+          "DOCTRINE"
+        ]
+      },
+      "detail": "The making-rooms index explicitly describes this as a paused operations-room sketch, separate from the discontinued Solopreneur vertical."
+    },
+    {
+      "id": "labs",
+      "name": "Your own labs",
+      "layer": "rooms",
+      "description": "Build shared workspaces without surrendering your personal memory or ownership.",
+      "today": {
+        "state": "gap",
+        "description": "Existing labs are named, but a customer room builder is absent from Sakme.",
+        "stackPart": "I §§3,7; V §7; XI §V",
+        "evidenceTags": [
+          "GAP — customer builder"
+        ]
+      },
+      "detail": ""
+    },
+    {
+      "id": "estate",
+      "name": "The estate room",
+      "layer": "rooms",
+      "description": "Whoever holds the operator office handles estate decisions here; the room passes with the office.",
+      "today": {
+        "state": "partial",
+        "description": "Operator grants exist; tappable waits, a waiting-on-me view and Assistant closure are missing.",
+        "stackPart": "XII §4.9",
+        "evidenceTags": [
+          "SHIPPED",
+          "GAP"
+        ]
+      },
+      "detail": ""
+    },
+    {
+      "id": "making",
+      "name": "Two moments are yours",
+      "layer": "making",
+      "description": "In making rooms, you make the first mark and give the final yes or no. The Assistant runs the method between them.",
+      "today": {
+        "state": "partial",
+        "description": "Human selection and preserved variants are recorded built; the complete Assistant-run method is direction.",
+        "stackPart": "I §§1,3; V §4",
+        "evidenceTags": [
+          "DOCTRINE"
+        ]
+      },
+      "detail": "The making-rooms index records the shipped selection screen. A decision records whose hand made it. Developer tasks after dispatch and company operations use execution rules, not an indefinitely open making process."
+    },
+    {
+      "id": "desk",
+      "name": "Writing Desk",
+      "layer": "furniture",
+      "description": "One shared editor supports writing across rooms without mixing their standards of truth.",
+      "today": {
+        "state": "partial",
+        "description": "Contracts and a surface exist; the complete Desk and its storage foundation are not documented as delivered.",
+        "stackPart": "V §§4,9; Appendices E",
+        "evidenceTags": [
+          "PARTIAL"
+        ]
+      },
+      "detail": "The supplemental Writing Desk specification (§§0–1,4) identifies contracts, projection tools and a surface, with a build-status correction. The store remains on its own delivery plan; this diagram does not infer completion from a frontend."
+    },
+    {
+      "id": "store",
+      "name": "Your work store",
+      "layer": "furniture",
+      "description": "Projects, pages, revisions, a project log and assets keep one durable copy of your work.",
+      "today": {
+        "state": "partial",
+        "description": "The CTO’s storage foundation is recorded in progress; STACK did not verify its implementation.",
+        "stackPart": "V §§4,6,9; Appendices E",
+        "evidenceTags": [
+          "PARTIAL — in progress"
+        ]
+      },
+      "detail": "The dated appendix records the Desk store work as open. Its current delivery is not independently audited here. The Writing Desk specification §§4.2–4.5 describes assets, ordered projects, named versions and project history."
+    },
+    {
+      "id": "binder",
+      "name": "Binder",
+      "layer": "furniture",
+      "description": "Find documents, sources, files and assets; navigate the work without becoming a second editor.",
+      "today": {
+        "state": "built",
+        "description": "The navigation tree and file browser are built. They are not the Writing Desk editor.",
+        "stackPart": "V §5",
+        "evidenceTags": [
+          "SHIPPED"
+        ]
+      },
+      "detail": ""
+    },
+    {
+      "id": "identity",
+      "name": "Identity",
+      "layer": "centre",
+      "description": "One person, distinct from their login, working context and office permissions.",
+      "today": {
+        "state": "built",
+        "description": "Engine login and commercial-layer verification exist; tenant identity is separate from office grants.",
+        "stackPart": "III §1; I §7; X §2",
+        "evidenceTags": [
+          "SHIPPED"
+        ]
+      },
+      "detail": ""
+    },
+    {
+      "id": "memory",
+      "name": "Memory",
+      "layer": "centre",
+      "description": "Rooms ask the shared centre to keep and recall your memory and standards.",
+      "today": {
+        "state": "built",
+        "description": "Memory and exemplar services exist; the full Assistant memory path remains incomplete.",
+        "stackPart": "II §2; XII §5",
+        "evidenceTags": [
+          "SHIPPED"
+        ]
+      },
+      "detail": ""
+    },
+    {
+      "id": "secrets",
+      "name": "Secrets · the vault",
+      "layer": "centre",
+      "description": "Credentials are used for a granted purpose and never handed to the model or another person.",
+      "today": {
+        "state": "partial",
+        "description": "Credential custody exists; the full per-grant browser broker is not built.",
+        "stackPart": "II §2; XII §4.12; XI §I",
+        "evidenceTags": [
+          "SHIPPED",
+          "GAP"
+        ]
+      },
+      "detail": ""
+    },
+    {
+      "id": "records",
+      "name": "Records · Notary",
+      "layer": "centre",
+      "description": "Every act leaves a receipt: model, why, cost and outcome—not message text. Notary verifies claims.",
+      "today": {
+        "state": "partial",
+        "description": "Signing and verification primitives exist; full production receipt coverage is missing.",
+        "stackPart": "II §2; IV §§1,5; XII §§5–6",
+        "evidenceTags": [
+          "SHIPPED",
+          "PARTIAL",
+          "GAP"
+        ]
+      },
+      "detail": "The documents distinguish signed creative-decision streams from ordinary audit tables with unused hash fields. They do not establish estate-wide, signed production receipts. A source-specific primitive is not complete runtime coverage."
+    },
+    {
+      "id": "approvals",
+      "name": "Approvals",
+      "layer": "centre",
+      "description": "The centre records your yes or no; the card reaches you in the Assistant’s conversation.",
+      "today": {
+        "state": "defect",
+        "description": "Separate approval mechanisms exist, but some permission routes fail open and approve-to-resume is missing.",
+        "stackPart": "II §2; XII §§4.1,6; XI §II",
+        "evidenceTags": [
+          "DEFECT",
+          "GAP"
+        ]
+      },
+      "detail": ""
+    },
+    {
+      "id": "sharing",
+      "name": "Sharing · bonds",
+      "layer": "centre",
+      "description": "People and their assistants work together only within each person’s permission.",
+      "today": {
+        "state": "partial",
+        "description": "Bond records and signing identities exist; human counter-signing and assistant collaboration are incomplete.",
+        "stackPart": "I §1; II §§2–3; XII §4",
+        "evidenceTags": [
+          "PARTIAL",
+          "GAP"
+        ]
+      },
+      "detail": ""
+    },
+    {
+      "id": "messaging",
+      "name": "Messaging",
+      "layer": "centre",
+      "description": "Channels carry the same conversation; useful decisions reach you without operational chatter.",
+      "today": {
+        "state": "partial",
+        "description": "Telegram components and a notification centre exist; unified channels and product-event wiring are incomplete.",
+        "stackPart": "III §7; XII §§1–3,5",
+        "evidenceTags": [
+          "PARTIAL",
+          "GAP"
+        ]
+      },
+      "detail": ""
+    },
+    {
+      "id": "model-access",
+      "name": "Model access",
+      "layer": "centre",
+      "description": "Own keys → subscription → platform credits; automatic choice per task, with your pin overriding.",
+      "today": {
+        "state": "defect",
+        "description": "Funding and pin components are built; the bot uses platform models and ignores your settings.",
+        "stackPart": "XII §§4.8,5; XI §II",
+        "evidenceTags": [
+          "SHIPPED",
+          "DEFECT"
+        ]
+      },
+      "detail": "Funding order, difficulty routing and per-task pins exist as components. They are not a complete personal-Assistant path. Bringing the Telegram route onto that path—including masking—is engineering work."
+    },
+    {
+      "id": "privacy",
+      "name": "Privacy before models",
+      "layer": "centre-guard",
+      "description": "Text is masked before providers; managed models use zero-retention terms and your data is never pooled.",
+      "today": {
+        "state": "partial",
+        "description": "Pattern masking exists; Assistant route wiring and provider-policy enforcement remain unfinished.",
+        "stackPart": "X §9; XII §§4.8,5; XI §II",
+        "evidenceTags": [
+          "PARTIAL",
+          "GAP"
+        ]
+      },
+      "detail": "Pattern masking does not anonymize prose: names and places are not covered. On a person’s own keys the provider terms are shown and the choice remains theirs. Managed use requires verified zero-retention terms."
+    },
+    {
+      "id": "governor",
+      "name": "Standards & safe tools",
+      "layer": "centre-guard",
+      "description": "Governor checks work against your standards; Notary checks bundles and the boundaries around their execution.",
+      "today": {
+        "state": "partial",
+        "description": "Detection and prompt-only certification work; correction, tool certification and runtime isolation have gaps.",
+        "stackPart": "II §2; IV §§3–4; XI §§II,IV",
+        "evidenceTags": [
+          "SHIPPED",
+          "GAP"
+        ]
+      },
+      "detail": ""
+    },
+    {
+      "id": "sign-in",
+      "name": "Sign-in",
+      "layer": "door",
+      "description": "Enter the platform through the same door, then open the rooms you can use.",
+      "today": {
+        "state": "built",
+        "description": "Login handoff, identity verification and entry routing are implemented.",
+        "stackPart": "III §1; V §2",
+        "evidenceTags": [
+          "SHIPPED"
+        ]
+      },
+      "detail": ""
+    },
+    {
+      "id": "billing",
+      "name": "Billing · SEIT",
+      "layer": "door",
+      "description": "Subscriptions and store credits pay for services; your data is not the product.",
+      "today": {
+        "state": "built",
+        "description": "Checkout, subscription handling and the append-only credit ledger exist per person and product.",
+        "stackPart": "III §§3–4; VII §2",
+        "evidenceTags": [
+          "SHIPPED"
+        ]
+      },
+      "detail": "Built refers to payment and ledger mechanisms, not complete usage settlement. Some inference paths still lack true-up to measured cost, and some engine usage rows do not carry actual cost."
+    },
+    {
+      "id": "limits",
+      "name": "Limits & warnings",
+      "layer": "door",
+      "description": "You set limits, see which balance is used and receive a warning before a provider limit is reached.",
+      "today": {
+        "state": "partial",
+        "description": "Spend-cap components exist; customer controls and the 80% warning are missing in the documented snapshot.",
+        "stackPart": "XII §§4.8,5–6; VII §2",
+        "evidenceTags": [
+          "PARTIAL",
+          "GAP"
+        ]
+      },
+      "detail": ""
+    },
+    {
+      "id": "local",
+      "name": "On your own machine",
+      "layer": "tiers",
+      "description": "The same rooms run on your computer; your keys and browser sessions stay there.",
+      "today": {
+        "state": "gap",
+        "description": "The same-build sovereign experience is direction. Centre memory location and sync are not yet designed.",
+        "stackPart": "I §§3,5; IX §1; XI §II",
+        "evidenceTags": [
+          "DOCTRINE",
+          "GAP"
+        ]
+      },
+      "detail": ""
+    },
+    {
+      "id": "hosted",
+      "name": "Hosted for you",
+      "layer": "tiers",
+      "description": "The same rooms run for you in the cloud, with visible, governed custody of secrets.",
+      "today": {
+        "state": "partial",
+        "description": "Managed services exist; equivalent complete rooms across both tiers are not established.",
+        "stackPart": "I §5; IX §§1,4",
+        "evidenceTags": [
+          "SHIPPED",
+          "DOCTRINE"
+        ]
+      },
+      "detail": ""
+    },
+    {
+      "id": "side-doors",
+      "name": "Messaging side doors",
+      "layer": "side-doors",
+      "description": "Telegram · WhatsApp · iMessage give short answers and a link back to the visual desktop.",
+      "today": {
+        "state": "partial",
+        "description": "Telegram is the first channel. Other side doors, account links and desktop return paths remain future work.",
+        "stackPart": "XII §§1–3,4.14,5",
+        "evidenceTags": [
+          "PARTIAL",
+          "GAP"
+        ]
+      },
+      "detail": ""
+    },
+    {
+      "id": "noise",
+      "name": "Machine noise",
+      "layer": "operations",
+      "description": "Retries, rate limits, duplicate guards, deploys and health checks stay below the conversation.",
+      "today": {
+        "state": "partial",
+        "description": "Operational channels exist; moving the right decision cards into the Assistant remains unfinished.",
+        "stackPart": "XII §4.9; VI §§2,5; VIII §1",
+        "evidenceTags": [
+          "SHIPPED",
+          "GAP"
+        ]
+      },
+      "detail": ""
+    }
+  ],
+  "sources": [
+    {
+      "path": "docs/STACK/00-how-to-read.md",
+      "sha256": "7405e0a13addcc1aa0e8764df00bd838c75d6555664c3c905508697683d4d41c",
+      "read": "full"
+    },
+    {
+      "path": "docs/STACK/01-what-the-estate-is.md",
+      "sha256": "935cc9b4ab30b33271ccec1c188ef003da035f2ccf6b5fa435995601a96b6490",
+      "read": "full"
+    },
+    {
+      "path": "docs/STACK/02-substrate-seitiate.md",
+      "sha256": "519d516244daa41f0c872c6187a0cb3053b25df747f092336304200e282d4f44",
+      "read": "full"
+    },
+    {
+      "path": "docs/STACK/03-commercial-seitiate-plus.md",
+      "sha256": "6bdfae878d78245f040c3b1c7d788f6a6cb60d54d762d43d78f06751467711ab",
+      "read": "full"
+    },
+    {
+      "path": "docs/STACK/04-trust-notary.md",
+      "sha256": "d0215c964e0361674607a9177dc42b1b96dd69155b5cf4eaba2c488fb180d802",
+      "read": "full"
+    },
+    {
+      "path": "docs/STACK/05-house-sakme.md",
+      "sha256": "893a2b4bde84b8a046e56e4219b6e882126f1b907aaf6c440ec14a71982b6915",
+      "read": "full"
+    },
+    {
+      "path": "docs/STACK/06-coordination-ces.md",
+      "sha256": "72b390cf442fd7511b55cb9c8cbad99fc530aa1bfac4e37f1b2c62e4db1c2e3a",
+      "read": "full"
+    },
+    {
+      "path": "docs/STACK/07-economic-substrate.md",
+      "sha256": "58eec42c33fe1857c0659722b0ace9ecc224cd25c68f18bd66c162d949a3a9f1",
+      "read": "full"
+    },
+    {
+      "path": "docs/STACK/08-delivery-and-governance.md",
+      "sha256": "781f55a37320026df9af1285ee13f6ef924eec2d12c45ded198ed341f2fb9422",
+      "read": "full"
+    },
+    {
+      "path": "docs/STACK/09-deployment-topologies.md",
+      "sha256": "8ce4c696001aa93e4ea71f4a988a6ab966c7041ecc5de75bfac451bbd546532b",
+      "read": "full"
+    },
+    {
+      "path": "docs/STACK/10-cross-cutting-invariants.md",
+      "sha256": "6ff879035490a5ac1a686856219c9e451252b30c42c72464569f292681bd7cb4",
+      "read": "full"
+    },
+    {
+      "path": "docs/STACK/11-what-is-not-built.md",
+      "sha256": "5bb6df980b171ba7d34b3871c896fe52de0f6ee2381f6ddddd3e36b094acc7e2",
+      "read": "full"
+    },
+    {
+      "path": "docs/STACK/12-the-personal-assistant.md",
+      "sha256": "e94bc7c248ec5f1502574f8e7ae6fe8825ba99dc8254032bf9bd0a2c0dccfa36",
+      "read": "full"
+    },
+    {
+      "path": "docs/STACK/README.md",
+      "sha256": "de612f56c8f686bffa79e9088f3d112a9bd9783325fcb20961a747624cdc7674",
+      "read": "full"
+    },
+    {
+      "path": "docs/STACK/appendices.md",
+      "sha256": "b579c42c8a05c8adca6b60a78c063114a9aadf358c74e046c7ad968834865c18",
+      "read": "full"
+    },
+    {
+      "path": "knowledge/reference/architecture/assistant/2026-09-26- -design- -approvals-and-the-dial.md",
+      "sha256": "56cf136ca056b11c04ee69dc634aa1c3a7c93191f6349a1a2a02209e77b85571",
+      "read": "full"
+    },
+    {
+      "path": "knowledge/reference/architecture/assistant/2026-09-26- -design- -character.md",
+      "sha256": "df361159f11b83099f8f522931e9192f95d8718d563f3b2591e48732412d175d",
+      "read": "full"
+    },
+    {
+      "path": "knowledge/reference/architecture/assistant/2026-09-26- -design- -memory-and-its-trust-labels.md",
+      "sha256": "842531bb3ce9ec7b224132933c839e4cec5b67a24214c93b4635aa32e2e49b30",
+      "read": "full"
+    },
+    {
+      "path": "knowledge/reference/architecture/assistant/2026-09-26- -design- -model-choice.md",
+      "sha256": "f6a67bf599b35ee2b698943e4692339cef7f50d0e563051025f771fd1b9e74fb",
+      "read": "full"
+    },
+    {
+      "path": "knowledge/reference/architecture/assistant/2026-09-26- -design- -naming.md",
+      "sha256": "acd265e644d8779452807d34597e7232da4cef76dcb9364575420c347389a6da",
+      "read": "full"
+    },
+    {
+      "path": "knowledge/reference/architecture/assistant/2026-09-26- -design- -reach-and-sources.md",
+      "sha256": "8483d7746ff2299686fe7a2a67b4d77cbeb11eb09cadc32e9d4fe69dd2159961",
+      "read": "full"
+    },
+    {
+      "path": "knowledge/reference/architecture/assistant/2026-09-26- -design- -the-reviewer-in-shadow.md",
+      "sha256": "5933805324001d1ea758722f0334d3c1aa0e00bac349e8c06db4638348d408be",
+      "read": "full"
+    },
+    {
+      "path": "knowledge/reference/architecture/assistant/2026-09-26- -design- -the-sketch.md",
+      "sha256": "5ce0bed0799c342fec06661dea0897468ccde78e273edc5b6129127698231833",
+      "read": "full"
+    },
+    {
+      "path": "knowledge/reference/architecture/assistant/2026-09-26- -design- -unattended-runs.md",
+      "sha256": "f74e9bc4ad8a3e09ae45bf7920c3e2104adfbc58a5f782781468fc2d3b3f8e31",
+      "read": "full"
+    },
+    {
+      "path": "knowledge/reference/architecture/assistant/2026-09-27- -design- -the-desktop-conversation.md",
+      "sha256": "8ecedfce6be620d5156c0cb70fa91d9bd2551cc63fe7e3da9363a75b2699495d",
+      "read": "full"
+    },
+    {
+      "path": "knowledge/reference/architecture/assistant/2026-09-27- -design- -the-estate-browser.md",
+      "sha256": "1308b46d386a53a4219487384aae96f41123131e617b9cb75e0db89404ed6160",
+      "read": "full"
+    },
+    {
+      "path": "knowledge/reference/architecture/assistant/2026-09-27- -design- -voice.md",
+      "sha256": "64ed6a2763bb9c8a8f71ddde9f487f694fae2bcbda1fae94b7886b0e7fc17553",
+      "read": "full"
+    },
+    {
+      "path": "knowledge/reference/architecture/assistant/2026-09-27- -direction- -the-house-the-crowd-does-not-own.md",
+      "sha256": "4d6df0abced8844175d257ae6bb1be1aa8c3763b4ee12ad3f5f259aff049d75b",
+      "read": "full"
+    },
+    {
+      "path": "knowledge/reference/architecture/assistant/README.md",
+      "sha256": "d9c47a46c8bc0b524357752e3bd8f11c4d2d9aad3a904be4311dbca11adaea84",
+      "read": "full"
+    },
+    {
+      "path": "knowledge/verticals/sakme/practices/README.md",
+      "sha256": "96a03c11f03f0fb13ff32a67fa801995a30ea6fbbef024f0de26e0d4bfdafd99",
+      "read": "full"
+    }
+  ],
+  "supplemental": [
+    {
+      "path": "docs/design/WRITING-DESK-COMPLETE-SPEC-V1.md",
+      "read": "§§0–1 and 4 excerpts; supplementary store definition"
+    }
+  ],
+  "notes": [
+    "Today is a documentation snapshot, not a new live deployment audit. Shipped components do not imply a complete connected product. Staging and dormant qualifiers remain visible in the evidence.",
+    "Part V’s missing-room findings are scoped to Sakme. The practices index also records existing writing, research and video work, and a shipped making screen. Both are preserved here.",
+    "The Desk store is recorded in progress in Appendix E; its implementation was not inspected by these Parts. No current completion or delivery date is inferred.",
+    "Part XII’s newer model-choice section describes a Telegram turn route, while older rows still describe a non-answering bot. This map does not claim a verified live answer flow. The newer explicit model-choice decision governs the intended route.",
+    "The same build on two tiers is direction. The location, custody and synchronization of sovereign centre memory remain open; the finished view does not invent a mechanism.",
+    "Operational noise is kept out of the main conversation. Decisions, useful receipts and spending warnings remain visible; nothing here promises to hide those from the person."
+  ]
+}
+-->
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Your Assistant — The Whole Platform</title>
+<!-- EDIT CONTENT HERE. Both maps are generated from this one block. today.state controls the status styling;
+     today.stackPart and evidenceTags retain the source. Do not equate built components with live integration. -->
+
+<style>
+:root{--paper:#f9f8f1;--ink:#203e37;--muted:#637269;--line:#bbc8bc;--leaf:#265945;--pale:#eaf0e6;--gold:#a67523;--violet:#756093;--red:#ab5149;--grey:#7e887e}*{box-sizing:border-box}body{margin:0;background:#e5e7df;color:var(--ink);font:14px/1.45 Arial,Helvetica,sans-serif}button,a{touch-action:manipulation}button{font:inherit}a{color:inherit}nav{max-width:1480px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:24px 34px}nav .brand{font-family:Georgia,serif;font-size:22px;letter-spacing:-.5px}nav .navlinks{display:flex;gap:8px;align-items:center}nav a,nav button{border:1px solid #adbcb0;background:transparent;color:var(--ink);border-radius:24px;padding:9px 17px;text-decoration:none;font-size:12px;cursor:pointer}nav a:hover,nav button:hover{background:#f3f5ed}a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--violet);outline-offset:4px}.page{max-width:1480px;margin:0 auto 28px;background:var(--paper);padding:38px 40px 25px;box-shadow:0 8px 36px #2343330c}.page-head{display:grid;grid-template-columns:1fr auto;align-items:end;gap:24px;margin-bottom:22px}.kicker,.group-label{font-size:10px;letter-spacing:1.6px;font-weight:700;text-transform:uppercase}.kicker{color:var(--muted)}h1{font:400 49px/1.05 Georgia,serif;letter-spacing:-1.5px;margin:9px 0 10px}.page-head p{margin:0;color:var(--muted);font-size:15px}.page-number{font:400 38px Georgia,serif;color:#a3b2a3;text-align:right}.orientation{font-size:11px;max-width:385px;margin-top:8px;color:var(--muted)}.legend{display:flex;gap:8px 17px;flex-wrap:wrap;align-items:center;font-size:10px;margin:0 0 16px;min-height:20px}.legend span{display:flex;align-items:center;gap:6px}.swatch{display:inline-block;width:21px;border-top:3px solid var(--leaf)}.swatch.partial{border-color:var(--gold)}.swatch.unwired{border-color:var(--violet);border-top-style:dotted}.swatch.gap{border-color:var(--grey);border-top-style:dashed}.swatch.defect{border-color:var(--red)}.swatch.direction{border-color:var(--grey);border-top-style:dotted}.complete-note{font-size:11px;color:var(--muted)}.map{position:relative}.links{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:visible}.links path{stroke:#98b29e;stroke-width:1.2;fill:none;vector-effect:non-scaling-stroke}.links .tie{stroke-dasharray:3 5}.map>section,.map>.heart{position:relative;z-index:1}.tiers{display:grid;grid-template-columns:1fr 1fr;gap:28px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:11px 0 12px;margin-bottom:19px}.tiers .group-label{grid-column:1/-1;margin-bottom:-24px;background:var(--paper);justify-self:center;padding:0 12px;z-index:2}.tiers .node{border:0;padding:0;display:grid;grid-template-columns:200px 1fr;gap:0 12px}.tiers .node .status{grid-row:2;grid-column:1}.tiers .node .desc{grid-column:2;grid-row:1/3}.tiers .node h3{font:400 20px Georgia,serif}.group-top{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-bottom:10px}.group-top h2{font:400 26px/1.1 Georgia,serif;letter-spacing:-.5px;margin:0}.group-top p{font-size:11px;color:var(--muted);margin:0}.rooms{padding:0 0 12px}.rooms-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:9px}.node{--state:var(--leaf);border-left:2px solid #b8c9b6;padding:9px 10px;position:relative;min-width:0}.node h3{font-size:13px;font-weight:700;line-height:1.25;margin:0 0 5px;letter-spacing:-.15px}.desc{font-size:11px;line-height:1.5;margin:0;color:#52665a;overflow-wrap:break-word}.rooms .node{border:1px solid #bdcbb8;border-radius:8px;background:var(--paper);padding:11px 10px}.rooms .desc{font-size:10.5px}.status{display:flex;align-items:center;gap:5px;min-height:14px;font-size:9px;font-weight:600;line-height:1.25;margin:6px 0 0;color:var(--state)}.status:before{content:'';width:5px;height:5px;border-radius:50%;background:var(--state);flex:none}.complete .status{visibility:hidden}.node[data-state="person"] .status{visibility:hidden}.today .node{border-color:var(--state)}.node[data-state="built"]{--state:var(--leaf)}.node[data-state="partial"]{--state:var(--gold)}.node[data-state="unwired"]{--state:var(--violet)}.node[data-state="gap"]{--state:var(--grey)}.node[data-state="defect"]{--state:var(--red)}.node[data-state="direction"]{--state:var(--grey)}.today .node[data-state="gap"],.today .node[data-state="unwired"],.today .node[data-state="direction"]{border-style:dashed}.today .node[data-state="defect"]{background:#f6eae4}.today .node[data-state="unwired"]{background:#eeebf2}.heart{display:grid;grid-template-columns:1fr 2.35fr 1fr;gap:27px;margin:30px 0 27px;align-items:stretch}.seity,.furniture{background:var(--paper);align-self:stretch;padding:10px 0}.seity .group-label,.furniture .group-label{margin-bottom:8px}.seity h2,.furniture h2{font:400 28px/1.15 Georgia,serif;letter-spacing:-.8px;margin:0 0 7px}.group-caption{font-size:11px;color:var(--muted);margin:0 0 12px}.seity .node{margin-bottom:4px;background:#f0f3e9}.furniture .node{margin-bottom:10px}.desktop{border:1px solid #9ab39c;border-radius:20px;padding:17px;background:#f0f3e9;position:relative;display:flex;flex-direction:column}.desktop>.group-label{text-align:center;margin-bottom:14px}.companions{display:grid;grid-template-columns:1fr 1.05fr;gap:11px;align-items:stretch}.person-box,.assistant-box{border:0;border-radius:13px;padding:18px 14px;text-align:center;background:var(--paper)}.person-box{border:1px solid #bac9b3}.person-box h3{font:400 42px/1 Georgia,serif;letter-spacing:-1px;margin-bottom:10px}.person-box .desc{font-size:12px}.assistant-box{background:var(--leaf);color:#fffdf0}.assistant-box h3{font:400 27px/1.15 Georgia,serif;letter-spacing:-.5px}.assistant-box .desc{color:#edf2e8;font-size:12px}.assistant-box .status{color:#f6ddb0}.today .assistant-box{background:#f1e9d7;color:var(--ink);border:1px dashed var(--gold)}.today .assistant-box .desc{color:#556252}.today .assistant-box .status{color:#8b6727}.character{border:0;text-align:center;padding:11px 4px 10px}.character h3{display:none}.character .desc{font-size:11px}.character .status{justify-content:center}.assistant-tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 12px;margin-top:3px}.assistant-tools .node{padding:6px 8px;border-left-width:2px;background:var(--paper)}.assistant-tools h3{font-size:12px}.assistant-tools .desc{font-size:10.5px}.making{margin-top:18px;padding-top:11px;border-top:1px solid var(--line)}.making .node{border:0;padding:0}.making .node h3{font:400 20px/1.15 Georgia,serif}.view-link{font-size:10px;color:var(--muted);text-align:center;padding:7px 0 0}.centre{border:1px solid #9fb49f;border-radius:14px;padding:16px 18px 12px;background:#eef2e8}.centre .group-top{margin-bottom:13px}.centre-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px 18px}.centre .node{background:var(--paper);padding:9px 10px}.guard-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:12px;border-top:1px solid #bdcbb8;padding-top:9px}.guard-grid .node{background:transparent;border:0;padding:3px 0}.guard-grid h3{font-size:12px}.door{margin:22px 0 0;display:grid;grid-template-columns:140px 1fr;align-items:start;gap:20px;border-top:1px solid var(--line);padding-top:15px}.door h2{font:400 25px/1.1 Georgia,serif;letter-spacing:-.5px;margin:0}.door .group-label{margin-bottom:5px}.door-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.door .node{padding-top:0}.side-doors{margin:16px 0 0;display:grid;grid-template-columns:140px 1fr;gap:20px;border-top:1px solid var(--line);padding:10px 0}.side-doors>.group-label{padding-top:9px}.side-doors .node{border:0;padding:0;display:grid;grid-template-columns:210px 1fr;gap:0 12px}.side-doors h3{font-size:12px;grid-row:1}.side-doors .status{grid-column:1;grid-row:2}.side-doors .desc{grid-column:2;grid-row:1/3}.noise{border-top:1px dashed #9cae9b;margin-top:10px;padding-top:12px;display:grid;grid-template-columns:140px 1fr;gap:20px}.noise>.group-label{padding-top:8px;color:var(--muted)}.noise .node{border:0;padding:0}.noise .desc{font-size:11px}.noise .node h3{display:none}.noise .status{display:none}.boundary-note{font-size:10px;color:var(--muted);margin:5px 0 0}.page-foot{border-top:1px solid #d0d9c9;margin-top:18px;padding-top:12px;font-size:10px;color:var(--muted)}.foot-row{display:flex;justify-content:space-between;gap:20px}.page-foot p{margin:0 0 6px}.page-foot details{margin-top:8px}.page-foot summary{cursor:pointer;color:var(--ink);font-size:11px}.source-list{display:grid;grid-template-columns:1fr 1fr;gap:4px 24px;list-style:none;padding:10px 0;margin:0}.source-list li{font-size:10px;overflow-wrap:anywhere}.evidence-list{margin:0;padding:12px 18px;columns:2;column-gap:25px}.evidence-list li{break-inside:avoid;margin-bottom:12px;font-size:11px}.evidence-list strong{color:var(--ink)}.evidence-list .source{font-size:10px;overflow-wrap:anywhere}.audit-notes{padding-left:18px;line-height:1.5}.audit-notes li{margin-bottom:6px}.noscript{padding:30px;text-align:center}.compare-mode .page{margin-bottom:0}.compare-mode .page[hidden]{display:none} @media(min-width:1100px){body.compare-mode .page{max-width:1480px}.comparison-bar{display:block}}@media(max-width:1100px){.page{padding:28px 25px}.heart{grid-template-columns:1fr 2.05fr 1fr;gap:16px}.tiers .node{grid-template-columns:160px 1fr}.rooms-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.rooms-grid .node:last-child{grid-column:span 2}.person-box h3{font-size:34px}.assistant-box h3{font-size:23px}.source-list{grid-template-columns:1fr}.group-top p{max-width:250px;text-align:right}.furniture h2,.seity h2{font-size:25px}}@media(max-width:800px){nav{padding:18px 20px}.page{margin:0 10px 22px;padding:24px 20px}.page-head{gap:12px}h1{font-size:39px}.orientation{max-width:280px}.heart{grid-template-columns:1fr 1fr;gap:20px}.desktop{grid-column:1/-1;grid-row:1}.seity{grid-column:1;grid-row:2}.furniture{grid-column:2;grid-row:2}.links{display:none}.centre-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tiers .node{display:block}.tiers .group-label{margin-bottom:-15px}.tiers{gap:20px}.node .desc,.assistant-tools .desc,.rooms .desc{font-size:12px}.node h3,.assistant-tools h3{font-size:13px}.status{font-size:10px}.door,.side-doors,.noise{grid-template-columns:1fr;gap:10px}.door-grid{gap:12px}.page-number{font-size:30px}.evidence-list{columns:1}.group-top p{max-width:240px}.guard-grid{gap:15px}.complete-note{font-size:11px}}@media(max-width:480px){nav{align-items:flex-start;gap:10px;flex-direction:column}nav .navlinks{gap:5px;flex-wrap:wrap}nav a,nav button{font-size:11px;padding:10px 13px}.page{margin:0 6px 20px;padding:24px 15px}.page-head{display:block}.page-number{display:none}.orientation{max-width:none;margin-top:12px}h1{font-size:37px}.page-head p{font-size:14px}.legend{gap:9px 14px;font-size:10px}.tiers{grid-template-columns:1fr;gap:12px}.tiers .group-label{margin:0;justify-self:start;padding:0}.tiers .node h3{font-size:20px}.rooms-grid{grid-template-columns:1fr 1fr}.rooms-grid .node:last-child{grid-column:span 2}.group-top{display:block}.group-top p{text-align:left;max-width:none;margin-top:6px}.group-top h2{font-size:25px}.heart{display:flex;flex-direction:column;gap:20px;margin-top:22px}.desktop{order:0;padding:13px 10px}.seity{order:1}.furniture{order:2}.companions{gap:7px}.person-box,.assistant-box{padding:14px 9px}.person-box h3{font-size:34px}.assistant-box h3{font-size:23px}.assistant-box .desc,.person-box .desc{font-size:12px}.assistant-tools{gap:9px}.assistant-tools .node{padding:7px}.node .desc,.assistant-tools .desc,.rooms .desc{font-size:12px}.character .desc{font-size:12px}.centre{padding:14px 11px}.centre-grid{gap:10px}.centre-grid .node{padding:8px}.guard-grid,.door-grid{grid-template-columns:1fr}.side-doors .node{display:block}.noise{margin-top:6px}.foot-row{display:block}.page-foot{font-size:11px}.source-list li{font-size:10px}.boundary-note{font-size:11px}.group-caption{font-size:12px}}
+@media print{@page{size:A3 portrait;margin:8mm}body{background:white}nav{display:none}.page{zoom:.72;width:138.888889%;max-width:none;margin:0;padding:15px 16px;box-shadow:none;break-after:page}.page:last-child{break-after:auto}.page-head{margin-bottom:14px}h1{font-size:36px}.page-foot details{display:none}.rooms-grid{grid-template-columns:repeat(7,minmax(0,1fr))}.rooms-grid .node:last-child{grid-column:auto}.heart{display:grid;grid-template-columns:1fr 2.35fr 1fr;gap:20px;margin:20px 0}.desktop{grid-column:auto;grid-row:auto}.seity,.furniture{grid-column:auto;grid-row:auto}.links{display:block}.centre-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.tiers{grid-template-columns:1fr 1fr}.node .desc,.assistant-tools .desc,.rooms .desc{font-size:10px}.node h3,.assistant-tools h3{font-size:11px}.status{font-size:8px}.source-list{display:none}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style></head><body>
+
+<div style="background:rgba(8,9,11,0.94);border-bottom:1px solid #1e222b;padding:10px 24px;display:flex;justify-content:space-between;align-items:center;font-family:'Inter',-apple-system,sans-serif;font-size:13px;color:#eceae7;position:sticky;top:0;z-index:9999;">
+  <div style="display:flex;align-items:center;gap:14px;">
+    <a href="/" style="color:#4ade80;font-weight:600;text-decoration:none;">← Seitiate Home</a>
+    <span style="color:#56585f;">|</span>
+    <span style="color:#8a8a90;">Wheels Within Wheels · Whole-Platform Architecture &amp; Fractal Flywheel</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:14px;">
+    <a href="/five-rungs.html" style="color:#38bdf8;text-decoration:none;font-weight:500;">5-Rung Ladder Configurator →</a>
+    <a href="/physical-ai.html" style="color:#c084fc;text-decoration:none;font-weight:500;">Physical AI (Ray-Ban HUD) →</a>
+    <a href="/login/" style="background:#4ade80;color:#08090b;font-weight:600;padding:5px 12px;border-radius:6px;text-decoration:none;">Log in / Beta Access →</a>
+  </div>
+</div>
+<nav aria-label="Diagram navigation"><div class="brand">The whole platform</div><div class="navlinks"><a href="#complete">When complete</a><a href="#today">Today</a></div></nav><main id="diagrams"><article class="page complete" id="complete"><header class="page-head" style="min-height: 118px;"><div><div class="kicker">Seitiate · the whole platform</div><h1>When complete</h1><p>Your life at the centre. One assistant beside you. A whole estate around you.</p></div><div><div class="page-number">01 / 02</div><div class="orientation">Read from you and your assistant outward: rooms for work, a shared centre, one door.</div></div></header><div class="legend" style="min-height: 20px;"><span class="complete-note">The finished experience includes documented direction; unresolved mechanisms are not invented.</span></div><div class="map"><svg class="links" aria-hidden="true" viewBox="0 0 681 3067.5625"><g><path d="M 340.5 514.34375 V 544.34375"></path><path d="M 330.5 879.40375 H 0"></path><path d="M 681 879.40375 H 350.5"></path><path d="M 340.5 1305.84375 V 1988.96875"></path></g></svg><section class="tiers" data-group="tiers"><div class="group-label">Two tiers · one build</div><div class="node " data-component="local" data-state="gap" style="min-height: 83px;"><h3>On your own machine</h3><p class="desc">The same rooms run on your computer; your keys and browser sessions stay there.</p><div class="status">Not built</div></div><div class="node " data-component="hosted" data-state="partial" style="min-height: 83px;"><h3>Hosted for you</h3><p class="desc">The same rooms run for you in the cloud, with visible, governed custody of secrets.</p><div class="status">Partly built</div></div></section><section class="rooms" data-group="rooms"><div class="group-top"><div><div class="group-label">Rooms</div><h2>Where you do your work</h2></div><p>Self-sufficient rooms, connected to the same centre.</p></div><div class="rooms-grid"><div class="node " data-component="writers" data-state="partial" style="min-height: 155px;"><h3>Writers Factory</h3><p class="desc">Long prose, novels and screenplays keep continuity and your chosen intent.</p><div class="status">Partly built</div></div><div class="node " data-component="evidence" data-state="partial" style="min-height: 155px;"><h3>Evidence Foundry</h3><p class="desc">Research connects claims to evidence, and helps you build a lab.</p><div class="status">Partly built</div></div><div class="node " data-component="workshop" data-state="partial" style="min-height: 155px;"><h3>Workshop</h3><p class="desc">Make video, apps, crafts and labs; keep the version you accept.</p><div class="status">Partly built</div></div><div class="node " data-component="developer" data-state="partial" style="min-height: 155px;"><h3>Developer Room</h3><p class="desc">Dispatch code work, inspect the checks, and approve its impact.</p><div class="status">Partly built</div></div><div class="node " data-component="company" data-state="gap" style="min-height: 137px;"><h3>One-person company</h3><p class="desc">Staff prepare the work; you approve sends, spends, filings, signatures and deletions.</p><div class="status">Not built</div></div><div class="node " data-component="labs" data-state="gap" style="min-height: 137px;"><h3>Your own labs</h3><p class="desc">Build shared workspaces without surrendering your personal memory or ownership.</p><div class="status">Not built</div></div><div class="node " data-component="estate" data-state="partial" style="min-height: 137px;"><h3>The estate room</h3><p class="desc">Whoever holds the operator office handles estate decisions here; the room passes with the office.</p><div class="status">Partly built</div></div></div></section><div class="heart"><section class="seity" data-group="seity"><div class="group-label">Belongs to you</div><h2>Your seity</h2><p class="group-caption">Your accumulating memory, taste and judgment. It stays yours when the Assistant changes.</p><div class="node " data-component="codex" data-state="built" style="min-height: 113px;"><h3>Memory · Codex</h3><p class="desc">What you remember and learn accumulates across your life and keeps its source.</p><div class="status">Built component</div></div><div class="node " data-component="canon" data-state="built" style="min-height: 95px;"><h3>Standards · Canon</h3><p class="desc">Your chosen examples, taste and standards guide the work.</p><div class="status">Built component</div></div><div class="node " data-component="memory-source" data-state="partial" style="min-height: 95px;"><h3>Source, not proof</h3><p class="desc">A memory distinguishes your words, the Assistant’s reading, a document and another person.</p><div class="status">Partly built</div></div><div class="node " data-component="doma" data-state="partial" style="min-height: 95px;"><h3>Working context · Doma</h3><p class="desc">For each task, the Assistant loads a fitting view of your seity—not your whole life.</p><div class="status">Partly built</div></div><div class="node " data-component="ownership" data-state="partial" style="min-height: 95px;"><h3>Yours to keep</h3><p class="desc">Your seity is bonded to you, never pooled for others’ models, and leaves with you.</p><div class="status">Partly built</div></div></section><section class="desktop" data-group="desktop"><div class="group-label">Your visual desktop</div><div class="companions"><div class="node person-box" data-component="person" data-state="person" style="min-height: 132px;"><h3>You</h3><p class="desc">Your intent, your decisions. Your work and your seity belong to you.</p><div class="status"></div></div><div class="node assistant-box" data-component="assistant" data-state="partial" style="min-height: 132px;"><h3>Your assistant</h3><p class="desc">The name you give it. One helper beside you—staff you can replace, serving the seity you keep.</p><div class="status">Partly built</div></div></div><div class="node character" data-component="character" data-state="direction" style="min-height: 59px;"><h3>Character</h3><p class="desc">Tells the truth, knows when to be quiet, treats you with care, and never makes you audit it.</p><div class="status">Direction · not verified</div></div><div class="assistant-tools"><div class="node " data-component="desktop" data-state="partial" style="min-height: 95px;"><h3>One conversation</h3><p class="desc">Type and talk on the visual desktop; the conversation stays with the same Assistant.</p><div class="status">Partly built</div></div><div class="node " data-component="answers" data-state="gap" style="min-height: 95px;"><h3>Answer panel</h3><p class="desc">Rich answers open beside the conversation as views of your own work, with revisions kept.</p><div class="status">Not built</div></div><div class="node " data-component="voice" data-state="gap" style="min-height: 95px;"><h3>Voice</h3><p class="desc">Talk, dictate and listen; your device handles speech first, then accepted recordings are deleted.</p><div class="status">Not built</div></div><div class="node " data-component="browser" data-state="gap" style="min-height: 95px;"><h3>Its own browser</h3><p class="desc">Web tasks run in your estate’s browser, with separate site grants—not in your everyday browser.</p><div class="status">Not built</div></div><div class="node " data-component="dial" data-state="gap" style="min-height: 95px;"><h3>Freedom dial</h3><p class="desc">Ask me · Routine acts allowed · Trusted scope. It offers a step up; you confirm.</p><div class="status">Not built</div></div><div class="node " data-component="cards" data-state="partial" style="min-height: 95px;"><h3>Approval cards</h3><p class="desc">One act, one card, your tap. Silence means no; irreversible and cross-owner acts always ask.</p><div class="status">Partly built</div></div><div class="node " data-component="reviewer" data-state="gap" style="min-height: 95px;"><h3>Reviewer in shadow</h3><p class="desc">An independent reviewer records what it would approve while you keep deciding.</p><div class="status">Not built</div></div><div class="node " data-component="sketch" data-state="unwired" style="min-height: 95px;"><h3>Your readings</h3><p class="desc">You mark first; possible meanings stay open until you say you are ready to plan.</p><div class="status">Built · not connected</div></div><div class="node " data-component="habits" data-state="gap" style="min-height: 95px;"><h3>Habits &amp; watches</h3><p class="desc">Routines you consent to watch while you are away, log their reads and pause when goals fail.</p><div class="status">Not built</div></div><div class="node " data-component="sources" data-state="partial" style="min-height: 95px;"><h3>Your connected sources</h3><p class="desc">You grant access to mail, files and calendars as needed; reach never grants permission to act.</p><div class="status">Partly built</div></div></div></section><section class="furniture" data-group="furniture"><div class="group-label">Across the rooms</div><h2>Shared furniture</h2><p class="group-caption">One work object, many views. The answer panel opens into the same store.</p><div class="node " data-component="desk" data-state="partial" style="min-height: 95px;"><h3>Writing Desk</h3><p class="desc">One shared editor supports writing across rooms without mixing their standards of truth.</p><div class="status">Partly built</div></div><div class="node " data-component="store" data-state="partial" style="min-height: 95px;"><h3>Your work store</h3><p class="desc">Projects, pages, revisions, a project log and assets keep one durable copy of your work.</p><div class="status">Partly built</div></div><div class="node " data-component="binder" data-state="built" style="min-height: 95px;"><h3>Binder</h3><p class="desc">Find documents, sources, files and assets; navigate the work without becoming a second editor.</p><div class="status">Built component</div></div><div class="making"><div class="node " data-component="making" data-state="partial" style="min-height: 84px;"><h3>Two moments are yours</h3><p class="desc">In making rooms, you make the first mark and give the final yes or no. The Assistant runs the method between them.</p><div class="status">Partly built</div></div></div></section></div><section class="centre" data-group="centre"><div class="group-top"><div><div class="group-label">The shared centre · Seitiate</div><h2>What every room draws on</h2></div><p>Eight interfaces. Shared services, separate ownership.</p></div><div class="centre-grid"><div class="node " data-component="identity" data-state="built" style="min-height: 95px;"><h3>Identity</h3><p class="desc">One person, distinct from their login, working context and office permissions.</p><div class="status">Built component</div></div><div class="node " data-component="memory" data-state="built" style="min-height: 95px;"><h3>Memory</h3><p class="desc">Rooms ask the shared centre to keep and recall your memory and standards.</p><div class="status">Built component</div></div><div class="node " data-component="secrets" data-state="partial" style="min-height: 95px;"><h3>Secrets · the vault</h3><p class="desc">Credentials are used for a granted purpose and never handed to the model or another person.</p><div class="status">Partly built</div></div><div class="node " data-component="records" data-state="partial" style="min-height: 95px;"><h3>Records · Notary</h3><p class="desc">Every act leaves a receipt: model, why, cost and outcome—not message text. Notary verifies claims.</p><div class="status">Partly built</div></div><div class="node " data-component="approvals" data-state="defect" style="min-height: 113px;"><h3>Approvals</h3><p class="desc">The centre records your yes or no; the card reaches you in the Assistant’s conversation.</p><div class="status">Built · needs repair</div></div><div class="node " data-component="sharing" data-state="partial" style="min-height: 113px;"><h3>Sharing · bonds</h3><p class="desc">People and their assistants work together only within each person’s permission.</p><div class="status">Partly built</div></div><div class="node " data-component="messaging" data-state="partial" style="min-height: 113px;"><h3>Messaging</h3><p class="desc">Channels carry the same conversation; useful decisions reach you without operational chatter.</p><div class="status">Partly built</div></div><div class="node " data-component="model-access" data-state="defect" style="min-height: 113px;"><h3>Model access</h3><p class="desc">Own keys → subscription → platform credits; automatic choice per task, with your pin overriding.</p><div class="status">Built · needs repair</div></div></div><div class="guard-grid"><div class="node " data-component="privacy" data-state="partial" style="min-height: 101px;"><h3>Privacy before models</h3><p class="desc">Text is masked before providers; managed models use zero-retention terms and your data is never pooled.</p><div class="status">Partly built</div></div><div class="node " data-component="governor" data-state="partial" style="min-height: 101px;"><h3>Standards &amp; safe tools</h3><p class="desc">Governor checks work against your standards; Notary checks bundles and the boundaries around their execution.</p><div class="status">Partly built</div></div></div></section><section class="door" data-group="door"><div><div class="group-label">The door</div><h2>Seitiate+</h2></div><div class="door-grid"><div class="node " data-component="sign-in" data-state="built" style="min-height: 122px;"><h3>Sign-in</h3><p class="desc">Enter the platform through the same door, then open the rooms you can use.</p><div class="status">Built component</div></div><div class="node " data-component="billing" data-state="built" style="min-height: 122px;"><h3>Billing · SEIT</h3><p class="desc">Subscriptions and store credits pay for services; your data is not the product.</p><div class="status">Built component</div></div><div class="node " data-component="limits" data-state="partial" style="min-height: 122px;"><h3>Limits &amp; warnings</h3><p class="desc">You set limits, see which balance is used and receive a warning before a provider limit is reached.</p><div class="status">Partly built</div></div></div></section><section class="side-doors" data-group="side-doors"><div class="group-label">Back to the desktop</div><div class="node " data-component="side-doors" data-state="partial" style="min-height: 41px;"><h3>Messaging side doors</h3><p class="desc">Telegram · WhatsApp · iMessage give short answers and a link back to the visual desktop.</p><div class="status">Partly built</div></div></section><section class="noise" data-group="noise"><div class="group-label">Below the conversation</div><div><div class="node " data-component="noise" data-state="partial" style="min-height: 18px;"><h3>Machine noise</h3><p class="desc">Retries, rate limits, duplicate guards, deploys and health checks stay below the conversation.</p><div class="status">Partly built</div></div><p class="boundary-note">Decisions, useful receipts and spending warnings still reach you.</p></div></section></div><footer class="page-foot"><div class="foot-row"><p><strong>Read 27 September 2026</strong> · The complete documented design, expressed in the present tense.</p><p>Same content model · same component positions</p></div><p>Documents read: STACK README, Parts 0–XII and Appendices; all 14 Assistant documents; the Sakme making-rooms index.</p><details><summary>Documents, evidence and reading limits</summary><p>The source list is complete for the requested read. Supplemental Desk excerpts identify the store’s contents. File fingerprints are retained in the data block.</p><ul class="source-list"><li>docs/STACK/00-how-to-read.md</li><li>docs/STACK/01-what-the-estate-is.md</li><li>docs/STACK/02-substrate-seitiate.md</li><li>docs/STACK/03-commercial-seitiate-plus.md</li><li>docs/STACK/04-trust-notary.md</li><li>docs/STACK/05-house-sakme.md</li><li>docs/STACK/06-coordination-ces.md</li><li>docs/STACK/07-economic-substrate.md</li><li>docs/STACK/08-delivery-and-governance.md</li><li>docs/STACK/09-deployment-topologies.md</li><li>docs/STACK/10-cross-cutting-invariants.md</li><li>docs/STACK/11-what-is-not-built.md</li><li>docs/STACK/12-the-personal-assistant.md</li><li>docs/STACK/README.md</li><li>docs/STACK/appendices.md</li><li>knowledge/reference/architecture/assistant/2026-09-26--design--approvals-and-the-dial.md</li><li>knowledge/reference/architecture/assistant/2026-09-26--design--character.md</li><li>knowledge/reference/architecture/assistant/2026-09-26--design--memory-and-its-trust-labels.md</li><li>knowledge/reference/architecture/assistant/2026-09-26--design--model-choice.md</li><li>knowledge/reference/architecture/assistant/2026-09-26--design--naming.md</li><li>knowledge/reference/architecture/assistant/2026-09-26--design--reach-and-sources.md</li><li>knowledge/reference/architecture/assistant/2026-09-26--design--the-reviewer-in-shadow.md</li><li>knowledge/reference/architecture/assistant/2026-09-26--design--the-sketch.md</li><li>knowledge/reference/architecture/assistant/2026-09-26--design--unattended-runs.md</li><li>knowledge/reference/architecture/assistant/2026-09-27--design--the-desktop-conversation.md</li><li>knowledge/reference/architecture/assistant/2026-09-27--design--the-estate-browser.md</li><li>knowledge/reference/architecture/assistant/2026-09-27--design--voice.md</li><li>knowledge/reference/architecture/assistant/2026-09-27--direction--the-house-the-crowd-does-not-own.md</li><li>knowledge/reference/architecture/assistant/README.md</li><li>knowledge/verticals/sakme/practices/README.md</li><li>docs/design/WRITING-DESK-COMPLETE-SPEC-V1.md — §§0–1 and 4 excerpts; supplementary store definition</li></ul><ul class="audit-notes"><li>Today is a documentation snapshot, not a new live deployment audit. Shipped components do not imply a complete connected product. Staging and dormant qualifiers remain visible in the evidence.</li><li>Part V’s missing-room findings are scoped to Sakme. The practices index also records existing writing, research and video work, and a shipped making screen. Both are preserved here.</li><li>The Desk store is recorded in progress in Appendix E; its implementation was not inspected by these Parts. No current completion or delivery date is inferred.</li><li>Part XII’s newer model-choice section describes a Telegram turn route, while older rows still describe a non-answering bot. This map does not claim a verified live answer flow. The newer explicit model-choice decision governs the intended route.</li><li>The same build on two tiers is direction. The location, custody and synchronization of sovereign centre memory remain open; the finished view does not invent a mechanism.</li><li>Operational noise is kept out of the main conversation. Decisions, useful receipts and spending warnings remain visible; nothing here promises to hide those from the person.</li></ul><ol class="evidence-list"><li><strong>Your assistant</strong> — Chat and naming components exist; the complete personal Assistant is unfinished. Naming screens still conflate assistant and seity.<br><span class="source">STACK I §1; XII §§1,4.7,5 · PARTIAL / DEFECT</span></li><li><strong>Character</strong> — These commitments are design direction; they are not verified as a complete product behaviour.<br><span class="source">STACK XII §1 · DOCTRINE</span></li><li><strong>Memory · Codex</strong> — Memory storage, retrieval and capture exist. This does not establish cross-session recall in the personal Assistant.<br><span class="source">STACK II §2; XII §5 · SHIPPED</span></li><li><strong>Standards · Canon</strong> — Stored exemplars and scoring exist; the newer engine’s Canon surface remains partial.<br><span class="source">STACK II §§2–3 · SHIPPED / PARTIAL</span></li><li><strong>Source, not proof</strong> — Source and confidence fields exist. Review, decay and the full correction experience are missing.<br><span class="source">STACK XII §§4.4,5–6 · SHIPPED / GAP</span></li><li><strong>Working context · Doma</strong> — One context can be assembled within a size budget; combining several contexts is incomplete.<br><span class="source">STACK II §3; XII §§4.4,5 · PARTIAL</span></li><li><strong>Yours to keep</strong> — Seity archive export exists. Full human binding and export of vault keys remain unfinished.<br><span class="source">STACK I §§2,5; II §§2–3; X §1 · SHIPPED / PARTIAL / GAP</span></li><li><strong>One conversation</strong> — A global chat panel and Telegram components exist; the continuous desktop experience is incomplete.<br><span class="source">STACK V §4; XII §§1,4.14,5 · PARTIAL</span></li><li><strong>Answer panel</strong> — No answer panel, artifact record or locked-down panel frame is built.<br><span class="source">STACK XII §4.14; XI §I · GAP</span><p>Chapters, images, diagrams, decks, short video and interactive pages are views onto the Writing Desk store. Edits reach the Assistant before its next reply. Publishing is your explicit choice. Generated media is saved immediately to your storage with its provenance. Generated code is isolated without network access by default, cookies or credentials.</p></li><li><strong>Voice</strong> — No customer dictation, spoken conversation or readout is built.<br><span class="source">STACK XII §4.13; XI §I · GAP</span><p>On-device speech is preferred wherever it meets the quality bar. Provider speech goes through the platform under zero-retention terms. Transcripts carry the source “the person’s own words”. Narration of finished work is a separate creative use.</p></li><li><strong>Its own browser</strong> — No estate browser, login broker, per-grant compartments or browser receipts are built.<br><span class="source">STACK XII §4.12; XI §I · GAP</span><p>Signing in there is consent. Hosted sessions stay in the vault; local sessions stay on your machine. Receipts keep the domain and action, never the page. Unknown outcomes are not automatically retried. A repeated task pauses if its outcome check fails.</p></li><li><strong>Freedom dial</strong> — Permission profiles exist; the three positions are not mapped or connected to the Assistant.<br><span class="source">STACK XII §§4.1,5–6 · SHIPPED — staging only / GAP</span></li><li><strong>Approval cards</strong> — Cards exist for the Director. Per-person delivery, expiry and resuming approved work have gaps.<br><span class="source">STACK XII §§4.1,5–6 · SHIPPED — Director only / GAP</span></li><li><strong>Reviewer in shadow</strong> — A laboratory reviewer exists; its shadow seat in the Assistant is not built.<br><span class="source">STACK XII §§4.2,6 · GAP</span><p>Shadow use comes first. It can only approve what the dial permits. Turning on automatic approval requires a later decision after real-use evidence; completion of this map does not grant that authority.</p></li><li><strong>Your readings</strong> — The sketch object is built; conversation wiring is held and is not authorized to proceed.<br><span class="source">STACK XII §§4.6,5–6 · PARTIAL / GAP</span><p>A plain execution task can skip the sketch. Rejected readings stay in the Assistant’s room and do not become memory without affirmation. The person closes by being ready, not by selecting a winning reading.</p></li><li><strong>Habits &amp; watches</strong> — Personal routines, event triggers, read logs and unattended memory access remain unbuilt.<br><span class="source">STACK XII §§4.5,4.12,6 · GAP</span></li><li><strong>Your connected sources</strong> — Gmail and Drive reads exist; Calendar, write-back and Assistant-specific grant controls are incomplete.<br><span class="source">STACK XII §§4.3,5–6 · SHIPPED / PARTIAL / GAP</span></li><li><strong>Writers Factory</strong> — Writing methods and a making screen exist; the named room entrance is absent from Sakme.<br><span class="source">STACK I §3; V §1; XI §V · GAP — Sakme entrance</span><p>The practices index records the making screen and version preservation as shipped. The absence in Part V concerns the Sakme entrance, not all writing capability in the estate.</p></li><li><strong>Evidence Foundry</strong> — A separate research product is documented; its Sakme entrance and making-method integration are gaps.<br><span class="source">STACK I §3; V §1; XI §V · GAP — Sakme entrance</span><p>The making-rooms index names research-facility as the product and marks the creative method within Evidence Foundry as an open gap. Research claims remain subject to warrant; they cannot be made true by a personal ruling.</p></li><li><strong>Workshop</strong> — Video and making-screen components exist; the complete room is not established by STACK.<br><span class="source">STACK I §3; XII §4.6 · PARTIAL</span><p>The practices index names the video lab and a keep/reopen method. It records wildcard generation, preserved versions and the human-selection screen as shipped. This is not evidence that the whole room is complete.</p></li><li><strong>Developer Room</strong> — A governed-code frontend exists; its backend connection is not confirmed in Sakme.<br><span class="source">STACK V §3; VI §7; XI §V · PARTIAL</span></li><li><strong>One-person company</strong> — A paused sketch with no product repository; no completed company room is documented.<br><span class="source">STACK I §3; Appendices E · DOCTRINE</span><p>The making-rooms index explicitly describes this as a paused operations-room sketch, separate from the discontinued Solopreneur vertical.</p></li><li><strong>Your own labs</strong> — Existing labs are named, but a customer room builder is absent from Sakme.<br><span class="source">STACK I §§3,7; V §7; XI §V · GAP — customer builder</span></li><li><strong>The estate room</strong> — Operator grants exist; tappable waits, a waiting-on-me view and Assistant closure are missing.<br><span class="source">STACK XII §4.9 · SHIPPED / GAP</span></li><li><strong>Two moments are yours</strong> — Human selection and preserved variants are recorded built; the complete Assistant-run method is direction.<br><span class="source">STACK I §§1,3; V §4 · DOCTRINE</span><p>The making-rooms index records the shipped selection screen. A decision records whose hand made it. Developer tasks after dispatch and company operations use execution rules, not an indefinitely open making process.</p></li><li><strong>Writing Desk</strong> — Contracts and a surface exist; the complete Desk and its storage foundation are not documented as delivered.<br><span class="source">STACK V §§4,9; Appendices E · PARTIAL</span><p>The supplemental Writing Desk specification (§§0–1,4) identifies contracts, projection tools and a surface, with a build-status correction. The store remains on its own delivery plan; this diagram does not infer completion from a frontend.</p></li><li><strong>Your work store</strong> — The CTO’s storage foundation is recorded in progress; STACK did not verify its implementation.<br><span class="source">STACK V §§4,6,9; Appendices E · PARTIAL — in progress</span><p>The dated appendix records the Desk store work as open. Its current delivery is not independently audited here. The Writing Desk specification §§4.2–4.5 describes assets, ordered projects, named versions and project history.</p></li><li><strong>Binder</strong> — The navigation tree and file browser are built. They are not the Writing Desk editor.<br><span class="source">STACK V §5 · SHIPPED</span></li><li><strong>Identity</strong> — Engine login and commercial-layer verification exist; tenant identity is separate from office grants.<br><span class="source">STACK III §1; I §7; X §2 · SHIPPED</span></li><li><strong>Memory</strong> — Memory and exemplar services exist; the full Assistant memory path remains incomplete.<br><span class="source">STACK II §2; XII §5 · SHIPPED</span></li><li><strong>Secrets · the vault</strong> — Credential custody exists; the full per-grant browser broker is not built.<br><span class="source">STACK II §2; XII §4.12; XI §I · SHIPPED / GAP</span></li><li><strong>Records · Notary</strong> — Signing and verification primitives exist; full production receipt coverage is missing.<br><span class="source">STACK II §2; IV §§1,5; XII §§5–6 · SHIPPED / PARTIAL / GAP</span><p>The documents distinguish signed creative-decision streams from ordinary audit tables with unused hash fields. They do not establish estate-wide, signed production receipts. A source-specific primitive is not complete runtime coverage.</p></li><li><strong>Approvals</strong> — Separate approval mechanisms exist, but some permission routes fail open and approve-to-resume is missing.<br><span class="source">STACK II §2; XII §§4.1,6; XI §II · DEFECT / GAP</span></li><li><strong>Sharing · bonds</strong> — Bond records and signing identities exist; human counter-signing and assistant collaboration are incomplete.<br><span class="source">STACK I §1; II §§2–3; XII §4 · PARTIAL / GAP</span></li><li><strong>Messaging</strong> — Telegram components and a notification centre exist; unified channels and product-event wiring are incomplete.<br><span class="source">STACK III §7; XII §§1–3,5 · PARTIAL / GAP</span></li><li><strong>Model access</strong> — Funding and pin components are built; the bot uses platform models and ignores your settings.<br><span class="source">STACK XII §§4.8,5; XI §II · SHIPPED / DEFECT</span><p>Funding order, difficulty routing and per-task pins exist as components. They are not a complete personal-Assistant path. Bringing the Telegram route onto that path—including masking—is engineering work.</p></li><li><strong>Privacy before models</strong> — Pattern masking exists; Assistant route wiring and provider-policy enforcement remain unfinished.<br><span class="source">STACK X §9; XII §§4.8,5; XI §II · PARTIAL / GAP</span><p>Pattern masking does not anonymize prose: names and places are not covered. On a person’s own keys the provider terms are shown and the choice remains theirs. Managed use requires verified zero-retention terms.</p></li><li><strong>Standards &amp; safe tools</strong> — Detection and prompt-only certification work; correction, tool certification and runtime isolation have gaps.<br><span class="source">STACK II §2; IV §§3–4; XI §§II,IV · SHIPPED / GAP</span></li><li><strong>Sign-in</strong> — Login handoff, identity verification and entry routing are implemented.<br><span class="source">STACK III §1; V §2 · SHIPPED</span></li><li><strong>Billing · SEIT</strong> — Checkout, subscription handling and the append-only credit ledger exist per person and product.<br><span class="source">STACK III §§3–4; VII §2 · SHIPPED</span><p>Built refers to payment and ledger mechanisms, not complete usage settlement. Some inference paths still lack true-up to measured cost, and some engine usage rows do not carry actual cost.</p></li><li><strong>Limits &amp; warnings</strong> — Spend-cap components exist; customer controls and the 80% warning are missing in the documented snapshot.<br><span class="source">STACK XII §§4.8,5–6; VII §2 · PARTIAL / GAP</span></li><li><strong>On your own machine</strong> — The same-build sovereign experience is direction. Centre memory location and sync are not yet designed.<br><span class="source">STACK I §§3,5; IX §1; XI §II · DOCTRINE / GAP</span></li><li><strong>Hosted for you</strong> — Managed services exist; equivalent complete rooms across both tiers are not established.<br><span class="source">STACK I §5; IX §§1,4 · SHIPPED / DOCTRINE</span></li><li><strong>Messaging side doors</strong> — Telegram is the first channel. Other side doors, account links and desktop return paths remain future work.<br><span class="source">STACK XII §§1–3,4.14,5 · PARTIAL / GAP</span></li><li><strong>Machine noise</strong> — Operational channels exist; moving the right decision cards into the Assistant remains unfinished.<br><span class="source">STACK XII §4.9; VI §§2,5; VIII §1 · SHIPPED / GAP</span></li></ol></details></footer></article><article class="page today" id="today"><header class="page-head" style="min-height: 118px;"><div><div class="kicker">Seitiate · the whole platform</div><h1>Today</h1><p>The same map, with the state of each part made visible.</p></div><div><div class="page-number">02 / 02</div><div class="orientation">Colour describes the documented component, not a promise that the whole path works.</div></div></header><div class="legend" style="min-height: 20px;"><span><i class="swatch built"></i>Built component</span><span><i class="swatch partial"></i>Partly built</span><span><i class="swatch unwired"></i>Built · not connected</span><span><i class="swatch gap"></i>Not built</span><span><i class="swatch defect"></i>Built · needs repair</span><span><i class="swatch direction"></i>Direction · not verified</span></div><div class="map"><svg class="links" aria-hidden="true" viewBox="0 0 681 3069.8125"><g><path d="M 340.5 514.59375 V 544.59375"></path><path d="M 330.5 880.20375 H 0"></path><path d="M 681 880.20375 H 350.5"></path><path d="M 340.5 1307.34375 V 1990.71875"></path></g></svg><section class="tiers" data-group="tiers"><div class="group-label">Two tiers · one build</div><div class="node " data-component="local" data-state="gap" style="min-height: 83px;"><h3>On your own machine</h3><p class="desc">The same-build sovereign experience is direction. Centre memory location and sync are not yet designed.</p><div class="status">Not built</div></div><div class="node " data-component="hosted" data-state="partial" style="min-height: 83px;"><h3>Hosted for you</h3><p class="desc">Managed services exist; equivalent complete rooms across both tiers are not established.</p><div class="status">Partly built</div></div></section><section class="rooms" data-group="rooms"><div class="group-top"><div><div class="group-label">Rooms</div><h2>Where you do your work</h2></div><p>Self-sufficient rooms, connected to the same centre.</p></div><div class="rooms-grid"><div class="node " data-component="writers" data-state="partial" style="min-height: 155px;"><h3>Writers Factory</h3><p class="desc">Writing methods and a making screen exist; the named room entrance is absent from Sakme.</p><div class="status">Partly built</div></div><div class="node " data-component="evidence" data-state="partial" style="min-height: 155px;"><h3>Evidence Foundry</h3><p class="desc">A separate research product is documented; its Sakme entrance and making-method integration are gaps.</p><div class="status">Partly built</div></div><div class="node " data-component="workshop" data-state="partial" style="min-height: 155px;"><h3>Workshop</h3><p class="desc">Video and making-screen components exist; the complete room is not established by STACK.</p><div class="status">Partly built</div></div><div class="node " data-component="developer" data-state="partial" style="min-height: 155px;"><h3>Developer Room</h3><p class="desc">A governed-code frontend exists; its backend connection is not confirmed in Sakme.</p><div class="status">Partly built</div></div><div class="node " data-component="company" data-state="gap" style="min-height: 137px;"><h3>One-person company</h3><p class="desc">A paused sketch with no product repository; no completed company room is documented.</p><div class="status">Not built</div></div><div class="node " data-component="labs" data-state="gap" style="min-height: 137px;"><h3>Your own labs</h3><p class="desc">Existing labs are named, but a customer room builder is absent from Sakme.</p><div class="status">Not built</div></div><div class="node " data-component="estate" data-state="partial" style="min-height: 137px;"><h3>The estate room</h3><p class="desc">Operator grants exist; tappable waits, a waiting-on-me view and Assistant closure are missing.</p><div class="status">Partly built</div></div></div></section><div class="heart"><section class="seity" data-group="seity"><div class="group-label">Belongs to you</div><h2>Your seity</h2><p class="group-caption">Your accumulating memory, taste and judgment. It stays yours when the Assistant changes.</p><div class="node " data-component="codex" data-state="built" style="min-height: 113px;"><h3>Memory · Codex</h3><p class="desc">Memory storage, retrieval and capture exist. This does not establish cross-session recall in the personal Assistant.</p><div class="status">Built component</div></div><div class="node " data-component="canon" data-state="built" style="min-height: 95px;"><h3>Standards · Canon</h3><p class="desc">Stored exemplars and scoring exist; the newer engine’s Canon surface remains partial.</p><div class="status">Built component</div></div><div class="node " data-component="memory-source" data-state="partial" style="min-height: 95px;"><h3>Source, not proof</h3><p class="desc">Source and confidence fields exist. Review, decay and the full correction experience are missing.</p><div class="status">Partly built</div></div><div class="node " data-component="doma" data-state="partial" style="min-height: 95px;"><h3>Working context · Doma</h3><p class="desc">One context can be assembled within a size budget; combining several contexts is incomplete.</p><div class="status">Partly built</div></div><div class="node " data-component="ownership" data-state="partial" style="min-height: 95px;"><h3>Yours to keep</h3><p class="desc">Seity archive export exists. Full human binding and export of vault keys remain unfinished.</p><div class="status">Partly built</div></div></section><section class="desktop" data-group="desktop"><div class="group-label">Your visual desktop</div><div class="companions"><div class="node person-box" data-component="person" data-state="person" style="min-height: 132px;"><h3>You</h3><p class="desc">You remain the owner. A person, a login and an office grant are different things.</p><div class="status"></div></div><div class="node assistant-box" data-component="assistant" data-state="partial" style="min-height: 132px;"><h3>Your assistant</h3><p class="desc">Chat and naming components exist; the complete personal Assistant is unfinished. Naming screens still conflate assistant and seity.</p><div class="status">Partly built</div></div></div><div class="node character" data-component="character" data-state="direction" style="min-height: 59px;"><h3>Character</h3><p class="desc">These commitments are design direction; they are not verified as a complete product behaviour.</p><div class="status">Direction · not verified</div></div><div class="assistant-tools"><div class="node " data-component="desktop" data-state="partial" style="min-height: 95px;"><h3>One conversation</h3><p class="desc">A global chat panel and Telegram components exist; the continuous desktop experience is incomplete.</p><div class="status">Partly built</div></div><div class="node " data-component="answers" data-state="gap" style="min-height: 95px;"><h3>Answer panel</h3><p class="desc">No answer panel, artifact record or locked-down panel frame is built.</p><div class="status">Not built</div></div><div class="node " data-component="voice" data-state="gap" style="min-height: 95px;"><h3>Voice</h3><p class="desc">No customer dictation, spoken conversation or readout is built.</p><div class="status">Not built</div></div><div class="node " data-component="browser" data-state="gap" style="min-height: 95px;"><h3>Its own browser</h3><p class="desc">No estate browser, login broker, per-grant compartments or browser receipts are built.</p><div class="status">Not built</div></div><div class="node " data-component="dial" data-state="gap" style="min-height: 95px;"><h3>Freedom dial</h3><p class="desc">Permission profiles exist; the three positions are not mapped or connected to the Assistant.</p><div class="status">Not built</div></div><div class="node " data-component="cards" data-state="partial" style="min-height: 95px;"><h3>Approval cards</h3><p class="desc">Cards exist for the Director. Per-person delivery, expiry and resuming approved work have gaps.</p><div class="status">Partly built</div></div><div class="node " data-component="reviewer" data-state="gap" style="min-height: 95px;"><h3>Reviewer in shadow</h3><p class="desc">A laboratory reviewer exists; its shadow seat in the Assistant is not built.</p><div class="status">Not built</div></div><div class="node " data-component="sketch" data-state="unwired" style="min-height: 95px;"><h3>Your readings</h3><p class="desc">The sketch object is built; conversation wiring is held and is not authorized to proceed.</p><div class="status">Built · not connected</div></div><div class="node " data-component="habits" data-state="gap" style="min-height: 95px;"><h3>Habits &amp; watches</h3><p class="desc">Personal routines, event triggers, read logs and unattended memory access remain unbuilt.</p><div class="status">Not built</div></div><div class="node " data-component="sources" data-state="partial" style="min-height: 95px;"><h3>Your connected sources</h3><p class="desc">Gmail and Drive reads exist; Calendar, write-back and Assistant-specific grant controls are incomplete.</p><div class="status">Partly built</div></div></div></section><section class="furniture" data-group="furniture"><div class="group-label">Across the rooms</div><h2>Shared furniture</h2><p class="group-caption">One work object, many views. The answer panel opens into the same store.</p><div class="node " data-component="desk" data-state="partial" style="min-height: 95px;"><h3>Writing Desk</h3><p class="desc">Contracts and a surface exist; the complete Desk and its storage foundation are not documented as delivered.</p><div class="status">Partly built</div></div><div class="node " data-component="store" data-state="partial" style="min-height: 95px;"><h3>Your work store</h3><p class="desc">The CTO’s storage foundation is recorded in progress; STACK did not verify its implementation.</p><div class="status">Partly built</div></div><div class="node " data-component="binder" data-state="built" style="min-height: 95px;"><h3>Binder</h3><p class="desc">The navigation tree and file browser are built. They are not the Writing Desk editor.</p><div class="status">Built component</div></div><div class="making"><div class="node " data-component="making" data-state="partial" style="min-height: 84px;"><h3>Two moments are yours</h3><p class="desc">Human selection and preserved variants are recorded built; the complete Assistant-run method is direction.</p><div class="status">Partly built</div></div></div></section></div><section class="centre" data-group="centre"><div class="group-top"><div><div class="group-label">The shared centre · Seitiate</div><h2>What every room draws on</h2></div><p>Eight interfaces. Shared services, separate ownership.</p></div><div class="centre-grid"><div class="node " data-component="identity" data-state="built" style="min-height: 95px;"><h3>Identity</h3><p class="desc">Engine login and commercial-layer verification exist; tenant identity is separate from office grants.</p><div class="status">Built component</div></div><div class="node " data-component="memory" data-state="built" style="min-height: 95px;"><h3>Memory</h3><p class="desc">Memory and exemplar services exist; the full Assistant memory path remains incomplete.</p><div class="status">Built component</div></div><div class="node " data-component="secrets" data-state="partial" style="min-height: 95px;"><h3>Secrets · the vault</h3><p class="desc">Credential custody exists; the full per-grant browser broker is not built.</p><div class="status">Partly built</div></div><div class="node " data-component="records" data-state="partial" style="min-height: 95px;"><h3>Records · Notary</h3><p class="desc">Signing and verification primitives exist; full production receipt coverage is missing.</p><div class="status">Partly built</div></div><div class="node " data-component="approvals" data-state="defect" style="min-height: 113px;"><h3>Approvals</h3><p class="desc">Separate approval mechanisms exist, but some permission routes fail open and approve-to-resume is missing.</p><div class="status">Built · needs repair</div></div><div class="node " data-component="sharing" data-state="partial" style="min-height: 113px;"><h3>Sharing · bonds</h3><p class="desc">Bond records and signing identities exist; human counter-signing and assistant collaboration are incomplete.</p><div class="status">Partly built</div></div><div class="node " data-component="messaging" data-state="partial" style="min-height: 113px;"><h3>Messaging</h3><p class="desc">Telegram components and a notification centre exist; unified channels and product-event wiring are incomplete.</p><div class="status">Partly built</div></div><div class="node " data-component="model-access" data-state="defect" style="min-height: 113px;"><h3>Model access</h3><p class="desc">Funding and pin components are built; the bot uses platform models and ignores your settings.</p><div class="status">Built · needs repair</div></div></div><div class="guard-grid"><div class="node " data-component="privacy" data-state="partial" style="min-height: 101px;"><h3>Privacy before models</h3><p class="desc">Pattern masking exists; Assistant route wiring and provider-policy enforcement remain unfinished.</p><div class="status">Partly built</div></div><div class="node " data-component="governor" data-state="partial" style="min-height: 101px;"><h3>Standards &amp; safe tools</h3><p class="desc">Detection and prompt-only certification work; correction, tool certification and runtime isolation have gaps.</p><div class="status">Partly built</div></div></div></section><section class="door" data-group="door"><div><div class="group-label">The door</div><h2>Seitiate+</h2></div><div class="door-grid"><div class="node " data-component="sign-in" data-state="built" style="min-height: 122px;"><h3>Sign-in</h3><p class="desc">Login handoff, identity verification and entry routing are implemented.</p><div class="status">Built component</div></div><div class="node " data-component="billing" data-state="built" style="min-height: 122px;"><h3>Billing · SEIT</h3><p class="desc">Checkout, subscription handling and the append-only credit ledger exist per person and product.</p><div class="status">Built component</div></div><div class="node " data-component="limits" data-state="partial" style="min-height: 122px;"><h3>Limits &amp; warnings</h3><p class="desc">Spend-cap components exist; customer controls and the 80% warning are missing in the documented snapshot.</p><div class="status">Partly built</div></div></div></section><section class="side-doors" data-group="side-doors"><div class="group-label">Back to the desktop</div><div class="node " data-component="side-doors" data-state="partial" style="min-height: 41px;"><h3>Messaging side doors</h3><p class="desc">Telegram is the first channel. Other side doors, account links and desktop return paths remain future work.</p><div class="status">Partly built</div></div></section><section class="noise" data-group="noise"><div class="group-label">Below the conversation</div><div><div class="node " data-component="noise" data-state="partial" style="min-height: 18px;"><h3>Machine noise</h3><p class="desc">Operational channels exist; moving the right decision cards into the Assistant remains unfinished.</p><div class="status">Partly built</div></div><p class="boundary-note">Decisions, useful receipts and spending warnings still reach you.</p></div></section></div><footer class="page-foot"><div class="foot-row"><p><strong>Read 27 September 2026</strong> · Evidence from the documents; not a fresh live deployment audit.</p><p>Same content model · same component positions</p></div><p>Documents read: STACK README, Parts 0–XII and Appendices; all 14 Assistant documents; the Sakme making-rooms index.</p><details><summary>Documents, evidence and reading limits</summary><p>The source list is complete for the requested read. Supplemental Desk excerpts identify the store’s contents. File fingerprints are retained in the data block.</p><ul class="source-list"><li>docs/STACK/00-how-to-read.md</li><li>docs/STACK/01-what-the-estate-is.md</li><li>docs/STACK/02-substrate-seitiate.md</li><li>docs/STACK/03-commercial-seitiate-plus.md</li><li>docs/STACK/04-trust-notary.md</li><li>docs/STACK/05-house-sakme.md</li><li>docs/STACK/06-coordination-ces.md</li><li>docs/STACK/07-economic-substrate.md</li><li>docs/STACK/08-delivery-and-governance.md</li><li>docs/STACK/09-deployment-topologies.md</li><li>docs/STACK/10-cross-cutting-invariants.md</li><li>docs/STACK/11-what-is-not-built.md</li><li>docs/STACK/12-the-personal-assistant.md</li><li>docs/STACK/README.md</li><li>docs/STACK/appendices.md</li><li>knowledge/reference/architecture/assistant/2026-09-26--design--approvals-and-the-dial.md</li><li>knowledge/reference/architecture/assistant/2026-09-26--design--character.md</li><li>knowledge/reference/architecture/assistant/2026-09-26--design--memory-and-its-trust-labels.md</li><li>knowledge/reference/architecture/assistant/2026-09-26--design--model-choice.md</li><li>knowledge/reference/architecture/assistant/2026-09-26--design--naming.md</li><li>knowledge/reference/architecture/assistant/2026-09-26--design--reach-and-sources.md</li><li>knowledge/reference/architecture/assistant/2026-09-26--design--the-reviewer-in-shadow.md</li><li>knowledge/reference/architecture/assistant/2026-09-26--design--the-sketch.md</li><li>knowledge/reference/architecture/assistant/2026-09-26--design--unattended-runs.md</li><li>knowledge/reference/architecture/assistant/2026-09-27--design--the-desktop-conversation.md</li><li>knowledge/reference/architecture/assistant/2026-09-27--design--the-estate-browser.md</li><li>knowledge/reference/architecture/assistant/2026-09-27--design--voice.md</li><li>knowledge/reference/architecture/assistant/2026-09-27--direction--the-house-the-crowd-does-not-own.md</li><li>knowledge/reference/architecture/assistant/README.md</li><li>knowledge/verticals/sakme/practices/README.md</li><li>docs/design/WRITING-DESK-COMPLETE-SPEC-V1.md — §§0–1 and 4 excerpts; supplementary store definition</li></ul><ul class="audit-notes"><li>Today is a documentation snapshot, not a new live deployment audit. Shipped components do not imply a complete connected product. Staging and dormant qualifiers remain visible in the evidence.</li><li>Part V’s missing-room findings are scoped to Sakme. The practices index also records existing writing, research and video work, and a shipped making screen. Both are preserved here.</li><li>The Desk store is recorded in progress in Appendix E; its implementation was not inspected by these Parts. No current completion or delivery date is inferred.</li><li>Part XII’s newer model-choice section describes a Telegram turn route, while older rows still describe a non-answering bot. This map does not claim a verified live answer flow. The newer explicit model-choice decision governs the intended route.</li><li>The same build on two tiers is direction. The location, custody and synchronization of sovereign centre memory remain open; the finished view does not invent a mechanism.</li><li>Operational noise is kept out of the main conversation. Decisions, useful receipts and spending warnings remain visible; nothing here promises to hide those from the person.</li></ul><ol class="evidence-list"><li><strong>Your assistant</strong> — Chat and naming components exist; the complete personal Assistant is unfinished. Naming screens still conflate assistant and seity.<br><span class="source">STACK I §1; XII §§1,4.7,5 · PARTIAL / DEFECT</span></li><li><strong>Character</strong> — These commitments are design direction; they are not verified as a complete product behaviour.<br><span class="source">STACK XII §1 · DOCTRINE</span></li><li><strong>Memory · Codex</strong> — Memory storage, retrieval and capture exist. This does not establish cross-session recall in the personal Assistant.<br><span class="source">STACK II §2; XII §5 · SHIPPED</span></li><li><strong>Standards · Canon</strong> — Stored exemplars and scoring exist; the newer engine’s Canon surface remains partial.<br><span class="source">STACK II §§2–3 · SHIPPED / PARTIAL</span></li><li><strong>Source, not proof</strong> — Source and confidence fields exist. Review, decay and the full correction experience are missing.<br><span class="source">STACK XII §§4.4,5–6 · SHIPPED / GAP</span></li><li><strong>Working context · Doma</strong> — One context can be assembled within a size budget; combining several contexts is incomplete.<br><span class="source">STACK II §3; XII §§4.4,5 · PARTIAL</span></li><li><strong>Yours to keep</strong> — Seity archive export exists. Full human binding and export of vault keys remain unfinished.<br><span class="source">STACK I §§2,5; II §§2–3; X §1 · SHIPPED / PARTIAL / GAP</span></li><li><strong>One conversation</strong> — A global chat panel and Telegram components exist; the continuous desktop experience is incomplete.<br><span class="source">STACK V §4; XII §§1,4.14,5 · PARTIAL</span></li><li><strong>Answer panel</strong> — No answer panel, artifact record or locked-down panel frame is built.<br><span class="source">STACK XII §4.14; XI §I · GAP</span><p>Chapters, images, diagrams, decks, short video and interactive pages are views onto the Writing Desk store. Edits reach the Assistant before its next reply. Publishing is your explicit choice. Generated media is saved immediately to your storage with its provenance. Generated code is isolated without network access by default, cookies or credentials.</p></li><li><strong>Voice</strong> — No customer dictation, spoken conversation or readout is built.<br><span class="source">STACK XII §4.13; XI §I · GAP</span><p>On-device speech is preferred wherever it meets the quality bar. Provider speech goes through the platform under zero-retention terms. Transcripts carry the source “the person’s own words”. Narration of finished work is a separate creative use.</p></li><li><strong>Its own browser</strong> — No estate browser, login broker, per-grant compartments or browser receipts are built.<br><span class="source">STACK XII §4.12; XI §I · GAP</span><p>Signing in there is consent. Hosted sessions stay in the vault; local sessions stay on your machine. Receipts keep the domain and action, never the page. Unknown outcomes are not automatically retried. A repeated task pauses if its outcome check fails.</p></li><li><strong>Freedom dial</strong> — Permission profiles exist; the three positions are not mapped or connected to the Assistant.<br><span class="source">STACK XII §§4.1,5–6 · SHIPPED — staging only / GAP</span></li><li><strong>Approval cards</strong> — Cards exist for the Director. Per-person delivery, expiry and resuming approved work have gaps.<br><span class="source">STACK XII §§4.1,5–6 · SHIPPED — Director only / GAP</span></li><li><strong>Reviewer in shadow</strong> — A laboratory reviewer exists; its shadow seat in the Assistant is not built.<br><span class="source">STACK XII §§4.2,6 · GAP</span><p>Shadow use comes first. It can only approve what the dial permits. Turning on automatic approval requires a later decision after real-use evidence; completion of this map does not grant that authority.</p></li><li><strong>Your readings</strong> — The sketch object is built; conversation wiring is held and is not authorized to proceed.<br><span class="source">STACK XII §§4.6,5–6 · PARTIAL / GAP</span><p>A plain execution task can skip the sketch. Rejected readings stay in the Assistant’s room and do not become memory without affirmation. The person closes by being ready, not by selecting a winning reading.</p></li><li><strong>Habits &amp; watches</strong> — Personal routines, event triggers, read logs and unattended memory access remain unbuilt.<br><span class="source">STACK XII §§4.5,4.12,6 · GAP</span></li><li><strong>Your connected sources</strong> — Gmail and Drive reads exist; Calendar, write-back and Assistant-specific grant controls are incomplete.<br><span class="source">STACK XII §§4.3,5–6 · SHIPPED / PARTIAL / GAP</span></li><li><strong>Writers Factory</strong> — Writing methods and a making screen exist; the named room entrance is absent from Sakme.<br><span class="source">STACK I §3; V §1; XI §V · GAP — Sakme entrance</span><p>The practices index records the making screen and version preservation as shipped. The absence in Part V concerns the Sakme entrance, not all writing capability in the estate.</p></li><li><strong>Evidence Foundry</strong> — A separate research product is documented; its Sakme entrance and making-method integration are gaps.<br><span class="source">STACK I §3; V §1; XI §V · GAP — Sakme entrance</span><p>The making-rooms index names research-facility as the product and marks the creative method within Evidence Foundry as an open gap. Research claims remain subject to warrant; they cannot be made true by a personal ruling.</p></li><li><strong>Workshop</strong> — Video and making-screen components exist; the complete room is not established by STACK.<br><span class="source">STACK I §3; XII §4.6 · PARTIAL</span><p>The practices index names the video lab and a keep/reopen method. It records wildcard generation, preserved versions and the human-selection screen as shipped. This is not evidence that the whole room is complete.</p></li><li><strong>Developer Room</strong> — A governed-code frontend exists; its backend connection is not confirmed in Sakme.<br><span class="source">STACK V §3; VI §7; XI §V · PARTIAL</span></li><li><strong>One-person company</strong> — A paused sketch with no product repository; no completed company room is documented.<br><span class="source">STACK I §3; Appendices E · DOCTRINE</span><p>The making-rooms index explicitly describes this as a paused operations-room sketch, separate from the discontinued Solopreneur vertical.</p></li><li><strong>Your own labs</strong> — Existing labs are named, but a customer room builder is absent from Sakme.<br><span class="source">STACK I §§3,7; V §7; XI §V · GAP — customer builder</span></li><li><strong>The estate room</strong> — Operator grants exist; tappable waits, a waiting-on-me view and Assistant closure are missing.<br><span class="source">STACK XII §4.9 · SHIPPED / GAP</span></li><li><strong>Two moments are yours</strong> — Human selection and preserved variants are recorded built; the complete Assistant-run method is direction.<br><span class="source">STACK I §§1,3; V §4 · DOCTRINE</span><p>The making-rooms index records the shipped selection screen. A decision records whose hand made it. Developer tasks after dispatch and company operations use execution rules, not an indefinitely open making process.</p></li><li><strong>Writing Desk</strong> — Contracts and a surface exist; the complete Desk and its storage foundation are not documented as delivered.<br><span class="source">STACK V §§4,9; Appendices E · PARTIAL</span><p>The supplemental Writing Desk specification (§§0–1,4) identifies contracts, projection tools and a surface, with a build-status correction. The store remains on its own delivery plan; this diagram does not infer completion from a frontend.</p></li><li><strong>Your work store</strong> — The CTO’s storage foundation is recorded in progress; STACK did not verify its implementation.<br><span class="source">STACK V §§4,6,9; Appendices E · PARTIAL — in progress</span><p>The dated appendix records the Desk store work as open. Its current delivery is not independently audited here. The Writing Desk specification §§4.2–4.5 describes assets, ordered projects, named versions and project history.</p></li><li><strong>Binder</strong> — The navigation tree and file browser are built. They are not the Writing Desk editor.<br><span class="source">STACK V §5 · SHIPPED</span></li><li><strong>Identity</strong> — Engine login and commercial-layer verification exist; tenant identity is separate from office grants.<br><span class="source">STACK III §1; I §7; X §2 · SHIPPED</span></li><li><strong>Memory</strong> — Memory and exemplar services exist; the full Assistant memory path remains incomplete.<br><span class="source">STACK II §2; XII §5 · SHIPPED</span></li><li><strong>Secrets · the vault</strong> — Credential custody exists; the full per-grant browser broker is not built.<br><span class="source">STACK II §2; XII §4.12; XI §I · SHIPPED / GAP</span></li><li><strong>Records · Notary</strong> — Signing and verification primitives exist; full production receipt coverage is missing.<br><span class="source">STACK II §2; IV §§1,5; XII §§5–6 · SHIPPED / PARTIAL / GAP</span><p>The documents distinguish signed creative-decision streams from ordinary audit tables with unused hash fields. They do not establish estate-wide, signed production receipts. A source-specific primitive is not complete runtime coverage.</p></li><li><strong>Approvals</strong> — Separate approval mechanisms exist, but some permission routes fail open and approve-to-resume is missing.<br><span class="source">STACK II §2; XII §§4.1,6; XI §II · DEFECT / GAP</span></li><li><strong>Sharing · bonds</strong> — Bond records and signing identities exist; human counter-signing and assistant collaboration are incomplete.<br><span class="source">STACK I §1; II §§2–3; XII §4 · PARTIAL / GAP</span></li><li><strong>Messaging</strong> — Telegram components and a notification centre exist; unified channels and product-event wiring are incomplete.<br><span class="source">STACK III §7; XII §§1–3,5 · PARTIAL / GAP</span></li><li><strong>Model access</strong> — Funding and pin components are built; the bot uses platform models and ignores your settings.<br><span class="source">STACK XII §§4.8,5; XI §II · SHIPPED / DEFECT</span><p>Funding order, difficulty routing and per-task pins exist as components. They are not a complete personal-Assistant path. Bringing the Telegram route onto that path—including masking—is engineering work.</p></li><li><strong>Privacy before models</strong> — Pattern masking exists; Assistant route wiring and provider-policy enforcement remain unfinished.<br><span class="source">STACK X §9; XII §§4.8,5; XI §II · PARTIAL / GAP</span><p>Pattern masking does not anonymize prose: names and places are not covered. On a person’s own keys the provider terms are shown and the choice remains theirs. Managed use requires verified zero-retention terms.</p></li><li><strong>Standards &amp; safe tools</strong> — Detection and prompt-only certification work; correction, tool certification and runtime isolation have gaps.<br><span class="source">STACK II §2; IV §§3–4; XI §§II,IV · SHIPPED / GAP</span></li><li><strong>Sign-in</strong> — Login handoff, identity verification and entry routing are implemented.<br><span class="source">STACK III §1; V §2 · SHIPPED</span></li><li><strong>Billing · SEIT</strong> — Checkout, subscription handling and the append-only credit ledger exist per person and product.<br><span class="source">STACK III §§3–4; VII §2 · SHIPPED</span><p>Built refers to payment and ledger mechanisms, not complete usage settlement. Some inference paths still lack true-up to measured cost, and some engine usage rows do not carry actual cost.</p></li><li><strong>Limits &amp; warnings</strong> — Spend-cap components exist; customer controls and the 80% warning are missing in the documented snapshot.<br><span class="source">STACK XII §§4.8,5–6; VII §2 · PARTIAL / GAP</span></li><li><strong>On your own machine</strong> — The same-build sovereign experience is direction. Centre memory location and sync are not yet designed.<br><span class="source">STACK I §§3,5; IX §1; XI §II · DOCTRINE / GAP</span></li><li><strong>Hosted for you</strong> — Managed services exist; equivalent complete rooms across both tiers are not established.<br><span class="source">STACK I §5; IX §§1,4 · SHIPPED / DOCTRINE</span></li><li><strong>Messaging side doors</strong> — Telegram is the first channel. Other side doors, account links and desktop return paths remain future work.<br><span class="source">STACK XII §§1–3,4.14,5 · PARTIAL / GAP</span></li><li><strong>Machine noise</strong> — Operational channels exist; moving the right decision cards into the Assistant remains unfinished.<br><span class="source">STACK XII §4.9; VI §§2,5; VIII §1 · SHIPPED / GAP</span></li></ol></details></footer></article></main></body></html>

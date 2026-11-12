@@ -1,0 +1,2216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="/assets/gate.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seitiate+ — Fractal Customer Ladder, Paddle v2 Tiers &amp; Capability Configurator</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --sp-bg: #0b0d10;
+      --sp-surface: #14171c;
+      --sp-surface-raised: #1a1e24;
+      --sp-surface-hover: #20262e;
+      --sp-border: #262b33;
+      --sp-border-strong: #363e4a;
+      --sp-text: #e8ecf1;
+      --sp-text-muted: #9aa3ae;
+      --sp-text-faint: #6c7683;
+      --sp-accent: #7fd1b9;
+      --sp-accent-ink: #082019;
+      --sp-accent-soft: rgba(127, 209, 185, 0.13);
+      --sp-warn: #e0a158;
+      --sp-warn-soft: rgba(224, 161, 88, 0.14);
+      --sp-purple: #b592ff;
+      --sp-purple-soft: rgba(181, 146, 255, 0.14);
+      --sp-blue: #6fb6ff;
+      --sp-blue-soft: rgba(111, 182, 255, 0.14);
+      --sp-error: #e06868;
+      --sp-radius: 10px;
+      --sp-radius-sm: 6px;
+      --sp-font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+      --sp-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--sp-bg);
+      color: var(--sp-text);
+      font-family: var(--sp-font);
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Accessible focus indicators everywhere */
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    [role="tab"]:focus-visible {
+      outline: 2px solid var(--sp-accent);
+      outline-offset: 2px;
+    }
+
+    /* Top Bar */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: rgba(11, 13, 16, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--sp-border);
+      padding: 12px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--sp-accent), #3a8f78);
+      color: var(--sp-accent-ink);
+      font-weight: 800;
+      font-size: 15px;
+      display: grid;
+      place-items: center;
+      letter-spacing: -0.03em;
+    }
+
+    .brand-title {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .brand-sub {
+      font-size: 12px;
+      color: var(--sp-text-muted);
+    }
+
+    .topbar-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .term-switcher {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--sp-surface);
+      border: 1px solid var(--sp-border);
+      border-radius: var(--sp-radius-sm);
+      padding: 4px 10px;
+      font-size: 12px;
+      color: var(--sp-text-muted);
+    }
+
+    .term-switcher select {
+      background: var(--sp-surface-raised);
+      color: var(--sp-accent);
+      border: 1px solid var(--sp-border-strong);
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 12px;
+      font-weight: 600;
+      min-height: 32px;
+    }
+
+    /* Preset Bar */
+    .preset-bar {
+      max-width: 1480px;
+      margin: 16px auto 0;
+      padding: 0 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .preset-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--sp-text-muted);
+      margin-right: 4px;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--sp-border-strong);
+      background: var(--sp-surface);
+      color: var(--sp-text);
+      font-family: inherit;
+      font-size: 12.5px;
+      font-weight: 600;
+      padding: 8px 13px;
+      min-height: 38px;
+      border-radius: var(--sp-radius-sm);
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn:hover {
+      background: var(--sp-surface-hover);
+      border-color: var(--sp-accent);
+    }
+
+    .btn-primary {
+      background: var(--sp-accent);
+      color: var(--sp-accent-ink);
+      border-color: var(--sp-accent);
+      font-weight: 700;
+    }
+
+    .btn-primary:hover {
+      background: #94dec9;
+      border-color: #94dec9;
+    }
+
+    .btn-preset-active {
+      border-color: var(--sp-accent);
+      background: var(--sp-accent-soft);
+      color: var(--sp-accent);
+    }
+
+    /* Main Workspace Grid */
+    .workspace {
+      max-width: 1480px;
+      margin: 16px auto 48px;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 410px;
+      gap: 22px;
+      align-items: start;
+    }
+
+    @media (max-width: 1140px) {
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Section Cards */
+    .panel {
+      background: var(--sp-surface);
+      border: 1px solid var(--sp-border);
+      border-radius: var(--sp-radius);
+      padding: 18px 20px;
+      margin-bottom: 18px;
+    }
+
+    .panel-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .wheel-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--sp-mono);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: var(--sp-accent-soft);
+      color: var(--sp-accent);
+      border: 1px solid rgba(127, 209, 185, 0.3);
+    }
+
+    .wheel-tag-purple {
+      background: var(--sp-purple-soft);
+      color: var(--sp-purple);
+      border-color: rgba(181, 146, 255, 0.3);
+    }
+
+    .wheel-tag-warn {
+      background: var(--sp-warn-soft);
+      color: var(--sp-warn);
+      border-color: rgba(224, 161, 88, 0.3);
+    }
+
+    .panel-title {
+      margin: 4px 0 0;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .panel-desc {
+      margin: 2px 0 0;
+      font-size: 13px;
+      color: var(--sp-text-muted);
+    }
+
+    /* Outer Wheel: 4 Master Rungs */
+    .rung-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    @media (max-width: 820px) {
+      .rung-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    .rung-btn {
+      text-align: left;
+      background: var(--sp-surface-raised);
+      border: 1px solid var(--sp-border);
+      border-radius: var(--sp-radius-sm);
+      padding: 12px 13px;
+      color: var(--sp-text);
+      cursor: pointer;
+      transition: border-color 0.15s ease, background 0.15s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-height: 108px;
+    }
+
+    .rung-btn:hover {
+      background: var(--sp-surface-hover);
+      border-color: var(--sp-border-strong);
+    }
+
+    .rung-btn[aria-pressed="true"] {
+      background: rgba(127, 209, 185, 0.09);
+      border: 1.5px solid var(--sp-accent);
+      box-shadow: inset 0 0 0 1px rgba(127, 209, 185, 0.18);
+    }
+
+    .rung-num {
+      font-family: var(--sp-mono);
+      font-size: 11px;
+      color: var(--sp-accent);
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .rung-name {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .rung-caption {
+      font-size: 12px;
+      color: var(--sp-text-muted);
+      line-height: 1.35;
+    }
+
+    /* Inner Wheel #1: Sub-Tiers (kind = plan | assigned) */
+    .subtier-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    @media (max-width: 720px) {
+      .subtier-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .subtier-card {
+      text-align: left;
+      background: var(--sp-surface-raised);
+      border: 1px solid var(--sp-border);
+      border-radius: var(--sp-radius-sm);
+      padding: 12px 14px;
+      color: var(--sp-text);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .subtier-card[aria-pressed="true"] {
+      border: 1.5px solid var(--sp-purple);
+      background: rgba(181, 146, 255, 0.08);
+    }
+
+    .subtier-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .kind-pill {
+      font-family: var(--sp-mono);
+      font-size: 10.5px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--sp-text-muted);
+    }
+
+    .subtier-price {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--sp-text);
+    }
+
+    .subtier-meta {
+      font-size: 12px;
+      color: var(--sp-text-muted);
+    }
+
+    /* Room Partner Config Bar (shown in Rung 4 & Rung 1 Room Selector) */
+    .partner-meta-bar {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--sp-border);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 10px;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .field-group label {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--sp-text-muted);
+    }
+
+    .field-group input,
+    .field-group select {
+      background: var(--sp-bg);
+      border: 1px solid var(--sp-border-strong);
+      border-radius: var(--sp-radius-sm);
+      color: var(--sp-text);
+      padding: 7px 10px;
+      font-size: 12.5px;
+      font-family: inherit;
+      min-height: 36px;
+    }
+
+    /* Tabs (Modern Web Guidance compliant: button role="tab" + pseudo-element underline, not color alone) */
+    .tablist {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      border-bottom: 1px solid var(--sp-border);
+      margin-bottom: 14px;
+    }
+
+    .tab-btn {
+      position: relative;
+      appearance: none;
+      background: transparent;
+      border: none;
+      color: var(--sp-text-muted);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 10px 14px;
+      min-height: 44px;
+      cursor: pointer;
+    }
+
+    .tab-btn:hover {
+      color: var(--sp-text);
+    }
+
+    .tab-btn[aria-selected="true"] {
+      color: var(--sp-text);
+    }
+
+    .tab-btn[aria-selected="true"]::after {
+      content: "";
+      position: absolute;
+      inset-inline: 8px;
+      bottom: -1px;
+      border-block-end: 3px solid var(--sp-accent);
+      border-radius: 2px;
+    }
+
+    /* Filter Toolbar */
+    .catalog-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .search-input {
+      flex: 1 1 240px;
+      background: var(--sp-bg);
+      border: 1px solid var(--sp-border-strong);
+      border-radius: var(--sp-radius-sm);
+      color: var(--sp-text);
+      padding: 9px 12px;
+      font-size: 13px;
+      min-height: 40px;
+    }
+
+    .bucket-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .bucket-pill {
+      appearance: none;
+      background: var(--sp-surface-raised);
+      border: 1px solid var(--sp-border);
+      color: var(--sp-text-muted);
+      border-radius: 999px;
+      padding: 6px 12px;
+      min-height: 36px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .bucket-pill[aria-pressed="true"] {
+      background: var(--sp-accent-soft);
+      color: var(--sp-accent);
+      border-color: var(--sp-accent);
+    }
+
+    /* Family Group Header + Indeterminate Select-All Checkbox */
+    .family-section {
+      margin-bottom: 18px;
+    }
+
+    .family-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 10px;
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid var(--sp-border);
+      border-radius: var(--sp-radius-sm);
+      margin-bottom: 8px;
+    }
+
+    .family-select-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      min-height: 44px;
+      padding-right: 8px;
+    }
+
+    /* Checkboxes: Brand-consistent accent-color >= 3:1 contrast + @supports not fallback */
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--sp-accent);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    @supports not (accent-color: #7fd1b9) {
+      input[type="checkbox"] {
+        appearance: none;
+        background: var(--sp-bg);
+        border: 2px solid var(--sp-border-strong);
+        border-radius: 4px;
+        position: relative;
+      }
+      input[type="checkbox"]:checked {
+        background: var(--sp-accent);
+        border-color: var(--sp-accent);
+      }
+      input[type="checkbox"]:checked::after {
+        content: "";
+        position: absolute;
+        left: 4px;
+        top: 1px;
+        width: 5px;
+        height: 9px;
+        border: solid var(--sp-accent-ink);
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+    }
+
+    /* Capability Cards + Child-State-Based Styling (:has + @supports not fallback) */
+    .cap-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    @media (max-width: 760px) {
+      .cap-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .cap-card {
+      background: var(--sp-surface-raised);
+      border: 1px solid var(--sp-border);
+      border-radius: var(--sp-radius-sm);
+      padding: 12px 14px;
+      transition: border-color 0.14s ease, background 0.14s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .cap-card:hover {
+      border-color: var(--sp-border-strong);
+    }
+
+    .cap-card:has(.cap-checkbox:checked) {
+      border-color: var(--sp-accent);
+      background: rgba(127, 209, 185, 0.075);
+      box-shadow: inset 0 0 0 1px rgba(127, 209, 185, 0.15);
+    }
+
+    @supports not selector(:has(*)) {
+      .cap-card.is-checked {
+        border-color: var(--sp-accent);
+        background: rgba(127, 209, 185, 0.075);
+        box-shadow: inset 0 0 0 1px rgba(127, 209, 185, 0.15);
+      }
+    }
+
+    .cap-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      cursor: pointer;
+      min-height: 44px;
+    }
+
+    .cap-label input[type="checkbox"] {
+      margin-top: 2px;
+    }
+
+    .cap-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--sp-text);
+    }
+
+    .cap-slug {
+      font-family: var(--sp-mono);
+      font-size: 11px;
+      color: var(--sp-text-faint);
+      display: block;
+      margin-top: 1px;
+    }
+
+    .cap-desc {
+      font-size: 12px;
+      color: var(--sp-text-muted);
+      margin: 4px 0 0;
+    }
+
+    .cap-footer {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      padding-top: 6px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 11.5px;
+    }
+
+    .badge {
+      font-family: var(--sp-mono);
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .badge-free {
+      background: rgba(127, 209, 185, 0.14);
+      color: var(--sp-accent);
+    }
+
+    .badge-line-item {
+      background: var(--sp-purple-soft);
+      color: var(--sp-purple);
+    }
+
+    .badge-metered {
+      background: var(--sp-blue-soft);
+      color: var(--sp-blue);
+    }
+
+    .badge-marketplace {
+      background: var(--sp-warn-soft);
+      color: var(--sp-warn);
+    }
+
+    .badge-guarded {
+      background: rgba(224, 104, 104, 0.16);
+      color: var(--sp-error);
+    }
+
+    /* Inner Wheel #2: Partner's Own Customer Tiers Simulator */
+    .wheel2-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+      margin-top: 8px;
+    }
+
+    .wheel2-table th,
+    .wheel2-table td {
+      text-align: left;
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--sp-border);
+    }
+
+    .wheel2-table th {
+      color: var(--sp-text-muted);
+      font-weight: 600;
+      font-size: 11.5px;
+    }
+
+    .clearing-box {
+      margin-top: 12px;
+      background: var(--sp-bg);
+      border: 1px solid var(--sp-border-strong);
+      border-radius: var(--sp-radius-sm);
+      padding: 12px 14px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+      gap: 10px;
+    }
+
+    .metric-label {
+      font-size: 11px;
+      color: var(--sp-text-muted);
+    }
+
+    .metric-val {
+      font-family: var(--sp-mono);
+      font-size: 15px;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    /* Sticky Summary Drawer */
+    .summary-drawer {
+      position: sticky;
+      top: 74px;
+      background: var(--sp-surface);
+      border: 1px solid var(--sp-border-strong);
+      border-radius: var(--sp-radius);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .drawer-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .cost-hero {
+      background: var(--sp-bg);
+      border: 1px solid var(--sp-border);
+      border-radius: var(--sp-radius-sm);
+      padding: 12px 14px;
+    }
+
+    .cost-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 12.5px;
+      padding: 4px 0;
+      color: var(--sp-text-muted);
+    }
+
+    .cost-row strong {
+      color: var(--sp-text);
+      font-family: var(--sp-mono);
+    }
+
+    .cost-total {
+      border-top: 1px solid var(--sp-border-strong);
+      margin-top: 6px;
+      padding-top: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--sp-text);
+    }
+
+    .cost-total strong {
+      color: var(--sp-accent);
+      font-size: 17px;
+    }
+
+    .code-preview {
+      background: #07090c;
+      border: 1px solid var(--sp-border);
+      border-radius: var(--sp-radius-sm);
+      padding: 10px 12px;
+      font-family: var(--sp-mono);
+      font-size: 11px;
+      color: #c8d3e0;
+      max-height: 210px;
+      overflow: auto;
+      white-space: pre;
+      margin: 0;
+    }
+
+    .guarded-alert {
+      background: rgba(224, 104, 104, 0.11);
+      border: 1px solid rgba(224, 104, 104, 0.35);
+      border-radius: var(--sp-radius-sm);
+      padding: 9px 11px;
+      font-size: 11.5px;
+      color: #f3b5b5;
+    }
+
+    /* Native Modal Dialog (Modern Web Guidance compliant: overscroll-behavior: contain, no body overflow:hidden) */
+    dialog {
+      background: var(--sp-surface);
+      color: var(--sp-text);
+      border: 1px solid var(--sp-border-strong);
+      border-radius: var(--sp-radius);
+      padding: 0;
+      width: min(920px, 94vw);
+      max-height: 88vh;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.65);
+    }
+
+    dialog:modal {
+      overscroll-behavior: contain;
+    }
+
+    dialog::backdrop {
+      background: rgba(5, 7, 10, 0.76);
+      backdrop-filter: blur(4px);
+      overflow: hidden;
+      overscroll-behavior: contain;
+    }
+
+    .dialog-inner {
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      max-height: 88vh;
+      overflow-y: auto;
+    }
+
+    .dialog-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px solid var(--sp-border);
+      padding-bottom: 12px;
+    }
+
+    .dialog-code {
+      background: #07090c;
+      border: 1px solid var(--sp-border);
+      border-radius: var(--sp-radius-sm);
+      padding: 14px;
+      font-family: var(--sp-mono);
+      font-size: 12px;
+      overflow: auto;
+      max-height: 46vh;
+      white-space: pre;
+      margin: 0;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+
+<div style="background:rgba(8,9,11,0.94);border-bottom:1px solid #1e222b;padding:10px 24px;display:flex;justify-content:space-between;align-items:center;font-family:'Inter',-apple-system,sans-serif;font-size:13px;color:#eceae7;position:sticky;top:0;z-index:9999;">
+  <div style="display:flex;align-items:center;gap:14px;">
+    <a href="/" style="color:#4ade80;font-weight:600;text-decoration:none;">← Seitiate Home</a>
+    <span style="color:#56585f;">|</span>
+    <span style="color:#8a8a90;">The 5-Rung Customer &amp; Partner Collaboration Ladder · Interactive Capability Configurator</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:14px;">
+    <a href="/five-rungs.html" style="color:#8a8a90;text-decoration:none;">5-Rung Ladder</a>
+    <a href="/wheels-within-wheels.html" style="color:#8a8a90;text-decoration:none;">Wheels Within Wheels</a>
+    <a href="/login/" style="background:#4ade80;color:#08090b;font-weight:600;padding:5px 12px;border-radius:6px;text-decoration:none;">Log in / Beta Access →</a>
+  </div>
+</div>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">S+</div>
+      <div>
+        <div class="brand-title">Seitiate+ &middot; Fractal Customer Ladder &amp; Capability Configurator</div>
+        <div class="brand-sub">Outer Master Rungs &rarr; Inner Paddle v2 <code>plan + line_item + assigned</code> &rarr; Partner Vertical Wheel</div>
+      </div>
+    </div>
+
+    <div class="topbar-controls">
+      <div class="term-switcher">
+        <label for="rung4-term-select">Rung 4 Candidate Name:</label>
+        <select id="rung4-term-select">
+          <option value="Room Partner" selected>Room Partner (Recommended #1)</option>
+          <option value="Room Builder">Room Builder (Runner-Up #2)</option>
+          <option value="Pavilion Partner">Pavilion Partner (Candidate #3)</option>
+          <option value="Foundry Partner">Foundry Partner (Collides w/ Evidence Foundry)</option>
+        </select>
+      </div>
+      <button type="button" class="btn btn-primary" id="open-manifest-btn">
+        Inspect Charter &amp; Manifest JSON
+      </button>
+    </div>
+  </header>
+
+  <!-- 1-Click Scenario Presets -->
+  <section class="preset-bar" aria-label="Architecture Presets">
+    <span class="preset-label">1-Click Presets:</span>
+    <button type="button" class="btn btn-preset-active" data-preset="questcraft">
+      Load Thomas / Questcraft Command (Rung 4)
+    </button>
+    <button type="button" class="btn" data-preset="imperfective">
+      Load Thomas / Imperfective Context App (Rung 4 Guarded)
+    </button>
+    <button type="button" class="btn" data-preset="sensarra">
+      Load Sensarra Bio-Lab Suite (Rung 4 + 3P Science)
+    </button>
+    <button type="button" class="btn" data-preset="sakme_user">
+      Load Rung 1: &ldquo;Just a Sakme Account&rdquo;
+    </button>
+    <button type="button" class="btn" data-preset="sovereign">
+      Load Rung 2: Sovereign Member
+    </button>
+    <button type="button" class="btn" data-preset="clear">
+      Clear All Checkboxes
+    </button>
+  </section>
+
+  <main class="workspace">
+    <div>
+      <!-- OUTER WHEEL: 4 MASTER RUNGS -->
+      <section class="panel" aria-labelledby="outer-wheel-heading">
+        <div class="panel-header">
+          <div>
+            <span class="wheel-tag">OUTER WHEEL &middot; vertical_id = &quot;platform&quot;</span>
+            <h2 class="panel-title" id="outer-wheel-heading">1. Master Estate Customer Ladder (Select Participation Rung)</h2>
+            <p class="panel-desc">Composable roles over one <code>Person = Tenant</code> sovereign identity. Every Master Rung spins its own Inner Sub-Tier Wheel below.</p>
+          </div>
+        </div>
+        <div class="rung-grid" id="rung-grid"></div>
+      </section>
+
+      <!-- INNER WHEEL #1: SUB-TIERS INSIDE SELECTED MASTER RUNG -->
+      <section class="panel" aria-labelledby="inner-wheel1-heading">
+        <div class="panel-header">
+          <div>
+            <span class="wheel-tag wheel-tag-purple">INNER WHEEL #1 &middot; PricingTier.kind IN ('plan', 'assigned')</span>
+            <h2 class="panel-title" id="inner-wheel1-heading">2. Base Sub-Tier Inside <span id="active-rung-label">Room Partner</span></h2>
+            <p class="panel-desc">Maps 1:1 to the primary <code>plan</code> item in Paddle Billing v2 <code>items[0]</code> (or an <code>assigned</code> co-built charter).</p>
+          </div>
+        </div>
+        <div class="subtier-grid" id="subtier-grid"></div>
+
+        <!-- Room Partner Metadata / Rung 1 Room Picker -->
+        <div class="partner-meta-bar" id="partner-meta-bar">
+          <div class="field-group">
+            <label for="room-slug-input">Room Slug (<code>rooms.vertical_id</code>)</label>
+            <input id="room-slug-input" type="text" value="questcraft" />
+          </div>
+          <div class="field-group">
+            <label for="room-origins-input">Dynamic CORS Allowed Origins (No Redeploy)</label>
+            <input id="room-origins-input" type="text" value="http://localhost:3000, https://questcraft.gg" />
+          </div>
+          <div class="field-group">
+            <label for="funding-waterfall-select">Metered Compute Funding Waterfall</label>
+            <select id="funding-waterfall-select">
+              <option value="partner_pool_first" selected>1. Partner SEIT Pool &rarr; 2. User Wallet &rarr; 3. BYOK</option>
+              <option value="user_wallet_first">1. End-User SEIT Wallet &rarr; 2. BYOK &rarr; 3. Hard Cap</option>
+              <option value="byok_only">End-User BYOK Pass-Through ($0 Markup)</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label for="volume-slider">Projected Monthly Tasks / Invocations: <span id="volume-label">2,500</span></label>
+            <input id="volume-slider" type="range" min="200" max="20000" step="100" value="2500" />
+          </div>
+        </div>
+      </section>
+
+      <!-- CAPABILITIES & INNER WHEEL #2 TABS -->
+      <section class="panel">
+        <div role="tablist" aria-label="Configurator Views" focusgroup="tablist nomemory" class="tablist">
+          <button type="button" role="tab" id="tab-catalog" aria-selected="true" aria-controls="panel-catalog" class="tab-btn">
+            3. Checkable Estate &amp; Marketplace Capabilities (<span id="checked-count-badge">0</span>)
+          </button>
+          <button type="button" role="tab" id="tab-wheel2" aria-selected="false" aria-controls="panel-wheel2" tabindex="-1" class="tab-btn">
+            4. Inner Wheel #2: Vertical's Own Customer Tiers &amp; Clearinghouse
+          </button>
+        </div>
+
+        <!-- TAB PANEL 1: CAPABILITIES CHECKBOX CATALOG -->
+        <div id="panel-catalog" role="tabpanel" aria-labelledby="tab-catalog">
+          <div class="catalog-toolbar">
+            <label for="cap-search" class="sr-only">Search capabilities</label>
+            <input id="cap-search" class="search-input" type="search" placeholder="Filter 24 audited organs, 4D Kanban, Skin Crafter, Analyzers, Roblox MCP, Stalls..." />
+            <div class="bucket-pills" role="group" aria-label="Filter by commercial routing bucket">
+              <button type="button" class="bucket-pill" data-bucket="all" aria-pressed="true">All Buckets</button>
+              <button type="button" class="bucket-pill" data-bucket="instant_enable" aria-pressed="false">Free / Included</button>
+              <button type="button" class="bucket-pill" data-bucket="subscribe_or_meter" aria-pressed="false">Seitiate+ Paid (line_item / SEIT)</button>
+              <button type="button" class="bucket-pill" data-bucket="marketplace_route" aria-pressed="false">3rd-Party Marketplace Proxy</button>
+            </div>
+          </div>
+
+          <div id="catalog-families"></div>
+        </div>
+
+        <!-- TAB PANEL 2: INNER WHEEL #2 (VERTICAL CUSTOMER TIERS & CLEARINGHOUSE) -->
+        <div id="panel-wheel2" role="tabpanel" aria-labelledby="tab-wheel2" hidden>
+          <span class="wheel-tag wheel-tag-warn">INNER WHEEL #2 &middot; vertical_id = &quot;<span id="wheel2-room-slug">questcraft</span>&quot;</span>
+          <h3 class="panel-title" style="margin-top:8px;">How Your Vertical Spins Its Own <code>plan + line_item</code> Wheel for Rung 1 Users</h3>
+          <p class="panel-desc">
+            Every Rung 4 room row inherits the exact same <code>pricing_tiers</code> schema (<code>UniqueConstraint('vertical_id', 'tier_key')</code>) so Thomas sets his own player tiers while <code>Seitiate+</code> acts as single Paddle Merchant-of-Record, deducts checked Estate &amp; 3P Marketplace costs, and settles net share!
+          </p>
+
+          <div class="partner-meta-bar" style="border-top:none; margin-top:6px; padding-top:4px;">
+            <div class="field-group">
+              <label for="sim-paid-users">Simulated Paid Room Users (Rung 1): <span id="sim-users-label">120</span></label>
+              <input id="sim-paid-users" type="range" min="10" max="2000" step="10" value="120" />
+            </div>
+            <div class="field-group">
+              <label for="sim-arpu">Avg Vertical Subscription + Add-On Price ($/mo): $<span id="sim-arpu-label">24</span></label>
+              <input id="sim-arpu" type="range" min="5" max="99" step="1" value="24" />
+            </div>
+          </div>
+
+          <table class="wheel2-table">
+            <thead>
+              <tr>
+                <th>Vertical <code>tier_key</code></th>
+                <th><code>PricingTier.kind</code></th>
+                <th>Customer Price</th>
+                <th>Included Room SEIT</th>
+                <th>Paddle Price Mapping</th>
+              </tr>
+            </thead>
+            <tbody id="wheel2-tbody"></tbody>
+          </table>
+
+          <div class="clearing-box" id="clearing-box"></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- LIVE PARTNERSHIP, PADDLE items[] & MANIFEST DRAWER -->
+    <aside class="summary-drawer" aria-label="Live Partnership Cost and Paddle Summary">
+      <div>
+        <span class="wheel-tag">LIVE PADDLE v2 + LEDGER QUOTE</span>
+        <h2 class="drawer-title" style="margin-top:6px;" id="drawer-heading">Room Partner Charter Summary</h2>
+      </div>
+
+      <div class="cost-hero">
+        <div class="cost-row">
+          <span>Base Sub-Tier (<code>kind='plan'</code>):</span>
+          <strong id="sum-base-usd">$0.00/mo</strong>
+        </div>
+        <div class="cost-row">
+          <span>Checked Add-Ons (<code id="sum-li-count">0</code> <code>line_item</code>s):</span>
+          <strong id="sum-addons-usd">$0.00/mo</strong>
+        </div>
+        <div class="cost-row cost-total">
+          <span>Paddle Recurring Checkout Total:</span>
+          <strong id="sum-recurring-total">$0.00/mo</strong>
+        </div>
+      </div>
+
+      <div class="cost-hero">
+        <div class="cost-row">
+          <span>Included Monthly Allowance:</span>
+          <strong id="sum-included-seit">50.00 SEIT</strong>
+        </div>
+        <div class="cost-row">
+          <span>Est. Estate Metered Compute:</span>
+          <strong id="sum-metered-seit">0.00 SEIT/mo</strong>
+        </div>
+        <div class="cost-row">
+          <span>Est. 3P Marketplace Proxy Burn:</span>
+          <strong id="sum-3p-seit">0.00 SEIT/mo</strong>
+        </div>
+        <div class="cost-row">
+          <span>3P Vendor / Creator Hold (7d):</span>
+          <strong id="sum-3p-creator">$0.00</strong>
+        </div>
+        <div class="cost-row">
+          <span>Seitiate+ Proxy Routing Margin:</span>
+          <strong id="sum-3p-margin">$0.00</strong>
+        </div>
+        <div class="cost-row cost-total">
+          <span>Net Overage After Included SEIT:</span>
+          <strong id="sum-net-seit">$0.00/mo</strong>
+        </div>
+      </div>
+
+      <div id="guarded-banner" class="guarded-alert" hidden>
+        <strong>GUARDED CAPABILITY SELECTED:</strong> <code>Person's Door</code> activates Sandbox mock briefs immediately; Production requires Audience Approval + explicit per-user <code>DoorGrantRow</code> (<code>'person left'</code> revokes cleanly).
+      </div>
+
+      <div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+          <span style="font-size:11.5px; font-weight:700; color:var(--sp-text-muted);">Paddle v2 Multi-Item <code>items[]</code> Payload</span>
+          <span style="font-size:11px; color:var(--sp-accent); font-family:var(--sp-mono);">O(N+M) Flat Prices</span>
+        </div>
+        <pre class="code-preview" id="paddle-items-preview"></pre>
+      </div>
+
+      <div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+          <span style="font-size:11.5px; font-weight:700; color:var(--sp-text-muted);">Zero-Patch Bootstrap CLI</span>
+        </div>
+        <pre class="code-preview" id="cli-preview" style="max-height:76px;"></pre>
+      </div>
+
+      <div style="display:flex; gap:8px;">
+        <button type="button" class="btn btn-primary" style="flex:1; justify-content:center;" id="drawer-open-modal-btn">
+          Export Manifest &amp; Term Sheet
+        </button>
+        <button type="button" class="btn" id="copy-manifest-quick-btn">
+          Copy JSON
+        </button>
+      </div>
+      <div style="font-size:11px; color:var(--sp-text-faint);">
+        Constitutional F25 Notice: <code>1 SEIT = $1.00</code> store credit for platform &amp; room usage only (non-withdrawable, non-transferable). Practitioner &amp; Partner payouts settle in USD after dispute hold.
+      </div>
+    </aside>
+  </main>
+
+  <!-- NATIVE MODAL DIALOG FOR FULL MANIFEST + COMMERCIAL CHARTER -->
+  <dialog id="manifest-dialog" closedby="any" aria-labelledby="dialog-title">
+    <div class="dialog-inner">
+      <div class="dialog-header">
+        <div>
+          <span class="wheel-tag">seitiate.partner-manifest.v1</span>
+          <h2 id="dialog-title" style="margin:4px 0 0; font-size:17px;">Generated Charter &amp; Machine-Readable Manifest</h2>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button type="button" class="btn btn-primary" id="dialog-copy-btn">Copy Full JSON</button>
+          <button type="button" class="btn" id="dialog-close-btn">Close</button>
+        </div>
+      </div>
+      <p style="margin:0; font-size:13px; color:var(--sp-text-muted);" id="dialog-human-summary"></p>
+      <pre class="dialog-code" id="dialog-manifest-json"></pre>
+    </div>
+  </dialog>
+
+  <script>
+    (function () {
+      const supportsHas = typeof CSS !== "undefined" && CSS.supports && CSS.supports("selector(:has(*))");
+
+      // 1. Master Customer Ladder (Outer Wheel) + Inner Wheel #1 Sub-Tiers
+      const MASTER_RUNGS = [
+        {
+          rung: 1,
+          key: "room_member",
+          getName: () => "Room Member",
+          caption: "“Just an account on Sakme” (or Questcraft / Sensarra). Single-room SSO & scoped wallet.",
+          plans: [
+            { key: "sakme_free", name: "Sakme Free Entry", kind: "plan", usd: 0, seit: 10, splitPct: 0, pri: "pri_01sakmefree0", meta: "10 starter SEIT · Sakme room only" },
+            { key: "sakme_making", name: "Sakme Making", kind: "plan", usd: 12, seit: 12, splitPct: 0, pri: "pri_01sakmemake12", meta: "12 SEIT/mo · Skin Crafter personal" },
+            { key: "sakme_workshop", name: "Sakme Workshop", kind: "plan", usd: 29, seit: 32, splitPct: 0, pri: "pri_01sakmework29", meta: "32 SEIT/mo · Priority room assistant" }
+          ]
+        },
+        {
+          rung: 2,
+          key: "sovereign_member",
+          getName: () => "Sovereign Member",
+          caption: "Seitiate+ personal account: Argon assistant, Keep, Seity, /sources, BYOK & Person's Door.",
+          plans: [
+            { key: "sovereign_free", name: "Personal Explorer", kind: "plan", usd: 0, seit: 5, splitPct: 0, pri: "pri_01sovfree00", meta: "5 welcome SEIT · Basic Keep & BYOK" },
+            { key: "sovereign_starter", name: "Seitiate+ Sovereign", kind: "plan", usd: 20, seit: 20, splitPct: 0, pri: "pri_01sovplus20", meta: "20 SEIT/mo · Named Assistant + Seity" },
+            { key: "sovereign_pro", name: "Sovereign Scholar", kind: "plan", usd: 60, seit: 65, splitPct: 0, pri: "pri_01sovpro60", meta: "65 SEIT/mo · Research Shelf included" }
+          ]
+        },
+        {
+          rung: 3,
+          key: "practitioner_creator",
+          getName: () => "Practitioner / Stall Creator",
+          caption: "Publishes Hallmarked Talents (notary.v1 + evidence.v1), Analyzers & Stalls to Marketplace.",
+          plans: [
+            { key: "creator_bench", name: "Open Practitioner Bench", kind: "plan", usd: 0, seit: 10, splitPct: 20, pri: "pri_01crebench0", meta: "80% Creator / 20% Estate · 7d payout hold" },
+            { key: "creator_atelier", name: "Certified Atelier", kind: "plan", usd: 39, seit: 40, splitPct: 12, pri: "pri_01createl39", meta: "88% Creator / 12% Estate · Priority Notary" },
+            { key: "creator_guild", name: "Specialist Doma Charter", kind: "assigned", usd: 0, seit: 100, splitPct: 10, pri: "assigned_doma_charter", meta: "Custom institutional stall agreement" }
+          ]
+        },
+        {
+          rung: 4,
+          key: "room_partner",
+          getName: () => state.rung4Term,
+          caption: "Brings an external vertical app/UI (like Thomas's Questcraft) & wires into Estate organs.",
+          plans: [
+            { key: "partner_incubate", name: "Incubate Charter (90d)", kind: "assigned", usd: 0, seit: 50, splitPct: 20, pri: "assigned_incubate_90d", meta: "$0 base · 50 Sandbox SEIT · 20% net share" },
+            { key: "partner_graduate", name: "Graduate Studio", kind: "plan", usd: 99, seit: 50, splitPct: 15, pri: "pri_01rpgrad99", meta: "$99/mo · 50 SEIT/mo · 15% net share" },
+            { key: "partner_manage", name: "Scale / Manage SLA", kind: "plan", usd: 299, seit: 200, splitPct: 10, pri: "pri_01rpmanage299", meta: "$299/mo · 200 SEIT/mo · 10% net share" }
+          ]
+        }
+      ];
+
+      // 2. 24 Real Audited Estate & Marketplace Capabilities across 7 Families
+      const CAPABILITIES = [
+        // Family 1: Orchestration & Multi-Agent Governance
+        {
+          slug: "consilium.kanban_4d_locks",
+          name: "4D Kanban D3 Glob Write-Lock Solver",
+          family: "1. Orchestration, Locks & Multi-Agent Governance",
+          bucket: "instant_enable",
+          kind: "included",
+          monthlyUsd: 0,
+          unitSeit: 0,
+          desc: "consilium/kanban/solver.py (_paths_collide) — prevents parallel RTS/coding worker file collisions.",
+          rateLabel: "$0 · Instant SDK + Gate"
+        },
+        {
+          slug: "engine.task_dag_siege",
+          name: "Task DAG Lifecycle & Parallel siege() Dispatcher",
+          family: "1. Orchestration, Locks & Multi-Agent Governance",
+          bucket: "subscribe_or_meter",
+          kind: "metered_seit",
+          monthlyUsd: 0,
+          unitSeit: 0.01,
+          callFactor: 1.0,
+          desc: "Unified single-gateway Task queue + WebSocket stream (hides run-before-claim & UUID seams).",
+          rateLabel: "0.01 SEIT / orchestrated task"
+        },
+        {
+          slug: "engine.vibe_coder_reducer",
+          name: "4-Role Vibe-Coder Deterministic State Reducer",
+          family: "1. Orchestration, Locks & Multi-Agent Governance",
+          bucket: "instant_enable",
+          kind: "included",
+          monthlyUsd: 0,
+          unitSeit: 0,
+          desc: "Architect / Builder / Playtester / Lorekeeper 37-test state kernel (developer-room-lab).",
+          rateLabel: "$0 · Included Kernel"
+        },
+        {
+          slug: "engine.code_canon_governor",
+          name: "7-Category Code Canon “Boss Gate” & Postmortem Guard",
+          family: "1. Orchestration, Locks & Multi-Agent Governance",
+          bucket: "subscribe_or_meter",
+          kind: "line_item",
+          paddlePriceId: "pri_01licodecanon29",
+          monthlyUsd: 29,
+          unitSeit: 0,
+          desc: "canon_code_router.py + safety_postmortem.py automated verification gate before task completion.",
+          rateLabel: "+$29/mo Paddle line_item"
+        },
+        {
+          slug: "engine.doma_bond_approvals",
+          name: "Role Doma (bond_delegations) & High-Consequence Gate",
+          family: "1. Orchestration, Locks & Multi-Agent Governance",
+          bucket: "instant_enable",
+          kind: "included",
+          monthlyUsd: 0,
+          unitSeit: 0,
+          desc: "Scoped worker delegations + interactive 403 approval_required human challenge (“Amber Diamond”).",
+          rateLabel: "$0 · Included in Rung 4"
+        },
+
+        // Family 2: Intelligence, Vault & Provenance
+        {
+          slug: "vault.multi_model_router",
+          name: "Seitiate Vault Multi-Model Router & sever() Failover",
+          family: "2. Intelligence, Vault Routing & Notary Provenance",
+          bucket: "subscribe_or_meter",
+          kind: "metered_seit",
+          monthlyUsd: 0,
+          unitSeit: 0.018,
+          callFactor: 1.0,
+          desc: "Claude, GPT, Gemini, Grok, Kimi & DeepSeek with circuit-breaker failover + conservative reserve/settle.",
+          rateLabel: "1.20x Wholesale SEIT ($0 BYOK)"
+        },
+        {
+          slug: "notary.c2pa_es256_receipts",
+          name: "Notary ES256 C2PA Receipts & Hosted Receipt Store",
+          family: "2. Intelligence, Vault Routing & Notary Provenance",
+          bucket: "subscribe_or_meter",
+          kind: "line_item",
+          paddlePriceId: "pri_01lireceiptstore15",
+          monthlyUsd: 15,
+          unitSeit: 0.005,
+          callFactor: 0.4,
+          desc: "RECEIPT_STORE_HOSTING line_item + cryptographic notary.v1 DecisionEvent signing & public verifier.",
+          rateLabel: "+$15/mo line_item + 0.005 SEIT"
+        },
+        {
+          slug: "plus.sso_and_seit_ledger",
+          name: "Signed-in-with-Seitiate SSO & Scoped SEIT Wallet",
+          family: "2. Intelligence, Vault Routing & Notary Provenance",
+          bucket: "instant_enable",
+          kind: "included",
+          monthlyUsd: 0,
+          unitSeit: 0,
+          desc: "Decode-only JWT boundary, CommandScopeEnvelope (command-scope.v1) cost telemetry & exact-bucket refunds.",
+          rateLabel: "$0 · Core Door Substrate"
+        },
+
+        // Family 3: Personal Context & Continuity
+        {
+          slug: "context.persons_door_brief",
+          name: "Person's Door Guarded One-Page Reading Brief",
+          family: "3. Personal Context & Continuity Organs (Guarded)",
+          bucket: "subscribe_or_meter",
+          kind: "line_item",
+          paddlePriceId: "pri_01lipersonsdoor49",
+          monthlyUsd: 49,
+          unitSeit: 0,
+          guarded: true,
+          desc: "0044_assistant_reading_briefs (W2.1/W2.6) — audience-bound personal context brief; 'person left' revokes.",
+          rateLabel: "+$49/mo Guarded line_item"
+        },
+        {
+          slug: "context.seity_move37",
+          name: "Seity FACT/READING Ledger & Move 37 Lateral Engine",
+          family: "3. Personal Context & Continuity Organs (Guarded)",
+          bucket: "subscribe_or_meter",
+          kind: "metered_seit",
+          monthlyUsd: 0,
+          unitSeit: 0.05,
+          callFactor: 0.25,
+          desc: "Separates verified FACT from revisable READING and proposes cross-domain lateral hypotheses.",
+          rateLabel: "0.05 SEIT / synthesis"
+        },
+        {
+          slug: "context.keep_codex_vault",
+          name: "Encrypted Keep & Sovereign Document Memory",
+          family: "3. Personal Context & Continuity Organs (Guarded)",
+          bucket: "instant_enable",
+          kind: "included",
+          monthlyUsd: 0,
+          unitSeit: 0,
+          desc: "User-owned Keep storage & scoped RAG retrieval (included in Rung 2; requires Door grant for Rung 4).",
+          rateLabel: "Included w/ User Consent"
+        },
+
+        // Family 4: Creative & 3D World Engines
+        {
+          slug: "creative.skin_crafter_pbr",
+          name: "5-Layer Procedural Skin Crafter & 3D PBR Compiler",
+          family: "4. Creative, 3D World & Procedural UI Engines",
+          bucket: "subscribe_or_meter",
+          kind: "line_item",
+          paddlePriceId: "pri_01liskincrafter19",
+          monthlyUsd: 19,
+          unitSeit: 0,
+          desc: "84 styles, 161 palettes & Three.js PBR material channels (WOOD, METAL, STONE, CIRCUIT) from JSON seed.",
+          rateLabel: "+$19/mo Paddle line_item"
+        },
+        {
+          slug: "creative.marina_importer",
+          name: "Marina Creator Corpus & Archive Importer (W1.2)",
+          family: "4. Creative, 3D World & Procedural UI Engines",
+          bucket: "subscribe_or_meter",
+          kind: "metered_seit",
+          monthlyUsd: 0,
+          unitSeit: 0.02,
+          callFactor: 0.15,
+          desc: "Ingests creator archives, lore bibles, and structured asset metadata with provenance hashes.",
+          rateLabel: "0.02 SEIT / import batch"
+        },
+
+        // Family 5: Certified First-Party Skills
+        {
+          slug: "skills.research_shelf_7",
+          name: "Certified Research Shelf (7 Skills: PRISMA, Citation Audit…)",
+          family: "5. Certified First-Party Skills (Registry)",
+          bucket: "subscribe_or_meter",
+          kind: "line_item",
+          paddlePriceId: "pri_01liresearch25",
+          monthlyUsd: 25,
+          unitSeit: 0,
+          desc: "citation_audit, prisma_screening, evidence_table, claim_extractor, method_critique, contradiction_scan.",
+          rateLabel: "+$25/mo Shelf line_item"
+        },
+        {
+          slug: "skills.workbench_core_3",
+          name: "Workbench Core Skills (Brief Writer, Meeting Distiller, Spec Linter)",
+          family: "5. Certified First-Party Skills (Registry)",
+          bucket: "instant_enable",
+          kind: "included",
+          monthlyUsd: 0,
+          unitSeit: 0,
+          desc: "Deterministic structured output skills available immediately across personal and partner rooms.",
+          rateLabel: "$0 · Free Starter Shelf"
+        },
+        {
+          slug: "skills.workbench_audit_4",
+          name: "Governance Audit Skills (Contract Redline, Cost Anomaly, Timeline)",
+          family: "5. Certified First-Party Skills (Registry)",
+          bucket: "subscribe_or_meter",
+          kind: "metered_seit",
+          monthlyUsd: 0,
+          unitSeit: 0.03,
+          callFactor: 0.2,
+          desc: "Deep document & ledger verification skills backed by Notary evidence.v1 citations.",
+          rateLabel: "0.03 SEIT / skill run"
+        },
+
+        // Family 6: Scientific & Dynamical Analyzers
+        {
+          slug: "analyzers.spectral_koopman_3",
+          name: "Temporal Regime, PIT Audit & 2D Koopman Shift Pack (3 Analyzers)",
+          family: "6. ResearchHarness Scientific & Dynamical Analyzers (21)",
+          bucket: "subscribe_or_meter",
+          kind: "metered_seit",
+          monthlyUsd: 0,
+          unitSeit: 0.15,
+          callFactor: 0.1,
+          desc: "Fisher-studentized CT-OU GLR & Koopman operator shift detection for telemetry, game economies & sensors.",
+          rateLabel: "0.15 SEIT / regime analysis"
+        },
+        {
+          slug: "analyzers.electrochem_18",
+          name: "Electrochemistry & Biosensor Calibration Suite (18 Analyzers)",
+          family: "6. ResearchHarness Scientific & Dynamical Analyzers (21)",
+          bucket: "subscribe_or_meter",
+          kind: "line_item",
+          paddlePriceId: "pri_01lielectrochem99",
+          monthlyUsd: 99,
+          unitSeit: 0.20,
+          callFactor: 0.15,
+          desc: "Randles-Sevcik, Nyquist EIS, Cottrell, SWV peak deconvolution & LoD calibration (Sensarra grade).",
+          rateLabel: "+$99/mo Lab line_item + 0.20 SEIT"
+        },
+
+        // Family 7: Connectors & 3rd-Party Marketplace Proxy
+        {
+          slug: "connectors.first_party_20",
+          name: "First-Party Connected Sources (20 OAuth/Keep Connectors)",
+          family: "7. Connectors & 3rd-Party Marketplace Routed Modules",
+          bucket: "instant_enable",
+          kind: "included",
+          monthlyUsd: 0,
+          unitSeit: 0,
+          desc: "GitHub, GDrive, Gmail, Slack, Linear, Notion, Discord, Obsidian, Zotero, Health/Oura/Whoop (source_catalog.yaml).",
+          rateLabel: "$0 Personal / Scoped OAuth"
+        },
+        {
+          slug: "marketplace.roblox_studio_cloud",
+          name: "Roblox Studio MCP + Open Cloud Luau Publisher",
+          family: "7. Connectors & 3rd-Party Marketplace Routed Modules",
+          bucket: "marketplace_route",
+          kind: "marketplace_proxy",
+          monthlyUsd: 0,
+          unitSeit: 0.04,
+          callFactor: 0.3,
+          creatorPct: 75,
+          desc: "Seitiate+ vaults Open Cloud keys, proxies Luau publish & mints ES256 receipt (Questcraft Phase 4).",
+          rateLabel: "0.04 SEIT/pub · 75/25 Split Proxy"
+        },
+        {
+          slug: "marketplace.talent_rts_economy",
+          name: "@practitioner/rts-economy-auditor@1.4 (Hallmarked Talent)",
+          family: "7. Connectors & 3rd-Party Marketplace Routed Modules",
+          bucket: "marketplace_route",
+          kind: "marketplace_proxy",
+          monthlyUsd: 0,
+          unitSeit: 0.12,
+          callFactor: 0.15,
+          creatorPct: 80,
+          desc: "Rung 3 Practitioner Stall (notary.v1 + evidence.v1). Simulates resource sinks & inflation; 7d PayoutHold.",
+          rateLabel: "0.12 SEIT/run · 80% Creator / 20% S+"
+        },
+        {
+          slug: "marketplace.skin_pack_nordic",
+          name: "@atelier/nordic-forge-pbr-pack@2.1 (Creator 3D Skin Stall)",
+          family: "7. Connectors & 3rd-Party Marketplace Routed Modules",
+          bucket: "marketplace_route",
+          kind: "line_item",
+          paddlePriceId: "pri_01li3pnordic12",
+          monthlyUsd: 12,
+          unitSeit: 0,
+          creatorPct: 80,
+          desc: "Curated 3D island PBR textures & UI runes licensed monthly via Seitiate+ Marketplace split.",
+          rateLabel: "+$12/mo Stall line_item (80/20)"
+        },
+        {
+          slug: "marketplace.edison_scientific",
+          name: "Edison Scientific Literature & Chem Agent Bridge",
+          family: "7. Connectors & 3rd-Party Marketplace Routed Modules",
+          bucket: "marketplace_route",
+          kind: "marketplace_proxy",
+          monthlyUsd: 0,
+          unitSeit: 0.35,
+          callFactor: 0.12,
+          creatorPct: 85,
+          desc: "Brokered wholesale access to Edison Scientific synthesis without separate vendor contract or key.",
+          rateLabel: "0.35 SEIT/query · 85/15 Proxy"
+        },
+        {
+          slug: "marketplace.bio_foundation_pack",
+          name: "BindingDB + Aptable + Atomica + Mammal Bio-Models",
+          family: "7. Connectors & 3rd-Party Marketplace Routed Modules",
+          bucket: "marketplace_route",
+          kind: "marketplace_proxy",
+          monthlyUsd: 0,
+          unitSeit: 0.25,
+          callFactor: 0.12,
+          creatorPct: 80,
+          desc: "Managed GPU inference & ligand-binding lookup routed through Seitiate+ single billing proxy.",
+          rateLabel: "0.25 SEIT/inf · 80/20 Proxy"
+        }
+      ];
+
+      const PRESETS = {
+        questcraft: {
+          rung: 4,
+          planIndex: 0,
+          roomSlug: "questcraft",
+          origins: "http://localhost:3000, http://localhost:3001, http://localhost:3002, https://questcraft.gg",
+          volume: 2500,
+          checked: [
+            "consilium.kanban_4d_locks",
+            "engine.task_dag_siege",
+            "engine.vibe_coder_reducer",
+            "engine.code_canon_governor",
+            "engine.doma_bond_approvals",
+            "vault.multi_model_router",
+            "notary.c2pa_es256_receipts",
+            "plus.sso_and_seit_ledger",
+            "creative.skin_crafter_pbr",
+            "marketplace.roblox_studio_cloud",
+            "marketplace.talent_rts_economy"
+          ]
+        },
+        imperfective: {
+          rung: 4,
+          planIndex: 1,
+          roomSlug: "imperfective",
+          origins: "http://localhost:5173, https://imperfective.app",
+          volume: 1800,
+          checked: [
+            "plus.sso_and_seit_ledger",
+            "vault.multi_model_router",
+            "context.persons_door_brief",
+            "context.seity_move37",
+            "notary.c2pa_es256_receipts",
+            "skills.workbench_core_3"
+          ]
+        },
+        sensarra: {
+          rung: 4,
+          planIndex: 2,
+          roomSlug: "sensarra-partner-lab",
+          origins: "https://lab.sensarra.bio",
+          volume: 4000,
+          checked: [
+            "plus.sso_and_seit_ledger",
+            "vault.multi_model_router",
+            "notary.c2pa_es256_receipts",
+            "skills.research_shelf_7",
+            "analyzers.spectral_koopman_3",
+            "analyzers.electrochem_18",
+            "marketplace.edison_scientific",
+            "marketplace.bio_foundation_pack"
+          ]
+        },
+        sakme_user: {
+          rung: 1,
+          planIndex: 1,
+          roomSlug: "sakme",
+          origins: "https://sakme.ge",
+          volume: 300,
+          checked: [
+            "plus.sso_and_seit_ledger",
+            "skills.workbench_core_3"
+          ]
+        },
+        sovereign: {
+          rung: 2,
+          planIndex: 1,
+          roomSlug: "personal-keep",
+          origins: "https://seitiate.app",
+          volume: 900,
+          checked: [
+            "plus.sso_and_seit_ledger",
+            "vault.multi_model_router",
+            "context.keep_codex_vault",
+            "context.seity_move37",
+            "connectors.first_party_20",
+            "skills.workbench_core_3",
+            "skills.research_shelf_7"
+          ]
+        },
+        clear: {
+          rung: 4,
+          planIndex: 0,
+          roomSlug: "new-vertical-room",
+          origins: "http://localhost:3000",
+          volume: 1000,
+          checked: ["plus.sso_and_seit_ledger"]
+        }
+      };
+
+      const state = {
+        rung4Term: "Room Partner",
+        activeRung: 4,
+        activePlanIndex: 0,
+        roomSlug: "questcraft",
+        origins: "http://localhost:3000, http://localhost:3001, http://localhost:3002, https://questcraft.gg",
+        fundingWaterfall: "partner_pool_first",
+        volume: 2500,
+        bucketFilter: "all",
+        searchQuery: "",
+        checked: new Set(PRESETS.questcraft.checked),
+        simPaidUsers: 120,
+        simArpu: 24
+      };
+
+      // DOM References
+      const rungGridEl = document.getElementById("rung-grid");
+      const subtierGridEl = document.getElementById("subtier-grid");
+      const activeRungLabelEl = document.getElementById("active-rung-label");
+      const catalogFamiliesEl = document.getElementById("catalog-families");
+      const checkedCountBadgeEl = document.getElementById("checked-count-badge");
+      const roomSlugInput = document.getElementById("room-slug-input");
+      const roomOriginsInput = document.getElementById("room-origins-input");
+      const waterfallSelect = document.getElementById("funding-waterfall-select");
+      const volumeSlider = document.getElementById("volume-slider");
+      const volumeLabel = document.getElementById("volume-label");
+      const dialog = document.getElementById("manifest-dialog");
+
+      function getCurrentRungObj() {
+        return MASTER_RUNGS.find((r) => r.rung === state.activeRung) || MASTER_RUNGS[3];
+      }
+
+      function getCurrentPlanObj() {
+        const rungObj = getCurrentRungObj();
+        return rungObj.plans[state.activePlanIndex] || rungObj.plans[0];
+      }
+
+      function renderRungs() {
+        rungGridEl.innerHTML = "";
+        MASTER_RUNGS.forEach((r) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "rung-btn";
+          btn.setAttribute("aria-pressed", String(r.rung === state.activeRung));
+          btn.innerHTML = `
+            <span class="rung-num">Rung ${r.rung}</span>
+            <span class="rung-name">${escapeHtml(r.getName())}</span>
+            <span class="rung-caption">${escapeHtml(r.caption)}</span>
+          `;
+          btn.addEventListener("click", () => {
+            state.activeRung = r.rung;
+            state.activePlanIndex = 0;
+            renderAll();
+          });
+          rungGridEl.appendChild(btn);
+        });
+      }
+
+      function renderSubTiers() {
+        const rungObj = getCurrentRungObj();
+        activeRungLabelEl.textContent = `Rung ${rungObj.rung}: ${rungObj.getName()}`;
+        document.getElementById("drawer-heading").textContent = `${rungObj.getName()} Charter & Cost Summary`;
+
+        subtierGridEl.innerHTML = "";
+        rungObj.plans.forEach((p, idx) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "subtier-card";
+          btn.setAttribute("aria-pressed", String(idx === state.activePlanIndex));
+          btn.innerHTML = `
+            <div class="subtier-top">
+              <strong style="font-size:13.5px;">${escapeHtml(p.name)}</strong>
+              <span class="kind-pill">kind='${p.kind}'</span>
+            </div>
+            <div class="subtier-price">$${p.usd}/mo</div>
+            <div class="subtier-meta">${escapeHtml(p.meta)}</div>
+          `;
+          btn.addEventListener("click", () => {
+            state.activePlanIndex = idx;
+            renderAll();
+          });
+          subtierGridEl.appendChild(btn);
+        });
+
+        document.getElementById("partner-meta-bar").style.display = state.activeRung === 4 ? "grid" : "none";
+      }
+
+      function renderCatalog() {
+        checkedCountBadgeEl.textContent = String(state.checked.size);
+        const q = state.searchQuery.trim().toLowerCase();
+
+        const families = [];
+        const byFamily = new Map();
+        CAPABILITIES.forEach((cap) => {
+          const matchesBucket = state.bucketFilter === "all" || cap.bucket === state.bucketFilter;
+          const matchesSearch =
+            !q ||
+            cap.name.toLowerCase().includes(q) ||
+            cap.slug.toLowerCase().includes(q) ||
+            cap.desc.toLowerCase().includes(q) ||
+            cap.family.toLowerCase().includes(q);
+          if (!matchesBucket || !matchesSearch) return;
+          if (!byFamily.has(cap.family)) {
+            byFamily.set(cap.family, []);
+            families.push(cap.family);
+          }
+          byFamily.get(cap.family).push(cap);
+        });
+
+        catalogFamiliesEl.innerHTML = "";
+
+        if (families.length === 0) {
+          catalogFamiliesEl.innerHTML = `<p style="color:var(--sp-text-muted); font-size:13px;">No capabilities match your current filter.</p>`;
+          return;
+        }
+
+        families.forEach((fam, famIdx) => {
+          const items = byFamily.get(fam);
+          const section = document.createElement("div");
+          section.className = "family-section";
+
+          const header = document.createElement("div");
+          header.className = "family-header";
+
+          const groupCheckId = `fam-check-${famIdx}`;
+          const checkedInFam = items.filter((c) => state.checked.has(c.slug)).length;
+
+          const label = document.createElement("label");
+          label.className = "family-select-label";
+          label.setAttribute("for", groupCheckId);
+
+          const groupCheckbox = document.createElement("input");
+          groupCheckbox.type = "checkbox";
+          groupCheckbox.id = groupCheckId;
+          groupCheckbox.checked = checkedInFam === items.length && items.length > 0;
+          // Indeterminate state set via JS DOM property per Modern Web Guidance
+          groupCheckbox.indeterminate = checkedInFam > 0 && checkedInFam < items.length;
+
+          groupCheckbox.addEventListener("change", () => {
+            const shouldCheck = groupCheckbox.checked;
+            items.forEach((c) => {
+              if (shouldCheck) state.checked.add(c.slug);
+              else state.checked.delete(c.slug);
+            });
+            renderAll();
+          });
+
+          const titleSpan = document.createElement("span");
+          titleSpan.textContent = fam;
+
+          label.appendChild(groupCheckbox);
+          label.appendChild(titleSpan);
+
+          const countSpan = document.createElement("span");
+          countSpan.style.fontSize = "11.5px";
+          countSpan.style.color = "var(--sp-text-muted)";
+          countSpan.textContent = `${checkedInFam}/${items.length} enabled`;
+
+          header.appendChild(label);
+          header.appendChild(countSpan);
+          section.appendChild(header);
+
+          const grid = document.createElement("div");
+          grid.className = "cap-grid";
+
+          items.forEach((cap) => {
+            const isChecked = state.checked.has(cap.slug);
+            const card = document.createElement("div");
+            card.className = "cap-card" + (!supportsHas && isChecked ? " is-checked" : "");
+
+            const checkId = `cap-${cap.slug.replace(/[^a-z0-9]/gi, "-")}`;
+            let badgeClass = "badge-free";
+            let bucketText = "instant_enable";
+            if (cap.bucket === "subscribe_or_meter" && cap.kind === "line_item") {
+              badgeClass = "badge-line-item";
+              bucketText = "Paddle line_item";
+            } else if (cap.bucket === "subscribe_or_meter") {
+              badgeClass = "badge-metered";
+              bucketText = "Metered SEIT";
+            } else if (cap.bucket === "marketplace_route") {
+              badgeClass = "badge-marketplace";
+              bucketText = "3P Marketplace Proxy";
+            }
+
+            card.innerHTML = `
+              <div>
+                <label class="cap-label" for="${checkId}">
+                  <input type="checkbox" class="cap-checkbox" id="${checkId}" ${isChecked ? "checked" : ""} />
+                  <span>
+                    <span class="cap-title">${escapeHtml(cap.name)}</span>
+                    <span class="cap-slug">${escapeHtml(cap.slug)}</span>
+                    <p class="cap-desc">${escapeHtml(cap.desc)}</p>
+                  </span>
+                </label>
+              </div>
+              <div class="cap-footer">
+                <span style="display:inline-flex; gap:5px; flex-wrap:wrap;">
+                  <span class="badge ${badgeClass}">${escapeHtml(bucketText)}</span>
+                  ${cap.guarded ? '<span class="badge badge-guarded">GUARDED DOOR</span>' : ""}
+                </span>
+                <strong style="font-family:var(--sp-mono); color:var(--sp-text);">${escapeHtml(cap.rateLabel)}</strong>
+              </div>
+            `;
+
+            const inputEl = card.querySelector("input");
+            inputEl.addEventListener("change", () => {
+              if (inputEl.checked) state.checked.add(cap.slug);
+              else state.checked.delete(cap.slug);
+              if (!supportsHas) {
+                card.classList.toggle("is-checked", inputEl.checked);
+              }
+              renderAll();
+            });
+
+            grid.appendChild(card);
+          });
+
+          section.appendChild(grid);
+          catalogFamiliesEl.appendChild(section);
+        });
+      }
+
+      function computeTotals() {
+        const rungObj = getCurrentRungObj();
+        const planObj = getCurrentPlanObj();
+        const selectedCaps = CAPABILITIES.filter((c) => state.checked.has(c.slug));
+
+        const lineItems = selectedCaps.filter((c) => c.kind === "line_item" && c.monthlyUsd > 0);
+        const addonsUsd = lineItems.reduce((acc, c) => acc + c.monthlyUsd, 0);
+        const recurringTotalUsd = planObj.usd + addonsUsd;
+
+        let estateMeteredSeit = 0;
+        let marketplaceSeit = 0;
+        let creatorHoldUsd = 0;
+        let seitiateProxyMarginUsd = 0;
+
+        selectedCaps.forEach((c) => {
+          if (c.bucket === "subscribe_or_meter" && c.unitSeit > 0) {
+            const calls = state.volume * (c.callFactor || 0.2);
+            estateMeteredSeit += calls * c.unitSeit;
+          } else if (c.bucket === "marketplace_route") {
+            if (c.unitSeit > 0) {
+              const calls = state.volume * (c.callFactor || 0.2);
+              const burn = calls * c.unitSeit;
+              marketplaceSeit += burn;
+              const cPct = (c.creatorPct || 80) / 100;
+              creatorHoldUsd += burn * cPct;
+              seitiateProxyMarginUsd += burn * (1 - cPct);
+            } else if (c.kind === "line_item" && c.monthlyUsd > 0) {
+              const cPct = (c.creatorPct || 80) / 100;
+              creatorHoldUsd += c.monthlyUsd * cPct;
+              seitiateProxyMarginUsd += c.monthlyUsd * (1 - cPct);
+            }
+          }
+        });
+
+        const totalBurnSeit = estateMeteredSeit + marketplaceSeit;
+        const netOverageSeit = Math.max(0, totalBurnSeit - planObj.seit);
+        const hasGuarded = selectedCaps.some((c) => c.guarded);
+
+        return {
+          rungObj,
+          planObj,
+          selectedCaps,
+          lineItems,
+          addonsUsd,
+          recurringTotalUsd,
+          estateMeteredSeit,
+          marketplaceSeit,
+          creatorHoldUsd,
+          seitiateProxyMarginUsd,
+          netOverageSeit,
+          hasGuarded
+        };
+      }
+
+      function buildManifestObject(totals) {
+        const slug = (state.roomSlug || "custom-room").trim().toLowerCase().replace(/[^a-z0-9-_]/g, "-");
+        const origins = state.origins
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean);
+
+        const paddleItems = [];
+        if (totals.planObj.kind === "plan" && totals.planObj.usd > 0) {
+          paddleItems.push({
+            price_id: totals.planObj.pri,
+            tier_key: totals.planObj.key,
+            kind: "plan",
+            quantity: 1,
+            monthly_usd: totals.planObj.usd.toFixed(2)
+          });
+        }
+        totals.lineItems.forEach((li) => {
+          paddleItems.push({
+            price_id: li.paddlePriceId,
+            capability_slug: li.slug,
+            kind: "line_item",
+            quantity: 1,
+            monthly_usd: li.monthlyUsd.toFixed(2)
+          });
+        });
+
+        return {
+          $schema: "https://seitiate.app/schemas/partner-manifest.v1.json",
+          schema_version: "seitiate.partner-manifest.v1",
+          manifest_version: "2026-11-11.1",
+          outer_wheel: {
+            master_rung: totals.rungObj.rung,
+            rung_key: totals.rungObj.key,
+            display_label: totals.rungObj.getName()
+          },
+          inner_wheel_subscription: {
+            base_tier_key: totals.planObj.key,
+            base_kind: totals.planObj.kind,
+            monthly_recurring_total_usd: totals.recurringTotalUsd.toFixed(2),
+            included_monthly_seit: totals.planObj.seit.toFixed(2),
+            estate_net_revenue_share_pct: totals.planObj.splitPct,
+            paddle_v2_items: paddleItems
+          },
+          room: {
+            vertical_id: slug,
+            allowed_origins: origins,
+            single_gateway_url: "https://api.seitiate.app/api/v1/partner/v1",
+            ws_url: "wss://api.seitiate.app/api/v1/partner/v1/ws",
+            stay_open_modes: ["mock", "sandbox", "live"]
+          },
+          funding_waterfall: state.fundingWaterfall,
+          capabilities: totals.selectedCaps.map((c) => ({
+            slug: c.slug,
+            bucket: c.bucket,
+            pricing_kind: c.kind,
+            monthly_usd: c.monthlyUsd.toFixed(2),
+            unit_seit: c.unitSeit.toFixed(4),
+            ...(c.guarded ? { guarded_consent: "persons_door_grant_required" } : {}),
+            ...(c.creatorPct ? { split: { vendor_or_creator_pct: c.creatorPct, seitiate_pct: 100 - c.creatorPct } } : {})
+          })),
+          estimated_monthly_economics: {
+            projected_invocations: state.volume,
+            estate_metered_seit: totals.estateMeteredSeit.toFixed(2),
+            marketplace_proxy_seit: totals.marketplaceSeit.toFixed(2),
+            net_overage_after_allowance_usd: totals.netOverageSeit.toFixed(2)
+          }
+        };
+      }
+
+      function renderSummaryAndWheel2() {
+        const totals = computeTotals();
+        document.getElementById("sum-base-usd").textContent = `$${totals.planObj.usd.toFixed(2)}/mo`;
+        document.getElementById("sum-li-count").textContent = String(totals.lineItems.length);
+        document.getElementById("sum-addons-usd").textContent = `$${totals.addonsUsd.toFixed(2)}/mo`;
+        document.getElementById("sum-recurring-total").textContent = `$${totals.recurringTotalUsd.toFixed(2)}/mo`;
+
+        document.getElementById("sum-included-seit").textContent = `${totals.planObj.seit.toFixed(2)} SEIT`;
+        document.getElementById("sum-metered-seit").textContent = `${totals.estateMeteredSeit.toFixed(2)} SEIT/mo`;
+        document.getElementById("sum-3p-seit").textContent = `${totals.marketplaceSeit.toFixed(2)} SEIT/mo`;
+        document.getElementById("sum-3p-creator").textContent = `$${totals.creatorHoldUsd.toFixed(2)}`;
+        document.getElementById("sum-3p-margin").textContent = `$${totals.seitiateProxyMarginUsd.toFixed(2)}`;
+        document.getElementById("sum-net-seit").textContent = `$${totals.netOverageSeit.toFixed(2)}/mo`;
+
+        document.getElementById("guarded-banner").hidden = !totals.hasGuarded;
+
+        const manifest = buildManifestObject(totals);
+        const paddlePayload = {
+          custom_data: {
+            tenant_id: "tenant-partner-01",
+            vertical_id: state.activeRung === 1 ? state.roomSlug : "platform"
+          },
+          items: manifest.inner_wheel_subscription.paddle_v2_items.length
+            ? manifest.inner_wheel_subscription.paddle_v2_items.map((i) => ({
+                price_id: i.price_id,
+                quantity: 1
+              }))
+            : [{ note: `Assigned / $0 Charter (${totals.planObj.key}) — no card charge today` }]
+        };
+
+        document.getElementById("paddle-items-preview").textContent = JSON.stringify(paddlePayload, null, 2);
+        document.getElementById("cli-preview").textContent =
+          `npx @seitiate/partner-sdk init \\\n  --room ${manifest.room.vertical_id} \\\n  --manifest ./seitiate-partner-manifest.json`;
+
+        // Update Modal contents if opened
+        document.getElementById("dialog-manifest-json").textContent = JSON.stringify(manifest, null, 2);
+        document.getElementById("dialog-human-summary").textContent =
+          `${totals.rungObj.getName()} (${totals.planObj.name}) for room "${manifest.room.vertical_id}": ` +
+          `$${totals.recurringTotalUsd.toFixed(2)}/mo recurring (${totals.lineItems.length} Paddle line_item add-ons) + ` +
+          `$${totals.netOverageSeit.toFixed(2)}/mo estimated SEIT overage across ${totals.selectedCaps.length} enabled capabilities.`;
+
+        // Render Inner Wheel #2 (Vertical's Own Customer Tiers & Clearinghouse)
+        const slug = manifest.room.vertical_id;
+        document.getElementById("wheel2-room-slug").textContent = slug;
+        const tbody = document.getElementById("wheel2-tbody");
+        tbody.innerHTML = `
+          <tr>
+            <td><code>${escapeHtml(slug)}/free</code></td>
+            <td><span class="kind-pill">plan</span></td>
+            <td>$0.00/mo</td>
+            <td>10 SEIT starter</td>
+            <td><code>activate_free_tier</code> (no card)</td>
+          </tr>
+          <tr>
+            <td><code>${escapeHtml(slug)}/member_core</code></td>
+            <td><span class="kind-pill">plan</span></td>
+            <td>$${state.simArpu.toFixed(2)}/mo</td>
+            <td>${Math.round(state.simArpu * 0.75)} SEIT/mo</td>
+            <td><code>pri_${escapeHtml(slug.slice(0, 8))}_core</code></td>
+          </tr>
+          <tr>
+            <td><code>${escapeHtml(slug)}/studio_pro</code></td>
+            <td><span class="kind-pill">plan</span></td>
+            <td>$${(state.simArpu * 2).toFixed(2)}/mo</td>
+            <td>${Math.round(state.simArpu * 1.6)} SEIT/mo</td>
+            <td><code>pri_${escapeHtml(slug.slice(0, 8))}_pro</code></td>
+          </tr>
+          <tr>
+            <td><code>${escapeHtml(slug)}/addon_power_pack</code></td>
+            <td><span class="kind-pill">line_item</span></td>
+            <td>+$9.00/mo</td>
+            <td>+5 SEIT/mo</td>
+            <td>Appended to <code>items[]</code></td>
+          </tr>
+        `;
+
+        const grossUsd = state.simPaidUsers * state.simArpu;
+        const paddleFeeUsd = grossUsd * 0.05 + state.simPaidUsers * 0.5;
+        const estateCogsUsd = totals.recurringTotalUsd + totals.netOverageSeit;
+        const distributableNet = Math.max(0, grossUsd - paddleFeeUsd - estateCogsUsd);
+        const estateSharePct = totals.planObj.splitPct || 15;
+        const estateShareUsd = distributableNet * (estateSharePct / 100);
+        const partnerNetPayoutUsd = Math.max(0, distributableNet - estateShareUsd);
+
+        document.getElementById("clearing-box").innerHTML = `
+          <div>
+            <div class="metric-label">Gross Vertical Paddle Rev</div>
+            <div class="metric-val">$${grossUsd.toFixed(2)}</div>
+          </div>
+          <div>
+            <div class="metric-label">Paddle MoR Tax/Fee (~5%+$0.50)</div>
+            <div class="metric-val" style="color:var(--sp-text-muted);">-$${paddleFeeUsd.toFixed(2)}</div>
+          </div>
+          <div>
+            <div class="metric-label">Estate + 3P Capability COGS</div>
+            <div class="metric-val" style="color:var(--sp-warn);">-$${estateCogsUsd.toFixed(2)}</div>
+          </div>
+          <div>
+            <div class="metric-label">Estate Charter Share (${estateSharePct}%)</div>
+            <div class="metric-val" style="color:var(--sp-purple);">-$${estateShareUsd.toFixed(2)}</div>
+          </div>
+          <div>
+            <div class="metric-label">Net Monthly Partner Payout</div>
+            <div class="metric-val" style="color:var(--sp-accent);">$${partnerNetPayoutUsd.toFixed(2)}</div>
+          </div>
+        `;
+      }
+
+      function renderAll() {
+        renderRungs();
+        renderSubTiers();
+        renderCatalog();
+        renderSummaryAndWheel2();
+      }
+
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      // Event Listeners: Rung 4 Term Switcher
+      document.getElementById("rung4-term-select").addEventListener("change", (e) => {
+        state.rung4Term = e.target.value;
+        renderAll();
+      });
+
+      // Presets
+      document.querySelectorAll("[data-preset]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const key = btn.getAttribute("data-preset");
+          const p = PRESETS[key];
+          if (!p) return;
+          document.querySelectorAll("[data-preset]").forEach((b) => b.classList.remove("btn-preset-active"));
+          btn.classList.add("btn-preset-active");
+
+          state.activeRung = p.rung;
+          state.activePlanIndex = p.planIndex;
+          state.roomSlug = p.roomSlug;
+          state.origins = p.origins;
+          state.volume = p.volume;
+          state.checked = new Set(p.checked);
+
+          roomSlugInput.value = state.roomSlug;
+          roomOriginsInput.value = state.origins;
+          volumeSlider.value = String(state.volume);
+          volumeLabel.textContent = state.volume.toLocaleString();
+          renderAll();
+        });
+      });
+
+      // Partner Meta Inputs
+      roomSlugInput.addEventListener("input", () => {
+        state.roomSlug = roomSlugInput.value;
+        renderSummaryAndWheel2();
+      });
+      roomOriginsInput.addEventListener("input", () => {
+        state.origins = roomOriginsInput.value;
+        renderSummaryAndWheel2();
+      });
+      waterfallSelect.addEventListener("change", () => {
+        state.fundingWaterfall = waterfallSelect.value;
+        renderSummaryAndWheel2();
+      });
+      volumeSlider.addEventListener("input", () => {
+        state.volume = Number(volumeSlider.value);
+        volumeLabel.textContent = state.volume.toLocaleString();
+        renderSummaryAndWheel2();
+      });
+
+      // Search & Bucket Filter
+      document.getElementById("cap-search").addEventListener("input", (e) => {
+        state.searchQuery = e.target.value;
+        renderCatalog();
+      });
+
+      document.querySelectorAll("[data-bucket]").forEach((pill) => {
+        pill.addEventListener("click", () => {
+          state.bucketFilter = pill.getAttribute("data-bucket");
+          document.querySelectorAll("[data-bucket]").forEach((p) =>
+            p.setAttribute("aria-pressed", String(p === pill))
+          );
+          renderCatalog();
+        });
+      });
+
+      // Inner Wheel #2 Sliders
+      document.getElementById("sim-paid-users").addEventListener("input", (e) => {
+        state.simPaidUsers = Number(e.target.value);
+        document.getElementById("sim-users-label").textContent = String(state.simPaidUsers);
+        renderSummaryAndWheel2();
+      });
+      document.getElementById("sim-arpu").addEventListener("input", (e) => {
+        state.simArpu = Number(e.target.value);
+        document.getElementById("sim-arpu-label").textContent = String(state.simArpu);
+        renderSummaryAndWheel2();
+      });
+
+      // Accessible Tabs with Arrow-Key Navigation
+      const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
+      function activateTab(selectedTab, moveFocus) {
+        tabs.forEach((tab) => {
+          const isSelected = tab === selectedTab;
+          tab.setAttribute("aria-selected", String(isSelected));
+          tab.tabIndex = isSelected ? 0 : -1;
+          const panel = document.getElementById(tab.getAttribute("aria-controls"));
+          if (panel) panel.hidden = !isSelected;
+        });
+        if (moveFocus) selectedTab.focus();
+      }
+      tabs.forEach((tab, index) => {
+        tab.addEventListener("click", () => activateTab(tab, false));
+        tab.addEventListener("keydown", (e) => {
+          if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+            e.preventDefault();
+            const nextIdx = e.key === "ArrowRight" ? (index + 1) % tabs.length : (index - 1 + tabs.length) % tabs.length;
+            activateTab(tabs[nextIdx], true);
+          }
+        });
+      });
+
+      // Native Dialog Modal + Light-Dismiss Fallback per Modern Web Guidance
+      function openManifestModal() {
+        renderSummaryAndWheel2();
+        dialog.showModal();
+      }
+      document.getElementById("open-manifest-btn").addEventListener("click", openManifestModal);
+      document.getElementById("drawer-open-modal-btn").addEventListener("click", openManifestModal);
+      document.getElementById("dialog-close-btn").addEventListener("click", () => dialog.close("close"));
+
+      dialog.addEventListener("close", () => {
+        dialog.returnValue = "";
+      });
+
+      if (!("closedBy" in HTMLDialogElement.prototype)) {
+        dialog.addEventListener("click", (event) => {
+          const rect = dialog.getBoundingClientRect();
+          const clickedInDialog =
+            rect.top <= event.clientY &&
+            event.clientY <= rect.top + rect.height &&
+            rect.left <= event.clientX &&
+            event.clientX <= rect.left + rect.width;
+          if (!clickedInDialog) {
+            dialog.close();
+          }
+        });
+      }
+
+      // Copy Manifest Buttons
+      function copyManifestText(btn) {
+        const text = document.getElementById("dialog-manifest-json").textContent;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text);
+        }
+        const orig = btn.textContent;
+        btn.textContent = "Copied!";
+        setTimeout(() => {
+          btn.textContent = orig;
+        }, 1400);
+      }
+      document.getElementById("copy-manifest-quick-btn").addEventListener("click", (e) => copyManifestText(e.currentTarget));
+      document.getElementById("dialog-copy-btn").addEventListener("click", (e) => copyManifestText(e.currentTarget));
+
+      // Initial Render
+      renderAll();
+    })();
+  </script>
+</body>
+</html>
