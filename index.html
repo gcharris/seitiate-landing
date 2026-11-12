@@ -3,160 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seitiate — Accountable Infrastructure &amp; Sovereign Workspaces for AI</title>
+    <title>Seitiate — Persistent Personal Assistants &amp; Shared Spaces</title>
     <script src="/assets/gate.js"></script>
-    <meta name="description" content="Seitiate turns stateless AI into accountable, long-lived workspaces with Sovereign Keep memory, multi-agent partner rooms, cryptographic Human Work Receipts, and the SEIT compute economy.">
+    <meta name="description" content="Seitiate is an AI platform built around persistent Personal Assistants that develop an understanding of each person’s work, preferences, and priorities over time.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossoContract Enginen>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #08090b; --surface: #0f1114; --surface-hover: #15181e; --border: #1a1c22;
-            --text: #eceae7; --text-secondary: #8a8a90; --text-muted: #56585f;
-            --accent: #4ade80; --amber: #e0b34a; --cyan: #38bdf8; --purple: #c084fc;
+            --bg: #0a0b0e;
+            --surface: #111318;
+            --surface-hover: #171a21;
+            --border: #1f232d;
+            --text: #f3f2ee;
+            --text-secondary: #a0a4ae;
+            --text-muted: #686c76;
+            --accent: #4ade80;
+            --serif: 'Instrument Serif', Georgia, serif;
+            --sans: 'Inter', -apple-system, sans-serif;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; }
-        a { color: inherit; text-decoration: none; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
-        body > nav {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-            padding: 14px 28px; display: flex; justify-content: space-between; align-items: center;
-            background: rgba(8, 9, 11, 0.88); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);
+        body {
+            font-family: var(--sans);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
         }
-        body > nav .brand { display: flex; align-items: center; gap: 9px; font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
-        body > nav .brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 2.2s infinite; }
-        .nav-right { display: flex; align-items: center; gap: 18px; font-size: 0.84rem; color: var(--text-secondary); }
+        a { color: inherit; text-decoration: none; }
+
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 16px 32px; display: flex; justify-content: space-between; align-items: center;
+            background: rgba(10, 11, 14, 0.88); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);
+        }
+        nav .brand { display: flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
+        nav .brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+        .nav-right { display: flex; align-items: center; gap: 22px; font-size: 0.88rem; color: var(--text-secondary); }
         .nav-right a.nav-link:hover { color: var(--text); }
         .nav-login-btn {
-            font-family: 'Inter', sans-serif; font-size: 0.82rem; font-weight: 600;
-            color: #08090b; background: var(--accent); border: 1px solid var(--accent);
-            padding: 7px 16px; border-radius: 8px; transition: all 0.15s ease;
+            font-size: 0.85rem; font-weight: 600; color: #0a0b0e; background: var(--accent);
+            padding: 8px 18px; border-radius: 8px; transition: opacity 0.15s ease;
         }
-        .nav-login-btn:hover { opacity: 0.92; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(74, 222, 128, 0.25); }
+        .nav-login-btn:hover { opacity: 0.9; }
 
-        .doc { max-width: 960px; margin: 0 auto; padding: 112px 24px 64px; }
-        .banner {
-            font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.03em;
-            color: var(--accent); border: 1px solid rgba(74, 222, 128, 0.25); background: rgba(74, 222, 128, 0.05);
-            border-radius: 8px; padding: 8px 14px; margin-bottom: 1.6rem; display: inline-block;
+        .wrap { max-width: 820px; margin: 0 auto; padding: 128px 24px 72px; }
+        h1 {
+            font-family: var(--serif);
+            font-weight: 400;
+            font-size: clamp(38px, 5.5vw, 56px);
+            line-height: 1.1;
+            letter-spacing: -0.01em;
+            margin-bottom: 24px;
         }
-        h1 { font-size: clamp(32px, 5vw, 48px); font-weight: 700; letter-spacing: -0.025em; line-height: 1.12; margin-bottom: 1.15rem; }
-        .lead { font-size: 1.08rem; color: var(--text-secondary); max-width: 780px; margin-bottom: 1.8rem; }
+        .lead {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            line-height: 1.75;
+            margin-bottom: 18px;
+        }
         .lead strong { color: var(--text); font-weight: 500; }
 
-        .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 2.6rem; }
+        .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 32px 0 56px; }
         .btn-primary {
-            background: var(--accent); color: #08090b; font-weight: 600; font-size: 0.92rem;
-            padding: 11px 22px; border-radius: 9px; transition: all 0.15s ease;
+            background: var(--accent); color: #0a0b0e; font-weight: 600; font-size: 0.92rem;
+            padding: 12px 24px; border-radius: 9px;
         }
-        .btn-primary:hover { opacity: 0.92; transform: translateY(-1px); }
         .btn-secondary {
             border: 1px solid var(--border); background: var(--surface); color: var(--text);
-            font-weight: 500; font-size: 0.92rem; padding: 11px 20px; border-radius: 9px; transition: all 0.15s ease;
+            font-weight: 500; font-size: 0.92rem; padding: 12px 22px; border-radius: 9px;
         }
-        .btn-secondary:hover { border-color: rgba(255,255,255,0.28); background: var(--surface-hover); }
+        .btn-secondary:hover { background: var(--surface-hover); border-color: #2f3545; }
 
-        /* Featured Wheels Within Wheels & Estate Map Hero Cards */
-        .featured-trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 2.8rem; }
-        .featured-card.purple-border { border-color: rgba(192, 132, 252, 0.45); background: linear-gradient(180deg, rgba(20, 15, 26, 0.96) 0%, rgba(11, 10, 15, 0.99) 100%); }
-        .featured-card.purple-border:hover { border-color: var(--purple); }
-        .featured-card.purple-border .kicker { color: var(--purple); }
-        .featured-card {
-            border: 1px solid rgba(56, 189, 248, 0.4);
-            background: linear-gradient(180deg, rgba(14, 19, 26, 0.96) 0%, rgba(10, 12, 16, 0.99) 100%);
-            border-radius: 14px; padding: 24px; transition: all 0.2s ease; display: block;
+        .section-title {
+            font-family: var(--serif);
+            font-weight: 400;
+            font-size: 2rem;
+            margin: 48px 0 18px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
         }
-        .featured-card:hover { border-color: var(--cyan); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(56, 189, 248, 0.1); }
-        .featured-card.amber-border { border-color: rgba(224, 179, 74, 0.4); background: linear-gradient(180deg, rgba(22, 19, 14, 0.96) 0%, rgba(12, 11, 10, 0.99) 100%); }
-        .featured-card.amber-border:hover { border-color: var(--amber); }
-        .featured-card .kicker { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--cyan); letter-spacing: 0.04em; margin-bottom: 6px; }
-        .featured-card.amber-border .kicker { color: var(--amber); }
-        .featured-card h3 { font-size: 1.22rem; font-weight: 600; margin-bottom: 6px; color: var(--text); }
-        .featured-card p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; }
 
-        /* Lenses Section */
-        .lens-header { margin: 2.4rem 0 1.2rem; display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid var(--border); padding-bottom: 0.8rem; }
-        .lens-header h2 { font-size: 1.24rem; font-weight: 600; letter-spacing: -0.01em; color: var(--text); }
-        .lens-header span { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-muted); }
-
-        .lenses-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 3rem; }
-        .lens-hero-card {
-            grid-column: span 4; border: 1px solid rgba(74, 222, 128, 0.35); background: linear-gradient(180deg, rgba(15, 17, 20, 0.95) 0%, rgba(10, 12, 15, 0.98) 100%);
-            border-radius: 14px; padding: 24px; position: relative; overflow: hidden; transition: all 0.2s ease;
-        }
-        .lens-hero-card::before {
-            content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-            background: linear-gradient(90deg, var(--accent) 0%, var(--cyan) 50%, var(--amber) 100%);
-        }
-        .lens-hero-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(74, 222, 128, 0.08); }
-        .lens-hero-card .kicker { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--accent); letter-spacing: 0.04em; margin-bottom: 0.4rem; }
-        .lens-hero-card h3 { font-size: 1.28rem; font-weight: 600; margin-bottom: 0.45rem; color: var(--text); }
-        .lens-hero-card p { color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; }
-
-        .lens-small-card {
+        /* 3 Simple Exploratory Doors */
+        .cards { display: grid; grid-template-columns: 1fr; gap: 16px; margin-bottom: 48px; }
+        .card {
             display: block; border: 1px solid var(--border); background: var(--surface);
-            border-radius: 12px; padding: 18px 20px; transition: all 0.2s ease;
+            border-radius: 14px; padding: 26px 28px; transition: all 0.18s ease;
         }
-        .lens-small-card:hover { border-color: rgba(255, 255, 255, 0.25); background: var(--surface-hover); transform: translateY(-2px); }
-        .lens-small-card .kicker { font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; color: var(--amber); margin-bottom: 0.35rem; }
-        .lens-small-card.cyan .kicker { color: var(--cyan); }
-        .lens-small-card.purple .kicker { color: var(--purple); }
-        .lens-small-card.green .kicker { color: var(--accent); }
-        .lens-small-card h3 { font-size: 1.0rem; font-weight: 600; margin-bottom: 0.35rem; color: var(--text); }
-        .lens-small-card p { color: var(--text-secondary); font-size: 0.83rem; line-height: 1.5; }
+        .card:hover { background: var(--surface-hover); border-color: rgba(74, 222, 128, 0.4); transform: translateY(-1px); }
+        .card .step-label { font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 6px; font-weight: 600; }
+        .card h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 6px; color: var(--text); }
+        .card p { font-size: 0.95rem; color: var(--text-secondary); }
 
-        /* Audience Doors */
-        .doors { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 3rem; }
-        .door {
-            display: block; border: 1px solid var(--border); background: var(--surface);
-            border-radius: 12px; padding: 22px 24px; transition: border-color .15s, background .15s;
+        /* SEIT & Plans */
+        .seit-box {
+            border: 1px solid var(--border); background: var(--surface);
+            border-radius: 14px; padding: 28px 30px; margin-bottom: 24px;
         }
-        .door:hover { border-color: rgba(74, 222, 128, 0.45); background: var(--surface-hover); }
-        .door.primary { border-color: rgba(74, 222, 128, 0.35); }
-        .door .who { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--accent); margin-bottom: 0.35rem; }
-        .door.amber .who { color: var(--amber); }
-        .door h2 { font-size: 1.12rem; font-weight: 600; margin-bottom: 0.35rem; letter-spacing: -0.01em; }
-        .door p { color: var(--text-secondary); font-size: 0.88rem; }
+        .seit-box h3 { font-size: 1.2rem; font-weight: 600; margin-bottom: 12px; color: var(--text); }
+        .seit-box p { font-size: 0.96rem; color: var(--text-secondary); margin-bottom: 14px; }
+        .seit-box ul { margin-left: 20px; color: var(--text-secondary); font-size: 0.95rem; display: grid; gap: 8px; margin-bottom: 14px; }
+        .seit-box li strong { color: var(--text); font-weight: 500; }
 
-        /* Pricing Section */
-        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 1.2rem; }
-        .price-card {
-            border: 1px solid var(--border); background: var(--surface); border-radius: 12px; padding: 22px;
-            display: flex; flex-direction: column; justify-content: space-between;
+        .plans-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 20px; }
+        .plan {
+            border: 1px solid var(--border); background: var(--surface);
+            border-radius: 12px; padding: 22px; display: flex; flex-direction: column; justify-content: space-between;
         }
-        .price-card.featured { border-color: rgba(74, 222, 128, 0.45); background: linear-gradient(180deg, rgba(16, 22, 20, 0.95) 0%, rgba(12, 14, 18, 0.98) 100%); }
-        .price-card .tier-kicker { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--accent); margin-bottom: 4px; }
-        .price-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 6px; }
-        .price-card .price-val { font-size: 1.85rem; font-weight: 700; color: var(--text); margin-bottom: 10px; }
-        .price-card .price-val span { font-size: 0.85rem; font-weight: 400; color: var(--text-secondary); }
-        .price-card ul { list-style: none; margin: 10px 0 18px; }
-        .price-card ul li { font-size: 0.84rem; color: var(--text-secondary); margin-bottom: 7px; padding-left: 16px; position: relative; }
-        .price-card ul li::before { content: "✓"; position: absolute; left: 0; color: var(--accent); font-weight: 600; }
-        .price-cta {
-            display: block; text-align: center; padding: 9px 14px; border-radius: 8px;
-            font-size: 0.84rem; font-weight: 600; border: 1px solid var(--border); background: var(--surface-hover);
+        .plan h4 { font-size: 1.02rem; font-weight: 600; margin-bottom: 4px; }
+        .plan .price { font-size: 1.7rem; font-weight: 600; color: var(--text); margin-bottom: 10px; }
+        .plan .price span { font-size: 0.85rem; font-weight: 400; color: var(--text-secondary); }
+        .plan p { font-size: 0.86rem; color: var(--text-secondary); margin-bottom: 16px; }
+        .plan a {
+            display: block; text-align: center; padding: 9px 12px; border-radius: 8px;
+            font-size: 0.84rem; font-weight: 600; background: var(--surface-hover); border: 1px solid var(--border);
         }
-        .price-card.featured .price-cta { background: var(--accent); color: #08090b; border-color: var(--accent); }
-        .seit-note {
-            border: 1px solid var(--border); background: var(--surface); border-radius: 12px;
-            padding: 16px 20px; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 3rem;
-        }
-        .seit-note strong { color: var(--text); }
+        .plan.featured { border-color: rgba(74, 222, 128, 0.45); }
+        .plan.featured a { background: var(--accent); color: #0a0b0e; border-color: var(--accent); }
 
         footer {
-            border-top: 1px solid var(--border); padding-top: 24px; margin-top: 40px;
-            font-size: 0.8rem; color: var(--text-muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+            border-top: 1px solid var(--border); padding-top: 28px; margin-top: 56px;
+            font-size: 0.84rem; color: var(--text-muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
         }
         footer a { color: var(--text-secondary); }
         footer a:hover { color: var(--text); }
-        @media (max-width: 820px) {
-            .featured-trio, .lenses-grid, .pricing-grid { grid-template-columns: 1fr; }
-            .lens-hero-card { grid-column: span 1; }
+
+        @media (max-width: 720px) {
+            .plans-grid { grid-template-columns: 1fr; }
             .nav-right a.hide-mobile { display: none; }
-        }
-        @media (max-width: 580px) {
-            .doors { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -164,208 +138,97 @@
     <nav>
         <a href="/" class="brand"><span class="dot"></span><span>Seitiate</span></a>
         <div class="nav-right">
-            <a href="/wheels-within-wheels.html" class="nav-link hide-mobile">Wheels Within Wheels</a>
-            <a href="/five-rungs.html" class="nav-link hide-mobile">5-Rung Ladder</a>
-            <a href="/physical-ai.html" class="nav-link hide-mobile">Physical AI (Ray-Ban)</a>
-            <a href="#lenses" class="nav-link hide-mobile">5 Lenses</a>
-            <a href="#pricing" class="nav-link">Pricing</a>
-            <a href="/terms.html" class="nav-link hide-mobile">Terms</a>
-            <a href="/privacy.html" class="nav-link hide-mobile">Privacy</a>
+            <a href="/five-rungs.html" class="nav-link hide-mobile">How It Grows</a>
+            <a href="/physical-ai.html" class="nav-link hide-mobile">Smart Glasses</a>
+            <a href="/wheels-within-wheels.html" class="nav-link hide-mobile">System Map</a>
+            <a href="#seit" class="nav-link">Plans &amp; SEIT</a>
             <a href="/login/" class="nav-login-btn">Log in / Beta Access →</a>
         </div>
     </nav>
 
-    <main class="doc">
-        <div class="banner">SEITIATE &amp; SEITIATE+ · STEALTH PARTNER &amp; ARCHITECTURE SHOWCASE</div>
-        <h1>Persistent Personal Assistants, shared spaces, and an open creator &amp; builder economy.</h1>
+    <main class="wrap">
+        <h1>An AI platform built around persistent Personal Assistants.</h1>
         <p class="lead">
-            <strong>Seitiate</strong> is an AI platform built around <strong>persistent Personal Assistants</strong> that develop an understanding of each person&rsquo;s work, preferences, and priorities over time.
+            <strong>Seitiate</strong> is built around Personal Assistants that develop a real understanding of each person&rsquo;s work, preferences, and priorities over time.
+        </p>
+        <p class="lead">
             Alongside their own assistant, members can work together in <strong>shared spaces</strong>, while creatives, domain specialists, and developers can build and sell their own content, services, and applications using our infrastructure.
         </p>
 
         <div class="hero-actions">
-            <a href="/login/" class="btn-primary">Log in / Apply as Beta Tester →</a>
-            <a href="/wheels-within-wheels.html" class="btn-secondary">Wheels Within Wheels →</a>
-            <a href="/five-rungs.html" class="btn-secondary">The 5-Rung Ladder →</a>
-            <a href="/physical-ai.html" class="btn-secondary">Physical AI: Ray-Ban Glasses HUD →</a>
+            <a href="/login/" class="btn-primary">Apply as a Beta Tester →</a>
+            <a href="/five-rungs.html" class="btn-secondary">How Seitiate Grows With You</a>
+            <a href="/physical-ai.html" class="btn-secondary">Seitiate on Smart Glasses</a>
         </div>
 
-        <!-- Featured Interactive Blueprints -->
-        <div class="featured-trio">
-            <a href="/wheels-within-wheels.html" class="featured-card">
-                <div class="kicker">WHOLE-STACK ARCHITECTURE · FRACTAL FLYWHEEL</div>
+        <h2 class="section-title">Explore the Platform</h2>
+        <div class="cards">
+            <a href="/five-rungs.html" class="card">
+                <div class="step-label">1 · From Personal Assistant to Full Business</div>
+                <h3>How Seitiate Grows With You (Five Steps) →</h3>
+                <p>See how someone starts with a personal assistant, invites colleagues into shared spaces, publishes courses or channels, and launches a complete business on our infrastructure.</p>
+            </a>
+
+            <a href="/physical-ai.html" class="card">
+                <div class="step-label">2 · Voice, Phone &amp; Smart Glasses</div>
+                <h3>Your Assistant Beyond the Desk →</h3>
+                <p>Most of life happens away from a keyboard. See how your Personal Assistant works with you by voice on your phone and on smart glasses like the Ray-Ban Meta Display.</p>
+            </a>
+
+            <a href="/wheels-within-wheels.html" class="card">
+                <div class="step-label">3 · Interactive Visual Map</div>
                 <h3>Wheels Within Wheels →</h3>
-                <p>Interactive diagram of the Seitiate platform flywheel—showing how outer platform rings, vertical partner wheels, Sovereign Keep memory, and cryptographic evidence interlock.</p>
-            </a>
-            <a href="/five-rungs.html" class="featured-card amber-border">
-                <div class="kicker">COMMERCIAL &amp; PARTNER LADDER</div>
-                <h3>The 5-Rung Customer &amp; Partner Ladder →</h3>
-                <p>Interactive configurator from Rung 1–2 (Individual PA &amp; Sovereign Keep) to Rung 3 (OEM Room Partners), Rung 4 (Co-Design Founders), and Rung 5 (Harbor &amp; Fleet Verticals).</p>
-            </a>
-            <a href="/physical-ai.html" class="featured-card purple-border">
-                <div class="kicker">PHYSICAL AI FUTURE · META RAY-BAN DISPLAY</div>
-                <h3>Seitiate on Ray-Ban Meta Glasses →</h3>
-                <p>Live interactive simulator of our 600×600 monocular waveguide Generative UI HUD, EMG Neural Band gesture controls, and 100+ skinnable Sakme user journeys.</p>
+                <p>An interactive visual map of how personal assistants, shared spaces, research workspaces, and creator businesses connect across the platform.</p>
             </a>
         </div>
 
-        <!-- 5 Architectural Lenses -->
-        <div class="lens-header" id="lenses">
-            <h2>1. Five Architectural Lenses of the Seitiate Stack</h2>
-            <span>01 — 05 · DEEP TECHNICAL &amp; PRODUCT ARCHITECTURE</span>
-        </div>
-
-        <div class="lenses-grid">
-            <a href="/palace-as-world.html" class="lens-hero-card">
-                <div class="kicker">LENS 01 · SPATIAL ARCHITECTURE · THE PALACE OF PRACTICE</div>
-                <h3>The Palace as World →</h3>
-                <p>A guided walk through the Seitiate architecture—from the Portus ingress gate, through the Scriptorium's Writing Desk and Evidence Foundry, to the Sovereign Keep and Public Agora.</p>
-            </a>
-
-            <a href="/cognitive-furniture.html" class="lens-small-card">
-                <div class="kicker">LENS 02 · INSTRUMENTS</div>
-                <h3>Cognitive Furniture →</h3>
-                <p>Desks, sensor benches, wax hallmarks, and the Four Chests of the Sovereign Keep enforcing evidentiary contracts.</p>
-            </a>
-
-            <a href="/game-engine.html" class="lens-small-card cyan">
-                <div class="kicker">LENS 03 · STATE &amp; SEIT</div>
-                <h3>World Machine &amp; SEIT Economy →</h3>
-                <p>Authoritative ledgers, multi-agent presence, and how SEIT compute credits power metered AI work and peer review.</p>
-            </a>
-
-            <a href="/harbor.html" class="lens-small-card purple">
-                <div class="kicker">LENS 04 · ECOSYSTEM</div>
-                <h3>The Harbor (Vertical BaaS) →</h3>
-                <p>How founder-owned vertical products sit on the Seitiate+ billing, auth, vault, and memory substrate.</p>
-            </a>
-
-            <a href="/architecture.html" class="lens-small-card green">
-                <div class="kicker">LENS 05 · CORE ENGINE</div>
-                <h3>Platform Engine Architecture →</h3>
-                <p>How Seitiate turns stateless AI tools into governed systems with portable memory, human review, and multi-model routing.</p>
-            </a>
-        </div>
-
-        <!-- Entry Doors by Audience -->
-        <div class="lens-header">
-            <h2>2. Product, Flowchart, &amp; Verification Entry Doors</h2>
-            <span>BY AUDIENCE &amp; LIVE ARTIFACT</span>
-        </div>
-
-        <div class="doors">
-            <a class="door primary" href="/overview.html">
-                <div class="who">COMPANY &amp; PLATFORM THESIS</div>
-                <h2>Seitiate Overview →</h2>
-                <p>Why accountable human judgment and portable context are the foundation of durable AI software, how the 4-layer stack fits together, and what is live today.</p>
-            </a>
-
-            <a class="door primary" href="/v/ab12-7f/">
-                <div class="who">LIVE CRYPTOGRAPHIC PROOF · NTRY-AB12-7F</div>
-                <h2>Verifiable Human Work Receipt →</h2>
-                <p>Inspect a live signed Human Work Receipt showing computed human contribution (Δ 73%), process attestation, and offline signature verification.</p>
-            </a>
-
-            <a class="door" href="/researcher.html">
-                <div class="who">FOR RESEARCHERS &amp; ANALYSTS · EVIDENCE FOUNDRY</div>
-                <h2>Defensible Claims, Not Confident Text →</h2>
-                <p>A research workspace where every load-bearing claim traces to primary evidence, datasets, or explicit open questions.</p>
-            </a>
-
-            <a class="door" href="/researchers-journey.html">
-                <div class="who">NARRATIVE WALKTHROUGH · A DAY IN THE PLATFORM</div>
-                <h2>The Researcher's Journey →</h2>
-                <p>Follow one researcher from raw experimental data and literature review to a cryptographically signed, verifiable publication package.</p>
-            </a>
-
-            <a class="door amber" href="/baas.html">
-                <div class="who">FOR BUILDERS &amp; PARTNER VERTICALS</div>
-                <h2>Bring a Repo, Get Real Users →</h2>
-                <p>Launch domain verticals on shared Seitiate+ tenancy, billing, vault, and memory infrastructure while keeping ownership of your company.</p>
-            </a>
-
-            <a class="door amber" href="/figures/the-whole-platform.html">
-                <div class="who">INTERACTIVE STACK FLOWCHARTS</div>
-                <h2>Whole-Platform &amp; Build Pipeline Diagrams →</h2>
-                <p>Interactive architectural diagrams of the Whole Platform, the Multi-Agent Build Pipeline, and the Governance Household.</p>
-            </a>
-        </div>
-
-        <!-- Pricing & Plans -->
-        <div class="lens-header" id="pricing">
-            <h2>3. Seitiate+ SaaS &amp; API Plans</h2>
-            <span>TRANSPARENT SUBSCRIPTIONS · SEIT COMPUTE CREDITS · BYOK</span>
-        </div>
-
-        <div class="pricing-grid">
-            <div class="price-card">
-                <div>
-                    <div class="tier-kicker">RUNG 1–2 · INDIVIDUAL WORKSPACE</div>
-                    <h3>Seitiate+ Starter</h3>
-                    <div class="price-val">$20 <span>/ month</span></div>
-                    <ul>
-                        <li>Personal Assistant workspace &amp; mobile Generative UI</li>
-                        <li>Sovereign Keep Space (4-Chest durable memory)</li>
-                        <li>Included monthly <strong>SEIT</strong> compute credit allowance</li>
-                        <li>Bring Your Own Key (BYOK) for OpenAI, Anthropic, Google &amp; xAI</li>
-                        <li>Full JSON/Markdown context export at any time</li>
-                    </ul>
-                </div>
-                <a href="/login/?plan=starter" class="price-cta">Apply for Beta / Sign In →</a>
-            </div>
-
-            <div class="price-card featured">
-                <div>
-                    <div class="tier-kicker">RUNG 2–3 · RESEARCHERS &amp; PROFESSIONALS</div>
-                    <h3>Seitiate+ Pro</h3>
-                    <div class="price-val">$60 <span>/ month</span></div>
-                    <ul>
-                        <li>Everything in Starter + <strong>3.5× SEIT</strong> monthly compute credits</li>
-                        <li>Multi-Agent Partner Rooms &amp; repo-connected liaisons</li>
-                        <li>Evidence Foundry &amp; signed Human Work Receipts</li>
-                        <li>Intelligent 14-seat multi-model routing &amp; deep verification</li>
-                        <li>Priority access to domain skills &amp; connectors</li>
-                    </ul>
-                </div>
-                <a href="/login/?plan=pro" class="price-cta">Apply for Pro Beta →</a>
-            </div>
-
-            <div class="price-card">
-                <div>
-                    <div class="tier-kicker">RUNG 3–5 · EXECUTIVE &amp; HARBOR BUILDERS</div>
-                    <h3>Seitiate+ Max</h3>
-                    <div class="price-val">$200 <span>/ month</span></div>
-                    <ul>
-                        <li>Everything in Pro + <strong>12× SEIT</strong> monthly compute credits</li>
-                        <li>4-Way Executive &amp; Engineering Rooms with live repo MCP</li>
-                        <li>Dedicated Role Doma cryptographic commitment chains</li>
-                        <li>Harbor Vertical Builder staging &amp; partner configuration</li>
-                        <li>Concierge onboarding &amp; architecture support</li>
-                    </ul>
-                </div>
-                <a href="/login/?plan=max" class="price-cta">Apply for Max / Partner Beta →</a>
-            </div>
-        </div>
-
-        <div class="seit-note">
-            <strong>How the SEIT Platform Credit Works (Launching at 1 SEIT = US$1.00):</strong>
-            <ul style="margin:8px 0 8px 18px;display:grid;gap:4px;">
-                <li><strong>Monthly Plans &amp; Top-Ups:</strong> Members subscribe to monthly plans that include SEIT and can purchase additional credits by card or crypto (or connect their own provider API keys via BYOK).</li>
-                <li><strong>Spend &amp; Transfer Across the Platform:</strong> Members can transfer SEIT to other members and spend it on offerings within the platform&mdash;such as a creator&rsquo;s video channel, a specialist&rsquo;s course, or an AI workflow or tool.</li>
-                <li><strong>Creator &amp; Builder Redemption:</strong> Members who earn SEIT can redeem it for crypto, with <strong>CryptoPass</strong> providing Know-Your-Wallet (KYW&trade;) verification.</li>
+        <h2 class="section-title" id="seit">The SEIT Credit &amp; Membership Plans</h2>
+        <div class="seit-box">
+            <h3>How SEIT Connects the Platform (Launching at 1 SEIT = US$1.00)</h3>
+            <p>The platform&rsquo;s credit, <strong>SEIT</strong>, connects every activity across Seitiate:</p>
+            <ul>
+                <li><strong>Monthly Plans &amp; Top-Ups:</strong> Members subscribe to monthly plans that include SEIT and can purchase additional credits by card or crypto.</li>
+                <li><strong>Spend &amp; Transfer Across the Platform:</strong> Members can transfer SEIT to other members and spend it on offerings within the platform&mdash;for example, a creator&rsquo;s video channel, a specialist&rsquo;s course, or an AI workflow or tool.</li>
+                <li><strong>Creator &amp; Builder Redemption:</strong> Members who earn SEIT can redeem it for crypto, with <strong>CryptoPass</strong> providing wallet verification.</li>
             </ul>
-            Operated by <strong>Agent-C LLC</strong>.
+            <p style="margin-bottom:0;font-size:0.88rem;color:var(--text-muted);">Over time, SEIT&rsquo;s value could change, and we may explore making it a cryptocurrency in its own right.</p>
+        </div>
+
+        <div class="plans-grid">
+            <div class="plan">
+                <div>
+                    <h4>Starter</h4>
+                    <div class="price">$20 <span>/ month</span></div>
+                    <p>Your personal assistant, durable memory across sessions, and an included monthly SEIT allowance.</p>
+                </div>
+                <a href="/login/?plan=starter">Apply for Beta →</a>
+            </div>
+
+            <div class="plan featured">
+                <div>
+                    <h4>Pro</h4>
+                    <div class="price">$60 <span>/ month</span></div>
+                    <p>Shared spaces with colleagues and clients, 3.5× monthly SEIT credits, and publishing tools for creators and specialists.</p>
+                </div>
+                <a href="/login/?plan=pro">Apply for Pro Beta →</a>
+            </div>
+
+            <div class="plan">
+                <div>
+                    <h4>Max &amp; Partner</h4>
+                    <div class="price">$200 <span>/ month</span></div>
+                    <p>Full team and partner workspaces, 12× monthly SEIT credits, and infrastructure for building and selling your own applications.</p>
+                </div>
+                <a href="/login/?plan=max">Apply for Partner Beta →</a>
+            </div>
         </div>
 
         <footer>
-            <span>&copy; 2026 Agent-C LLC · Seitiate &amp; Seitiate+</span>
+            <span>&copy; 2026 Agent-C LLC · Seitiate</span>
             <span>
-                <a href="/wheels-within-wheels.html">Wheels Within Wheels</a> &middot;
-                <a href="/estate-map.html">Estate Map</a> &middot;
-                <a href="/overview.html">Overview</a> &middot;
-                <a href="/architecture.html">Architecture</a> &middot;
-                <a href="/principles.html">Principles</a> &middot;
-                <a href="/licensing.html">Licensing</a> &middot;
+                <a href="/five-rungs.html">How It Grows</a> &middot;
+                <a href="/physical-ai.html">Smart Glasses</a> &middot;
+                <a href="/wheels-within-wheels.html">System Map</a> &middot;
                 <a href="/terms.html">Terms of Use</a> &middot;
                 <a href="/privacy.html">Privacy Policy</a> &middot;
                 <a href="/login/">Log in / Beta Access</a>

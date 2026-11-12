@@ -3,297 +3,208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The 5-Rung Customer &amp; Partner Ladder — Seitiate+</title>
+    <title>How Seitiate Grows With You — Five Steps</title>
     <script src="/assets/gate.js"></script>
-    <meta name="description" content="How individuals, creators, SDK studios, co-design partners, and dedicated vertical businesses grow on one shared Seitiate+ substrate.">
+    <meta name="description" content="From your own Personal Assistant to shared spaces, creator channels, and running a full business on Seitiate.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossoContract Enginen>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #08090b; --surface: #0f1114; --surface-hover: #15181e; --border: #1e222b;
-            --text: #eceae7; --text-secondary: #8a8a90; --text-muted: #56585f;
-            --accent: #4ade80; --cyan: #38bdf8; --amber: #e0b34a; --purple: #c084fc; --rose: #fb7185;
+            --bg: #0a0b0e;
+            --surface: #111318;
+            --surface-hover: #171a21;
+            --border: #1f232d;
+            --text: #f3f2ee;
+            --text-secondary: #a8acb6;
+            --text-muted: #686c76;
+            --accent: #4ade80;
+            --serif: 'Instrument Serif', Georgia, serif;
+            --sans: 'Inter', -apple-system, sans-serif;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+        body {
+            font-family: var(--sans);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
         a { color: inherit; text-decoration: none; }
+
         nav {
-            position: sticky; top: 0; z-index: 100; padding: 12px 24px;
-            display: flex; justify-content: space-between; align-items: center;
-            background: rgba(8, 9, 11, 0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 16px 32px; display: flex; justify-content: space-between; align-items: center;
+            background: rgba(10, 11, 14, 0.88); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);
         }
-        nav .left { display: flex; align-items: center; gap: 14px; font-size: 0.85rem; }
-        nav .brand { color: var(--accent); font-weight: 600; }
-        nav .right { display: flex; align-items: center; gap: 16px; font-size: 0.82rem; color: var(--text-secondary); }
-        nav .right a:hover { color: var(--text); }
-        nav .login-btn { background: var(--accent); color: #08090b; font-weight: 600; padding: 6px 14px; border-radius: 7px; }
-
-        .wrap { max-width: 920px; margin: 0 auto; padding: 48px 20px 64px; }
-        .kicker { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--accent); letter-spacing: 0.05em; margin-bottom: 8px; }
-        h1 { font-size: clamp(28px, 4.5vw, 40px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 10px; }
-        .sub { font-size: 1rem; color: var(--text-secondary); max-width: 680px; margin-bottom: 32px; }
-
-        /* Interactive 5-Rung Selector Pills */
-        .rung-tabs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 20px; }
-        .rung-tab {
-            border: 1px solid var(--border); background: var(--surface); border-radius: 10px;
-            padding: 12px 10px; text-align: left; cursor: pointer; transition: all 0.18s ease;
+        nav .brand { font-size: 0.9rem; font-weight: 500; color: var(--accent); }
+        .nav-right { display: flex; align-items: center; gap: 20px; font-size: 0.86rem; color: var(--text-secondary); }
+        .nav-right a:hover { color: var(--text); }
+        .nav-login-btn {
+            font-size: 0.84rem; font-weight: 600; color: #0a0b0e; background: var(--accent);
+            padding: 7px 16px; border-radius: 8px;
         }
-        .rung-tab:hover { background: var(--surface-hover); border-color: rgba(255,255,255,0.2); }
-        .rung-tab.active { border-color: var(--accent); background: rgba(74, 222, 128, 0.08); box-shadow: 0 6px 20px rgba(74, 222, 128, 0.08); }
-        .rung-tab .r-num { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--accent); display: block; margin-bottom: 3px; }
-        .rung-tab .r-name { font-size: 0.86rem; font-weight: 600; color: var(--text); display: block; line-height: 1.25; }
-        .rung-tab .r-price { font-size: 0.74rem; color: var(--text-secondary); margin-top: 4px; display: block; }
 
-        /* Active Rung Detail Surface */
-        .rung-stage {
+        .wrap { max-width: 780px; margin: 0 auto; padding: 120px 24px 72px; }
+        .eyebrow {
+            font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--accent); font-weight: 600; margin-bottom: 12px;
+        }
+        h1 {
+            font-family: var(--serif);
+            font-weight: 400;
+            font-size: clamp(36px, 5vw, 50px);
+            line-height: 1.12;
+            margin-bottom: 16px;
+        }
+        .intro {
+            font-size: 1.12rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+        }
+
+        .ladder { display: grid; gap: 16px; margin-bottom: 44px; }
+        .rung {
+            border: 1px solid var(--border);
+            background: var(--surface);
+            border-radius: 14px;
+            padding: 24px 28px;
+            display: grid;
+            grid-template-columns: 110px 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+        .rung-num {
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent);
+            padding-top: 4px;
+        }
+        .rung-num span {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            text-transform: none;
+            letter-spacing: 0;
+            margin-top: 4px;
+        }
+        .rung h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+        .rung p {
+            font-size: 0.96rem;
+            color: var(--text-secondary);
+        }
+
+        .cta-box {
             border: 1px solid rgba(74, 222, 128, 0.35);
-            background: linear-gradient(180deg, rgba(15, 19, 22, 0.96) 0%, rgba(10, 12, 16, 0.99) 100%);
-            border-radius: 14px; padding: 28px; margin-bottom: 32px;
-            display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 24px; align-items: center;
+            background: var(--surface);
+            border-radius: 14px;
+            padding: 24px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
         }
-        .stage-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--cyan); letter-spacing: 0.05em; margin-bottom: 6px; }
-        .stage-title { font-size: 1.45rem; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.01em; }
-        .stage-desc { font-size: 0.94rem; color: var(--text-secondary); margin-bottom: 16px; }
-        .stage-list { list-style: none; display: grid; gap: 8px; }
-        .stage-list li { font-size: 0.86rem; color: var(--text); padding-left: 18px; position: relative; }
-        .stage-list li::before { content: "→"; position: absolute; left: 0; color: var(--accent); font-weight: 600; }
-
-        .stage-box {
-            border: 1px solid var(--border); background: #090b0e; border-radius: 12px; padding: 20px;
+        .btn-primary {
+            background: var(--accent); color: #0a0b0e; font-weight: 600; font-size: 0.92rem;
+            padding: 11px 22px; border-radius: 9px;
         }
-        .stage-box .sb-label { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px; }
-        .stage-box .sb-val { font-size: 1.35rem; font-weight: 700; color: var(--accent); margin-bottom: 12px; }
-        .stage-box .sb-row { display: flex; justify-content: space-between; font-size: 0.8rem; padding: 7px 0; border-top: 1px solid var(--border); color: var(--text-secondary); }
-        .stage-box .sb-row strong { color: var(--text); font-weight: 500; }
-        .stage-cta {
-            display: block; text-align: center; margin-top: 14px; background: var(--accent); color: #08090b;
-            font-weight: 600; font-size: 0.84rem; padding: 9px 14px; border-radius: 8px;
-        }
-
-        /* Compact 3-Column Comparison Grid (Mobile Gold Standard) */
-        .section-h { font-size: 1.15rem; font-weight: 600; margin-bottom: 12px; }
-        .compact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 32px; }
-        .c-tile { border: 1px solid var(--border); background: var(--surface); border-radius: 12px; padding: 16px; }
-        .c-tile .ct-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; color: var(--amber); margin-bottom: 4px; }
-        .c-tile h3 { font-size: 0.94rem; font-weight: 600; margin-bottom: 6px; }
-        .c-tile p { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.45; }
 
         footer {
-            border-top: 1px solid var(--border); padding-top: 20px; font-size: 0.78rem;
-            color: var(--text-muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+            border-top: 1px solid var(--border); padding-top: 24px; margin-top: 56px;
+            font-size: 0.82rem; color: var(--text-muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
         }
         footer a { color: var(--text-secondary); }
-        @media (max-width: 760px) {
-            .rung-tabs { grid-template-columns: repeat(2, 1fr); }
-            .rung-stage { grid-template-columns: 1fr; }
-            .compact-grid { grid-template-columns: 1fr; }
-            nav .hide-m { display: none; }
+        @media (max-width: 600px) {
+            .rung { grid-template-columns: 1fr; gap: 6px; }
         }
     </style>
 </head>
 <body>
     <nav>
-        <div class="left">
-            <a href="/" class="brand">← Seitiate Home</a>
-            <span class="hide-m" style="color:#56585f;">|</span>
-            <span class="hide-m" style="color:#8a8a90;">The 5-Rung Customer &amp; Partner Ladder</span>
-        </div>
-        <div class="right">
-            <a href="/wheels-within-wheels.html" class="hide-m">Wheels Within Wheels</a>
-            <a href="/physical-ai.html" class="hide-m">Physical AI (Ray-Ban)</a>
-            <a href="/login/" class="login-btn">Log in / Beta Access →</a>
+        <a href="/" class="brand">← Back to Seitiate</a>
+        <div class="nav-right">
+            <a href="/physical-ai.html">Smart Glasses</a>
+            <a href="/wheels-within-wheels.html">System Map</a>
+            <a href="/login/" class="nav-login-btn">Log in / Beta Access →</a>
         </div>
     </nav>
 
     <main class="wrap">
-        <div class="kicker">ONE SUBSTRATE · FIVE PARTICIPATION RUNGS</div>
-        <h1>The 5-Rung Customer &amp; Partner Ladder</h1>
-        <p class="sub">
-            Every participant starts with a single Sovereign Identity and scales from a personal AI workspace to a full multi-agent vertical business without changing substrates. Tap any rung below to inspect how it works.
+        <div class="eyebrow">Five Steps · One Platform</div>
+        <h1>How Seitiate grows with you.</h1>
+        <p class="intro">
+            Whether you are one person organizing your daily life or a founder launching a new product, you use the same platform and the same <strong>SEIT</strong> credit at every step.
         </p>
 
-        <div class="rung-tabs" id="rung-tabs">
-            <button class="rung-tab active" data-rung="0">
-                <span class="r-num">RUNG 01</span>
-                <span class="r-name">Room Member</span>
-                <span class="r-price">$20 / mo · Retail</span>
-            </button>
-            <button class="rung-tab" data-rung="1">
-                <span class="r-num">RUNG 02</span>
-                <span class="r-name">Sovereign &amp; Maker</span>
-                <span class="r-price">$60 / mo · Pro</span>
-            </button>
-            <button class="rung-tab" data-rung="2">
-                <span class="r-num">RUNG 03</span>
-                <span class="r-name">OEM Room Partner</span>
-                <span class="r-price">$200 / mo + SEIT</span>
-            </button>
-            <button class="rung-tab" data-rung="3">
-                <span class="r-num">RUNG 04</span>
-                <span class="r-name">Co-Design Partner</span>
-                <span class="r-price">Shared Engineering</span>
-            </button>
-            <button class="rung-tab" data-rung="4">
-                <span class="r-num">RUNG 05</span>
-                <span class="r-name">Harbor &amp; Fleet BaaS</span>
-                <span class="r-price">Vertical Enterprise</span>
-            </button>
+        <div class="ladder">
+            <div class="rung">
+                <div class="rung-num">Rung 1<span>Individuals</span></div>
+                <div>
+                    <h2>Your Personal Assistant</h2>
+                    <p>You start with a Personal Assistant that learns your work, preferences, and priorities over time&mdash;on the web, on your phone, and on smart glasses.</p>
+                </div>
+            </div>
+
+            <div class="rung">
+                <div class="rung-num">Rung 2<span>Teams &amp; Peers</span></div>
+                <div>
+                    <h2>Shared Spaces</h2>
+                    <p>Invite friends, colleagues, or clients into shared spaces where your assistants help you think through problems, review work, and keep projects moving together.</p>
+                </div>
+            </div>
+
+            <div class="rung">
+                <div class="rung-num">Rung 3<span>Creators &amp; Specialists</span></div>
+                <div>
+                    <h2>Selling Content, Courses &amp; Workflows</h2>
+                    <p>Creatives and domain specialists can publish their own video channels, courses, research tools, or AI workflows and earn <strong>SEIT</strong> directly from other members.</p>
+                </div>
+            </div>
+
+            <div class="rung">
+                <div class="rung-num">Rung 4<span>Product Partners</span></div>
+                <div>
+                    <h2>Co-Building Applications</h2>
+                    <p>Studios and developers can connect their own software or domain expertise to Seitiate, using our assistants, shared spaces, and SEIT credits inside their product.</p>
+                </div>
+            </div>
+
+            <div class="rung">
+                <div class="rung-num">Rung 5<span>Full Businesses</span></div>
+                <div>
+                    <h2>Running Your Own Business on Seitiate</h2>
+                    <p>Launch and run a complete vertical business with accounts, subscriptions, SEIT payments, and AI assistants built in from day one&mdash;while keeping full ownership of your company and data.</p>
+                </div>
+            </div>
         </div>
 
-        <div class="rung-stage" id="rung-stage">
+        <div class="cta-box">
             <div>
-                <div class="stage-badge" id="st-badge">RUNG 01 · INDIVIDUAL ENTRY</div>
-                <div class="stage-title" id="st-title">Room Member — Personal Assistant &amp; Keep Space</div>
-                <p class="stage-desc" id="st-desc">
-                    Start inside a single workspace with your voice-first Personal Assistant, 4-Chest Sovereign Keep memory, and monthly SEIT compute allowance.
-                </p>
-                <ul class="stage-list" id="st-list">
-                    <li>Dedicated Personal Assistant across web, mobile, and Telegram</li>
-                    <li>Sovereign Keep Space that remembers decisions without model lock-in</li>
-                    <li>Included monthly SEIT compute allowance + Bring Your Own Key (BYOK)</li>
-                </ul>
+                <strong style="display:block;font-size:1.02rem;margin-bottom:2px;">Ready to get started?</strong>
+                <span style="color:var(--text-secondary);font-size:0.9rem;">Apply as a beta tester to explore the platform at any step.</span>
             </div>
-            <div class="stage-box">
-                <div class="sb-label">COMMERCIAL MODEL</div>
-                <div class="sb-val" id="sb-price">$20 / month</div>
-                <div class="sb-row"><span>Identity &amp; Memory</span><strong id="sb-mem">Sovereign Keep v1</strong></div>
-                <div class="sb-row"><span>Compute Rail</span><strong id="sb-compute">1× Monthly SEIT + BYOK</strong></div>
-                <div class="sb-row"><span>Residency</span><strong id="sb-res">Managed Cloud</strong></div>
-                <a href="/login/" class="stage-cta" id="sb-cta">Apply for Beta Access →</a>
-            </div>
-        </div>
-
-        <h2 class="section-h">How the Three Concentric Wheels Fit Together</h2>
-        <div class="compact-grid">
-            <div class="c-tile">
-                <div class="ct-tag">WHEEL 01 · PLATFORM SPINE</div>
-                <h3>One Sovereign Identity</h3>
-                <p>Authentication, Ed25519 memory commitments, Vault key custody, and SEIT compute accounting work identically from Rung 1 to Rung 5.</p>
-            </div>
-            <div class="c-tile">
-                <div class="ct-tag">WHEEL 02 · MODULAR CAPABILITIES</div>
-                <h3>Plug-In Rooms &amp; Evidence</h3>
-                <p>Add 4-way multi-agent partner rooms, repo-connected liaisons, and cryptographic Human Work Receipts without rebuilding your app.</p>
-            </div>
-            <div class="c-tile">
-                <div class="ct-tag">WHEEL 03 · HARBOR TO FLEET</div>
-                <h3>Zero Vendor Lock-In</h3>
-                <p>Launch on our managed Harbor infrastructure and export your tenant's full memory, ledger, and receipts to your own Fleet at any time.</p>
-            </div>
+            <a href="/login/" class="btn-primary">Apply as a Beta Tester →</a>
         </div>
 
         <footer>
-            <span>&copy; 2026 Agent-C LLC · Seitiate &amp; Seitiate+</span>
+            <span>&copy; 2026 Agent-C LLC · Seitiate</span>
             <span>
                 <a href="/">Home</a> &middot;
-                <a href="/wheels-within-wheels.html">Wheels Within Wheels</a> &middot;
-                <a href="/physical-ai.html">Physical AI (Ray-Ban)</a> &middot;
+                <a href="/physical-ai.html">Smart Glasses</a> &middot;
+                <a href="/wheels-within-wheels.html">System Map</a> &middot;
                 <a href="/terms.html">Terms</a> &middot;
-                <a href="/privacy.html">Privacy</a> &middot;
-                <a href="/login/">Log in / Beta Access</a>
+                <a href="/privacy.html">Privacy</a>
             </span>
         </footer>
     </main>
-
-    <script>
-        var RUNGS = [
-            {
-                badge: "RUNG 01 · INDIVIDUAL WORKSPACE",
-                title: "Room Member — Personal Assistant & Keep Space",
-                desc: "Start inside a single workspace with your voice-first Personal Assistant, 4-Chest Sovereign Keep memory, and monthly SEIT compute allowance.",
-                items: [
-                    "Dedicated Personal Assistant across web, mobile, and Telegram",
-                    "Sovereign Keep Space that remembers decisions without model lock-in",
-                    "Included monthly SEIT compute allowance + Bring Your Own Key (BYOK)"
-                ],
-                price: "$20 / month",
-                mem: "Sovereign Keep v1",
-                compute: "1× Monthly SEIT + BYOK",
-                res: "Managed Cloud",
-                cta: "/login/?plan=starter"
-            },
-            {
-                badge: "RUNG 02 · RESEARCHERS, ANALYSTS & MAKERS",
-                title: "Sovereign Member & Stall Maker",
-                desc: "Step up to multi-model routing, the Evidence Foundry for verifiable research claims, and publishing reusable skills or talents.",
-                items: [
-                    "Evidence Foundry with signed, offline-verifiable Human Work Receipts",
-                    "14-seat multi-model router across frontier reasoning and fast synthesis",
-                    "Publish metered skills and domain workflows with automated royalty splits"
-                ],
-                price: "$60 / month",
-                mem: "Keep + Role Doma Graph",
-                compute: "3.5× Monthly SEIT + BYOK",
-                res: "Managed Cloud + Export",
-                cta: "/login/?plan=pro"
-            },
-            {
-                badge: "RUNG 03 · EXTERNAL STUDIOS & PRODUCT TEAMS",
-                title: "OEM Vertical SDK & Room Partner",
-                desc: "Connect your own product, studio, or codebase to a 4-way multi-agent collaboration room and our single-oContract Enginen API gateway.",
-                items: [
-                    "4-way shared partner rooms with live read-only repository MCP",
-                    "Custom visual backdrop & domain terminology over the shared engine",
-                    "Per-seat and per-turn SEIT compute metering for your own end users"
-                ],
-                price: "$200 / mo + SEIT Packs",
-                mem: "Dedicated Room Doma",
-                compute: "12× SEIT + Partner Pool",
-                res: "Shared Harbor Substrate",
-                cta: "/login/?plan=max"
-            },
-            {
-                badge: "RUNG 04 · TECHNICAL CO-DESIGN PARTNERS",
-                title: "Architecture & Co-Design Partner",
-                desc: "Co-develop specialized verification engines, domain compilers, or cryptographic contracts directly alongside our core engineering team.",
-                items: [
-                    "Dedicated co-design room with Architect-reviewed contract boundaries",
-                    "Shared evidence admission & semantic verification pipelines",
-                    "Joint commercial distribution across the Seitiate+ ecosystem"
-                ],
-                price: "Partner Agreement",
-                mem: "Bilateral Signed Spine",
-                compute: "Dedicated Partner Pool",
-                res: "Hybrid Harbor / Fleet",
-                cta: "/login/?plan=max"
-            },
-            {
-                badge: "RUNG 05 · FULL VERTICAL BUSINESSES",
-                title: "Harbor & Fleet Vertical BaaS",
-                desc: "Run an entire vertical SaaS business on Seitiate+ tenancy, billing, vault, and memory—and graduate to your own independent Fleet whenever ready.",
-                items: [
-                    "Turnkey multi-tenant billing, entitlements, and SEIT wallet ledger",
-                    "100+ declarative user journeys with zero backend forking",
-                    "Cryptographic Harbor-to-Fleet tenant portability guarantee"
-                ],
-                price: "Enterprise / Rev-Share",
-                mem: "Full Tenant Isolation",
-                compute: "Custom Volume + BYOK",
-                res: "Harbor or Self-Hosted Fleet",
-                cta: "/login/?plan=max"
-            }
-        ];
-
-        var tabs = document.querySelectorAll(".rung-tab");
-        tabs.forEach(function (btn) {
-            btn.addEventListener("click", function () {
-                tabs.forEach(function (b) { b.classList.remove("active"); });
-                btn.classList.add("active");
-                var d = RUNGS[parseInt(btn.getAttribute("data-rung"), 10)];
-                document.getElementById("st-badge").textContent = d.badge;
-                document.getElementById("st-title").textContent = d.title;
-                document.getElementById("st-desc").textContent = d.desc;
-                document.getElementById("sb-price").textContent = d.price;
-                document.getElementById("sb-mem").textContent = d.mem;
-                document.getElementById("sb-compute").textContent = d.compute;
-                document.getElementById("sb-res").textContent = d.res;
-                document.getElementById("sb-cta").setAttribute("href", d.cta);
-                var ul = document.getElementById("st-list");
-                ul.innerHTML = d.items.map(function (it) { return "<li>" + it + "</li>"; }).join("");
-            });
-        });
-    </script>
 </body>
 </html>
