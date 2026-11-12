@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Seitiate Estate — Complete Architecture, The Household &amp; The 5 Connected Flowcharts (Nov 2026)</title>
+<style>
+  :root {
+    --bg: #0b0f17;
+    --panel: #111826;
+    --panel-alt: #162032;
+    --border: #24324b;
+    --text: #e6edf7;
+    --muted: #93a4bf;
+    --gold: #f59e0b;
+    --gold-soft: rgba(245, 158, 11, 0.14);
+    --cyan: #38bdf8;
+    --cyan-soft: rgba(56, 189, 248, 0.14);
+    --emerald: #10b981;
+    --emerald-soft: rgba(16, 185, 129, 0.14);
+    --violet: #a855f7;
+    --violet-soft: rgba(168, 85, 247, 0.14);
+    --rose: #f43f5e;
+    --rose-soft: rgba(244, 63, 94, 0.14);
+    /* For embedded STACK SVG */
+    --paper: #0b0f17;
+    --ink: #e6edf7;
+    --rule: #24324b;
+    --box: #162032;
+    --accent: #10b981;
+    --accent-soft: rgba(16, 185, 129, 0.16);
+    --warn: #f59e0b;
+    --warn-soft: rgba(245, 158, 11, 0.15);
+    --bad: #f43f5e;
+    --bad-soft: rgba(244, 63, 94, 0.15);
+    --gap: #64748b;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 24px 28px 56px;
+    background: radial-gradient(circle at 15% 0%, #131d31 0%, var(--bg) 65%);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "SF Pro Display", sans-serif;
+    line-height: 1.5;
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 18px;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+  }
+  .eyebrow {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  h1 {
+    font-size: 24px;
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+  .subtitle {
+    color: var(--muted);
+    font-size: 13.5px;
+    margin-top: 4px;
+    max-width: 820px;
+  }
+  .tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    background: var(--panel);
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 9px 15px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+  .tab-btn:hover {
+    color: var(--text);
+    border-color: var(--cyan);
+  }
+  .tab-btn.active {
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(168, 85, 247, 0.2));
+    color: #fff;
+    border-color: var(--cyan);
+    box-shadow: 0 0 18px rgba(56, 189, 248, 0.22);
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  .subtabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .subtab-btn {
+    background: var(--panel-alt);
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 7px 13px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .subtab-btn.active {
+    background: var(--cyan-soft);
+    color: var(--cyan);
+    border-color: var(--cyan);
+  }
+  .fc-panel { display: none; }
+  .fc-panel.active { display: block; }
+
+  .kpi-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(195px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .kpi {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 13px 16px;
+  }
+  .kpi .num {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .kpi .lbl {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 18px;
+  }
+  .card h2 {
+    font-size: 16px;
+    margin: 0 0 6px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .card p.lead {
+    color: var(--muted);
+    font-size: 13px;
+    margin: 0 0 16px 0;
+  }
+  .svg-wrap {
+    width: 100%;
+    overflow-x: auto;
+    background: #090d14;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  /* Embedded STACK SVG styles */
+  svg.stack-svg text { font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif; fill: var(--ink); font-size: 12.5px; }
+  svg.stack-svg text.h { font-weight: 700; font-size: 13px; fill: #fff; }
+  svg.stack-svg text.s { fill: var(--muted); font-size: 11px; }
+  svg.stack-svg text.lane { font-weight: 700; font-size: 12px; letter-spacing: .06em; fill: var(--cyan); }
+  svg.stack-svg .box { fill: var(--box); stroke: var(--border); stroke-width: 1.4; }
+  svg.stack-svg .part { stroke: var(--gold); stroke-dasharray: 7 4; stroke-width: 1.6; }
+  svg.stack-svg .partfill { fill: var(--warn-soft); }
+  svg.stack-svg .design { stroke: var(--cyan); stroke-dasharray: 4 3; stroke-width: 1.5; }
+  svg.stack-svg .designfill { fill: rgba(56, 189, 248, 0.1); }
+  svg.stack-svg .gap { stroke: var(--gap); stroke-dasharray: 2 5; stroke-width: 1.4; fill: none; }
+  svg.stack-svg .stage { fill: rgba(17, 24, 38, 0.7); stroke: var(--border); stroke-dasharray: 4 4; }
+  svg.stack-svg .wire { stroke: var(--cyan); stroke-width: 1.5; fill: none; }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+    margin-top: 16px;
+  }
+  .mini-card {
+    background: var(--panel-alt);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .mini-card h3 {
+    font-size: 13.5px;
+    margin: 0 0 6px 0;
+  }
+  .mini-card p {
+    font-size: 12.5px;
+    color: var(--muted);
+    margin: 0;
+  }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .b-cyan { background: var(--cyan-soft); color: var(--cyan); border: 1px solid rgba(56,189,248,0.35); }
+  .b-gold { background: var(--gold-soft); color: var(--gold); border: 1px solid rgba(245,158,11,0.35); }
+  .b-emerald { background: var(--emerald-soft); color: var(--emerald); border: 1px solid rgba(16,185,129,0.35); }
+  .b-violet { background: var(--violet-soft); color: var(--violet); border: 1px solid rgba(168,85,247,0.35); }
+  .b-rose { background: var(--rose-soft); color: var(--rose); border: 1px solid rgba(244,63,94,0.35); }
+  code {
+    background: rgba(255,255,255,0.07);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-family: "JetBrains Mono", "SF Mono", monospace;
+    font-size: 11.5px;
+    color: #e2e8f0;
+  }
+  table.roadmap {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+  }
+  table.roadmap th, table.roadmap td {
+    border: 1px solid var(--border);
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  table.roadmap th {
+    background: var(--panel-alt);
+    color: var(--cyan);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+  }
+  table.roadmap tr:nth-child(even) td {
+    background: rgba(22, 32, 50, 0.45);
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="eyebrow">The Seitiate Estate · Complete Technical &amp; Household Picture (8 November 2026)</div>
+    <h1>The Whole Platform, The 15-Seat Household &amp; Part XV ("The Ceiling" 5 Connected Flowcharts)</h1>
+    <div class="subtitle">Assembled jointly by the Software Architect (Opus 5.5), Consilium Lead ("Cecilia"), the Librarian, and all 10 Specialist Domain Leads across the estate (`docs/STACK/ Part I, XIII &amp; XV`).</div>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('tab-platform', this)">1. The Whole Platform (Rooms &amp; The Centre)</button>
+    <button class="tab-btn" onclick="switchTab('tab-household', this)">2. The Household (8 Workshops &amp; 15 Seats)</button>
+    <button class="tab-btn" onclick="switchTab('tab-ceiling', this)">3. "The Ceiling" (The 5 Connected Flowcharts)</button>
+    <button class="tab-btn" onclick="switchTab('tab-roadmap', this)">4. The One Estate Roadmap (Waves 0–4)</button>
+  </div>
+</div>
+
+<!-- ==================== TAB 1: THE WHOLE PLATFORM ==================== -->
+<div id="tab-platform" class="tab-panel active">
+  <div class="kpi-strip">
+    <div class="kpi"><div class="num" style="color:var(--gold)">1 Personal Assistant</div><div class="lbl">Named by its owner ("Argonika" for the Director) — the front-stage Majordomo across every room</div></div>
+    <div class="kpi"><div class="num" style="color:var(--cyan)">2 Sibling Collections</div><div class="lbl"><strong>Sakme</strong> (Creatives &amp; Specialists) + <strong>Scientific Platform</strong> (Evidence Foundry &amp; Research Hub)</div></div>
+    <div class="kpi"><div class="num" style="color:var(--emerald)">1 Entrance (Seitiate+)</div><div class="lbl">One Person = One Tenant · The Person's Door · SEIT Reserve → Execute → Settle Ledger</div></div>
+    <div class="kpi"><div class="num" style="color:var(--violet)">4 Foundation Pillars</div><div class="lbl">Identity/Tenancy · Sovereign Memory (Codex/Canon/Seity) · VaultCrypto &amp; 8-Family Router · Notary</div></div>
+  </div>
+
+  <div class="card">
+    <h2><span class="badge b-gold">STACK Part I</span> Rooms and a Centre — One Accumulating Intelligence That Belongs to the Person</h2>
+    <p class="lead">Behind the Personal Assistant and every working room is one product: a sovereign intelligence (the person's <strong>Seity</strong>) that accumulates what they do, distinguishes their own live words from model or third-party text, acts across every room, and never trains a model that serves anyone else.</p>
+
+    <div class="svg-wrap">
+      <svg viewBox="0 0 1160 540" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="p-arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8"/>
+          </marker>
+          <marker id="g-arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1 L 10 5 L 0 9 z" fill="#f59e0b"/>
+          </marker>
+        </defs>
+
+        <!-- TOP: THE PERSON & MAJORDOMO -->
+        <rect x="280" y="16" width="600" height="78" rx="12" fill="#162238" stroke="#f59e0b" stroke-width="2"/>
+        <text x="580" y="42" text-anchor="middle" fill="#f59e0b" font-size="14" font-weight="800">THE PERSON ↔ THEIR NAMED PERSONAL ASSISTANT (THE MAJORDOMO)</text>
+        <text x="580" y="62" text-anchor="middle" fill="#e6edf7" font-size="11.5">Front-stage on Telegram &amp; Web · Voice pinned by owner (Argon default) · Holds unfinished Sketch before closing to a Plan</text>
+        <text x="580" y="79" text-anchor="middle" fill="#93a4bf" font-size="10.5">Keeps the two human moments: the initial unfinished mark &amp; the final yes/no tap on any irreversible send, spend, or merge</text>
+
+        <!-- ENTRANCE: SEITIATE+ -->
+        <rect x="40" y="116" width="1080" height="68" rx="10" fill="#131c2e" stroke="#38bdf8" stroke-width="1.6"/>
+        <text x="60" y="141" fill="#38bdf8" font-size="13" font-weight="800">ENTRANCE &amp; COMMERCIAL SPINE · SEITIATE+ (seitiate.app)</text>
+        <text x="60" y="161" fill="#e6edf7" font-size="11">One Sign-In (1 Person = 1 Tenant, never forked across rooms) · Room Directory &amp; Approval · Consolidated /settings &amp; /sources (Keep + Connected Accounts)</text>
+        <text x="60" y="176" fill="#93a4bf" font-size="10.5">One SEIT Wallet (Reserve → Execute → Settle) · Payer Hierarchy: Rank 0 BYOK → Rank 1 Subscription Bridge → Rank 2 Managed SEIT → Estate Helper</text>
+
+        <!-- SIBLING PRODUCT COLLECTIONS (ROOMS) -->
+        <rect x="40" y="206" width="525" height="156" rx="12" fill="#101929" stroke="#a855f7" stroke-width="1.6"/>
+        <text x="58" y="232" fill="#a855f7" font-size="13" font-weight="800">SIBLING COLLECTION A · SAKME (Creatives &amp; Independent Specialists)</text>
+        <rect x="58" y="246" width="236" height="48" rx="7" fill="#162238" stroke="#24324b"/>
+        <text x="70" y="266" fill="#e6edf7" font-size="11.5" font-weight="700">Writers Factory &amp; Writing Desk</text>
+        <text x="70" y="282" fill="#93a4bf" font-size="10">Binder · Continuity obligation · Move 37</text>
+        <rect x="308" y="246" width="238" height="48" rx="7" fill="#162238" stroke="#24324b"/>
+        <text x="320" y="266" fill="#e6edf7" font-size="11.5" font-weight="700">The Workshop &amp; Developer Room</text>
+        <text x="320" y="282" fill="#93a4bf" font-size="10">Makers pipeline · Sovereign Forge CI</text>
+        <rect x="58" y="302" width="488" height="46" rx="7" fill="#162238" stroke="#24324b"/>
+        <text x="70" y="321" fill="#f59e0b" font-size="11.5" font-weight="700">Sakme 9 Spaces &amp; Specialist Stalls (Bazaar / Talents / Saved Recipes)</text>
+        <text x="70" y="337" fill="#93a4bf" font-size="10">Creator archive import (creator_package.v1) · Owner-private draft skills → opt-in marketplace</text>
+
+        <rect x="595" y="206" width="525" height="156" rx="12" fill="#101929" stroke="#10b981" stroke-width="1.6"/>
+        <text x="613" y="232" fill="#10b981" font-size="13" font-weight="800">SIBLING COLLECTION B · SCIENTIFIC PLATFORM (Researchers &amp; Labs)</text>
+        <rect x="613" y="246" width="238" height="48" rx="7" fill="#162238" stroke="#24324b"/>
+        <text x="625" y="266" fill="#e6edf7" font-size="11.5" font-weight="700">Evidence Foundry (research-facility)</text>
+        <text x="625" y="282" fill="#93a4bf" font-size="10">Warrant lattice · Tier-1/2 rigor · Zenodo DOI</text>
+        <rect x="865" y="246" width="238" height="48" rx="7" fill="#162238" stroke="#24324b"/>
+        <text x="877" y="266" fill="#e6edf7" font-size="11.5" font-weight="700">Research Hub &amp; Harness (Sensarra)</text>
+        <text x="877" y="282" fill="#93a4bf" font-size="10">19 analyzers · continuous.py · spectral.py</text>
+        <rect x="613" y="302" width="490" height="46" rx="7" fill="#162238" stroke="#24324b"/>
+        <text x="625" y="321" fill="#38bdf8" font-size="11.5" font-weight="700">Plug-In Field Workbenches (field-pack.v1) &amp; External Producers</text>
+        <text x="625" y="337" fill="#93a4bf" font-size="10">HenniPenny (Energy NILM) · Mendel (Genomics) · Pipette-Lab (Edge ML) · Imperfective (World Models)</text>
+
+        <!-- THE CENTRE: SEITIATE FOUNDATION -->
+        <rect x="40" y="384" width="1080" height="138" rx="12" fill="#101929" stroke="#f59e0b" stroke-width="1.8"/>
+        <text x="60" y="410" fill="#f59e0b" font-size="13.5" font-weight="800">THE CENTRE · SEITIATE ENGINE &amp; SOVEREIGN FOUNDATION (Shared by Every Room via Fixed Interfaces)</text>
+
+        <rect x="60" y="424" width="250" height="82" rx="8" fill="#162238" stroke="#38bdf8"/>
+        <text x="74" y="444" fill="#38bdf8" font-size="11.5" font-weight="700">1. Sovereign Memory (Codex &amp; Canon)</text>
+        <text x="74" y="461" fill="#93a4bf" font-size="10">• Passphrase-sealed codex_chunks</text>
+        <text x="74" y="476" fill="#93a4bf" font-size="10">• Provenance gate (admits_as_person_fact)</text>
+        <text x="74" y="491" fill="#93a4bf" font-size="10">• Role &amp; life-area Domas (famili.py)</text>
+
+        <rect x="324" y="424" width="250" height="82" rx="8" fill="#162238" stroke="#a855f7"/>
+        <text x="338" y="444" fill="#a855f7" font-size="11.5" font-weight="700">2. Seity Underground (Layer 3)</text>
+        <text x="338" y="461" fill="#93a4bf" font-size="10">• Async post-turn episode reflection</text>
+        <text x="338" y="476" fill="#93a4bf" font-size="10">• 5-Matrix question banks &amp; Move 37</text>
+        <text x="338" y="491" fill="#93a4bf" font-size="10">• Bounded seity.scaffolding.v1 (≤2400B)</text>
+
+        <rect x="588" y="424" width="250" height="82" rx="8" fill="#162238" stroke="#10b981"/>
+        <text x="602" y="444" fill="#10b981" font-size="11.5" font-weight="700">3. VaultCrypto &amp; Open Model Router</text>
+        <text x="602" y="461" fill="#93a4bf" font-size="10">• MultiFernet key custody + ZDR checks</text>
+        <text x="602" y="476" fill="#93a4bf" font-size="10">• 8+ model families (model-table.v1)</text>
+        <text x="602" y="491" fill="#93a4bf" font-size="10">• Per-tenant outbound PII egress masking</text>
+
+        <rect x="852" y="424" width="248" height="82" rx="8" fill="#162238" stroke="#f59e0b"/>
+        <text x="866" y="444" fill="#f59e0b" font-size="11.5" font-weight="700">4. Notary &amp; Governance Chain</text>
+        <text x="866" y="461" fill="#93a4bf" font-size="10">• ClosedClaw ES256 offline jwks.json</text>
+        <text x="866" y="476" fill="#93a4bf" font-size="10">• Cloud KMS signed governance chain</text>
+        <text x="866" y="491" fill="#93a4bf" font-size="10">• Permissioned assistant-to-assistant bonds</text>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TAB 2: THE HOUSEHOLD (NOV 2026 DESIGN) ==================== -->
+<div id="tab-household" class="tab-panel">
+  <div class="card">
+    <h2><span class="badge b-cyan">STACK Part XIII §8</span> The Household — Current Whole-Estate Design (Updated 8 November 2026)</h2>
+    <p class="lead">This is the exact current-design SVG figure our agents reconciled today in <code>docs/STACK/figures/the-household.html</code>: showing the Director, Software Architect, the 8 Product Workshops, the Shared Foundation, the Development Room (with 2-Family Adversarial Reviewers), and the 5 Household Services.</p>
+
+    <div class="svg-wrap">
+      <svg class="stack-svg" viewBox="0 0 920 560" role="img" aria-label="Current whole-estate household design (November 2026)">
+        <defs>
+          <marker id="ah-cur" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"/>
+          </marker>
+        </defs>
+
+        <!-- Top Governance & Whole-Estate Architecture Band -->
+        <rect x="30" y="20" width="260" height="60" rx="8" class="box part partfill"/>
+        <text class="h" x="160" y="44" text-anchor="middle">The Director</text>
+        <text class="s" x="160" y="62" text-anchor="middle">reserved kinds (reaches_the_director.json; Part I)</text>
+
+        <rect x="320" y="20" width="350" height="60" rx="8" class="box part partfill"/>
+        <text class="h" x="495" y="44" text-anchor="middle">Software Architect (software-architect)</text>
+        <text class="s" x="495" y="62" text-anchor="middle">whole-estate architecture &amp; ordinary docket scope (Part I, Doma 8c71a5f3)</text>
+
+        <rect x="700" y="20" width="190" height="60" rx="8" class="box design designfill"/>
+        <text class="h" x="795" y="44" text-anchor="middle">Executive Advisor</text>
+        <text class="s" x="795" y="62" text-anchor="middle">single human-facing door to the Director</text>
+
+        <line x1="290" y1="50" x2="320" y2="50" class="wire" marker-end="url(#ah-cur)"/>
+        <line x1="495" y1="80" x2="495" y2="106" class="wire" marker-end="url(#ah-cur)"/>
+
+        <!-- Product Workshops Band -->
+        <rect x="30" y="108" width="860" height="156" rx="10" class="stage"/>
+        <text class="lane" x="46" y="128" text-anchor="start">EIGHT PRODUCT WORKSHOPS — EACH LEAD OWNS PRODUCT VISION &amp; DELIVERY</text>
+
+        <rect x="46" y="138" width="198" height="52" rx="6" class="box part partfill"/>
+        <text class="h" x="145" y="159" text-anchor="middle">Personal Assistant</text>
+        <text class="s" x="145" y="176" text-anchor="middle">assistant-lead (+ assistant-research)</text>
+
+        <rect x="256" y="138" width="198" height="52" rx="6" class="box design designfill"/>
+        <text class="h" x="355" y="155" text-anchor="middle">Seity (Layer 3 · seity-lead)</text>
+        <text class="s" x="355" y="170" text-anchor="middle">5-matrix reflection &amp; Move 37;</text>
+        <text class="s" x="355" y="183" text-anchor="middle">author/condition filter WORKING</text>
+
+        <rect x="466" y="138" width="198" height="52" rx="6" class="box part partfill"/>
+        <text x="565" y="159" text-anchor="middle">Seitiate Plus</text>
+        <text class="s" x="565" y="176" text-anchor="middle">seitiate-plus-lead · door &amp; SEIT ledger</text>
+
+        <rect x="676" y="138" width="198" height="52" rx="6" class="box part partfill"/>
+        <text x="775" y="159" text-anchor="middle">Sakme</text>
+        <text class="s" x="775" y="176" text-anchor="middle">sakme-lead · bench, desk &amp; bazaar</text>
+
+        <rect x="46" y="200" width="198" height="52" rx="6" class="box part partfill"/>
+        <text x="145" y="221" text-anchor="middle">Skills &amp; Connectors</text>
+        <text class="s" x="145" y="238" text-anchor="middle">skills-connectors-lead · Keep &amp; Vault</text>
+
+        <rect x="256" y="200" width="198" height="52" rx="6" class="box part partfill"/>
+        <text x="355" y="221" text-anchor="middle">Scientific / Evidence</text>
+        <text class="s" x="355" y="238" text-anchor="middle">scientific-lead · 5 repos &amp; evidence.v1</text>
+
+        <rect x="466" y="200" width="198" height="52" rx="6" class="box part partfill"/>
+        <text x="565" y="221" text-anchor="middle">Verticals &amp; Rooms</text>
+        <text class="s" x="565" y="238" text-anchor="middle">verticals-lead · room directory &amp; admin</text>
+
+        <rect x="676" y="200" width="198" height="52" rx="6" class="box part partfill"/>
+        <text x="775" y="221" text-anchor="middle">Sovereign Forge</text>
+        <text class="s" x="775" y="238" text-anchor="middle">forge-lead · Forgejo product &amp; CI</text>
+
+        <!-- Shared Engine & Communication OS Foundation Band -->
+        <rect x="30" y="280" width="860" height="58" rx="8" class="box design designfill"/>
+        <text class="h" x="460" y="304" text-anchor="middle">Shared Foundation: Seitiate Engine &amp; Communication OS (engine-lead) + Foundation Seams (pavel-liaison)</text>
+        <text class="s" x="460" y="322" text-anchor="middle">Vault (WORKING), Keep &amp; Provenance Gate (BUILT/WORKING), 8-Family Model Database &amp; Open Router</text>
+
+        <!-- Development Room & Household Services -->
+        <rect x="30" y="356" width="420" height="184" rx="10" class="stage"/>
+        <text class="lane" x="46" y="376" text-anchor="start">DEVELOPMENT ROOM (ALL PROGRAMMING &amp; REVIEWS)</text>
+
+        <rect x="46" y="388" width="388" height="56" rx="6" class="box part partfill"/>
+        <text class="h" x="240" y="410" text-anchor="middle">Dev Lead (dev-lead)</text>
+        <text class="s" x="240" y="428" text-anchor="middle">leads &amp; manages all programming, independent reviews &amp; delivery (Part I, XIII §8)</text>
+
+        <rect x="46" y="456" width="188" height="68" rx="6" class="box part partfill"/>
+        <text class="h" x="140" y="478" text-anchor="middle">Assigned Builders &amp; 2-Family</text>
+        <text class="s" x="140" y="495" text-anchor="middle">Claude / Codex / MiniMax builders;</text>
+        <text class="s" x="140" y="510" text-anchor="middle">Kimi K3 + DeepSeek V4 Pro review</text>
+
+        <rect x="246" y="456" width="188" height="68" rx="6" class="box part partfill"/>
+        <text class="h" x="340" y="478" text-anchor="middle">Clerk (clerk)</text>
+        <text x="340" y="495" text-anchor="middle">tracks assignments, deadlines</text>
+        <text class="s" x="340" y="510" text-anchor="middle">&amp; returned verification receipts</text>
+
+        <rect x="470" y="356" width="420" height="184" rx="10" class="stage"/>
+        <text class="lane" x="486" y="376" text-anchor="start">HOUSEHOLD SERVICES (ROLE RESPONSIBILITIES)</text>
+
+        <rect x="486" y="388" width="188" height="62" rx="6" class="box part partfill"/>
+        <text class="h" x="580" y="410" text-anchor="middle">Consilium (consilium-lead)</text>
+        <text class="s" x="580" y="427" text-anchor="middle">household ledger, dependencies,</text>
+        <text class="s" x="580" y="441" text-anchor="middle">contracts &amp; one estate view</text>
+
+        <rect x="686" y="388" width="188" height="62" rx="6" class="box part partfill"/>
+        <text class="h" x="780" y="410" text-anchor="middle">Librarian (librarian)</text>
+        <text class="s" x="780" y="427" text-anchor="middle">canonical STACK &amp; decision</text>
+        <text class="s" x="780" y="441" text-anchor="middle">reconciliation</text>
+
+        <rect x="486" y="462" width="188" height="62" rx="6" class="box part partfill"/>
+        <text class="h" x="580" y="484" text-anchor="middle">Scheduling (scheduling)</text>
+        <text class="s" x="580" y="501" text-anchor="middle">capacity, quota &amp; routing</text>
+        <text class="s" x="580" y="515" text-anchor="middle">supply layer</text>
+
+        <rect x="686" y="462" width="188" height="62" rx="6" class="box part partfill"/>
+        <text class="h" x="780" y="484" text-anchor="middle">Diagnostic &amp; Retrospective</text>
+        <text class="s" x="780" y="501" text-anchor="middle">15-minute failure watchdog &amp;</text>
+        <text class="s" x="780" y="515" text-anchor="middle">proposed Doma lessons</text>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TAB 3: PART XV "THE CEILING" (5 FLOWCHARTS) ==================== -->
+<div id="tab-ceiling" class="tab-panel">
+  <div class="card">
+    <h2><span class="badge b-violet">STACK Part XV · "The Sistine Chapel Ceiling"</span> The 5 Connected Flowcharts of the Estate</h2>
+    <p class="lead">Drawn by the Software Architect and verified line-by-line against code across all 10 Domain Leads. Every node carries its epistemic state: <span class="badge b-emerald">WORKING</span> (live with receipt), <span class="badge b-cyan">BUILT</span> (merged/PR, awaiting pin deploy), or <span class="badge b-gold">RECORDED</span> (docketed).</p>
+
+    <div class="subtabs">
+      <button class="subtab-btn active" onclick="switchFc('fc1', this)">Flowchart 1: Person's Door &amp; SEIT Spine</button>
+      <button class="subtab-btn" onclick="switchFc('fc2', this)">Flowchart 2: Sovereign Vault, Provenance &amp; Creator Skills</button>
+      <button class="subtab-btn" onclick="switchFc('fc3', this)">Flowchart 3: Personal Assistant Turn &amp; /settings Spine</button>
+      <button class="subtab-btn" onclick="switchFc('fc4', this)">Flowchart 4: Seity Underground (Layer 3 &amp; Move 37)</button>
+      <button class="subtab-btn" onclick="switchFc('fc5', this)">Flowchart 5: Foundation, Governance &amp; Rigi Graph Seams</button>
+    </div>
+
+    <!-- FC 1 -->
+    <div id="fc1" class="fc-panel active">
+      <div class="svg-wrap">
+        <svg viewBox="0 0 1120 340" xmlns="http://www.w3.org/2000/svg">
+          <rect x="20" y="30" width="180" height="70" rx="8" fill="#162238" stroke="#10b981" stroke-width="1.6"/>
+          <text x="110" y="56" text-anchor="middle" fill="#10b981" font-size="12" font-weight="700">Person (Self-Register)</text>
+          <text x="110" y="74" text-anchor="middle" fill="#93a4bf" font-size="10">seitiate auth.py:446 · WORKING</text>
+
+          <rect x="250" y="30" width="220" height="70" rx="8" fill="#162238" stroke="#10b981" stroke-width="1.6"/>
+          <text x="360" y="54" text-anchor="middle" fill="#e6edf7" font-size="12" font-weight="700">Apply to a Room (/verticals/v/apply)</text>
+          <text x="360" y="72" text-anchor="middle" fill="#93a4bf" font-size="10">EarlyAccessApplication PENDING · WORKING</text>
+
+          <rect x="520" y="30" width="240" height="70" rx="8" fill="#162238" stroke="#f59e0b" stroke-width="1.6"/>
+          <text x="640" y="54" text-anchor="middle" fill="#f59e0b" font-size="12" font-weight="700">Director Approve Gate</text>
+          <text x="640" y="72" text-anchor="middle" fill="#93a4bf" font-size="10">verticals.py:762-926 · Configurable cap (50)</text>
+
+          <rect x="810" y="20" width="280" height="90" rx="8" fill="#162238" stroke="#38bdf8" stroke-width="1.6"/>
+          <text x="950" y="45" text-anchor="middle" fill="#38bdf8" font-size="12" font-weight="700">1 Person = 1 Engine Tenant (Never Forked)</text>
+          <text x="950" y="64" text-anchor="middle" fill="#e6edf7" font-size="10.5">+ approval-promo:room:tenant row</text>
+          <text x="950" y="81" text-anchor="middle" fill="#93a4bf" font-size="10">+ Access email (seitiate.app/login?enroll=token)</text>
+
+          <rect x="250" y="165" width="380" height="120" rx="10" fill="#101929" stroke="#10b981" stroke-width="1.6"/>
+          <text x="440" y="192" text-anchor="middle" fill="#10b981" font-size="12.5" font-weight="700">Rooms Table Directory (rooms_are_rows)</text>
+          <text x="440" y="214" text-anchor="middle" fill="#e6edf7" font-size="11">models/room.py:37-95 · room_directory.py:325-421</text>
+          <text x="440" y="234" text-anchor="middle" fill="#93a4bf" font-size="10.5">GET /api/v1/rooms &amp; /rooms/defaults WORKING</text>
+          <text x="440" y="254" text-anchor="middle" fill="#93a4bf" font-size="10.5">R2 reader swap (DOCKET-2026-11-07-09) → R3 Admin CRUD</text>
+
+          <rect x="680" y="165" width="410" height="120" rx="10" fill="#101929" stroke="#a855f7" stroke-width="1.6"/>
+          <text x="885" y="192" text-anchor="middle" fill="#a855f7" font-size="12.5" font-weight="700">One SEIT Wallet Across Every Room</text>
+          <text x="885" y="214" text-anchor="middle" fill="#e6edf7" font-size="11">Plus credit_ledger_service (WORKING for Plus &amp; Assistant)</text>
+          <text x="885" y="234" text-anchor="middle" fill="#93a4bf" font-size="10.5">Sakme &amp; Scientific reserve, debit, settle via Plus</text>
+          <text x="885" y="254" text-anchor="middle" fill="#f59e0b" font-size="10.5">Soonest-expiring buckets drawn first; reverse-order refund</text>
+
+          <line x1="200" y1="65" x2="250" y2="65" stroke="#38bdf8" stroke-width="2"/>
+          <line x1="470" y1="65" x2="520" y2="65" stroke="#38bdf8" stroke-width="2"/>
+          <line x1="760" y1="65" x2="810" y2="65" stroke="#38bdf8" stroke-width="2"/>
+          <line x1="640" y1="100" x2="440" y2="165" stroke="#10b981" stroke-width="1.8" stroke-dasharray="5 4"/>
+          <line x1="950" y1="110" x2="885" y2="165" stroke="#a855f7" stroke-width="1.8"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- FC 2 -->
+    <div id="fc2" class="fc-panel">
+      <div class="svg-wrap">
+        <svg viewBox="0 0 1120 340" xmlns="http://www.w3.org/2000/svg">
+          <rect x="20" y="30" width="210" height="80" rx="8" fill="#162238" stroke="#38bdf8" stroke-width="1.6"/>
+          <text x="125" y="56" text-anchor="middle" fill="#38bdf8" font-size="12" font-weight="700">Sources Home (/sources)</text>
+          <text x="125" y="75" text-anchor="middle" fill="#e6edf7" font-size="10.5">1. Connected Accounts (OAuth)</text>
+          <text x="125" y="92" text-anchor="middle" fill="#10b981" font-size="10.5">2. Keep (/keep · WORKING)</text>
+
+          <rect x="275" y="20" width="265" height="100" rx="8" fill="#162238" stroke="#10b981" stroke-width="1.6"/>
+          <text x="407" y="45" text-anchor="middle" fill="#10b981" font-size="12" font-weight="700">Keep Write &amp; Creator Archive Import</text>
+          <text x="407" y="64" text-anchor="middle" fill="#e6edf7" font-size="10.5">codex_keep_service.py:470-493 (WORKING)</text>
+          <text x="407" y="81" text-anchor="middle" fill="#93a4bf" font-size="10">No model call or embedding on write;</text>
+          <text x="407" y="97" text-anchor="middle" fill="#93a4bf" font-size="10">speaker check + explicit relation choice</text>
+
+          <rect x="585" y="20" width="255" height="100" rx="8" fill="#162238" stroke="#f59e0b" stroke-width="1.6"/>
+          <text x="712" y="45" text-anchor="middle" fill="#f59e0b" font-size="12" font-weight="700">Sealed codex_chunks + Provenance</text>
+          <text x="712" y="64" text-anchor="middle" fill="#e6edf7" font-size="10.5">Sealed by memory passphrase</text>
+          <text x="712" y="81" text-anchor="middle" fill="#93a4bf" font-size="10">Contract: author, relation, condition,</text>
+          <text x="712" y="97" text-anchor="middle" fill="#93a4bf" font-size="10">consent_ref, forwarded, tenant</text>
+
+          <rect x="880" y="20" width="220" height="100" rx="8" fill="#162238" stroke="#a855f7" stroke-width="1.6"/>
+          <text x="990" y="45" text-anchor="middle" fill="#a855f7" font-size="12" font-weight="700">admits_as_person_fact Gate</text>
+          <text x="990" y="64" text-anchor="middle" fill="#e6edf7" font-size="10.5">seitiate #525 &amp; #527 (BUILT)</text>
+          <text x="990" y="81" text-anchor="middle" fill="#10b981" font-size="10">Admits ONLY person's own live words</text>
+          <text x="990" y="97" text-anchor="middle" fill="#93a4bf" font-size="10">for context_assembler &amp; Seity</text>
+
+          <rect x="275" y="165" width="380" height="120" rx="10" fill="#101929" stroke="#38bdf8" stroke-width="1.6"/>
+          <text x="465" y="192" text-anchor="middle" fill="#38bdf8" font-size="12.5" font-weight="700">Plain Recall on the Assistant Turn (search_codex)</text>
+          <text x="465" y="214" text-anchor="middle" fill="#e6edf7" font-size="11">POST /api/v1/assistant-tools/search-codex (BUILT)</text>
+          <text x="465" y="234" text-anchor="middle" fill="#93a4bf" font-size="10.5">Returns matching snippets with author + relation,</text>
+          <text x="465" y="254" text-anchor="middle" fill="#93a4bf" font-size="10.5">or explains plainly how to unlock memory at /settings (0 charge)</text>
+
+          <rect x="695" y="165" width="405" height="120" rx="10" fill="#101929" stroke="#f59e0b" stroke-width="1.6"/>
+          <text x="897" y="192" text-anchor="middle" fill="#f59e0b" font-size="12.5" font-weight="700">Creator Vault &amp; Owner-Private Skills (Marina creator-001)</text>
+          <text x="897" y="214" text-anchor="middle" fill="#e6edf7" font-size="11">85 works · 27 methods · 12 prompt ladders · 26 skills</text>
+          <text x="897" y="234" text-anchor="middle" fill="#93a4bf" font-size="10.5">Skill rows start draft &amp; owner-private (seitiate #528 guard)</text>
+          <text x="897" y="254" text-anchor="middle" fill="#93a4bf" font-size="10.5">Published to Talents / Bazaar only by explicit creator choice</text>
+
+          <line x1="230" y1="70" x2="275" y2="70" stroke="#38bdf8" stroke-width="2"/>
+          <line x1="540" y1="70" x2="585" y2="70" stroke="#10b981" stroke-width="2"/>
+          <line x1="840" y1="70" x2="880" y2="70" stroke="#f59e0b" stroke-width="2"/>
+          <line x1="712" y1="120" x2="465" y2="165" stroke="#38bdf8" stroke-width="1.8"/>
+          <line x1="407" y1="120" x2="897" y2="165" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="5 4"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- FC 3 -->
+    <div id="fc3" class="fc-panel">
+      <div class="svg-wrap">
+        <svg viewBox="0 0 1120 340" xmlns="http://www.w3.org/2000/svg">
+          <rect x="20" y="25" width="220" height="85" rx="8" fill="#162238" stroke="#10b981" stroke-width="1.6"/>
+          <text x="130" y="50" text-anchor="middle" fill="#10b981" font-size="12" font-weight="700">Telegram / Web Message</text>
+          <text x="130" y="69" text-anchor="middle" fill="#e6edf7" font-size="10.5">telegram_channel.handle (WORKING)</text>
+          <text x="130" y="86" text-anchor="middle" fill="#93a4bf" font-size="10">Link check + Room adoption check</text>
+
+          <rect x="280" y="25" width="250" height="85" rx="8" fill="#162238" stroke="#10b981" stroke-width="1.6"/>
+          <text x="405" y="50" text-anchor="middle" fill="#10b981" font-size="12" font-weight="700">Pre-Consent Zero-Text &amp; File Gate</text>
+          <text x="405" y="69" text-anchor="middle" fill="#e6edf7" font-size="10.5">plus #360 &amp; #361 (WORKING live)</text>
+          <text x="405" y="86" text-anchor="middle" fill="#93a4bf" font-size="10">Zero words or files kept before explicit YES</text>
+
+          <rect x="570" y="25" width="250" height="85" rx="8" fill="#162238" stroke="#38bdf8" stroke-width="1.6"/>
+          <text x="695" y="50" text-anchor="middle" fill="#38bdf8" font-size="12" font-weight="700">Funded Route &amp; Pin Guard</text>
+          <text x="695" y="69" text-anchor="middle" fill="#e6edf7" font-size="10.5">_select_funded_route (seitiate #520)</text>
+          <text x="695" y="86" text-anchor="middle" fill="#f59e0b" font-size="10">Never silently swaps pinned voice model</text>
+
+          <rect x="860" y="25" width="240" height="85" rx="8" fill="#162238" stroke="#a855f7" stroke-width="1.6"/>
+          <text x="980" y="50" text-anchor="middle" fill="#a855f7" font-size="12" font-weight="700">Egress Masking &amp; Reply Settle</text>
+          <text x="980" y="69" text-anchor="middle" fill="#e6edf7" font-size="10.5">apply_egress_masking (#506 Packet 3A)</text>
+          <text x="980" y="86" text-anchor="middle" fill="#93a4bf" font-size="10">Signed receipt + async Seity handoff</text>
+
+          <rect x="20" y="165" width="1080" height="125" rx="10" fill="#101929" stroke="#f59e0b" stroke-width="1.6"/>
+          <text x="40" y="192" fill="#f59e0b" font-size="12.5" font-weight="800">THE CUSTOMER CONTROL SPINE · CONSOLIDATED /settings (4 Sections, DOCKET-2026-11-07-08)</text>
+          <text x="40" y="216" fill="#e6edf7" font-size="11">• <strong>Section 1 (Personal Assistant):</strong> Persona name ("Argonika" for Director, configurable per person), voice model pin, Move 37 creative cadence (off | gentle | regular)</text>
+          <text x="40" y="238" fill="#e6edf7" font-size="11">• <strong>Section 2 (Models &amp; Costs):</strong> BYOK keys (WORKING), Outbound Subscription Connector (Argonika on Ultra 20x / SIWC OAuth), customer routing policy, Spend Limits</text>
+          <text x="40" y="260" fill="#e6edf7" font-size="11">• <strong>Section 3 (Rooms &amp; Access) &amp; Section 4 (Memory &amp; Privacy):</strong> Passphrase unlock, kept parts list, Learning Pause toggle, ProviderDataChoice (zero-retention)</text>
+
+          <line x1="240" y1="67" x2="280" y2="67" stroke="#10b981" stroke-width="2"/>
+          <line x1="530" y1="67" x2="570" y2="67" stroke="#38bdf8" stroke-width="2"/>
+          <line x1="820" y1="67" x2="860" y2="67" stroke="#a855f7" stroke-width="2"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- FC 4 -->
+    <div id="fc4" class="fc-panel">
+      <div class="svg-wrap">
+        <svg viewBox="0 0 1120 340" xmlns="http://www.w3.org/2000/svg">
+          <rect x="20" y="30" width="230" height="90" rx="8" fill="#162238" stroke="#a855f7" stroke-width="1.6"/>
+          <text x="135" y="56" text-anchor="middle" fill="#a855f7" font-size="12" font-weight="700">Async Post-Turn Episode Reader</text>
+          <text x="135" y="75" text-anchor="middle" fill="#e6edf7" font-size="10.5">Never sits in the live reply path</text>
+          <text x="135" y="92" text-anchor="middle" fill="#93a4bf" font-size="10">Honours Learning Pause row lock (#367)</text>
+
+          <rect x="290" y="30" width="240" height="90" rx="8" fill="#162238" stroke="#10b981" stroke-width="1.6"/>
+          <text x="410" y="56" text-anchor="middle" fill="#10b981" font-size="12" font-weight="700">Seity Provenance Filter</text>
+          <text x="410" y="75" text-anchor="middle" fill="#e6edf7" font-size="10.5">coordinator.py:130-166 (WORKING)</text>
+          <text x="410" y="92" text-anchor="middle" fill="#93a4bf" font-size="10">Only author=='person' &amp; condition=='live'</text>
+
+          <rect x="570" y="30" width="250" height="90" rx="8" fill="#162238" stroke="#38bdf8" stroke-width="1.6"/>
+          <text x="695" y="56" text-anchor="middle" fill="#38bdf8" font-size="12" font-weight="700">5-Matrix Reflection &amp; Move 37</text>
+          <text x="695" y="75" text-anchor="middle" fill="#e6edf7" font-size="10.5">banks.py · compiler.py · move37.py (BUILT)</text>
+          <text x="695" y="92" text-anchor="middle" fill="#93a4bf" font-size="10">Work, Motivation, Relations, Taste, Values</text>
+
+          <rect x="860" y="30" width="240" height="90" rx="8" fill="#162238" stroke="#f59e0b" stroke-width="1.6"/>
+          <text x="980" y="56" text-anchor="middle" fill="#f59e0b" font-size="12" font-weight="700">seity.scaffolding.v1 (≤ 2400B)</text>
+          <text x="980" y="75" text-anchor="middle" fill="#e6edf7" font-size="10.5">Bounded underground packet</text>
+          <text x="980" y="92" text-anchor="middle" fill="#93a4bf" font-size="10">Feeds Engine Front-Stage Assembly</text>
+
+          <rect x="20" y="165" width="1080" height="120" rx="10" fill="#101929" stroke="#38bdf8" stroke-width="1.6"/>
+          <text x="40" y="192" fill="#38bdf8" font-size="12.5" font-weight="800">HOW COORDINATION WORKS AT EVERY SEAM IN THE HOUSEHOLD</text>
+          <text x="40" y="216" fill="#e6edf7" font-size="11">1. <strong>software-architect</strong> rules the architectural seam and approves ordinary docket scope (<code>Doma 8c71a5f3</code>).</text>
+          <text x="40" y="238" fill="#e6edf7" font-size="11">2. <strong>consilium-lead ("Cecilia")</strong> convenes the co-owning domain leads into one unified estate view and checks all existing dockets first.</text>
+          <text x="40" y="260" fill="#e6edf7" font-size="11">3. <strong>Owning domain leads</strong> agree the interface and acceptance criteria directly; <strong>advisor</strong> is the single door to the Director.</text>
+
+          <line x1="250" y1="75" x2="290" y2="75" stroke="#a855f7" stroke-width="2"/>
+          <line x1="530" y1="75" x2="570" y2="75" stroke="#10b981" stroke-width="2"/>
+          <line x1="820" y1="75" x2="860" y2="75" stroke="#38bdf8" stroke-width="2"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- FC 5 -->
+    <div id="fc5" class="fc-panel">
+      <div class="svg-wrap">
+        <svg viewBox="0 0 1120 320" xmlns="http://www.w3.org/2000/svg">
+          <rect x="30" y="25" width="460" height="260" rx="12" fill="#101929" stroke="#38bdf8" stroke-width="1.6"/>
+          <text x="50" y="52" fill="#38bdf8" font-size="13" font-weight="800">HOUSEHOLD SIDE (Python / TypeScript Application Repos)</text>
+          <text x="50" y="84" fill="#e6edf7" font-size="11.5">• <strong>Role Domas &amp; Checkpoints:</strong> Lean, culled, write-time byte cap per node</text>
+          <text x="50" y="114" fill="#e6edf7" font-size="11.5">• <strong>codex_chunks &amp; Provenance Contract:</strong> Language-neutral JSON schema</text>
+          <text x="50" y="144" fill="#e6edf7" font-size="11.5">• <strong>Build Pipeline Receipts:</strong> refs/ces/governance append-only KMS chain</text>
+          <text x="50" y="174" fill="#e6edf7" font-size="11.5">• <strong>Assistant Harness &amp; Tools:</strong> Scoped work, permissions, recovery, evidence</text>
+          <text x="50" y="204" fill="#10b981" font-size="11.5">• <strong>Scientific evidence.v1:</strong> RFC 8785 JCS hash + provenance.receipt slot</text>
+
+          <rect x="630" y="25" width="460" height="260" rx="12" fill="#101929" stroke="#f59e0b" stroke-width="1.6"/>
+          <text x="650" y="52" fill="#f59e0b" font-size="13" font-weight="800">FOUNDATION &amp; GRAPH SIDE (Clean Replaceable Seams)</text>
+          <text x="650" y="84" fill="#e6edf7" font-size="11.5">• <strong>Brain / Decision Memory (Rigi Graph):</strong> Read-only graph query seam</text>
+          <text x="650" y="114" fill="#e6edf7" font-size="11.5">• <strong>Seitiate Foundation 4 Pillars:</strong> Tenancy, Ledger, Vault, Memory</text>
+          <text x="650" y="144" fill="#e6edf7" font-size="11.5">• <strong>Signed Lifecycle Events:</strong> candidate_submitted → deployment_observed</text>
+          <text x="650" y="174" fill="#e6edf7" font-size="11.5">• <strong>Transport (th-ug / acord):</strong> Peer-to-peer daemon &amp; result interface</text>
+          <text x="650" y="204" fill="#10b981" font-size="11.5">• <strong>P-2 Handshake:</strong> Working ES256 signed test vector for evidence.v1</text>
+
+          <line x1="490" y1="80" x2="630" y2="80" stroke="#38bdf8" stroke-width="2" stroke-dasharray="6 4"/>
+          <line x1="490" y1="110" x2="630" y2="110" stroke="#38bdf8" stroke-width="2" stroke-dasharray="6 4"/>
+          <line x1="490" y1="140" x2="630" y2="140" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6 4"/>
+          <line x1="490" y1="170" x2="630" y2="170" stroke="#10b981" stroke-width="2" stroke-dasharray="6 4"/>
+          <line x1="490" y1="200" x2="630" y2="200" stroke="#a855f7" stroke-width="2" stroke-dasharray="6 4"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TAB 4: THE ONE ESTATE ROADMAP (WAVES 0-4) ==================== -->
+<div id="tab-roadmap" class="tab-panel">
+  <div class="card">
+    <h2><span class="badge b-emerald">STACK Part XV · Section 2</span> The One Integrated Estate Roadmap (Waves 0–4 Across All 10 Domain Leads)</h2>
+    <p class="lead">Every slice names the user-visible outcome, the co-owning domain leads at the seam, and the verified epistemic status (<span class="badge b-emerald">WORKING</span> vs. <span class="badge b-cyan">BUILT</span> vs. <span class="badge b-gold">RECORDED</span>).</p>
+
+    <table class="roadmap">
+      <thead>
+        <tr>
+          <th style="width:14%">Wave &amp; Slice</th>
+          <th style="width:42%">User-Visible Outcome</th>
+          <th style="width:20%">Co-Owning Leads</th>
+          <th style="width:24%">Epistemic Status &amp; Evidence</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Wave 0 · W0.0 &amp; W0.1</strong><br/>Deploy Gate &amp; Sovereign Keep</td>
+          <td><strong>Ordinary &amp; Purpose-Led Keep (`/keep`) + Engine Pin Deploy (`CES #2216`):</strong> Signed-in person keeps transcripts or purpose-led records with speaker/relation check into passphrase-sealed <code>codex_chunks</code>; hand deploy moves `seitiate` pin to `19d7319e` (`#506`–`#530`).</td>
+          <td><code>dev-lead</code>, <code>engine-lead</code>, <code>seitiate-plus-lead</code>, <code>skills-connectors-lead</code></td>
+          <td><span class="badge b-emerald">WORKING</span> (Web Keep live; Director kept 6 parts) · <span class="badge b-cyan">BUILT</span> (`#506`–`#530` in `CES #2216` hand deploy)</td>
+        </tr>
+        <tr>
+          <td><strong>Wave 0 · W0.2 &amp; W0.4</strong><br/>Pre-Consent Gate &amp; Provenance</td>
+          <td><strong>Zero words/files before YES + `admits_as_person_fact` Gate:</strong> No typed text or file caption is kept before explicit pilot consent (`#360`, `#361`); readers building person facts admit only `author=='person'` &amp; `condition=='live'` (`#525`, `#527`).</td>
+          <td><code>assistant-lead</code>, <code>seity-lead</code>, <code>engine-lead</code>, <code>seitiate-plus-lead</code></td>
+          <td><span class="badge b-emerald">WORKING</span> (`#360`, `#361`, `#365` live on `00398-4jf`) · <span class="badge b-cyan">BUILT</span> (`#525`, `#527` on `seitiate` `main`)</td>
+        </tr>
+        <tr>
+          <td><strong>Wave 0 · W0.5 &amp; W0.6</strong><br/>Keep Recall &amp; Model Pin Guard</td>
+          <td><strong>Assistant Recall (`search_codex`) &amp; Never-Swap Voice Pin:</strong> Kept notes reach the assistant with `author` + `relation`; pinned voice model (Argon default) is honoured or returns plain `pin_unavailable` (`#520` + `#355`).</td>
+          <td><code>assistant-lead</code>, <code>engine-lead</code>, <code>seitiate-plus-lead</code></td>
+          <td><span class="badge b-cyan">BUILT</span> (`#521`, `#523`, `#356` merged; `#520` &amp; `#355` in PR review)</td>
+        </tr>
+        <tr>
+          <td><strong>Wave 1 · W1.1–W1.5</strong><br/>The Person's Door, `/settings` &amp; Connectors</td>
+          <td><strong>Consolidated `/settings` (4 sections) &amp; `/sources` + Outbound Subscription Bridge + Packet 3A Egress Masking:</strong> Argonika on Director's Ultra 20x subscription (`001_master`) first, then tester CLI/OAuth &amp; BYOK; per-tenant PII masking (`#506`).</td>
+          <td><code>seitiate-plus-lead</code>, <code>engine-lead</code>, <code>skills-connectors-lead</code>, <code>assistant-lead</code></td>
+          <td><span class="badge b-emerald">WORKING</span> (BYOK &amp; Telegram mint `#359`) · <span class="badge b-cyan">BUILT</span> (`#506` Packet 3A, Drive one-shot, Context Wizard `#345`)</td>
+        </tr>
+        <tr>
+          <td><strong>Wave 1 · W1.6–W1.9</strong><br/>Rooms Directory &amp; Creator Vault</td>
+          <td><strong>Vertical Admin Invite Bar (`#362`), Paused-Learning Row Lock (`#367`), Rooms Reader Swap &amp; Creator Archive Importer (Marina `creator-001`):</strong> 85 works, 27 methods, 12 prompt ladders, 26 owner-private skills (`#364`, `#528`).</td>
+          <td><code>verticals-lead</code>, <code>skills-connectors-lead</code>, <code>sakme-lead</code>, <code>seitiate-plus-lead</code></td>
+          <td><span class="badge b-emerald">WORKING</span> (Rooms API R1) · <span class="badge b-cyan">BUILT</span> (`#364` live UI, `#362`, `#367`, `#528` in review)</td>
+        </tr>
+        <tr>
+          <td><strong>Wave 2 · W2.1–W2.4</strong><br/>Seity Layer 3, Front-Stage Assembly &amp; 1 Wallet</td>
+          <td><strong>Seity Underground Episode Loop (`seity.scaffolding.v1` ≤ 2400B), Engine Front-Stage Prompt Assembly &amp; One SEIT Wallet Across Sakme + Scientific:</strong> Retires local vertical credit silos and string constants.</td>
+          <td><code>seity-lead</code>, <code>engine-lead</code>, <code>assistant-lead</code>, <code>sakme-lead</code>, <code>scientific-lead</code></td>
+          <td><span class="badge b-emerald">WORKING</span> (`seity-00003-g7r` filter) · <span class="badge b-cyan">BUILT</span> (5-matrix &amp; Move 37) · <span class="badge b-gold">RECORDED</span> (async loop &amp; 1-wallet)</td>
+        </tr>
+        <tr>
+          <td><strong>Wave 3 · W3.1–W3.4</strong><br/>Sakme &amp; Scientific Platform Sibling Rooms</td>
+          <td><strong>Sakme Writing Desk + Bench Codex Recall (`sakme #175–#178`) &amp; Scientific Platform V0→V1 (`Evidence Foundry` + `research-hub` + `Notary` ES256):</strong> Signed `evidence.v1` bundles, `claim-card.v1`, `field-pack.v1` labs, and P2P review bounties.</td>
+          <td><code>scientific-lead</code>, <code>sakme-lead</code>, <code>engine-lead</code>, <code>seitiate-plus-lead</code></td>
+          <td><span class="badge b-cyan">BUILT</span> (>1,100 scientific tests, 19 analyzers, 12 contracts, `sakme #175–#178`) · <span class="badge b-gold">RECORDED</span> (Notary P-2 receipt bind)</td>
+        </tr>
+        <tr>
+          <td><strong>Wave 4 · W4.1–W4.4</strong><br/>Sovereign Forge, Cloud Runner &amp; Rigi Seams</td>
+          <td><strong>Canonical Scion Dispatcher, Zero-GB/hr Disk Hygiene (Live), Forge Cloud Runner Migration &amp; Dedicated Mac Mini #2 for Argonika:</strong> Frees Household Mac and dedicates Mac Mini #2 to the Director's Personal Assistant.</td>
+          <td><code>forge-lead</code>, <code>dev-lead</code>, <code>scheduling</code>, <code>diagnostician</code></td>
+          <td><span class="badge b-emerald">WORKING</span> (0 GB/hr cleanup &amp; 15m watchdog) · <span class="badge b-gold">RECORDED</span> (Cloud Forge cutover &amp; Mac Mini #2 Argonika)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+function switchFc(id, btn) {
+  document.querySelectorAll('.fc-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.subtab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

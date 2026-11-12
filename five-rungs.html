@@ -5,205 +5,326 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>How Seitiate Grows With You — Five Steps</title>
     <script src="/assets/gate.js"></script>
-    <meta name="description" content="From your own Personal Assistant to shared spaces, creator channels, and running a full business on Seitiate.">
+    <meta name="description" content="From your own Personal Assistant to shared spaces, creator channels, and running a full business on Seitiate — five steps, one platform.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0a0b0e;
-            --surface: #111318;
-            --surface-hover: #171a21;
-            --border: #1f232d;
-            --text: #f3f2ee;
-            --text-secondary: #a8acb6;
-            --text-muted: #686c76;
+            --bg: #09090b;
+            --surface: #111114;
+            --surface-2: #18181b;
+            --border: #27272a;
+            --border-subtle: #1e1e21;
+            --text: #fafaf9;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
             --accent: #4ade80;
+            --accent-dim: rgba(74, 222, 128, 0.12);
             --serif: 'Instrument Serif', Georgia, serif;
-            --sans: 'Inter', -apple-system, sans-serif;
+            --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: var(--sans);
             background: var(--bg);
             color: var(--text);
-            line-height: 1.7;
+            line-height: 1.6;
             -webkit-font-smoothing: antialiased;
         }
         a { color: inherit; text-decoration: none; }
 
         nav {
             position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-            padding: 16px 32px; display: flex; justify-content: space-between; align-items: center;
-            background: rgba(10, 11, 14, 0.88); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);
+            padding: 0 32px; height: 64px;
+            display: flex; align-items: center; justify-content: space-between;
+            background: rgba(9, 9, 11, 0.8);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border-bottom: 1px solid var(--border-subtle);
         }
-        nav .brand { font-size: 0.9rem; font-weight: 500; color: var(--accent); }
-        .nav-right { display: flex; align-items: center; gap: 20px; font-size: 0.86rem; color: var(--text-secondary); }
-        .nav-right a:hover { color: var(--text); }
-        .nav-login-btn {
-            font-size: 0.84rem; font-weight: 600; color: #0a0b0e; background: var(--accent);
-            padding: 7px 16px; border-radius: 8px;
+        .nav-brand {
+            display: flex; align-items: center; gap: 10px;
+            font-size: 15px; font-weight: 600; letter-spacing: -0.02em;
         }
+        .nav-dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 12px rgba(74, 222, 128, 0.4);
+        }
+        .nav-links { display: flex; align-items: center; gap: 28px; }
+        .nav-link {
+            font-size: 13.5px; font-weight: 400; color: var(--text-muted);
+            transition: color 0.15s;
+        }
+        .nav-link:hover { color: var(--text); }
+        .nav-cta {
+            font-size: 13px; font-weight: 600; color: var(--bg);
+            background: var(--accent); padding: 8px 18px; border-radius: 8px;
+            transition: opacity 0.15s;
+        }
+        .nav-cta:hover { opacity: 0.9; }
 
-        .wrap { max-width: 780px; margin: 0 auto; padding: 120px 24px 72px; }
-        .eyebrow {
-            font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em;
-            color: var(--accent); font-weight: 600; margin-bottom: 12px;
+        .container { max-width: 800px; margin: 0 auto; padding: 0 24px; }
+
+        .hero {
+            padding: 160px 0 96px;
+            position: relative;
         }
-        h1 {
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -40px; left: 50%; transform: translateX(-50%);
+            width: 700px; height: 500px;
+            background: radial-gradient(ellipse 60% 50% at 50% 40%, rgba(74, 222, 128, 0.05) 0%, transparent 100%);
+            pointer-events: none;
+        }
+        .section-label {
+            font-size: 12px; font-weight: 600; letter-spacing: 0.1em;
+            text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
+        }
+        .hero h1 {
             font-family: var(--serif);
             font-weight: 400;
-            font-size: clamp(36px, 5vw, 50px);
-            line-height: 1.12;
-            margin-bottom: 16px;
+            font-size: clamp(38px, 5.5vw, 60px);
+            line-height: 1.08;
+            letter-spacing: -0.025em;
+            margin-bottom: 24px;
         }
-        .intro {
-            font-size: 1.12rem;
-            color: var(--text-secondary);
-            margin-bottom: 40px;
+        .hero-sub {
+            font-size: 18px; line-height: 1.7; color: var(--text-secondary);
+            max-width: 560px;
         }
+        .hero-sub strong { color: var(--text); font-weight: 500; }
 
-        .ladder { display: grid; gap: 16px; margin-bottom: 44px; }
+        .ladder {
+            padding-bottom: 80px;
+        }
         .rung {
-            border: 1px solid var(--border);
-            background: var(--surface);
-            border-radius: 14px;
-            padding: 24px 28px;
             display: grid;
-            grid-template-columns: 110px 1fr;
-            gap: 20px;
-            align-items: start;
+            grid-template-columns: 72px 1fr;
+            gap: 0 28px;
+            padding-bottom: 56px;
+            position: relative;
+        }
+        .rung:last-child { padding-bottom: 0; }
+        .rung-marker {
+            display: flex; flex-direction: column; align-items: center;
+            position: relative;
         }
         .rung-num {
-            font-size: 0.78rem;
-            font-weight: 600;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--accent);
+            width: 56px; height: 56px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 14px;
+            border: 1px solid rgba(74, 222, 128, 0.3);
+            background: var(--accent-dim);
+            font-size: 18px; font-weight: 700;
+            color: var(--accent); letter-spacing: -0.02em;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+        }
+        .rung-line {
+            width: 1px; flex: 1;
+            background: linear-gradient(180deg, rgba(74, 222, 128, 0.3), rgba(74, 222, 128, 0.06));
+            margin-top: 8px;
+        }
+        .rung:last-child .rung-line { display: none; }
+        .rung-content {
             padding-top: 4px;
         }
-        .rung-num span {
-            display: block;
-            font-size: 0.75rem;
+        .rung-for {
+            font-size: 12px; font-weight: 600; letter-spacing: 0.08em;
+            text-transform: uppercase; color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+        .rung-title {
+            font-family: var(--serif);
             font-weight: 400;
-            color: var(--text-muted);
-            text-transform: none;
-            letter-spacing: 0;
-            margin-top: 4px;
+            font-size: clamp(24px, 3vw, 30px);
+            line-height: 1.15;
+            letter-spacing: -0.015em;
+            margin-bottom: 14px;
         }
-        .rung h2 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 6px;
-            color: var(--text);
-        }
-        .rung p {
-            font-size: 0.96rem;
+        .rung-body {
+            font-size: 16px; line-height: 1.75;
             color: var(--text-secondary);
+            max-width: 520px;
         }
+        .rung-body strong { color: var(--text); font-weight: 500; }
 
+        .cta-section {
+            border-top: 1px solid var(--border-subtle);
+            padding: 80px 0;
+        }
         .cta-box {
-            border: 1px solid rgba(74, 222, 128, 0.35);
-            background: var(--surface);
-            border-radius: 14px;
-            padding: 24px 28px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
+            border: 1px solid rgba(74, 222, 128, 0.25);
+            background: linear-gradient(180deg, rgba(74, 222, 128, 0.03), var(--surface));
+            border-radius: 16px; padding: 40px 36px;
+            display: flex; justify-content: space-between;
+            align-items: center; flex-wrap: wrap; gap: 20px;
+        }
+        .cta-text { max-width: 400px; }
+        .cta-text strong {
+            display: block; font-size: 18px; font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .cta-text span {
+            font-size: 15px; color: var(--text-secondary); line-height: 1.6;
         }
         .btn-primary {
-            background: var(--accent); color: #0a0b0e; font-weight: 600; font-size: 0.92rem;
-            padding: 11px 22px; border-radius: 9px;
+            background: var(--accent); color: var(--bg);
+            font-weight: 600; font-size: 15px;
+            padding: 14px 28px; border-radius: 10px;
+            transition: opacity 0.15s;
         }
+        .btn-primary:hover { opacity: 0.9; }
 
         footer {
-            border-top: 1px solid var(--border); padding-top: 24px; margin-top: 56px;
-            font-size: 0.82rem; color: var(--text-muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+            border-top: 1px solid var(--border-subtle);
+            padding: 36px 0;
         }
-        footer a { color: var(--text-secondary); }
-        @media (max-width: 600px) {
-            .rung { grid-template-columns: 1fr; gap: 6px; }
+        .footer-inner {
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 16px;
+            font-size: 13px; color: var(--text-muted);
+        }
+        .footer-links { display: flex; flex-wrap: wrap; gap: 24px; }
+        .footer-links a { color: var(--text-muted); transition: color 0.15s; }
+        .footer-links a:hover { color: var(--text-secondary); }
+
+        @media (max-width: 640px) {
+            nav { padding: 0 20px; }
+            .nav-link.hide-m { display: none; }
+            .rung { grid-template-columns: 48px 1fr; gap: 0 16px; }
+            .rung-num { width: 40px; height: 40px; font-size: 15px; border-radius: 10px; }
+            .hero { padding: 130px 0 72px; }
         }
     </style>
 </head>
 <body>
     <nav>
-        <a href="/" class="brand">← Back to Seitiate</a>
-        <div class="nav-right">
-            <a href="/physical-ai.html">Smart Glasses</a>
-            <a href="/wheels-within-wheels.html">System Map</a>
-            <a href="/login/" class="nav-login-btn">Log in / Beta Access →</a>
+        <a href="/" class="nav-brand">
+            <span class="nav-dot"></span>
+            <span>Seitiate</span>
+        </a>
+        <div class="nav-links">
+            <a href="/physical-ai.html" class="nav-link hide-m">Beyond the Screen</a>
+            <a href="/wheels-within-wheels.html" class="nav-link hide-m">System Map</a>
+            <a href="/login/" class="nav-cta">Log in / Beta Access</a>
         </div>
     </nav>
 
-    <main class="wrap">
-        <div class="eyebrow">Five Steps · One Platform</div>
-        <h1>How Seitiate grows with you.</h1>
-        <p class="intro">
-            Whether you are one person organizing your daily life or a founder launching a new product, you use the same platform and the same <strong>SEIT</strong> credit at every step.
-        </p>
-
-        <div class="ladder">
-            <div class="rung">
-                <div class="rung-num">Rung 1<span>Individuals</span></div>
-                <div>
-                    <h2>Your Personal Assistant</h2>
-                    <p>You start with a Personal Assistant that learns your work, preferences, and priorities over time&mdash;on the web, on your phone, and on smart glasses.</p>
-                </div>
+    <main>
+        <div class="container">
+            <div class="hero">
+                <div class="section-label">Five Steps &middot; One Platform</div>
+                <h1>From your first conversation to your own business.</h1>
+                <p class="hero-sub">
+                    Seitiate is designed to grow with you. Everyone starts with a Personal Assistant.
+                    Where you go from there&mdash;sharing with a team, publishing your expertise,
+                    building a product, launching a company&mdash;is up to you. The same platform
+                    and the same <strong>SEIT</strong> credit at every step.
+                </p>
             </div>
 
-            <div class="rung">
-                <div class="rung-num">Rung 2<span>Teams &amp; Peers</span></div>
-                <div>
-                    <h2>Shared Spaces</h2>
-                    <p>Invite friends, colleagues, or clients into shared spaces where your assistants help you think through problems, review work, and keep projects moving together.</p>
+            <div class="ladder">
+                <div class="rung">
+                    <div class="rung-marker">
+                        <div class="rung-num">01</div>
+                        <div class="rung-line"></div>
+                    </div>
+                    <div class="rung-content">
+                        <div class="rung-for">For everyone</div>
+                        <h2 class="rung-title">Your Personal Assistant</h2>
+                        <p class="rung-body">
+                            An assistant that genuinely gets to know you&mdash;your work, your preferences, your priorities. Not a blank slate every time you open it. A persistent partner that <strong>remembers what matters to you</strong> and picks up where you left off, every session, on the web, on your phone, or through smart glasses.
+                        </p>
+                    </div>
                 </div>
-            </div>
 
-            <div class="rung">
-                <div class="rung-num">Rung 3<span>Creators &amp; Specialists</span></div>
-                <div>
-                    <h2>Selling Content, Courses &amp; Workflows</h2>
-                    <p>Creatives and domain specialists can publish their own video channels, courses, research tools, or AI workflows and earn <strong>SEIT</strong> directly from other members.</p>
+                <div class="rung">
+                    <div class="rung-marker">
+                        <div class="rung-num">02</div>
+                        <div class="rung-line"></div>
+                    </div>
+                    <div class="rung-content">
+                        <div class="rung-for">For teams &amp; peers</div>
+                        <h2 class="rung-title">Shared Spaces</h2>
+                        <p class="rung-body">
+                            Bring colleagues, friends, or clients into shared spaces where your assistants help you <strong>think, build, and decide together</strong>. Everyone keeps their own assistant, their own memory, their own perspective. You collaborate without merging.
+                        </p>
+                    </div>
                 </div>
-            </div>
 
-            <div class="rung">
-                <div class="rung-num">Rung 4<span>Product Partners</span></div>
-                <div>
-                    <h2>Co-Building Applications</h2>
-                    <p>Studios and developers can connect their own software or domain expertise to Seitiate, using our assistants, shared spaces, and SEIT credits inside their product.</p>
+                <div class="rung">
+                    <div class="rung-marker">
+                        <div class="rung-num">03</div>
+                        <div class="rung-line"></div>
+                    </div>
+                    <div class="rung-content">
+                        <div class="rung-for">For creators &amp; specialists</div>
+                        <h2 class="rung-title">Turn Your Expertise Into an Offering</h2>
+                        <p class="rung-body">
+                            Turn what you know into something the world can use. Whether it&rsquo;s a <strong>video channel, a specialist course, a research methodology, or an AI workflow</strong>&mdash;publish it, price it in SEIT, and earn directly from members who value what you&rsquo;ve built.
+                        </p>
+                    </div>
                 </div>
-            </div>
 
-            <div class="rung">
-                <div class="rung-num">Rung 5<span>Full Businesses</span></div>
-                <div>
-                    <h2>Running Your Own Business on Seitiate</h2>
-                    <p>Launch and run a complete vertical business with accounts, subscriptions, SEIT payments, and AI assistants built in from day one&mdash;while keeping full ownership of your company and data.</p>
+                <div class="rung">
+                    <div class="rung-marker">
+                        <div class="rung-num">04</div>
+                        <div class="rung-line"></div>
+                    </div>
+                    <div class="rung-content">
+                        <div class="rung-for">For product partners</div>
+                        <h2 class="rung-title">Co-Build Your Application</h2>
+                        <p class="rung-body">
+                            Partner with Seitiate to bring your software idea or studio to life. Your application gets <strong>built-in AI assistants, shared rooms, and the entire SEIT economy</strong>&mdash;without building any of that infrastructure yourself.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="rung">
+                    <div class="rung-marker">
+                        <div class="rung-num">05</div>
+                    </div>
+                    <div class="rung-content">
+                        <div class="rung-for">For founders &amp; businesses</div>
+                        <h2 class="rung-title">Launch Your Own Business</h2>
+                        <p class="rung-body">
+                            Run a complete, independent digital business powered by Seitiate&rsquo;s accounts, subscriptions, and credit economy. <strong>Own your brand. Own your customer relationships.</strong> We provide the infrastructure; you provide the vision.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="cta-box">
-            <div>
-                <strong style="display:block;font-size:1.02rem;margin-bottom:2px;">Ready to get started?</strong>
-                <span style="color:var(--text-secondary);font-size:0.9rem;">Apply as a beta tester to explore the platform at any step.</span>
+        <div class="cta-section">
+            <div class="container">
+                <div class="cta-box">
+                    <div class="cta-text">
+                        <strong>Ready to start?</strong>
+                        <span>Apply as a beta tester and begin at whichever step makes sense for you.</span>
+                    </div>
+                    <a href="/login/" class="btn-primary">Apply as a Beta Tester &rarr;</a>
+                </div>
             </div>
-            <a href="/login/" class="btn-primary">Apply as a Beta Tester →</a>
         </div>
 
         <footer>
-            <span>&copy; 2026 Agent-C LLC · Seitiate</span>
-            <span>
-                <a href="/">Home</a> &middot;
-                <a href="/physical-ai.html">Smart Glasses</a> &middot;
-                <a href="/wheels-within-wheels.html">System Map</a> &middot;
-                <a href="/terms.html">Terms</a> &middot;
-                <a href="/privacy.html">Privacy</a>
-            </span>
+            <div class="container">
+                <div class="footer-inner">
+                    <span>&copy; 2026 Agent-C LLC &middot; Seitiate</span>
+                    <div class="footer-links">
+                        <a href="/">Home</a>
+                        <a href="/physical-ai.html">Beyond the Screen</a>
+                        <a href="/wheels-within-wheels.html">System Map</a>
+                        <a href="/terms.html">Terms</a>
+                        <a href="/privacy.html">Privacy</a>
+                    </div>
+                </div>
+            </div>
         </footer>
     </main>
 </body>
