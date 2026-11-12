@@ -57,7 +57,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
           <div style="font-size:24px;line-height:1.18;font-weight:500;letter-spacing:-0.02em;color:#c8d0dc;text-wrap:balance">{{ lens.title }}</div>
           <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center">
             <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.1em;padding:3px 9px;border-radius:100px;border:1px {{ lens.dash }} {{ lens.sc }};color:{{ lens.sc }};white-space:nowrap">{{ lens.stLabel }}</span>
-            <sc-if value="{{ lens.noChip }}" hint-placeholder-val="{{ false }}"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.1em;padding:3px 9px;border-radius:100px;border:1px solid rgba(200,208,220,0.25);color:#c8d0dc;white-space:nowrap">PARTNER TOUCHPOINT</span></sc-if>
+            <sc-if value="{{ lens.noChip }}" hint-placeholder-val="{{ false }}"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.1em;padding:3px 9px;border-radius:100px;border:1px solid rgba(200,208,220,0.25);color:#c8d0dc;white-space:nowrap">IES TOUCHPOINT</span></sc-if>
           </div>
         </div>
         <p style="margin:0;font-size:15px;line-height:1.6;color:#c8d0dc;text-wrap:pretty">{{ lens.desc }}</p>
@@ -249,10 +249,11 @@ class Component extends DCLogic {
           d: 'Later, your assistant will be able to run regular routines, keep watch for things you care about, and use a walled-off web browser.',
           stage: 'Designed, on the roadmap.',
           l: ['a-talk', 'a-skills'] },
-        { id: 'a-voice', s: 'Speaking Aloud', t: 'Talking by Voice', st: 'planned',
-          d: 'Speak to your assistant instead of typing, using a speech-to-text service.',
-          stage: 'The speech service exists. Linking it to the estate, with your consent, is planned.',
-          l: ['p-hooshi', 'a-talk'] }
+        { id: 'a-voice', s: 'Voice & Glasses', t: 'Voice, Phone & Smart Glasses', st: 'flight',
+          d: 'Most of life happens away from a desk. Speak naturally to your Personal Assistant on your phone or through smart glasses like the Ray-Ban Meta Display and see quiet, helpful visual context right in front of you.',
+          stage: 'Phone and Telegram voice work today; companion smart glasses view is in active preview.',
+          b: [{ k: 'Who looks after it', v: 'Personal Assistant & Sakme workshops.' }],
+          l: ['a-talk', 'a-recall', 'core'] }
       ] },
     { id: 'door', t: 'The Front Door', eb: 'Seitiate+ · one way in',
       d: 'Seitiate+ is the single entrance to everything. One sign-in, one account for one person, one wallet and one place to control it all, whichever room you are in.',
@@ -267,10 +268,15 @@ class Component extends DCLogic {
           stage: 'Working today. An admin screen for managing rooms is planned.',
           b: [{ k: 'Who looks after it', v: 'Verticals & Rooms workshop.' }],
           l: ['p-signin', 's-arrival', 'p-foundry'] },
-        { id: 'p-wallet', s: 'One Wallet', t: 'One Wallet for Every Room (SEIT)', st: 'flight',
-          d: 'You pay with credits called SEIT. The cost is set aside first, the work is done, then only the true cost is charged. Credits that expire soonest get used first.',
-          stage: 'Working today for Seitiate+ and the Assistant. Sharing the wallet with Sakme and the science rooms is planned.',
-          b: [{ k: 'Prices', v: 'Future price tiers have not been published.' }],
+        { id: 'p-ladder', s: 'Five Steps', t: 'How Seitiate Grows With You (Five Steps)', st: 'live',
+          d: 'Start with your own Personal Assistant (Step 1), invite peers into Shared Spaces (Step 2), sell courses or channels as a Creator or Specialist (Step 3), co-build applications (Step 4), or run a complete business on our infrastructure (Step 5).',
+          stage: 'Steps 1 and 2 work today; Steps 3 to 5 are opening in beta cohorts.',
+          b: [{ k: 'Who looks after it', v: 'Seitiate Plus & Verticals workshops.' }],
+          l: ['p-signin', 'p-wallet', 's-spaces'] },
+        { id: 'p-wallet', s: 'One Wallet (SEIT)', t: 'One SEIT Wallet (1 SEIT = US$1.00)', st: 'flight',
+          d: 'The platform credit, SEIT, connects every activity at 1 SEIT = US$1.00. Members receive SEIT in monthly plans, top up by card or crypto, spend or transfer SEIT across creator offerings, and redeem earned SEIT for crypto via CryptoPass wallet verification.',
+          stage: 'Working today for Seitiate+ and the Assistant; full cross-room marketplace settlement is in beta.',
+          b: [{ k: 'Plans', v: '$20/mo Starter, $60/mo Pro, and $200/mo Max & Partner.' }],
           l: ['p-pay', 's-spaces', 'p-foundry'] },
         { id: 'p-pay', s: 'Paying for AI', t: 'Three Ways to Pay for the AI', st: 'flight',
           d: 'You can use your own AI account key, connect a subscription you already pay for, or use SEIT credits. The system tries them in that order.',
@@ -339,21 +345,21 @@ class Component extends DCLogic {
           stage: 'Built and tested on sample data. Live connections to the databases are still to come.',
           b: [{ k: 'Databases', v: 'PubMed, OpenAlex, EuropePMC, ClinicalTrials.gov, ChEMBL and RCSB PDB.' }],
           l: ['e-evidence', 'p-foundry', 'p-packs'] },
-        { id: ‘p-henni’, s: ‘Energy Lab’, t: ‘Energy Lab’, st: ‘live’,
-          d: ‘A live working example: a lab tool that works out which appliances are using electricity from a single meter reading.’,
-          stage: ‘Up and running, used by the lab it was built for.’,
-          b: [{ k: ‘Who it’s for’, v: ‘A university research team.’ }],
+        { id: 'p-henni', s: 'Energy Lab Lab', t: 'Energy Lab Lab', st: 'live',
+          d: 'A live working example: a lab tool that works out which appliances are using electricity from a single meter reading.',
+          stage: 'Up and running, used by the lab it was built for.',
+          b: [{ k: 'Who it’s for', v: 'Sahar Moghimian and Ilia Kamyshev, under Prof. Henni.' }],
           l: ['p-packs', 'p-foundry', 'p-bridge'] },
         { id: 'p-packs', s: 'Field Benches', t: 'Plug-In Benches for Each Science', st: 'flight',
           d: 'Each field can have its own specialised workbench that plugs into the same core, so nobody has to rebuild the basics.',
-          stage: 'The plug-in method is built, with the Energy Lab as the working example. The others are at earlier stages.',
-          b: [{ k: 'Fields', v: 'Genomics, machine learning on small devices, world models, and electrochemistry and biosensors.' }],
+          stage: 'The plug-in method is built, with Energy Lab as the working example. The others are at earlier stages.',
+          b: [{ k: 'Fields', v: 'Mendel for genomics, Pipette-Lab for machine learning on small devices, Imperfective for world models, and Sensarra for electrochemistry and biosensors.' }],
           l: ['p-henni', 'p-hub'] },
         { id: 'p-bridge', s: 'Lab to Office', t: 'From Lab Result to Running Business', st: 'flight',
           d: 'A path that carries a discovery all the way to a business: research, then checked evidence, then patents and quality paperwork, then the office and a public website.',
           loop: 'Experiment → audit → ship ↺',
           stage: 'The first two stages are built or running. The last two are proposed.',
-          b: [{ k: 'Partners involved', v: 'Uses an external business-planning service, hosted independently.' }],
+          b: [{ k: 'Partners involved', v: 'Uses Startuplan, which remains owned by IES. Being allowed to use the hosted service does not grant any right to copy its code.' }],
           l: ['p-foundry', 's-office', 'p-xrusted'] },
         { id: 'p-partner', s: 'Partner Rooms', t: 'How Any Company Can Add a Room', st: 'flight',
           d: 'An outside company can plug its product into the estate through one standard connection. It keeps its own servers, brand and intellectual property, and never holds anyone’s private memory.',
@@ -362,11 +368,11 @@ class Component extends DCLogic {
           l: ['e-seam', 'p-rooms', 'p-xrusted'] },
         { id: 'p-xrusted', s: 'xRusted', t: 'Websites That AIs Can Also Read', st: 'planned',
           d: 'A partner product that builds one website in two forms: a fast site for people, and a clear doorway for visiting AI agents.',
-          stage: 'Specified, to be hosted independently.',
+          stage: 'Specified. It would be IES’s product on IES’s servers.',
           l: ['p-bridge', 'p-partner'] },
-        { id: 'p-hooshi', s: 'Speech', t: 'Speech-to-Text', st: 'flight',
-          d: 'A speech transcription service that would let people speak to the estate by voice.',
-          stage: 'The service is built externally. Linking it to the estate with consent is planned.',
+        { id: 'p-hooshi', s: 'Speech-to-Text', t: 'Speech-to-Text Speech-to-Text', st: 'flight',
+          d: 'A speech transcription service built by the partner studio, which would let people speak to the estate.',
+          stage: 'The service is built by IES. Linking it to the estate with consent is planned.',
           b: [{ k: 'Also under discussion', v: 'A security “sparring partner” that tests a website, with the owner’s permission. Who would own it is still an open question.' }],
           l: ['a-voice', 'p-partner'] }
       ] },
@@ -612,7 +618,7 @@ class Component extends DCLogic {
   renderVals() {
     const ST = Component.ST, D = Component.DOMAINS, CORE = Component.CORE;
     const { focus, lens, phase, W, H } = this.state;
-    const pvMode = false;
+    const ies = false;
     const showLinks = this.props.showLinks ?? true;
     const { P, R, cx, cy, u, lensD } = this.layout();
     const stop = e => e.stopPropagation();
@@ -624,7 +630,7 @@ class Component extends DCLogic {
       const d = Math.max(p.d, 1);
       const bw = (kind === 'core' ? 1.5 : 1) * 100 / d;
       const st = ST[info.st || 'live'];
-      const dim = pvMode && !info.pvMode ? 0.22 : 1;
+      const dim = ies && !info.ies ? 0.22 : 1;
       let bg = '#0e1015', border, shadow = 'none';
       if (p.dot) { bg = st.c; border = 'none'; }
       else if (kind === 'core') { bg = '#161a22'; border = `${bw}px solid rgba(57,255,20,0.55)`; shadow = '0 0 60px rgba(57,255,20,0.14)'; }
@@ -652,16 +658,16 @@ class Component extends DCLogic {
       });
     };
 
-    push('core', 'core', { name: CORE.t, st: 'flight', pvMode: true, onClick: () => focus ? this.setState({ focus: null, lens: null }) : this.openLens(null, 'core') });
+    push('core', 'core', { name: CORE.t, st: 'flight', ies: true, onClick: () => focus ? this.setState({ focus: null, lens: null }) : this.openLens(null, 'core') });
     D.forEach((dm, i) => {
       push(dm.id, 'domain', {
-        name: dm.t, pvMode: dm.subs.some(s => s.pvMode), c: this.counts(dm),
+        name: dm.t, ies: dm.subs.some(s => s.ies), c: this.counts(dm),
         kicker: `${dm.subs.length} parts`,
         onClick: () => (focus === dm.id ? (lens === dm.id ? this.setState({ lens: null }) : this.openLens(dm.id, dm.id)) : this.setState({ focus: dm.id, lens: null }))
       });
     });
     D.forEach(dm => dm.subs.forEach(s => {
-      push(s.id, 'sub', { name: s.s, st: s.st, pvMode: s.pvMode, onClick: () => (lens === s.id ? this.setState({ lens: null }) : this.openLens(dm.id, s.id)) });
+      push(s.id, 'sub', { name: s.s, st: s.st, ies: s.ies, onClick: () => (lens === s.id ? this.setState({ lens: null }) : this.openLens(dm.id, s.id)) });
     }));
 
     const rings = Object.keys(R).map(k => {
