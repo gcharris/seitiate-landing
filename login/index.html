@@ -3,99 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Log in or Apply as a Beta Tester — Seitiate+</title>
-    <meta name="description" content="Sign in to your Seitiate+ workspace or apply for invited Beta Tester access to Seitiate Personal Assistant, Multi-Agent Rooms, and Evidence Foundry.">
+    <title>Log In or Apply as a Beta Tester — Seitiate</title>
+    <meta name="description" content="Sign in to your Seitiate workspace or apply for beta access to your Personal Assistant, shared spaces, and the SEIT economy.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #08090b; --surface: #0f1114; --surface-hover: #15181e; --border: #1e222b;
-            --text: #eceae7; --text-secondary: #8a8a90; --text-muted: #56585f;
-            --accent: #4ade80; --amber: #e0b34a; --cyan: #38bdf8;
+            --bg: #09090b;
+            --surface: #111114;
+            --surface-2: #18181b;
+            --border: #27272a;
+            --border-subtle: #1e1e21;
+            --text: #fafaf9;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --accent: #4ade80;
+            --accent-dim: rgba(74, 222, 128, 0.12);
+            --serif: 'Instrument Serif', Georgia, serif;
+            --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--sans);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
         a { color: inherit; text-decoration: none; }
+
         nav {
-            padding: 14px 28px; display: flex; justify-content: space-between; align-items: center;
-            background: rgba(8, 9, 11, 0.9); border-bottom: 1px solid var(--border);
+            padding: 0 32px; height: 64px;
+            display: flex; align-items: center; justify-content: space-between;
+            border-bottom: 1px solid var(--border-subtle);
         }
-        nav .brand { display: flex; align-items: center; gap: 9px; font-size: 15px; font-weight: 600; }
-        nav .brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
-        nav .back { font-size: 0.84rem; color: var(--text-secondary); }
-        nav .back:hover { color: var(--text); }
+        .nav-brand {
+            display: flex; align-items: center; gap: 10px;
+            font-size: 15px; font-weight: 600; letter-spacing: -0.02em;
+        }
+        .nav-dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 12px rgba(74, 222, 128, 0.4);
+        }
+        .nav-back {
+            font-size: 13.5px; color: var(--text-muted);
+            transition: color 0.15s;
+        }
+        .nav-back:hover { color: var(--text); }
 
-        .container {
-            max-width: 920px; width: 100%; margin: 48px auto; padding: 0 24px; flex: 1;
-            display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 24px; align-items: start;
+        .page {
+            max-width: 960px; width: 100%; margin: 56px auto; padding: 0 24px; flex: 1;
+            display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 20px; align-items: start;
         }
+
         .card {
-            border: 1px solid var(--border); background: var(--surface); border-radius: 14px; padding: 30px;
+            border: 1px solid var(--border-subtle);
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 36px 32px;
         }
-        .card.beta-card {
-            border-color: rgba(74, 222, 128, 0.4);
-            background: linear-gradient(180deg, rgba(15, 20, 18, 0.96) 0%, rgba(12, 14, 18, 0.99) 100%);
+        .card.primary {
+            border-color: rgba(74, 222, 128, 0.3);
+            background: linear-gradient(180deg, rgba(74, 222, 128, 0.03), var(--surface));
         }
-        .kicker { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--accent); letter-spacing: 0.04em; margin-bottom: 6px; }
-        .kicker.cyan { color: var(--cyan); }
-        h1 { font-size: 1.55rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px; }
-        h2 { font-size: 1.25rem; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 8px; }
-        .sub { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 22px; }
 
-        .field { margin-bottom: 15px; }
-        label { display: block; font-size: 0.8rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 6px; }
-        input, select, textarea {
-            width: 100%; background: #08090b; border: 1px solid #282c37; border-radius: 8px;
-            padding: 10px 13px; color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.9rem; outline: none;
+        .card-label {
+            font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+            text-transform: uppercase; margin-bottom: 12px;
         }
-        input:focus, select:focus, textarea:focus { border-color: var(--accent); }
-        textarea { resize: vertical; min-height: 76px; }
+        .card-label.green { color: var(--accent); }
+        .card-label.blue { color: #60a5fa; }
+
+        h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px; }
+        h2 { font-size: 18px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 8px; }
+        .sub { font-size: 14.5px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 28px; }
+
+        .field { margin-bottom: 18px; }
+        label {
+            display: block; font-size: 13px; font-weight: 500;
+            color: var(--text-secondary); margin-bottom: 6px;
+        }
+        input, select, textarea {
+            width: 100%; background: var(--bg);
+            border: 1px solid var(--border); border-radius: 10px;
+            padding: 11px 14px; color: var(--text);
+            font-family: var(--sans); font-size: 14.5px; outline: none;
+            transition: border-color 0.15s;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--accent);
+        }
+        input::placeholder, textarea::placeholder { color: var(--text-muted); }
+        textarea { resize: vertical; min-height: 80px; }
+        select { cursor: pointer; }
 
         .btn {
-            width: 100%; background: var(--accent); color: #08090b; border: none; border-radius: 8px;
-            padding: 11px 18px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: opacity 0.15s;
+            width: 100%; background: var(--accent); color: var(--bg);
+            border: none; border-radius: 10px;
+            padding: 12px 20px; font-size: 14.5px; font-weight: 600;
+            cursor: pointer; transition: opacity 0.15s;
+            font-family: var(--sans);
         }
-        .btn:hover { opacity: 0.92; }
-        .btn-outline {
-            width: 100%; background: var(--surface-hover); color: var(--text); border: 1px solid var(--border);
-            border-radius: 8px; padding: 10px 18px; font-size: 0.88rem; font-weight: 500; cursor: pointer; margin-top: 10px;
-            display: inline-block; text-align: center;
-        }
-        .btn-outline:hover { border-color: rgba(255,255,255,0.3); }
+        .btn:hover { opacity: 0.9; }
 
         .status-box {
-            display: none; margin-top: 16px; padding: 14px 16px; border-radius: 9px;
-            border: 1px solid rgba(74, 222, 128, 0.4); background: rgba(74, 222, 128, 0.08);
-            font-size: 0.85rem; color: var(--text);
+            display: none; margin-top: 18px; padding: 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(74, 222, 128, 0.3);
+            background: rgba(74, 222, 128, 0.06);
+            font-size: 14px; color: var(--text); line-height: 1.6;
         }
-        .divider { height: 1px; background: var(--border); margin: 20px 0; }
-        .meta-note { font-size: 0.78rem; color: var(--text-muted); margin-top: 14px; }
+        .divider { height: 1px; background: var(--border-subtle); margin: 24px 0; }
+        .meta-note { font-size: 13px; color: var(--text-muted); margin-top: 16px; line-height: 1.55; }
 
         footer {
-            border-top: 1px solid var(--border); padding: 20px 28px; font-size: 0.78rem;
-            color: var(--text-muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+            border-top: 1px solid var(--border-subtle);
+            padding: 24px 32px;
+            font-size: 13px; color: var(--text-muted);
+            display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
         }
-        footer a { color: var(--text-secondary); }
-        @media (max-width: 760px) {
-            .container { grid-template-columns: 1fr; margin: 28px auto; }
+        footer a { color: var(--text-muted); transition: color 0.15s; }
+        footer a:hover { color: var(--text-secondary); }
+
+        @media (max-width: 768px) {
+            .page { grid-template-columns: 1fr; margin: 32px auto; }
+            nav { padding: 0 20px; }
         }
     </style>
 </head>
 <body>
     <nav>
-        <a href="/" class="brand"><span class="dot"></span><span>Seitiate+</span></a>
-        <a href="/" class="back">← Back to Seitiate.com</a>
+        <a href="/" class="nav-brand"><span class="nav-dot"></span><span>Seitiate</span></a>
+        <a href="/" class="nav-back">&larr; Back to seitiate.com</a>
     </nav>
 
-    <div class="container">
-        <!-- Left: Apply as a Beta Tester -->
-        <div class="card beta-card">
-            <div class="kicker">INVITED COHORT &amp; PARTNER ONBOARDING</div>
-            <h1>Apply as a Seitiate+ Beta Tester</h1>
+    <div class="page">
+        <div class="card primary">
+            <div class="card-label green">Beta Access</div>
+            <h1>Apply as a Beta Tester</h1>
             <p class="sub">
-                Seitiate+ is onboarding beta testers across our Individual ($20/mo), Pro ($60/mo), and Max ($200/mo) workspaces.
-                Request your invite below to activate your Personal Assistant, shared spaces, and initial SEIT credits.
+                We&rsquo;re onboarding beta testers across our Starter ($20/mo), Pro ($60/mo), and Max ($200/mo) plans.
+                Apply below to activate your Personal Assistant, shared spaces, and initial SEIT credits.
             </p>
 
             <form id="beta-form">
@@ -104,65 +157,57 @@
                     <input type="text" id="beta-name" name="name" placeholder="Ada Lovelace" required>
                 </div>
                 <div class="field">
-                    <label for="beta-email">Work or Academic Email</label>
-                    <input type="email" id="beta-email" name="email" placeholder="ada@analytical.org" required>
+                    <label for="beta-email">Email</label>
+                    <input type="email" id="beta-email" name="email" placeholder="ada@example.com" required>
                 </div>
                 <div class="field">
-                    <label for="beta-focus">Primary Workspace Focus</label>
+                    <label for="beta-focus">What interests you most?</label>
                     <select id="beta-focus" name="focus">
-                        <option value="personal-assistant">Step 1–2: Personal Assistant &amp; Shared Spaces ($20/mo Starter)</option>
-                        <option value="research-foundry" selected>Step 2–3: Shared Spaces, Research &amp; Creator Publishing ($60/mo Pro)</option>
-                        <option value="harbor-builder">Step 4–5: Building Applications &amp; Running a Business ($200/mo Max)</option>
-                        <option value="partner-review">Institutional / Payment Partner Verification Review</option>
+                        <option value="personal-assistant">Personal Assistant &amp; Shared Spaces (Starter, $20/mo)</option>
+                        <option value="creator" selected>Creator Publishing &amp; Research (Pro, $60/mo)</option>
+                        <option value="builder">Building Applications &amp; Running a Business (Max, $200/mo)</option>
                     </select>
                 </div>
                 <div class="field">
-                    <label for="beta-notes">What would you like your Seitiate workspace to remember and build?</label>
-                    <textarea id="beta-notes" name="notes" placeholder="Briefly describe your workflow, research domain, or team room requirements..."></textarea>
+                    <label for="beta-notes">Tell us briefly what you&rsquo;d like to build or explore</label>
+                    <textarea id="beta-notes" name="notes" placeholder="Your workflow, interests, or what you'd like your assistant to help with..."></textarea>
                 </div>
-                <button type="submit" class="btn">Submit Beta Tester Application →</button>
+                <button type="submit" class="btn">Submit Application &rarr;</button>
             </form>
 
             <div id="beta-status" class="status-box"></div>
             <p class="meta-note">
-                Reviewed daily by the Agent-C LLC engineering team. Approved beta testers receive a single-use workspace activation token and initial SEIT compute credits.
+                Applications are reviewed daily. Approved testers receive an activation token and initial SEIT credits by email.
             </p>
         </div>
 
-        <!-- Right: Existing Member Sign-In -->
         <div class="card">
-            <div class="kicker cyan">EXISTING WORKSPACE MEMBERS</div>
-            <h2>Sign in to Seitiate+</h2>
-            <p class="sub">Already have a workspace invite token or active Seitiate+ account? Sign in below.</p>
+            <div class="card-label blue">Existing Members</div>
+            <h2>Sign In</h2>
+            <p class="sub">Already have a workspace token or active account? Sign in below.</p>
 
             <form id="login-form">
                 <div class="field">
-                    <label for="login-email">Workspace Email</label>
-                    <input type="email" id="login-email" placeholder="you@company.com" required>
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" placeholder="you@example.com" required>
                 </div>
                 <div class="field">
-                    <label for="login-token">Invite Token or Passkey Code</label>
-                    <input type="password" id="login-token" placeholder="••••••••••••••••" required>
+                    <label for="login-token">Invite Token or Passkey</label>
+                    <input type="password" id="login-token" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;" required>
                 </div>
-                <button type="submit" class="btn">Continue to Workspace →</button>
+                <button type="submit" class="btn">Continue &rarr;</button>
             </form>
 
             <div id="login-status" class="status-box"></div>
-
-            <div class="divider"></div>
-            <p style="font-size: 0.82rem; color: var(--text-secondary);">
-                Looking for our vertical creative &amp; research workspace?
-            </p>
-            <a href="https://app.sakme.ai/login" class="btn-outline">Open Sakme Workspace Login →</a>
         </div>
     </div>
 
     <footer>
-        <span>&copy; 2026 Agent-C LLC · Seitiate &amp; Seitiate+</span>
+        <span>&copy; 2026 Agent-C LLC &middot; Seitiate</span>
         <span>
-            <a href="/terms.html">Terms of Use</a> &middot;
-            <a href="/privacy.html">Privacy Policy</a> &middot;
-            <a href="/licensing.html">Licensing</a>
+            <a href="/">Home</a> &middot;
+            <a href="/terms.html">Terms</a> &middot;
+            <a href="/privacy.html">Privacy</a>
         </span>
     </footer>
 
@@ -172,19 +217,19 @@
             var plan = params.get("plan");
             var select = document.getElementById("beta-focus");
             if (plan === "starter" && select) select.value = "personal-assistant";
-            if (plan === "pro" && select) select.value = "research-foundry";
-            if (plan === "max" && select) select.value = "harbor-builder";
+            if (plan === "pro" && select) select.value = "creator";
+            if (plan === "max" && select) select.value = "builder";
 
             document.getElementById("beta-form").addEventListener("submit", function (e) {
                 e.preventDefault();
                 var name = document.getElementById("beta-name").value.trim();
                 var email = document.getElementById("beta-email").value.trim();
-                var focus = document.getElementById("beta-focus").value;
                 var status = document.getElementById("beta-status");
                 status.style.display = "block";
-                status.innerHTML = "<strong>Application recorded for " + email.replace(/</g, "&lt;") + ".</strong><br>" +
-                    "Your Seitiate+ Beta Tester request (" + focus.replace(/</g, "&lt;") + ") is queued for cohort activation. " +
-                    "For immediate partner or compliance verification access, email <a href='mailto:support@seitiate.com?subject=Seitiate%2B%20Beta%20Access%20(" +
+                status.innerHTML = "<strong>Application received.</strong><br>" +
+                    "We’ve recorded your request for " + email.replace(/</g, "&lt;") + ". " +
+                    "You’ll receive an activation token by email once approved. " +
+                    "For questions, email <a href='mailto:support@seitiate.com?subject=Beta%20Access%20(" +
                     encodeURIComponent(name) + ")' style='color:#4ade80;text-decoration:underline;'>support@seitiate.com</a>.";
             });
 
@@ -193,8 +238,8 @@
                 var email = document.getElementById("login-email").value.trim();
                 var status = document.getElementById("login-status");
                 status.style.display = "block";
-                status.innerHTML = "<strong>Invite token required:</strong> We could not match an active beta session for <code>" +
-                    email.replace(/</g, "&lt;") + "</code>. Please complete the <strong>Apply as a Beta Tester</strong> form on the left to receive your activation token.";
+                status.innerHTML = "<strong>Token required.</strong> We couldn’t find an active session for " +
+                    email.replace(/</g, "&lt;") + ". If you don’t have a token yet, apply using the form on the left.";
             });
         })();
     </script>

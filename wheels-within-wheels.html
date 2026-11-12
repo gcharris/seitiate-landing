@@ -57,7 +57,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
           <div style="font-size:24px;line-height:1.18;font-weight:500;letter-spacing:-0.02em;color:#c8d0dc;text-wrap:balance">{{ lens.title }}</div>
           <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center">
             <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.1em;padding:3px 9px;border-radius:100px;border:1px {{ lens.dash }} {{ lens.sc }};color:{{ lens.sc }};white-space:nowrap">{{ lens.stLabel }}</span>
-            <sc-if value="{{ lens.noChip }}" hint-placeholder-val="{{ false }}"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.1em;padding:3px 9px;border-radius:100px;border:1px solid rgba(200,208,220,0.25);color:#c8d0dc;white-space:nowrap">Partner Vertical TOUCHPOINT</span></sc-if>
+            <sc-if value="{{ lens.noChip }}" hint-placeholder-val="{{ false }}"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.1em;padding:3px 9px;border-radius:100px;border:1px solid rgba(200,208,220,0.25);color:#c8d0dc;white-space:nowrap">PARTNER TOUCHPOINT</span></sc-if>
           </div>
         </div>
         <p style="margin:0;font-size:15px;line-height:1.6;color:#c8d0dc;text-wrap:pretty">{{ lens.desc }}</p>
@@ -250,8 +250,8 @@ class Component extends DCLogic {
           stage: 'Designed, on the roadmap.',
           l: ['a-talk', 'a-skills'] },
         { id: 'a-voice', s: 'Speaking Aloud', t: 'Talking by Voice', st: 'planned',
-          d: 'Speak to your assistant instead of typing, using Hooshi, a speech-to-text service built by the partner company Partner Vertical.',
-          stage: 'Hooshi itself exists. The link to it, with your consent built in, is planned.',
+          d: 'Speak to your assistant instead of typing, using a speech-to-text service.',
+          stage: 'The speech service exists. Linking it to the estate, with your consent, is planned.',
           l: ['p-hooshi', 'a-talk'] }
       ] },
     { id: 'door', t: 'The Front Door', eb: 'Seitiate+ · one way in',
@@ -339,21 +339,21 @@ class Component extends DCLogic {
           stage: 'Built and tested on sample data. Live connections to the databases are still to come.',
           b: [{ k: 'Databases', v: 'PubMed, OpenAlex, EuropePMC, ClinicalTrials.gov, ChEMBL and RCSB PDB.' }],
           l: ['e-evidence', 'p-foundry', 'p-packs'] },
-        { id: 'p-henni', s: 'HenniPenny Lab', t: 'HenniPenny Lab', st: 'live',
-          d: 'A live working example: a lab tool that works out which appliances are using electricity from a single meter reading.',
-          stage: 'Up and running, used by the lab it was built for.',
-          b: [{ k: 'Who it’s for', v: 'Partner Lead Moghimian and Partner Director Kamyshev, under Prof. Henni.' }],
+        { id: ‘p-henni’, s: ‘Energy Lab’, t: ‘Energy Lab’, st: ‘live’,
+          d: ‘A live working example: a lab tool that works out which appliances are using electricity from a single meter reading.’,
+          stage: ‘Up and running, used by the lab it was built for.’,
+          b: [{ k: ‘Who it’s for’, v: ‘A university research team.’ }],
           l: ['p-packs', 'p-foundry', 'p-bridge'] },
         { id: 'p-packs', s: 'Field Benches', t: 'Plug-In Benches for Each Science', st: 'flight',
           d: 'Each field can have its own specialised workbench that plugs into the same core, so nobody has to rebuild the basics.',
-          stage: 'The plug-in method is built, with HenniPenny as the working example. The others are at earlier stages.',
-          b: [{ k: 'Fields', v: 'Mendel for genomics, Pipette-Lab for machine learning on small devices, Partner Studio for world models, and Sensarra for electrochemistry and biosensors.' }],
+          stage: 'The plug-in method is built, with the Energy Lab as the working example. The others are at earlier stages.',
+          b: [{ k: 'Fields', v: 'Genomics, machine learning on small devices, world models, and electrochemistry and biosensors.' }],
           l: ['p-henni', 'p-hub'] },
         { id: 'p-bridge', s: 'Lab to Office', t: 'From Lab Result to Running Business', st: 'flight',
           d: 'A path that carries a discovery all the way to a business: research, then checked evidence, then patents and quality paperwork, then the office and a public website.',
           loop: 'Experiment → audit → ship ↺',
           stage: 'The first two stages are built or running. The last two are proposed.',
-          b: [{ k: 'Partners involved', v: 'Uses Startuplan, which remains owned by Partner Vertical. Being allowed to use the hosted service does not grant any right to copy its code.' }],
+          b: [{ k: 'Partners involved', v: 'Uses an external business-planning service, hosted independently.' }],
           l: ['p-foundry', 's-office', 'p-xrusted'] },
         { id: 'p-partner', s: 'Partner Rooms', t: 'How Any Company Can Add a Room', st: 'flight',
           d: 'An outside company can plug its product into the estate through one standard connection. It keeps its own servers, brand and intellectual property, and never holds anyone’s private memory.',
@@ -362,11 +362,11 @@ class Component extends DCLogic {
           l: ['e-seam', 'p-rooms', 'p-xrusted'] },
         { id: 'p-xrusted', s: 'xRusted', t: 'Websites That AIs Can Also Read', st: 'planned',
           d: 'A partner product that builds one website in two forms: a fast site for people, and a clear doorway for visiting AI agents.',
-          stage: 'Specified. It would be Partner Vertical’s product on Partner Vertical’s servers.',
+          stage: 'Specified, to be hosted independently.',
           l: ['p-bridge', 'p-partner'] },
-        { id: 'p-hooshi', s: 'Hooshi', t: 'Hooshi Speech-to-Text', st: 'flight',
-          d: 'A speech transcription service built by the partner company Partner Vertical, which would let people speak to the estate.',
-          stage: 'The service is built by Partner Vertical. Linking it to the estate with consent is planned.',
+        { id: 'p-hooshi', s: 'Speech', t: 'Speech-to-Text', st: 'flight',
+          d: 'A speech transcription service that would let people speak to the estate by voice.',
+          stage: 'The service is built externally. Linking it to the estate with consent is planned.',
           b: [{ k: 'Also under discussion', v: 'A security “sparring partner” that tests a website, with the owner’s permission. Who would own it is still an open question.' }],
           l: ['a-voice', 'p-partner'] }
       ] },
@@ -612,7 +612,7 @@ class Component extends DCLogic {
   renderVals() {
     const ST = Component.ST, D = Component.DOMAINS, CORE = Component.CORE;
     const { focus, lens, phase, W, H } = this.state;
-    const Partner Vertical = false;
+    const pvMode = false;
     const showLinks = this.props.showLinks ?? true;
     const { P, R, cx, cy, u, lensD } = this.layout();
     const stop = e => e.stopPropagation();
@@ -624,7 +624,7 @@ class Component extends DCLogic {
       const d = Math.max(p.d, 1);
       const bw = (kind === 'core' ? 1.5 : 1) * 100 / d;
       const st = ST[info.st || 'live'];
-      const dim = Partner Vertical && !info.Partner Vertical ? 0.22 : 1;
+      const dim = pvMode && !info.pvMode ? 0.22 : 1;
       let bg = '#0e1015', border, shadow = 'none';
       if (p.dot) { bg = st.c; border = 'none'; }
       else if (kind === 'core') { bg = '#161a22'; border = `${bw}px solid rgba(57,255,20,0.55)`; shadow = '0 0 60px rgba(57,255,20,0.14)'; }
@@ -652,16 +652,16 @@ class Component extends DCLogic {
       });
     };
 
-    push('core', 'core', { name: CORE.t, st: 'flight', Partner Vertical: true, onClick: () => focus ? this.setState({ focus: null, lens: null }) : this.openLens(null, 'core') });
+    push('core', 'core', { name: CORE.t, st: 'flight', pvMode: true, onClick: () => focus ? this.setState({ focus: null, lens: null }) : this.openLens(null, 'core') });
     D.forEach((dm, i) => {
       push(dm.id, 'domain', {
-        name: dm.t, Partner Vertical: dm.subs.some(s => s.Partner Vertical), c: this.counts(dm),
+        name: dm.t, pvMode: dm.subs.some(s => s.pvMode), c: this.counts(dm),
         kicker: `${dm.subs.length} parts`,
         onClick: () => (focus === dm.id ? (lens === dm.id ? this.setState({ lens: null }) : this.openLens(dm.id, dm.id)) : this.setState({ focus: dm.id, lens: null }))
       });
     });
     D.forEach(dm => dm.subs.forEach(s => {
-      push(s.id, 'sub', { name: s.s, st: s.st, Partner Vertical: s.Partner Vertical, onClick: () => (lens === s.id ? this.setState({ lens: null }) : this.openLens(dm.id, s.id)) });
+      push(s.id, 'sub', { name: s.s, st: s.st, pvMode: s.pvMode, onClick: () => (lens === s.id ? this.setState({ lens: null }) : this.openLens(dm.id, s.id)) });
     }));
 
     const rings = Object.keys(R).map(k => {
