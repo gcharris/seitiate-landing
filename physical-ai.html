@@ -1,432 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Seitiate — Your Assistant in the Physical World</title>
-  <script src="/assets/gate.js"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #faf8f5;
-      --surface: #ffffff;
-      --surface-warm: #f3efe8;
-      --ink: #191816;
-      --ink-soft: #4a4742;
-      --ink-muted: #78736a;
-      --accent: #8c5a2b;
-      --border: #e6e0d6;
-    }
-    *, *::before, *::after {
-      box-sizing: border-box !important;
-    }
-    html, body {
-      width: 100% !important;
-      max-width: 100vw !important;
-      overflow-x: hidden !important;
-      margin: 0;
-      padding: 0;
-      background: var(--bg);
-      color: var(--ink);
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      line-height: 1.65;
-      -webkit-font-smoothing: antialiased;
-    }
-    img, svg {
-      max-width: 100% !important;
-      height: auto;
-      display: block;
-    }
-    header {
-      border-bottom: 1px solid var(--border);
-      background: rgba(250, 248, 245, 0.94);
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      backdrop-filter: blur(8px);
-    }
-    .nav-wrap {
-      max-width: 1040px;
-      margin: 0 auto;
-      padding: 14px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    .brand {
-      font-family: 'Instrument Serif', Georgia, serif;
-      font-size: 1.5rem;
-      color: var(--ink);
-      text-decoration: none;
-      letter-spacing: -0.01em;
-    }
-    .nav-links {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px 18px;
-      font-size: 0.88rem;
-    }
-    .nav-links a {
-      color: var(--ink-soft);
-      text-decoration: none;
-    }
-    .nav-links a:hover, .nav-links a.active {
-      color: var(--ink);
-      font-weight: 500;
-    }
-    .nav-cta {
-      padding: 6px 12px;
-      border-radius: 6px;
-      border: 1px solid var(--ink);
-      color: var(--ink) !important;
-      font-weight: 500;
-      font-size: 0.82rem;
-    }
-    main {
-      max-width: 840px;
-      margin: 0 auto;
-      padding: 44px 20px 72px;
-    }
-    .eyebrow {
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--accent);
-      font-weight: 600;
-      margin-bottom: 10px;
-    }
-    h1 {
-      font-family: 'Instrument Serif', Georgia, serif;
-      font-weight: 400;
-      font-size: clamp(2rem, 6vw, 3.1rem);
-      line-height: 1.15;
-      margin: 0 0 18px;
-      letter-spacing: -0.015em;
-    }
-    .lead {
-      font-size: 1.08rem;
-      color: var(--ink-soft);
-      margin: 0 0 32px;
-    }
-    /* Smart Glasses Hero Showcase Card */
-    .glasses-card {
-      background: #141311;
-      color: #f7f4ee;
-      border-radius: 16px;
-      padding: 28px 22px;
-      margin-bottom: 36px;
-      box-shadow: 0 16px 40px rgba(25, 24, 22, 0.12);
-      overflow: hidden;
-    }
-    .glasses-badge {
-      display: inline-block;
-      font-size: 0.72rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #e5c396;
-      background: rgba(229, 195, 150, 0.12);
-      border: 1px solid rgba(229, 195, 150, 0.3);
-      padding: 4px 10px;
-      border-radius: 999px;
-      margin-bottom: 14px;
-    }
-    .glasses-svg-wrap {
-      width: 100%;
-      margin: 8px 0 18px;
-      background: radial-gradient(circle at 65% 45%, rgba(212, 163, 96, 0.22), rgba(20, 19, 17, 0.95) 72%);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 12px;
-      padding: 18px 12px;
-    }
-    .glasses-caption {
-      font-size: 0.88rem;
-      color: #c9c3b8;
-      margin: 0;
-    }
-    /* Three Editorial Paragraphs */
-    .editorial-prose {
-      margin: 36px 0;
-    }
-    .editorial-prose h2 {
-      font-family: 'Instrument Serif', Georgia, serif;
-      font-weight: 400;
-      font-size: 1.6rem;
-      margin: 28px 0 10px;
-      color: var(--ink);
-    }
-    .editorial-prose p {
-      font-size: 1.02rem;
-      color: var(--ink-soft);
-      margin: 0 0 20px;
-    }
-    /* Makers & Sakme Journey Stills */
-    .scenes-section {
-      margin-top: 48px;
-      padding-top: 36px;
-      border-top: 1px solid var(--border);
-    }
-    .scenes-section h2 {
-      font-family: 'Instrument Serif', Georgia, serif;
-      font-weight: 400;
-      font-size: clamp(1.65rem, 5vw, 2.2rem);
-      margin: 0 0 10px;
-    }
-    .scenes-sub {
-      color: var(--ink-soft);
-      font-size: 0.98rem;
-      margin: 0 0 26px;
-    }
-    .scenes-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-    }
-    .scene-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-    }
-    .scene-card.featured {
-      grid-column: 1 / -1;
-    }
-    .scene-card img {
-      width: 100%;
-      aspect-ratio: 16 / 10;
-      object-fit: cover;
-      border-bottom: 1px solid var(--border);
-    }
-    .scene-body {
-      padding: 16px 18px;
-    }
-    .scene-step {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--accent);
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-    .scene-title {
-      font-family: 'Instrument Serif', Georgia, serif;
-      font-size: 1.3rem;
-      margin: 0 0 6px;
-      color: var(--ink);
-    }
-    .scene-desc {
-      font-size: 0.9rem;
-      color: var(--ink-soft);
-      margin: 0;
-    }
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 28px 20px;
-      font-size: 0.84rem;
-      color: var(--ink-muted);
-      text-align: center;
-    }
-    footer a {
-      color: var(--ink-soft);
-      text-decoration: none;
-      margin: 0 8px;
-    }
-    @media (max-width: 680px) {
-      .nav-wrap { padding: 12px 16px; }
-      main { padding: 28px 16px 56px; }
-      .scenes-grid { grid-template-columns: 1fr; }
-      .glasses-card { padding: 20px 16px; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seitiate — Smart Glasses &amp; Customer Journeys</title>
+    <script src="/assets/gate.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #09090b; --surface: #111114; --surface-2: #18181b;
+            --border: #27272a; --border-subtle: #1e1e21;
+            --text: #fafaf9; --text-secondary: #a1a1aa; --text-muted: #71717a;
+            --accent: #4ade80; --accent-dim: rgba(74, 222, 128, 0.12);
+            --serif: 'Instrument Serif', Georgia, serif;
+            --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box !important; }
+        html, body {
+            width: 100% !important; max-width: 100vw !important; overflow-x: hidden !important;
+            font-family: var(--sans); background: var(--bg); color: var(--text);
+            line-height: 1.65; -webkit-font-smoothing: antialiased;
+        }
+        a { color: inherit; text-decoration: none; }
+        img { max-width: 100% !important; height: auto; display: block; }
+        nav {
+            position: sticky; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 10px 16px; min-height: 56px;
+            display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+            background: rgba(9, 9, 11, 0.88); backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        .nav-brand { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600; }
+        .nav-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px rgba(74, 222, 128, 0.4); }
+        .nav-links { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 14px; }
+        .nav-link { font-size: 13px; color: var(--text-secondary); }
+        .nav-link.active { color: var(--text); font-weight: 500; }
+        .nav-cta { font-size: 12px; font-weight: 600; color: var(--bg); background: var(--accent); padding: 6px 12px; border-radius: 7px; }
+        .container { max-width: 960px; margin: 0 auto; padding: 36px 16px 72px; }
+        .eyebrow {
+            display: inline-flex; font-size: 11px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.1em; color: var(--accent); background: var(--accent-dim);
+            padding: 5px 12px; border-radius: 999px; margin-bottom: 16px;
+        }
+        h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(32px, 7.5vw, 56px); line-height: 1.08; margin-bottom: 16px; }
+        h1 em { font-style: italic; color: var(--accent); }
+        .lead { font-size: 16px; color: var(--text-secondary); max-width: 660px; margin-bottom: 28px; }
+        .glasses-showcase { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin-bottom: 36px; }
+        .glasses-photo-wrap img { width: 100%; max-height: 380px; object-fit: cover; }
+        .in-lens-card {
+            background: #141418; border-top: 1px solid rgba(74, 222, 128, 0.3);
+            padding: 14px 16px;
+        }
+        .in-lens-kicker { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 3px; }
+        .in-lens-title { font-size: 13.5px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+        .in-lens-sub { font-size: 12.5px; color: var(--text-secondary); }
+        .glasses-caption { padding: 14px 16px; font-size: 13px; color: var(--text-muted); border-top: 1px solid var(--border-subtle); }
+        .prose-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 48px; }
+        .prose-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 18px; }
+        .prose-num { font-size: 11px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+        .prose-card h2 { font-family: var(--serif); font-weight: 400; font-size: 22px; margin-bottom: 8px; }
+        .prose-card p { font-size: 14px; color: var(--text-secondary); }
+        .journeys-header { border-top: 1px solid var(--border); padding-top: 40px; margin-bottom: 24px; }
+        .journeys-header h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(26px, 6vw, 40px); line-height: 1.12; margin-bottom: 10px; }
+        .journeys-header p { font-size: 15px; color: var(--text-secondary); }
+        .scenes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+        .scene-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+        .scene-card.featured { grid-column: 1 / -1; }
+        .scene-card img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-bottom: 1px solid var(--border); }
+        .scene-body { padding: 16px 18px; }
+        .scene-step { font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 4px; }
+        .scene-title { font-family: var(--serif); font-weight: 400; font-size: 21px; margin-bottom: 6px; }
+        .scene-desc { font-size: 13.5px; color: var(--text-secondary); }
+        footer { border-top: 1px solid var(--border-subtle); padding: 28px 16px; text-align: center; font-size: 12.5px; color: var(--text-muted); }
+        footer a { color: var(--text-secondary); margin: 0 6px; }
+        @media (max-width: 720px) {
+            .prose-grid, .scenes-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+<script>
+if (new URLSearchParams(window.location.search).get('w') === '390') {
+  document.documentElement.style.setProperty('max-width', '390px', 'important');
+  document.documentElement.style.setProperty('width', '390px', 'important');
+  document.addEventListener('DOMContentLoaded', function() {
+    document.body.style.setProperty('max-width', '390px', 'important');
+    document.body.style.setProperty('width', '390px', 'important');
+    var nav = document.querySelector('nav, header');
+    if (nav) { nav.style.setProperty('max-width', '390px', 'important'); nav.style.setProperty('width', '390px', 'important'); }
+  });
+}
+</script>
 </head>
 <body>
-  <header>
-    <div class="nav-wrap">
-      <a href="/index.html" class="brand">Seitiate</a>
-      <nav class="nav-links">
-        <a href="/index.html">Overview</a>
-        <a href="/five-rungs.html">Five Steps</a>
-        <a href="/physical-ai.html" class="active">Smart Glasses &amp; Journeys</a>
-        <a href="/wheels-within-wheels.html">The Estate Map</a>
-        <a href="/login/index.html" class="nav-cta">Log in / Beta</a>
-      </nav>
-    </div>
-  </header>
-
-  <main>
-    <div class="eyebrow">Beyond the Screen</div>
-    <h1>Your Personal Assistant, right where you are</h1>
-    <p class="lead">
-      Seitiate is designed for the moments when you are away from a desk—walking between meetings, reviewing a studio cut, or working hands-free through smart glasses while your creative and professional workflows keep moving in the background.
-    </p>
-
-    <div class="glasses-card">
-      <div class="glasses-badge">Smart Glasses &amp; In-Lens Companion</div>
-      <div class="glasses-svg-wrap" role="img" aria-label="Ray-Ban Meta Wayfarer style smart glasses with in-lens assistant prompt">
-        <!-- Authentic Wayfarer Smart Glasses silhouette with camera lens, status LED, and warm right-lens whisper card -->
-        <svg viewBox="0 0 680 250" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="frameGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#2c2a29"/>
-              <stop offset="50%" stop-color="#181716"/>
-              <stop offset="100%" stop-color="#0d0c0b"/>
-            </linearGradient>
-            <linearGradient id="lensLeft" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#25292e" stop-opacity="0.72"/>
-              <stop offset="100%" stop-color="#121417" stop-opacity="0.88"/>
-            </linearGradient>
-            <linearGradient id="lensRightHud" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#33291e" stop-opacity="0.78"/>
-              <stop offset="100%" stop-color="#171411" stop-opacity="0.92"/>
-            </linearGradient>
-          </defs>
-          <!-- Classic Bold Wayfarer Frame Outer Silhouette -->
-          <path d="M 55 58
-                   C 120 48, 235 50, 298 66
-                   C 322 72, 358 72, 382 66
-                   C 445 50, 560 48, 625 58
-                   L 638 86
-                   L 616 92
-                   C 610 156, 578 206, 498 210
-                   C 420 212, 386 168, 368 106
-                   C 352 98, 328 98, 312 106
-                   C 294 168, 260 212, 182 210
-                   C 102 206, 70 156, 64 92
-                   L 42 86 Z"
-                fill="url(#frameGrad)" stroke="#4a4640" stroke-width="2.5"/>
-          <!-- Left Wayfarer Lens -->
-          <path d="M 88 80
-                   C 138 72, 238 74, 282 88
-                   C 292 138, 266 190, 186 192
-                   C 114 190, 86 146, 88 80 Z"
-                fill="url(#lensLeft)" stroke="#5c564e" stroke-width="1.5"/>
-          <!-- Right Wayfarer Display Lens -->
-          <path d="M 398 88
-                   C 442 74, 542 72, 592 80
-                   C 594 146, 566 190, 494 192
-                   C 414 190, 388 138, 398 88 Z"
-                fill="url(#lensRightHud)" stroke="#8c6d46" stroke-width="1.8"/>
-          <!-- Corner Ultra-Wide Camera & Capture LED on Outer Brow -->
-          <circle cx="72" cy="74" r="7.5" fill="#0b0b0b" stroke="#6e6a63" stroke-width="2"/>
-          <circle cx="72" cy="74" r="3" fill="#3a5a78"/>
-          <circle cx="608" cy="74" r="7.5" fill="#0b0b0b" stroke="#6e6a63" stroke-width="2"/>
-          <circle cx="608" cy="74" r="3.2" fill="#f2d29b"/>
-          <!-- Classic Wayfarer Silver Rivets -->
-          <circle cx="94" cy="70" r="2.2" fill="#b8b2a6"/>
-          <circle cx="103" cy="70" r="2.2" fill="#b8b2a6"/>
-          <circle cx="577" cy="70" r="2.2" fill="#b8b2a6"/>
-          <circle cx="586" cy="70" r="2.2" fill="#b8b2a6"/>
-          <!-- Subtle In-Lens Whisper Card Inside Right Lens -->
-          <rect x="418" y="96" width="152" height="76" rx="8" fill="#1e1a15" fill-opacity="0.88" stroke="#d9b382" stroke-width="1.2"/>
-          <text x="430" y="114" fill="#e5c396" font-family="Inter, sans-serif" font-size="9.5" font-weight="600" letter-spacing="0.06em">SEITIATE ASSISTANT</text>
-          <text x="430" y="132" fill="#ffffff" font-family="Inter, sans-serif" font-size="11.5" font-weight="500">3:00 PM Studio Review</text>
-          <text x="430" y="148" fill="#c9c3b8" font-family="Inter, sans-serif" font-size="10">Scene 4 cut ready in Sakme</text>
-          <text x="430" y="163" fill="#98c379" font-family="Inter, sans-serif" font-size="9.5">● Tap or nod to approve</text>
-        </svg>
-      </div>
-      <p class="glasses-caption">
-        Wayfarer smart glasses with a quiet, glanceable in-lens card—giving you a calm prompt from your Personal Assistant without pulling you out of the room.
-      </p>
-    </div>
-
-    <div class="editorial-prose">
-      <h2>1. A quiet voice and a glanceable prompt</h2>
-      <p>
-        Most software demands your eyes and both hands. Seitiate works the other way around: your Personal Assistant already knows your ongoing projects, the people you work with, and the decisions waiting on you. Whether you speak a quick thought on a walk or glance at a single three-line card inside your glasses, your assistant captures the intent and routes the work silently behind the scenes.
-      </p>
-
-      <h2>2. Continuous memory from the street to the studio</h2>
-      <p>
-        There is no separate "mobile mode" to sync. A note you dictate while stepping out of a meeting immediately updates your shared workspace, drafts the follow-up in your voice, or queues a revision in your creative studio. When you sit back down at your desk, the work is already waiting for you.
-      </p>
-
-      <h2>3. You stay present; your assistant handles the machinery</h2>
-      <p>
-        Instead of noisy notifications, your assistant surfaces only what matters right now—a timely reminder of who you are meeting, a quick yes-or-no approval on a team deliverable, or a gentle cue that a long-running creative render has finished.
-      </p>
-    </div>
-
-    <section class="scenes-section">
-      <div class="eyebrow">The Makers Story &amp; Sakme Customer Journeys</div>
-      <h2>How a single idea travels through the Seitiate workspace</h2>
-      <p class="scenes-sub">
-        Stills from our seven-minute Makers story and the Sakme creative workbench—showing how members, creators, and teams move from a spoken spark to a finished work in the marketplace.
-      </p>
-
-      <div class="scenes-grid">
-        <article class="scene-card featured">
-          <img src="/assets/scenes/makers.png" alt="The Makers Studio — collaborating with your Personal Assistant across story, visual, and production workflows" />
-          <div class="scene-body">
-            <div class="scene-step">Journey I · The Makers Workbench</div>
-            <h3 class="scene-title">One creative table for writers, filmmakers, and builders</h3>
-            <p class="scene-desc">
-              In Sakme, over a hundred guided customer journeys turn complex creative production—from book manuscripts and storyboards to multi-scene video and audio—into a calm, step-by-step collaboration with your assistant.
-            </p>
-          </div>
-        </article>
-
-        <article class="scene-card">
-          <img src="/assets/scenes/scene-study.png" alt="Scene Study — directing characters, pacing, and visual continuity" />
-          <div class="scene-body">
-            <div class="scene-step">Journey II · Scene Study &amp; Storyboarding</div>
-            <h3 class="scene-title">Shape every scene before you render</h3>
-            <p class="scene-desc">
-              Explore dialogue, camera framing, and character continuity side by side, keeping your creative voice consistent across every chapter or episode.
-            </p>
-          </div>
-        </article>
-
-        <article class="scene-card">
-          <img src="/assets/scenes/room.png" alt="Shared Space — collaborating with partners and specialists in one room" />
-          <div class="scene-body">
-            <div class="scene-step">Journey III · Shared Spaces</div>
-            <h3 class="scene-title">Bring partners and specialists into the room</h3>
-            <p class="scene-desc">
-              Work together in shared rooms where each person's assistant coordinates context, handoffs, and project memory automatically.
-            </p>
-          </div>
-        </article>
-
-        <article class="scene-card">
-          <img src="/assets/scenes/laboratory.png" alt="The Laboratory — testing workflows, domain recipes, and custom tools" />
-          <div class="scene-body">
-            <div class="scene-step">Journey IV · Specialist Workflows</div>
-            <h3 class="scene-title">Turn your expertise into reusable tools</h3>
-            <p class="scene-desc">
-              Domain specialists and creators package their best methods into repeatable journeys without writing infrastructure code.
-            </p>
-          </div>
-        </article>
-
-        <article class="scene-card">
-          <img src="/assets/scenes/market.png" alt="The SEIT Marketplace — publishing courses, channels, and tools for other members" />
-          <div class="scene-body">
-            <div class="scene-step">Journey V · The SEIT Commons &amp; Market</div>
-            <h3 class="scene-title">Publish your work and earn SEIT</h3>
-            <p class="scene-desc">
-              Share finished channels, courses, and creative workflows with other members—settled directly in SEIT (1 SEIT = US$1.00) with CryptoPass verification.
-            </p>
-          </div>
-        </article>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div>
-      <a href="/index.html">Home</a> ·
-      <a href="/five-rungs.html">Five Steps</a> ·
-      <a href="/physical-ai.html">Smart Glasses &amp; Journeys</a> ·
-      <a href="/wheels-within-wheels.html">Wheels Within Wheels</a> ·
-      <a href="/scriptorium/index.html">Makers Scriptorium</a> ·
-      <a href="/terms.html">Terms</a> ·
-      <a href="/privacy.html">Privacy</a> ·
-      <a href="/licensing.html">Licensing</a>
-    </div>
-  </footer>
+    <nav>
+        <a href="/index.html" class="nav-brand"><span class="nav-dot"></span><span>Seitiate</span></a>
+        <div class="nav-links">
+            <a href="/index.html" class="nav-link">Overview</a>
+            <a href="/five-rungs.html" class="nav-link">Five Steps</a>
+            <a href="/physical-ai.html" class="nav-link active">Smart Glasses &amp; Journeys</a>
+            <a href="/wheels-within-wheels.html" class="nav-link">The Estate Map</a>
+            <a href="/login/index.html" class="nav-cta">Log in / Beta</a>
+        </div>
+    </nav>
+    <main class="container">
+        <div class="eyebrow">Beyond the Screen</div>
+        <h1>Your Personal Assistant, <em>right where you are</em></h1>
+        <p class="lead">Seitiate stays with you when you step away from your desk—working quietly through smart glasses and voice while your creative studio and shared rooms keep moving in the background.</p>
+        <section class="glasses-showcase">
+            <div class="glasses-photo-wrap">
+                <img src="/assets/scenes/wayfarer-smart-glasses.jpg" alt="Classic black Wayfarer smart glasses paired with your Seitiate Personal Assistant" />
+            </div>
+            <div class="in-lens-card">
+                <div class="in-lens-kicker">● In-Lens Assistant Prompt</div>
+                <div class="in-lens-title">3:00 PM · Studio Cut Ready in Sakme</div>
+                <div class="in-lens-sub">Scene 4 storyboard approved. Say "send to shared room" to publish.</div>
+            </div>
+            <div class="glasses-caption">Classic Wayfarer smart glasses paired with your Personal Assistant—giving you a calm, glanceable prompt and voice control without pulling a phone from your pocket.</div>
+        </section>
+        <section class="prose-grid">
+            <article class="prose-card">
+                <div class="prose-num">01 · Hands-Free Presence</div>
+                <h2>A quiet voice and a glanceable prompt</h2>
+                <p>Most software demands your eyes and both hands. Seitiate works the other way around: your Personal Assistant already knows your ongoing projects, the people you work with, and the decisions waiting on you.</p>
+            </article>
+            <article class="prose-card">
+                <div class="prose-num">02 · Continuous Memory</div>
+                <h2>From the street straight to the studio</h2>
+                <p>There is no separate mobile mode to sync. A note you dictate while stepping out of a meeting immediately updates your shared workspace, drafts the follow-up in your voice, or queues a revision in your creative workbench.</p>
+            </article>
+            <article class="prose-card">
+                <div class="prose-num">03 · Calm Focus</div>
+                <h2>You stay in the room; your assistant handles the rest</h2>
+                <p>Instead of noisy notifications, your assistant surfaces only what matters right now—a timely reminder of who you are meeting, a quick yes-or-no approval for a collaborator, or a cue that a render has finished.</p>
+            </article>
+        </section>
+        <section class="journeys-header">
+            <div class="eyebrow">The Makers Story &amp; Sakme Customer Journeys</div>
+            <h2>How a spoken spark becomes finished work</h2>
+            <p>Scenes from our seven-minute Makers story and the Sakme creative workbench—showing how members, creators, and teams move from a first idea to a published offering in the SEIT marketplace.</p>
+        </section>
+        <section class="scenes-grid">
+            <article class="scene-card featured">
+                <img src="/assets/scenes/makers.png" alt="The Makers Studio" />
+                <div class="scene-body">
+                    <div class="scene-step">Journey I · The Makers Workbench (100+ Guided Journeys)</div>
+                    <h3 class="scene-title">One creative table for writers, filmmakers, and builders</h3>
+                    <p class="scene-desc">In Sakme, over a hundred guided customer journeys turn complex creative production—from manuscripts and storyboards to multi-scene video and audio—into a calm, step-by-step collaboration with your assistant.</p>
+                </div>
+            </article>
+            <article class="scene-card">
+                <img src="/assets/scenes/scene-study.png" alt="Scene Study" />
+                <div class="scene-body">
+                    <div class="scene-step">Journey II · Scene Study &amp; Storyboarding</div>
+                    <h3 class="scene-title">Shape every scene before you render</h3>
+                    <p class="scene-desc">Explore dialogue, camera framing, and character continuity side by side, keeping your creative voice consistent across every chapter or episode.</p>
+                </div>
+            </article>
+            <article class="scene-card">
+                <img src="/assets/scenes/room.png" alt="Shared Space" />
+                <div class="scene-body">
+                    <div class="scene-step">Journey III · Shared Spaces</div>
+                    <h3 class="scene-title">Bring collaborators and specialists into the room</h3>
+                    <p class="scene-desc">Work together in shared rooms where each person's assistant coordinates context, handoffs, and project memory automatically.</p>
+                </div>
+            </article>
+            <article class="scene-card">
+                <img src="/assets/scenes/laboratory.png" alt="The Laboratory" />
+                <div class="scene-body">
+                    <div class="scene-step">Journey IV · Specialist Workflows</div>
+                    <h3 class="scene-title">Turn your expertise into reusable tools</h3>
+                    <p class="scene-desc">Domain specialists and creators package their best methods into repeatable journeys without writing infrastructure code.</p>
+                </div>
+            </article>
+            <article class="scene-card featured">
+                <img src="/assets/scenes/market.png" alt="The SEIT Marketplace" />
+                <div class="scene-body">
+                    <div class="scene-step">Journey V · The SEIT Commons &amp; Market</div>
+                    <h3 class="scene-title">Publish your work and earn SEIT (1 SEIT = US$1.00)</h3>
+                    <p class="scene-desc">Share finished channels, courses, and creative workflows with other members—settled directly in SEIT with CryptoPass wallet verification.</p>
+                </div>
+            </article>
+        </section>
+    </main>
+    <footer>
+        <a href="/index.html">Overview</a> · <a href="/five-rungs.html">Five Steps</a> · <a href="/physical-ai.html">Smart Glasses &amp; Journeys</a> · <a href="/wheels-within-wheels.html">Wheels Within Wheels</a> · <a href="/scriptorium/index.html">Makers Scriptorium</a> · <a href="/terms.html">Terms</a> · <a href="/privacy.html">Privacy</a> · <a href="/licensing.html">Licensing</a>
+    </footer>
 </body>
 </html>

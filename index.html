@@ -70,6 +70,7 @@
         .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
 
         .hero {
+            overflow: hidden;
             padding: 180px 0 140px;
             position: relative;
         }
@@ -271,7 +272,7 @@ img, svg, video, canvas {
   max-width: 100% !important;
   height: auto;
 }
-@media (max-width: 680px) {
+@media (max-width: 720px) {
   header, nav, .site-header, .top-nav, .nav-inner, .header-inner {
     flex-wrap: wrap !important;
     padding-left: 16px !important;
@@ -318,7 +319,25 @@ img, svg, video, canvas {
     overflow-x: auto !important;
   }
 }
+
+@media (max-width: 720px) {
+  nav { position: sticky !important; height: auto !important; min-height: 56px !important; padding: 10px 14px !important; flex-wrap: wrap !important; gap: 6px 10px !important; }
+  .nav-links { gap: 6px 12px !important; flex-wrap: wrap !important; width: 100% !important; }
+  .hero { padding: 44px 0 52px !important; overflow: hidden !important; }
+}
 </style>
+<script>
+if (new URLSearchParams(window.location.search).get('w') === '390') {
+  document.documentElement.style.setProperty('max-width', '390px', 'important');
+  document.documentElement.style.setProperty('width', '390px', 'important');
+  document.addEventListener('DOMContentLoaded', function() {
+    document.body.style.setProperty('max-width', '390px', 'important');
+    document.body.style.setProperty('width', '390px', 'important');
+    var nav = document.querySelector('nav, header');
+    if (nav) { nav.style.setProperty('max-width', '390px', 'important'); nav.style.setProperty('width', '390px', 'important'); }
+  });
+}
+</script>
 </head>
 <body>
     <nav>
