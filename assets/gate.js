@@ -34,7 +34,11 @@
         notifyEnter();
         return true;
       }
-      return localStorage.getItem(STORAGE_KEY) === '1';
+      if (localStorage.getItem(STORAGE_KEY) === '1') {
+        notifyEnter();
+        return true;
+      }
+      return false;
     } catch (e) {
       return false;
     }
