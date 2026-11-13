@@ -1,5 +1,29 @@
 (function() {
   const STORAGE_KEY = 'seitiate_gate_sakme_v1';
+  const NOTIFIED_KEY = 'seitiate_gate_notified_v1';
+
+  async function notifyEnter() {
+    try {
+      if (navigator.globalPrivacyControl || navigator.doNotTrack === '1') return;
+      if (sessionStorage.getItem(NOTIFIED_KEY) === '1') return;
+      sessionStorage.setItem(NOTIFIED_KEY, '1');
+      const res = await fetch('/assets/pulse-config.json', {cache: 'no-store', credentials: 'omit'});
+      if (!res.ok) return;
+      const cfg = await res.json();
+      if (!cfg.service_url) return;
+      const serviceURL = new URL(cfg.service_url);
+      if (serviceURL.protocol !== 'https:') return;
+      const requested = new URLSearchParams(window.location.search).get('via');
+      const source = (cfg.sources || []).includes(requested) ? requested : 'direct';
+      await fetch(new URL('/engagement', serviceURL), {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({event: 'enter', source: source}),
+        credentials: 'omit',
+        referrerPolicy: 'no-referrer'
+      });
+    } catch (e) {}
+  }
 
   function isAuthed() {
     try {
@@ -7,6 +31,7 @@
       const qCode = (params.get('code') || params.get('passcode') || '').trim().toUpperCase();
       if (qCode === 'SAKME') {
         try { localStorage.setItem(STORAGE_KEY, '1'); } catch (e) {}
+        notifyEnter();
         return true;
       }
       return localStorage.getItem(STORAGE_KEY) === '1';
@@ -19,6 +44,7 @@
     try {
       localStorage.setItem(STORAGE_KEY, '1');
     } catch (e) {}
+    notifyEnter();
   }
 
   if (isAuthed()) return;
