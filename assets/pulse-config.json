@@ -1,0 +1,5 @@
+{
+  "snapshot_url": "/assets/pulse-snapshot.json",
+  "service_url": null,
+  "sources": ["direct", "stripe-introduction"]
+}
