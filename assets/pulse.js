@@ -63,4 +63,5 @@
   }
   panel.addEventListener('toggle', () => { if (panel.open) load('open'); });
   refresh.addEventListener('click', () => load('refresh'));
+  load('open');
 })();
