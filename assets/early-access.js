@@ -3,7 +3,7 @@
   const form = document.getElementById('access-form');
   const status = document.getElementById('access-status');
   const draft = document.getElementById('access-draft');
-  const recipient = 'agentcsakme@gmail.com';
+  const recipient = 'bot@seitiate.com';
   form.querySelector('button[type="submit"]').disabled = false;
   const tiers = ['Starter', 'Pro', 'Max'];
   const requested = new URLSearchParams(location.search).get('plan');
@@ -40,7 +40,7 @@
     } catch (_) {}
     btn.disabled = false;
     if (submitted) {
-      status.textContent = 'Thank you — your early-access request has been received. We will be in touch shortly.';
+      status.textContent = 'Thank you — your early-access request has been received. For further information, contact bot@seitiate.com.';
     } else {
       document.getElementById('access-fallback').hidden = false;
       status.textContent = 'Your email draft is ready below — please send it from your email app to complete your request.';
@@ -48,7 +48,7 @@
     }
   });
   document.getElementById('access-copy').addEventListener('click', async () => {
-    try { await navigator.clipboard.writeText(draft.value); status.textContent = 'Request copied. Paste it into an email and send it to agentcsakme@gmail.com.'; }
+    try { await navigator.clipboard.writeText(draft.value); status.textContent = 'Request copied. Paste it into an email and send it to bot@seitiate.com.'; }
     catch (_) { draft.focus(); draft.select(); status.textContent = 'Select and copy the prepared request below, then send it by email.'; }
   });
 })();

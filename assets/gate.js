@@ -84,7 +84,7 @@
           <button type="submit">Enter <span aria-hidden="true">↗</span></button></div>
           <p id="gate-err" role="status" aria-live="polite" hidden>That code isn’t recognised. Please try again.</p>
         </form>
-        <footer class="gate-footer"><span>Seitiate · Georgia</span><a href="mailto:agentcsakme@gmail.com">Get in touch ↗</a></footer>
+        <footer class="gate-footer"><span>Seitiate · Georgia</span><a href="mailto:bot@seitiate.com">Get in touch ↗</a></footer>
       </main>
     `;
     document.body.appendChild(overlay);
