@@ -9,19 +9,43 @@
   const requested = new URLSearchParams(location.search).get('plan');
   const selected = tiers.find(t => t.toLowerCase() === requested?.toLowerCase());
   if (selected) form.elements.tier.value = selected;
-  form.addEventListener('submit', event => {
+  form.addEventListener('submit', async event => {
     event.preventDefault();
     if (!form.reportValidity()) return;
     const name = form.elements.name.value.trim();
     const email = form.elements.email.value.trim();
     const tier = form.elements.tier.value;
+    const idea = form.elements.idea.value.trim();
     if (!name || !tiers.includes(tier)) { status.textContent = 'Please enter your name and select a starting point.'; return; }
     const subject = `Seitiate early access — ${tier}`;
-    const body = `Hello Seitiate,\n\nI’d like to request early access.\n\nName: ${name}\nEmail: ${email}\nInterested in: ${tier}\n\nWhat I have in mind:\n${form.elements.idea.value.trim() || 'I would like to explore the possibilities.'}\n\nThank you,\n${name}`;
+    const body = `Hello Seitiate,\n\nI’d like to request early access.\n\nName: ${name}\nEmail: ${email}\nInterested in: ${tier}\n\nWhat I have in mind:\n${idea || 'I would like to explore the possibilities.'}\n\nThank you,\n${name}`;
     draft.value = `To: ${recipient}\nSubject: ${subject}\n\n${body}`;
-    document.getElementById('access-fallback').hidden = false;
-    status.textContent = 'Your email draft is ready. Send it from your email app to submit your request; nothing has been submitted by this page.';
-    location.href = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    status.textContent = 'Submitting your request…';
+    let submitted = false;
+    try {
+      const cfgRes = await fetch('/assets/pulse-config.json', {cache: 'no-store', credentials: 'omit'});
+      const cfg = cfgRes.ok ? await cfgRes.json() : {};
+      if (cfg.service_url) {
+        const res = await fetch(new URL('/apply', cfg.service_url), {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({name, email, tier, idea}),
+          credentials: 'omit',
+          referrerPolicy: 'no-referrer'
+        });
+        submitted = res.ok;
+      }
+    } catch (_) {}
+    btn.disabled = false;
+    if (submitted) {
+      status.textContent = 'Thank you — your early-access request has been received. We will be in touch shortly.';
+    } else {
+      document.getElementById('access-fallback').hidden = false;
+      status.textContent = 'Your email draft is ready below — please send it from your email app to complete your request.';
+      location.href = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    }
   });
   document.getElementById('access-copy').addEventListener('click', async () => {
     try { await navigator.clipboard.writeText(draft.value); status.textContent = 'Request copied. Paste it into an email and send it to agentcsakme@gmail.com.'; }
