@@ -1,5 +1,5 @@
 {
   "snapshot_url": "/assets/pulse-snapshot.json",
-  "service_url": null,
-  "sources": ["direct", "stripe-introduction"]
+  "service_url": "https://essay-chem-extensive-montana.trycloudflare.com",
+  "sources": ["direct", "stripe-introduction", "paddle-introduction"]
 }
