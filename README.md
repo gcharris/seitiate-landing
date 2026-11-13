@@ -1,20 +1,7 @@
-# seitiate-landing
+# Seitiate invitation site
 
-Private orientation and standing-policy site for **seitiate.com** (GitHub Pages).
+Static editorial introduction at https://seitiate.com, published by GitHub Pages from main at the repository root.
 
-## Deployed Pages
+Pages: index.html, five-rungs.html, terms.html, privacy.html. Shared presentation: assets/site.css, assets/legal.css and assets/gate.css. The invitation gate accepts the existing SAKME code and query link. It is a presentation gate, not a confidentiality boundary.
 
-- `index.html` — Standing Principles & Policy index linking to the four standing pages
-- `principles.html` — Standing Principles
-- `licensing.html` — Licensing summary
-- `privacy.html` — Privacy & Portability (Ten Promises)
-- `terms.html` — Terms of Service
-
-## Required Site Assets
-
-- `assets/gate.js` — Client-side orientation gate
-- `robots.txt` — `Disallow: /`
-- `CNAME` — `seitiate.com`
-- `.nojekyll` — Static root serving marker
-
-*(Earlier June–September 2026 ad-hoc sharing pages and prototypes have been archived off-site with a full SHA-256 manifest so they are no longer served on `seitiate.com`.)*
+The complete prior source at a9793073456d1e6fdf38cb0311378b1563376f40 is preserved separately in CES at knowledge/archives/seitiate-landing/2026-11-13, with a checksum manifest. Archive files must not be copied into this publishing tree.
