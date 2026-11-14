@@ -5,7 +5,7 @@
   const status = document.getElementById('pulse-status');
   const refresh = document.getElementById('pulse-refresh');
   const notice = document.getElementById('pulse-analytics');
-  const keys = ['active_repositories', 'merged_changes_7d', 'commits_24h'];
+  const keys = ['active_repositories', 'commits_24h'];
   let config, serviceURL, busy = false, lastSnapshot;
   async function getJSON(url) {
     const controller = new AbortController();
